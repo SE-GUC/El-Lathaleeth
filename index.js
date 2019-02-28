@@ -1,6 +1,5 @@
 const express = require("express");
 
-const users = require("./routes/api/users");
 const entity_emp = require("./routes/api/entity_emp");
 
 const app = express();
