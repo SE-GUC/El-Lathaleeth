@@ -1,0 +1,42 @@
+{
+		"law":"12663",
+        "legalForm":"blabla",
+        "formType":"SPC",
+        "arabicName" : "sd",
+        "englishName" : "booboo12",
+        "location" : {
+        	"address":"home",
+        	"city":"to",
+        	"town":"aliens"
+        },
+        "phone":"0111111111",
+        "fax":"2222",
+        "investor":"more deets",
+        "capitalCurr":"EGP",
+        "capitalVal":1000000, 
+              "boardOfDirectors": [
+                {
+                    "address": "address",
+                    "birthdate": "1970-03-25T00:00:00.000Z",
+                    "gender": "male",
+                    "idNum": "A2938920",
+                    "name": "Mohamed",
+                    "nationality": "Egypt",
+                    "position": "manager",
+                    "typeID": "passport",
+                    "typeInves": "individual"
+                },
+                {
+                    "address": "address",
+                    "birthdate": "1970-03-25T00:00:00.000Z",
+                    "gender": "male",
+                    "idNum": "A2938920",
+                    "name": "Ali",
+                    "nationality": "Egypt",
+                    "position": "manager2",
+                    "typeID": "passport",
+                    "typeInves": "individual"
+                }
+            ]
+
+}
