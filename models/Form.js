@@ -1,6 +1,6 @@
 const uuid = require('uuid');
 class Form{
-    constructor(law,legalForm,formType,arabicName,englishName,location,phone,fax,investor,capitalCurr,capitalVal,boardOfDirectors){
+    constructor(bitIL,law,legalForm,formType,arabicName,englishName,location,phone,fax,investor,capitalCurr,capitalVal,boardOfDirectors){
         this.formType = formType
         this.location = location //location contain town,city,address
         this.arabicName = arabicName
@@ -18,6 +18,7 @@ class Form{
         this.status = null
         this.deadline = new Date().setMonth(this.createdOn.getMonth()+1)
         this.id = uuid.v4()
+        this.bitIL = bitIL
     };
 
 };
