@@ -37,6 +37,16 @@ const forms = [
 
 router.get('/', (req, res) => res.json({ data: forms }));
 
+router.delete('/', (req, res) => 
+{
+    const id = req.params.id
+    const form = forms.find(form => form.id === id)
+    const index = forms.indexOf(form)
+    forms.splice(index)
+    res.send(forms)
+   
+})
+
 router.post('/', (req, res) => {
     const formType = req.body.formType
     const location = new Address(req.body.location)
