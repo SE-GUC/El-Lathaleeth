@@ -17,7 +17,7 @@ class Entity_Emp {
     this.password = password;
     this.email = email;
     this.id = uuidv4();
-    this.dateOfBirth = dateOfBirth;
+    this.dateOfBirth = new date(dateOfBirth);
     // this.fullName=function() {
     // return this.firstName + " " +this.middleName+" "+this.lastName;}
     this.firstName = firstName;
@@ -26,7 +26,7 @@ class Entity_Emp {
     this.emp_type = emp_type;
     this.form = form;
     this.emp_details = emp_details;
-    this.joined_on = joined_on;
+    this.joined_on = new date(joined_on);
     //     this.age=function _calculateAge(birthday) { // birthday is a date
     //         var ageDifMs = Date.now() - dateOfBirth.getTime();
     //         var ageDate = new Date(ageDifMs); // miliseconds from epoch
