@@ -20,7 +20,7 @@ class Investor {
         this.email=email;
         this.capital=capital;
         this.capitalCurrency=capitalCurrency;
-        this.id=uuidv4();
+        this.id=uuid.v4();
     };
 };
 

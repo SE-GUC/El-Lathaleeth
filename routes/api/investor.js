@@ -5,6 +5,8 @@ const router = express.Router();
 
 const Investor = require('../../models/Investor');
 
+// Temp Array to test
+
 const investors = [
         new Investor('Naguib', 'Ramy', 'Sawiras', 'Male // Drop Down', 'Egyptian // Drop Down', 'Individual // Drop Down', 'National ID // Drop Down', '12345678901234', '1960-02-23', '24 Magnolia St., Compound Le Reve, 6th Of October, Giza, Egypt', '01234567890', '+20-2-1234567', 'nagiub.sawiras@mymail.com', 1000000, 'Euro // Drop Down'),
         new Investor('Maged', 'Gamal', 'Rashad', 'Male // Drop Down', 'Jordanian // Drop Down', 'Individual // Drop Down', 'Passport // Drop Down', 'A823D09H', '1970-08-12', '324 Gadallah St., Compound Reyan, Abdoun, Amman, Jordan', '+962 79 999 9999', '+962 6 466 3322', 'maged.rashad@mymail.com', 5000000, 'Dollar // Drop Down')
@@ -12,7 +14,8 @@ const investors = [
 
 router.get('/', (req, res) => res.json({ data: investors }));
 
-//router.post('/joi', (req, res) => {
+// Creating New Investor
+
 router.post('/', (req, res) => {
 
     const firstName = req.body.firstName;
@@ -37,7 +40,7 @@ router.post('/', (req, res) => {
         lastName: Joi.string().min(3).required(),
         gender: Joi.any().valid(['male', 'female']).required(), // Drop Down
         nationality: Joi.string().required(), // Drop Down
-        investorType: Joi.required(), // Drop Down
+        investorType: Joi.any().valid(['individual', 'company']).required(), // Drop Down
         typeOfID: Joi.any().valid(['passport', 'id']).required(),// Drop Down
         IDNumber: Joi.string().min(8).required(),
         dateOfBirth: Joi.date().required(),
@@ -63,5 +66,9 @@ router.post('/', (req, res) => {
     return res.json({ data: newInvestor });
 
 });
+
+// Updating Existing Investor
+
+
 
 module.exports = router;
