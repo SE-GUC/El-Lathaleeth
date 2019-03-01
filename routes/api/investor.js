@@ -12,11 +12,11 @@ const investors = [
         new Investor('Maged', 'Gamal', 'Rashad', 'Male // Drop Down', 'Jordanian // Drop Down', 'Individual // Drop Down', 'Passport // Drop Down', 'A823D09H', '1970-08-12', '324 Gadallah St., Compound Reyan, Abdoun, Amman, Jordan', '+962 79 999 9999', '+962 6 466 3322', 'maged.rashad@mymail.com', 5000000, 'Dollar // Drop Down')
 ];
 
-router.get('/', (req, res) => res.json({ data: investors }));
+router.get('/read', (req, res) => res.json({ data: investors }));
 
 // Creating New Investor
 
-router.post('/', (req, res) => {
+router.post('/create', (req, res) => {
 
     const firstName = req.body.firstName;
     const middleName = req.body.middleName;
@@ -67,8 +67,15 @@ router.post('/', (req, res) => {
 
 });
 
-// Updating Existing Investor
+// Deleting Existing Investor
 
-
+router.delete("/delete/:id", (req, res) => {
+    const id = req.params.id;
+    const investor = investors.find(investor => investor.id === id);
+    const index = investors.indexOf(investor);
+    if(index<0) return res.status(400).send({ err: 'None of the existing investors has that ID, please check and try again' });
+    investors.splice(index,1);
+    res.send(investors);
+  });
 
 module.exports = router;
