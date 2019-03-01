@@ -44,7 +44,7 @@ router.post('/', (req, res) => {
         address: Joi.string().required(),
         phoneNumber: Joi.string().length(11),
         faxNumber: Joi.string(),
-        email: Joi.alphanumeric(),
+        email: Joi.string().email().required(),
         capital: Joi.number().required(),
         capitalCurrency: Joi.string().required() // Drop Down
         
