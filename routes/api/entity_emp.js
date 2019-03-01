@@ -67,6 +67,9 @@ router.post("/", (req, res) => {
     dateOfBirth: Joi.date().required(),
     emp_type: Joi.required(),
     form: Joi.required(),
+    email: Joi.string()
+      .email()
+      .required(),
     joined_on: Joi.date().required(),
     emp_details: Joi.required()
   };
@@ -79,6 +82,7 @@ router.post("/", (req, res) => {
   const newEmp = {
     username,
     password,
+    email,
     firstName,
     middleName,
     lastName,
@@ -91,12 +95,13 @@ router.post("/", (req, res) => {
   emp.push(new Entity_Emp(newEmp));
   return res.json({ data: newEmp });
 });
-router.post("/update", (req, res) => {
+router.put("/", async (req, res) => {
   console.log("0");
-  const id = req.body.id;
+  const id = req.params.id;
   const firstName = req.body.firstName;
   const middleName = req.body.middleName;
   const lastName = req.body.lastName;
+  const email = req.body.email;
   const username = req.body.username;
   const password = req.body.password;
   const emp_type = req.body.emp_type;
@@ -105,6 +110,9 @@ router.post("/update", (req, res) => {
   const joined_on = req.body.joined_on;
   const emp_details = req.body.emp_details;
   const schema = {
+    email: Joi.string()
+      .email()
+      .required(),
     firstName: Joi.string()
       .min(3)
       .required(),
@@ -119,7 +127,9 @@ router.post("/update", (req, res) => {
       .min(6)
       .required(),
     dateOfBirth: Joi.date().required(),
-    emp_type: Joi.required(),
+    emp_type: Joi.any()
+      .valid(["Lawyer", "Reviewer", "Admin"])
+      .required(),
     form: Joi.required(),
     id: Joi.required(),
     joined_on: Joi.date().required(),
@@ -144,6 +154,7 @@ router.post("/update", (req, res) => {
   updatedEmp["dateOfBirth"] = dateOfBirth;
   updatedEmp["emp_details"] = emp_details;
   updatedEmp["joined_on"] = joined_on;
+  updatedEmp["email"] = email;
   console.log("3");
   return res.json({ data: updatedEmp });
 });
