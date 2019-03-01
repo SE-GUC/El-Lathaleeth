@@ -61,6 +61,7 @@ router.post('/', (req, res) => {
     const law = req.body.law
     const legalForm = req.body.legalForm
     const bitIL = req.body.bitIL
+    
     if(formType === "SPC"){
          const schema = {
             law: Joi.string().required(),//drop down menu
@@ -110,8 +111,6 @@ router.post('/', (req, res) => {
         }
     }
     
-
-
     const result = Joi.validate(req.body, schema);
     if (result.error) return res.status(400).send({ error: result.error.details[0].message });
 
