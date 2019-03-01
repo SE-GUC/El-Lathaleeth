@@ -142,7 +142,7 @@ router.put ("/", (req,res) =>{
 
     console.log("0")
     const id = req.params.id
-    const location = new Adress (req.body.location) //location contain town,city,address
+    const location = new Address (req.body.location) //location contain town,city,address
     const arabicName = req.body.arabicName
     const englishName = req.body.englishName
     const phone = req.body.phone
