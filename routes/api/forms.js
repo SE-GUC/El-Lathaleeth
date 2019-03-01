@@ -47,7 +47,7 @@ router.delete('/', (req, res) =>
    
 })
 
-router.post('/', (req, res) => {
+router.put('/', (req, res) => {
     const formType = req.body.formType
     const location = new Address(req.body.location)
     const arabicName = req.body.arabicName
@@ -141,7 +141,7 @@ router.post('/', (req, res) => {
 router.post ("/update", (req,res) =>{
 
     console.log("0")
-    const id = req.body.id
+    const id = req.params.id
     const location = new Adress (req.body.location) //location contain town,city,address
     const arabicName = req.body.arabicName
     const englishName = req.body.englishName
