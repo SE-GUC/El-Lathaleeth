@@ -1,11 +1,11 @@
-const express = require('express');
-const Joi = require('joi');
+const express = require("express");
+const Joi = require("joi");
 const router = express.Router();
-const uuid = require('uuid');
+const uuid = require("uuid");
 
-const Form = require('../../models/Form');
-const Director = require('../../models/BoardOfDirector');
-const Address = require('../../models/Address');
+const Form = require("../../models/Form");
+const Director = require("../../models/BoardOfDirector");
+const Address = require("../../models/Address");
 
 const forms = [
     new Form(0,"Laws drop down menu",
@@ -109,29 +109,26 @@ router.post('/', (req, res) => {
             formType: Joi.any().valid(['SPC', 'SSC']).required(),//drop down menu maybe same as up
             boardOfDirectors: Joi.array().min(1).items(Joi.object(direcSchema).required)
         }
-    }
-    
-    const result = Joi.validate(req.body, schema);
-    if (result.error) return res.status(400).send({ error: result.error.details[0].message });
+        const newForm = {
+            law,
+            legalForm,
+            formType,
+            arabicName,
+            englishName,
+            location,
+            phone,
+            fax,
+            investor,
+            capitalCurr,
+            capitalVal,
+            bitIL,
+            boardOfDirectors,
+            id: uuid.v4()
+          };
+          forms.push(new Form(newForm));
+          return res.json({ data: newForm });
+        }
+    });
 
-    const newForm = {
-        law,
-        legalForm,
-        formType,
-        arabicName,
-        englishName,
-        location,
-        phone,
-        fax,
-        investor,
-        capitalCurr,
-        capitalVal, 
-        bitIL,
-        boardOfDirectors,
-        id: uuid.v4(),
-    };
-    forms.push(new Form(newForm))
-    return res.json({ data: newForm });
-});
 
-module.exports = router
+module.exports = router;
