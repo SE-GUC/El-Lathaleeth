@@ -61,6 +61,7 @@ router.post('/', (req, res) => {
     const law = req.body.law
     const legalForm = req.body.legalForm
     const bitIL = req.body.bitIL
+    
     if(formType === "SPC"){
          const schema = {
             law: Joi.string().required(),//drop down menu
@@ -108,34 +109,29 @@ router.post('/', (req, res) => {
             formType: Joi.any().valid(['SPC', 'SSC']).required(),//drop down menu maybe same as up
             boardOfDirectors: Joi.array().min(1).items(Joi.object(direcSchema).required)
         }
-    }
-    
 
- 
+        const newForm = {
+            law,
+            legalForm,
+            formType,
+            arabicName,
+            englishName,
+            location,
+            phone,
+            fax,
+            investor,
+            capitalCurr,
+            capitalVal,
+            bitIL,
+            boardOfDirectors,
+            id: uuid.v4()
+          };
+          forms.push(new Form(newForm));
+          return res.json({ data: newForm });
+        }
+    });
 
-  //const result = Joi.validate(req.body, schema);
-  //if (result.error) return res.status(400).send({ error: result.error.details[0].message });
 
-
-  const newForm = {
-    law,
-    legalForm,
-    formType,
-    arabicName,
-    englishName,
-    location,
-    phone,
-    fax,
-    investor,
-    capitalCurr,
-    capitalVal,
-    bitIL,
-    boardOfDirectors,
-    id: uuid.v4()
-  };
-  forms.push(new Form(newForm));
-  return res.json({ data: newForm });
-});
 
 //Updating a form
 router.put ("/", (req,res) =>{
