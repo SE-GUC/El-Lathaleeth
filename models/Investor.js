@@ -1,7 +1,7 @@
 const uuid = require('uuid');
 
 class Investor {
-    constructor(firstName, middleName, lastName, gender, nationality, investorType, typeOfID, IDNumber, dateOfBirth, address, phoneNumber, faxNumber, email, capital, capitalCurrency){
+    constructor(firstName, middleName, lastName, gender, nationality, investorType, typeOfID, IDNumber, dateOfBirth, address, phoneNumber, faxNumber, creditCardNumber, email, capital, capitalCurrency){
         this.firstName=firstName;
         this.middleName=middleName;
         this.lastName=lastName;
@@ -17,6 +17,7 @@ class Investor {
         this.address=address;
         this.phoneNumber=phoneNumber;
         this.faxNumber=faxNumber;
+        this.creditCardNumber=creditCardNumber;
         this.email=email;
         this.capital=capital;
         this.capitalCurrency=capitalCurrency;
