@@ -24,6 +24,7 @@ const comment = [
   ];
 
 router.post("/", (req, res) => {
+    const id = req.params.id;
     const author_type = req.body.author_type
     const author = req.body.author
     const text = req.body.text
