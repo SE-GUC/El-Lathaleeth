@@ -23,10 +23,7 @@ const comment = [
     )
   ];
 
-
 router.post("/", (req, res) => {
-router.post("/:id", (req, res) => {
-    const id = req.params.Form.id
     const author_type = req.body.author_type
     const author = req.body.author
     const text = req.body.text
@@ -62,20 +59,6 @@ const newComment = {
     read
 };
 comment.push(new Entity_Emp(newComment));
-return res.json({ data: newComment });
-});
-
-router.get('/', (req, res) => res.json({ data: comments }))
-router.delete("/", (req, res) => {
-    const id = req.params.id;
-    const commentdel = Comments.find(commentdel => commentdel.id === id);
-    const index = Comments.indexOf(commentdel);
-    Comments.splice(index);
-    res.send(Comments);
-})
-
-module.exports = router
-comment.push(new Comment(newComment));
 return res.json({ data: newComment });
 });
 
