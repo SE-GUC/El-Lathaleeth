@@ -44,6 +44,8 @@ router.post("/", (req, res) => {
   const middleName = req.body.middleName;
   const lastName = req.body.lastName;
   const username = req.body.username;
+  console.log(username)
+  const email=req.body.email;
   const password = req.body.password;
   const emp_type = req.body.emp_type;
   const form = req.body.form;
@@ -67,6 +69,9 @@ router.post("/", (req, res) => {
     dateOfBirth: Joi.date().required(),
     emp_type: Joi.required(),
     form: Joi.required(),
+    email: Joi.string()
+      .email()
+      .required(),
     joined_on: Joi.date().required(),
     emp_details: Joi.required()
   };
@@ -76,9 +81,10 @@ router.post("/", (req, res) => {
   if (result.error)
     return res.status(400).send({ error: result.error.details[0].message });
 
-  const newEmp = {
+  const newEmp = new Entity_Emp(
     username,
     password,
+    email,
     firstName,
     middleName,
     lastName,
@@ -86,17 +92,18 @@ router.post("/", (req, res) => {
     emp_type,
     form,
     emp_details,
-    joined_on
-  };
-  emp.push(new Entity_Emp(newEmp));
+    joined_on)
+  ;
+  emp.push(newEmp);
   return res.json({ data: newEmp });
 });
-router.post("/update", (req, res) => {
+router.put('/update/:id',  (req, res) => {
   console.log("0");
-  const id = req.body.id;
+  const id = req.params.id;
   const firstName = req.body.firstName;
   const middleName = req.body.middleName;
   const lastName = req.body.lastName;
+  const email = req.body.email;
   const username = req.body.username;
   const password = req.body.password;
   const emp_type = req.body.emp_type;
@@ -105,6 +112,9 @@ router.post("/update", (req, res) => {
   const joined_on = req.body.joined_on;
   const emp_details = req.body.emp_details;
   const schema = {
+    email: Joi.string()
+      .email()
+      .required(),
     firstName: Joi.string()
       .min(3)
       .required(),
@@ -119,13 +129,15 @@ router.post("/update", (req, res) => {
       .min(6)
       .required(),
     dateOfBirth: Joi.date().required(),
-    emp_type: Joi.required(),
+    emp_type: Joi.any()
+      .valid(["Lawyer", "Reviewer", "Admin"])
+      .required(),
     form: Joi.required(),
-    id: Joi.required(),
+    id: Joi.optional(),
     joined_on: Joi.date().required(),
     emp_details: Joi.required()
   };
-
+console.log(id)
   const result = Joi.validate(req.body, schema);
 
   if (result.error)
@@ -144,15 +156,18 @@ router.post("/update", (req, res) => {
   updatedEmp["dateOfBirth"] = dateOfBirth;
   updatedEmp["emp_details"] = emp_details;
   updatedEmp["joined_on"] = joined_on;
+  updatedEmp["email"] = email;
   console.log("3");
   return res.json({ data: updatedEmp });
 });
 
-router.delete("/", (req, res) => {
+router.delete("/delete/:id", (req, res) => {
+  console.log(9)
   const id = req.params.id;
   const employee = emp.find(emp => emp.id === id);
   const index = emp.indexOf(employee);
-  emp.splice(index);
+  if(index>=0){
+  emp.splice(index,1);}
   res.send(emp);
 });
 module.exports = router;

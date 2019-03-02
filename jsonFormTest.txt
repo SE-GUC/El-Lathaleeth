@@ -1,4 +1,4 @@
-{
+{       "bitIL":0,
 		"law":"12663",
         "legalForm":"blabla",
         "formType":"SPC",
