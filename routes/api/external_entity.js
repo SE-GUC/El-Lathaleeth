@@ -75,10 +75,11 @@ router.put("/update/:id", (req, res) => {
         .status(400)
         .send({ error: isValidated.error.details[0].message });
     const entity = entities.find(entity => entity.id === id);
-    const index = entities.indexOf(entity);
-    if (index >= 0) {
-      entities.splice(index, 1, newExternal_entity);
-    }
+    entity["name"]=name
+    entity["address"]=address
+    entity["telephone"]=telephone
+    entity["fax"]=fax
+    entity["email"]=email
     res.send(entities);
   } catch (error) {
     console.log(error);
