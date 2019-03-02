@@ -5,15 +5,18 @@ const router = express.Router();
 
 const Investor = require('../../models/Investor');
 
+// Temp Array to test
+
 const investors = [
         new Investor('Naguib', 'Ramy', 'Sawiras', 'Male // Drop Down', 'Egyptian // Drop Down', 'Individual // Drop Down', 'National ID // Drop Down', '12345678901234', '1960-02-23', '24 Magnolia St., Compound Le Reve, 6th Of October, Giza, Egypt', '01234567890', '+20-2-1234567', 'nagiub.sawiras@mymail.com', 1000000, 'Euro // Drop Down'),
         new Investor('Maged', 'Gamal', 'Rashad', 'Male // Drop Down', 'Jordanian // Drop Down', 'Individual // Drop Down', 'Passport // Drop Down', 'A823D09H', '1970-08-12', '324 Gadallah St., Compound Reyan, Abdoun, Amman, Jordan', '+962 79 999 9999', '+962 6 466 3322', 'maged.rashad@mymail.com', 5000000, 'Dollar // Drop Down')
 ];
 
-router.get('/', (req, res) => res.json({ data: investors }));
+router.get('/read', (req, res) => res.json({ data: investors }));
 
-//router.post('/joi', (req, res) => {
-router.post('/', (req, res) => {
+// Creating New Investor
+
+router.post('/create', (req, res) => {
 
     const firstName = req.body.firstName;
     const middleName = req.body.middleName;
@@ -37,14 +40,14 @@ router.post('/', (req, res) => {
         lastName: Joi.string().min(3).required(),
         gender: Joi.any().valid(['male', 'female']).required(), // Drop Down
         nationality: Joi.string().required(), // Drop Down
-        investorType: Joi.required(), // Drop Down
+        investorType: Joi.any().valid(['individual', 'company']).required(), // Drop Down
         typeOfID: Joi.any().valid(['passport', 'id']).required(),// Drop Down
         IDNumber: Joi.string().min(8).required(),
         dateOfBirth: Joi.date().required(),
         address: Joi.string().required(),
         phoneNumber: Joi.string().length(11),
         faxNumber: Joi.string(),
-        email: Joi.alphanumeric(),
+        email: Joi.string().email().required(),
         capital: Joi.number().required(),
         capitalCurrency: Joi.string().required() // Drop Down
         
@@ -63,5 +66,16 @@ router.post('/', (req, res) => {
     return res.json({ data: newInvestor });
 
 });
+
+// Deleting Existing Investor
+
+router.delete("/delete/:id", (req, res) => {
+    const id = req.params.id;
+    const investor = investors.find(investor => investor.id === id);
+    const index = investors.indexOf(investor);
+    if(index<0) return res.status(400).send({ err: 'None of the existing investors has that ID, please check and try again' });
+    investors.splice(index,1);
+    res.send(investors);
+  });
 
 module.exports = router;

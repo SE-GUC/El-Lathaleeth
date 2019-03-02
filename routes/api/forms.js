@@ -1,16 +1,16 @@
-const express = require("express");
-const Joi = require("joi");
+const express = require('express');
+const Joi = require('joi');
 const router = express.Router();
-const uuid = require("uuid");
+const uuid = require('uuid');
 
-const Form = require("../../models/Form");
-const Director = require("../../models/BoardOfDirector");
-const Address = require("../../models/Address");
+const Form = require('../../models/Form');
+const Director = require('../../models/BoardOfDirector');
+const Address = require('../../models/Address');
 
 const validator = require('../../validations/formValidations')
 
 const forms = [
-    new Form(0, "Laws drop down menu",
+    new Form(0,"Laws drop down menu",
         "Legal form of company drop down",
         "SSC",
         "لينا للانتاج",
@@ -23,6 +23,7 @@ const forms = [
         500000,
         [new Director("Mohamed", "individual", "male", "Egypt", "passport", "A2938920", new Date("1970-03-25"), "address", "manager"),
         new Director("Ali", "individual", "male", "Egypt", "passport", "A2938920", new Date("1970-03-25"), "address", "manager2")]),
+
     new Form(1, "Laws drop down menu",
         "Legal form of company drop down",
         "SPC",
@@ -39,11 +40,13 @@ const forms = [
 
 router.get('/', (req, res) => res.json({ data: forms }));
 
-router.delete('/delete', (req, res) => {
+
+router.delete('/delete/:id', (req, res) => 
+{
     const id = req.params.id
     const form = forms.find(form => form.id === id)
     const index = forms.indexOf(form)
-    forms.splice(index)
+    forms.splice(index,1)
     res.send(forms)
 
 })
@@ -62,6 +65,7 @@ router.post('/post', async (req, res) => {
     const capitalVal = req.body.capitalVal
     const law = req.body.law
     const legalForm = req.body.legalForm
+
     const bitIL = req.body.bitIL 
     try {
        const isValidated = validator.createValidation(req.body,formType)
@@ -181,6 +185,7 @@ router.post("/update", (req, res) => {
     updatedForm["bitIL"] = bitIL
     console.log("3");
     return res.json({ data: updatedEmp });
+
 });
 
-module.exports = router;
+module.exports = router
