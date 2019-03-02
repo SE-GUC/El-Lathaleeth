@@ -2,6 +2,8 @@ const express = require("express");
 const entity_emp = require("./routes/api/entity_emp");
 const forms = require("./routes/api/forms");
 const investor = require("./routes/api/investor");
+const external_entity = require("./routes/api/external_entity");
+
 
 const app = express();
 app.use(express.json());
@@ -17,6 +19,8 @@ app.get("/", (req, res) => {
 app.use("/api/entity_emp", entity_emp);
 app.use("/api/forms", forms);
 app.use("/api/investor", investor);
+app.use("/api/external_entity", external_entity);
+
 
 // Handling 404
 app.use((req, res) => {
