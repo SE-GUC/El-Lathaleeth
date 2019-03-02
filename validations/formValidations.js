@@ -17,7 +17,24 @@ module.exports = {
                fax : Joi.string(),
                capitalCurr : Joi.string().required(),//drop down menu
                capitalVal : Joi.number().positive().required(), //if foreign Joi.number().positive().max(100000).required()
-               investor: Joi.string(), //validate all investor stuff at investor wait till he is made
+               investor:{//NADINE SCHEMA HERE WAIT VALIDATION FOR CLEANER
+                firstName: Joi.string().min(3).required(),
+                middleName: Joi.string().min(3),
+                lastName: Joi.string().min(3).required(),
+                gender: Joi.any().valid(['male', 'female']).required(), // Drop Down
+                nationality: Joi.string().required(), // Drop Down
+                investorType: Joi.any().valid(['individual', 'company']), // Drop Down
+                typeOfID: Joi.any().valid(['passport', 'id']).required(),// Drop Down
+                IDNumber: Joi.string().min(8).required(),
+                dateOfBirth: Joi.date().required(),
+                address: Joi.string().required(),
+                phoneNumber: Joi.string().length(11),
+                faxNumber: Joi.string(),
+                email: Joi.string().email().required(),
+                capital: Joi.number().required(),
+                capitalCurrency: Joi.string().required() // Drop Down
+                
+               }, //validate all investor stuff at investor wait till he is made
                bitIL: Joi.number(),
                formType: Joi.any().valid(['SPC', 'SSC']).required(),//drop down menu
            }
@@ -48,7 +65,24 @@ module.exports = {
                fax:Joi.string(),
                capitalCurr: Joi.string().required(),//drop down menu
                capitalVal: Joi.number().min(50000).max(999999999999).required(),
-               investor: Joi.string(), //validate all investor stuff at investor wait till he is made
+               investor:{//NADINE SCHEMA HERE WAIT VALIDATION FOR CLEANER
+                firstName: Joi.string().min(3).required(),
+                middleName: Joi.string().min(3),
+                lastName: Joi.string().min(3).required(),
+                gender: Joi.any().valid(['male', 'female']).required(), // Drop Down
+                nationality: Joi.string().required(), // Drop Down
+                investorType: Joi.any().valid(['individual', 'company']).required(), // Drop Down
+                typeOfID: Joi.any().valid(['passport', 'id']).required(),// Drop Down
+                IDNumber: Joi.string().min(8).required(),
+                dateOfBirth: Joi.date().required(),
+                address: Joi.string().required(),
+                phoneNumber: Joi.string().length(11),
+                faxNumber: Joi.string(),
+                email: Joi.string().email().required(),
+                capital: Joi.number().required(),
+                capitalCurrency: Joi.string().required() // Drop Down
+                
+               }, //validate all investor stuff at investor wait till he is made
                bitIL: Joi.number(),
                formType: Joi.any().valid(['SPC', 'SSC']).required(),//drop down menu maybe same as up
                boardOfDirectors: Joi.array().min(1).items(Joi.object(direcSchema).required())
