@@ -3,6 +3,7 @@ const Joi = require('joi');
 module.exports = {
 	createValidation: (request, formType) => {
 		const SPCschema = {
+			boardOfDirectors:Joi.optional(),
 			law: Joi.string().required(), //drop down menu
 			legalForm: Joi.string().required(), //drop down menu
 			arabicName: Joi.string().required(), //make sure in next sprint that name of comapny is unique
