@@ -42,7 +42,7 @@ router.post("/create", (req, res) => {
       .status(400)
       .send({ error: isValidated.error.details[0].message });
 
-  const newInvestor = {
+  const newInvestor = new Investor(
     firstName,
     middleName,
     lastName,
@@ -59,9 +59,9 @@ router.post("/create", (req, res) => {
     email,
     capital,
     capitalCurrency
-  };
+  );
 
-  investors.push(new Investor(newInvestor));
+  investors.push(newInvestor);
   return res.json({ data: newInvestor });
 });
 
