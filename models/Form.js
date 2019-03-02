@@ -1,8 +1,9 @@
 const uuid = require('uuid');
+const Address = require("../models/Address");
 class Form{
-    constructor(bitIL,law,legalForm,formType,arabicName,englishName,location,phone,fax,investor,capitalCurr,capitalVal,boardOfDirectors){
+    constructor(bitIL,law,legalForm,formType,arabicName,englishName,address,city,town,phone,fax,investor,capitalCurr,capitalVal,boardOfDirectors){
         this.formType = formType
-        this.location = location //location contain town,city,address
+        this.location = new Address(address,town,city) //location contain town,city,address
         this.arabicName = arabicName
         this.englishName = englishName
         this.phone = phone
