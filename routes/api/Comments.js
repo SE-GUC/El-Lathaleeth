@@ -3,8 +3,6 @@ const router = express.Router()
 const Joi = require("joi")
 
 const Comment = require("../../models/Comment")
-const Reviewer = require("../../models/Reviewer");
-const Lawyer = require("../../models/Lawyer");
 
 router.post("/", (req, res) => {
     const author_type = req.body.author_type
@@ -25,8 +23,8 @@ router.put ("/", async (req, res) => {
         author: Joi.string().required(),
         text: Joi.string().required(),
         postedOn: Joi.required(),
-        read: Joi.required()
-})
+        read: Joi.required(),
+)
 const result = Joi.validate(req.body, schema);
 
   if (result.error)
