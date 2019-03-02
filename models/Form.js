@@ -1,6 +1,5 @@
 const uuid = require('uuid');
 
-
 class Form{
     constructor(bitIL,law,legalForm,formType,arabicName,englishName,location,phone,fax,investor,capitalCurr,capitalVal,boardOfDirectors){
         this.formType = formType
