@@ -97,10 +97,11 @@ router.post('/post', async (req, res) => {
 
 
 //Updating a form
-router.put("/update/:id", (req, res) => {
+router.put('/update/:id', (req, res) => {
 
     const id = req.params.id
-    const location = new Adress(req.body.location) //location contain town,city,address
+    const formType = req.body.formType
+    const location = new Address(req.body.location) //location contain town,city,address
     const arabicName = req.body.arabicName
     const englishName = req.body.englishName
     const phone = req.body.phone
@@ -113,15 +114,14 @@ router.put("/update/:id", (req, res) => {
     const legalForm = req.body.legalForm
     const bitIL = req.body.bitIL
     
-    const result = Joi.validate(req.body, schema)
 
     try {
-        const isValidated = validator.updateValidation(req.body,formType)
+        const isValidated = validator.updateValidation(req.body, formType)
         if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
 
         const updatedForm = form.find(function(form){
-        
-        
+        return user["id"] === id})
+
         updatedForm["location"] = location
         updatedForm["aracicName"] = arabicName
         updatedForm["englishName"] = englishName
@@ -134,9 +134,9 @@ router.put("/update/:id", (req, res) => {
         updatedForm["law"] = law
         updatedForm["legalForm"] = legalForm
         updatedForm["bitIL"] = bitIL
-        return res.json({ data: updatedEmp })})
-        
+        return res.json({ data: updatedEmp })
     }
+        
     
     catch(error) {
         // We will be handling the error later

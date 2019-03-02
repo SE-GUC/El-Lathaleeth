@@ -81,6 +81,8 @@ module.exports = {
             capitalVal : Joi.number().positive().required(), //if foreign Joi.number().positive().max(100000).required()
             investor: Joi.string(), //validate all investor stuff at investor wait till he is made
             bitIL: Joi.number(),
+            formType: Joi.any().valid(['SPC', 'SSC'])//drop down menu
+
         }
 
         const direcSchema = {
@@ -111,7 +113,9 @@ module.exports = {
             capitalVal: Joi.number().min(50000).max(999999999999),
             investor: Joi.string(), //validate all investor stuff at investor wait till he is made
             bitIL: Joi.number(),
-            boardOfDirectors: Joi.array().min(1).items(Joi.object(direcSchema))
+            boardOfDirectors: Joi.array().min(1).items(Joi.object(direcSchema)),
+            formType: Joi.any().valid(['SPC', 'SSC'])//drop down menu
+
         }
 
      if(formType === "SPC"){
