@@ -5,7 +5,7 @@ const Joi = require("joi");
 const Entity_Emp = require("../../models/Entity_Emp");
 const Reviewer = require("../../models/Reviewer");
 const Lawyer = require("../../models/Lawyer");
-const validator = require('../../validations/entity_empValidations');
+const validator = require("../../validations/entity_empValidations");
 const Form = require("../../models/Form");
 const Admin = require("../../models/Admin");
 
@@ -43,19 +43,19 @@ router.post("/", (req, res) => {
   const middleName = req.body.middleName;
   const lastName = req.body.lastName;
   const username = req.body.username;
-  console.log(username)
-  const email=req.body.email;
+  console.log(username);
+  const email = req.body.email;
   const password = req.body.password;
   const emp_type = req.body.emp_type;
   const emp_details = req.body.emp_details;
   const joined_on = req.body.joined_on;
   const dateOfBirth = req.body.dateOfBirth;
-  const isValidated = validator.createValidation(req.body)
-
-
+  const isValidated = validator.createValidation(req.body);
 
   if (isValidated.error)
-    return res.status(400).send({ error: isValidated.error.details[0].message });
+    return res
+      .status(400)
+      .send({ error: isValidated.error.details[0].message });
 
   const newEmp = new Entity_Emp(
     username,
@@ -67,12 +67,12 @@ router.post("/", (req, res) => {
     dateOfBirth,
     emp_type,
     emp_details,
-    joined_on)
-  ;
+    joined_on
+  );
   emp.push(newEmp);
   return res.json({ data: newEmp });
 });
-router.put('/update/:id',  (req, res) => {
+router.put("/update/:id", (req, res) => {
   console.log("0");
   const id = req.params.id;
   const firstName = req.body.firstName;
@@ -85,14 +85,14 @@ router.put('/update/:id',  (req, res) => {
   const dateOfBirth = req.body.dateOfBirth;
   const joined_on = req.body.joined_on;
   const emp_details = req.body.emp_details;
-  const isValidated = validator.createValidation(req.body)
+  const isValidated = validator.createValidation(req.body);
 
-  
-console.log(id)
-
+  console.log(id);
 
   if (isValidated.error)
-    return res.status(400).send({ error: isValidated.error.details[0].message });
+    return res
+      .status(400)
+      .send({ error: isValidated.error.details[0].message });
   const updatedEmp = emp.find(function(user) {
     console.log("1");
     return user["id"] === id;
@@ -112,12 +112,13 @@ console.log(id)
 });
 
 router.delete("/delete/:id", (req, res) => {
-  console.log(9)
+  console.log(9);
   const id = req.params.id;
   const employee = emp.find(emp => emp.id === id);
   const index = emp.indexOf(employee);
-  if(index>=0){
-  emp.splice(index,1);}
+  if (index >= 0) {
+    emp.splice(index, 1);
+  }
   res.send(emp);
 });
 module.exports = router;
