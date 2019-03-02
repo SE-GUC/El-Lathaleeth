@@ -115,7 +115,10 @@ router.delete("/delete/:id", (req, res) => {
 router.post("/post", async (req, res) => {
   //const { } = req.body;
   const formType = req.body.formType;
-  const location = new Address(req.body.location);
+  const location =req.body.location;
+  const address=location["address"]
+  const city=location["city"]
+  const town=location["town"]
   const arabicName = req.body.arabicName;
   const englishName = req.body.englishName;
   const phone = req.body.phone;
@@ -126,7 +129,7 @@ router.post("/post", async (req, res) => {
   const capitalVal = req.body.capitalVal;
   const law = req.body.law;
   const legalForm = req.body.legalForm;
-
+    console.log(location["address"])
   const bitIL = req.body.bitIL;
   try {
     const isValidated = validator.createValidation(req.body, formType);
@@ -134,23 +137,25 @@ router.post("/post", async (req, res) => {
       return res
         .status(400)
         .send({ error: isValidated.error.details[0].message });
-    const newForm = await {
-      law,
-      legalForm,
-      formType,
-      arabicName,
-      englishName,
-      location,
-      phone,
-      fax,
-      investor,
-      capitalCurr,
-      capitalVal,
-      bitIL,
-      boardOfDirectors,
-      id: uuid.v4()
-    };
-    forms.push(new Form(newForm));
+    const newForm = new Form (
+        bitIL,
+        law,
+        legalForm,
+        formType,
+        arabicName,
+        englishName,
+        address,
+        town,
+        city,
+        phone,
+        fax,
+        investor,
+        capitalCurr,
+        capitalVal,
+        boardOfDirectors
+     
+    );
+    forms.push(newForm);
     res.json({ msg: "Form was created successfully", data: newForm });
   } catch (error) {
     // We will be handling the error later
@@ -162,7 +167,7 @@ router.post("/post", async (req, res) => {
 router.put("/update/:id", (req, res) => {
   const id = req.params.id;
   const formType = req.body.formType;
-  const location = new Address(req.body.location); //location contain town,city,address
+  const location = req.body.location; //location contain town,city,address
   const arabicName = req.body.arabicName;
   const englishName = req.body.englishName;
   const phone = req.body.phone;
@@ -174,27 +179,35 @@ router.put("/update/:id", (req, res) => {
   const law = req.body.law;
   const legalForm = req.body.legalForm;
   const bitIL = req.body.bitIL;
+  try {
+    const isValidated = validator.createValidation(req.body, formType);
+    if (isValidated.error)
+      return res
+        .status(400)
+        .send({ error: isValidated.error.details[0].message });
 
-  console.log(id);
-
-  const updatedForm = forms.find(function(form) {
-    console.log("1");
-    return form["id"] === id;
-  });
-  updatedForm["location"] = location;
-  updatedForm["arabicName"] = arabicName;
-  updatedForm["englishName"] = englishName;
-  updatedForm["phone"] = phone;
-  updatedForm["fax"] = fax;
-  updatedForm["investor"] = investor;
-  updatedForm["boardOfDirectors"] = boardOfDirectors;
-  updatedForm["capitalCurr"] = capitalCurr;
-  updatedForm["capitalVal"] = capitalVal;
-  updatedForm["law"] = law;
-  updatedForm["legalForm"] = legalForm;
-  updatedForm["bitIL"] = bitIL;
-  console.log("Form has been updated");
-  return res.json({ data: updatedForm });
+    const updatedForm = forms.find(function(form) {
+      console.log("1");
+      return form["id"] === id;
+    });
+    updatedForm["location"] = location;
+    updatedForm["arabicName"] = arabicName;
+    updatedForm["englishName"] = englishName;
+    updatedForm["phone"] = phone;
+    updatedForm["fax"] = fax;
+    updatedForm["investor"] = investor;
+    updatedForm["boardOfDirectors"] = boardOfDirectors;
+    updatedForm["capitalCurr"] = capitalCurr;
+    updatedForm["capitalVal"] = capitalVal;
+    updatedForm["law"] = law;
+    updatedForm["legalForm"] = legalForm;
+    updatedForm["bitIL"] = bitIL;
+    console.log("Form has been updated");
+    return res.json({ data: updatedForm });
+  } catch (error) {
+    // We will be handling the error later
+    console.log(error);
+  }
 });
 
 module.exports = router;
