@@ -113,68 +113,14 @@ router.put('/update/:id', (req, res) => {
     const law = req.body.law
     const legalForm = req.body.legalForm
     const bitIL = req.body.bitIL
-    const SPCschema = {
-        law: Joi.string(),//drop down menu
-        legalForm: Joi.string(),//drop down menu
-        arabicName: Joi.string(), //make sure in next sprint that name of comapny is unique 
-        englishName: Joi.string(),
-        location: {
-            address : Joi.string(),
-            city : Joi.string(),
-            town : Joi.string()
-         },
-        phone : Joi.string().length(11),
-        fax : Joi.string(),
-        capitalCurr : Joi.string(),//drop down menu
-        capitalVal : Joi.number().positive(), //if foreign Joi.number().positive().max(100000).required()
-        investor: Joi.string(), //validate all investor stuff at investor wait till he is made
-        bitIL: Joi.binary(),
-        formType: Joi.any().valid(['SPC', 'SSC'])//drop down menu
-
-    }
-
-    const direcSchema = {
-                            address: Joi.string(),
-                            birthdate: Joi.date(), // automatically put according to id, must be greater than 21 years
-                            gender: Joi.any().valid(['male', 'female']),//drop down menu
-                            idNum: Joi.string(), //frontend validation on length
-                            name: Joi.string(),
-                            nationality: Joi.string(),//drop down menu, manager must be egypt if investor foreign
-                            position: Joi.string(),//drop down menu
-                            typeID: Joi.any().valid(['passport', 'id']),//drop down menu must be id if investor egypt
-                            typeInves:Joi.any().valid(['individual', 'company']),//drop down menu
-    }
-
-    const SSCschema = {
-        law: Joi.string(),//drop down menu
-        legalForm: Joi.string(),//drop down menu
-        arabicName: Joi.string(), //make sure in next sprint that name of comapny is unique 
-        englishName: Joi.string(),
-        location: { 
-            address:Joi.string(),
-            city: Joi.string(),
-            town:Joi.string()
-         },
-        phone: Joi.string().length(11),
-        fax:Joi.string(),
-        capitalCurr: Joi.string(),//drop down menu
-        capitalVal: Joi.number().min(50000).max(999999999999),
-        investor: Joi.string(), //validate all investor stuff at investor wait till he is made
-        bitIL: Joi.number(),
-        boardOfDirectors: Joi.array().min(1).items(Joi.object(direcSchema)),
-        formType: Joi.any().valid(['SPC', 'SSC'])//drop down menu
-
-    }
 
     console.log(id)
-    if(formType === "SPC"){
-        const result  = Joi.validate(request, SPCschema)
-        if (result.error)
-    return res.status(400).send({ error: result.error.details[0].message });
 
-    const updatedForm = form.find(function(form){
-        return user["id"] === id})
-
+    const updatedForm = forms.find(function(form){
+        console.log("1")
+        return form["id"] === id
+    })
+    
         updatedForm["location"] = location
         updatedForm["aracicName"] = arabicName
         updatedForm["englishName"] = englishName
@@ -189,32 +135,6 @@ router.put('/update/:id', (req, res) => {
         updatedForm["bitIL"] = bitIL
         console.log("Form has been updated")
         return res.json({ data: updatedForm })
-    }
-    else if (formType === "SSC"){
-        const result =  Joi.validate(request, SSCschema)
-        if (result.error)
-    return res.status(400).send({ error: result.error.details[0].message });
-
-    const updatedForm = form.find(function(form){
-        return user["id"] === id})
-
-        updatedForm["location"] = location
-        updatedForm["aracicName"] = arabicName
-        updatedForm["englishName"] = englishName
-        updatedForm["phone"] = phone
-        updatedForm["fax"] = fax
-        updatedForm["investor"] = investor
-        updatedForm["boardOfDirectors"] = boardOfDirectors
-        updatedForm["capitalCurr"] = capitalCurr
-        updatedForm["capitalVal"] = capitalVal
-        updatedForm["law"] = law
-        updatedForm["legalForm"] = legalForm
-        updatedForm["bitIL"] = bitIL
-        console.log("form has been updated")
-        return res.json({ data: updatedForm })
-    }
-    
-    
 })
-
+   
 module.exports = router
