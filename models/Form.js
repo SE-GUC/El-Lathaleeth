@@ -9,9 +9,7 @@ class Form {
 		formType,
 		arabicName,
 		englishName,
-		address,
-		city,
-		town,
+		location,
 		phone,
 		fax,
 		investor,
@@ -20,7 +18,7 @@ class Form {
 		boardOfDirectors
 	) {
 		this.formType = formType;
-		this.location = new Address(address, town, city); //location contain town,city,address
+		this.location = new Address(location['address'], location['town'], location['city']); //location contain town,city,address
 		this.arabicName = arabicName;
 		this.englishName = englishName;
 		this.phone = phone;

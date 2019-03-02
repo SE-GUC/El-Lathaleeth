@@ -150,7 +150,7 @@ router.post("/post", async (req, res) => {
       boardOfDirectors,
       id: uuid.v4()
     };
-    forms.push(new Form(newForm));
+    forms.push(newForm);
     res.json({ msg: "Form was created successfully", data: newForm });
   } catch (error) {
     // We will be handling the error later
@@ -174,27 +174,35 @@ router.put("/update/:id", (req, res) => {
   const law = req.body.law;
   const legalForm = req.body.legalForm;
   const bitIL = req.body.bitIL;
+  try {
+    const isValidated = validator.createValidation(req.body, formType);
+    if (isValidated.error)
+      return res
+        .status(400)
+        .send({ error: isValidated.error.details[0].message });
 
-  console.log(id);
-
-  const updatedForm = forms.find(function(form) {
-    console.log("1");
-    return form["id"] === id;
-  });
-  updatedForm["location"] = location;
-  updatedForm["arabicName"] = arabicName;
-  updatedForm["englishName"] = englishName;
-  updatedForm["phone"] = phone;
-  updatedForm["fax"] = fax;
-  updatedForm["investor"] = investor;
-  updatedForm["boardOfDirectors"] = boardOfDirectors;
-  updatedForm["capitalCurr"] = capitalCurr;
-  updatedForm["capitalVal"] = capitalVal;
-  updatedForm["law"] = law;
-  updatedForm["legalForm"] = legalForm;
-  updatedForm["bitIL"] = bitIL;
-  console.log("Form has been updated");
-  return res.json({ data: updatedForm });
+    const updatedForm = forms.find(function(form) {
+      console.log("1");
+      return form["id"] === id;
+    });
+    updatedForm["location"] = location;
+    updatedForm["arabicName"] = arabicName;
+    updatedForm["englishName"] = englishName;
+    updatedForm["phone"] = phone;
+    updatedForm["fax"] = fax;
+    updatedForm["investor"] = investor;
+    updatedForm["boardOfDirectors"] = boardOfDirectors;
+    updatedForm["capitalCurr"] = capitalCurr;
+    updatedForm["capitalVal"] = capitalVal;
+    updatedForm["law"] = law;
+    updatedForm["legalForm"] = legalForm;
+    updatedForm["bitIL"] = bitIL;
+    console.log("Form has been updated");
+    return res.json({ data: updatedForm });
+  } catch (error) {
+    // We will be handling the error later
+    console.log(error);
+  }
 });
 
 module.exports = router;
