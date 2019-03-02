@@ -38,18 +38,18 @@ router.post("/", (req, res) => {
   const email = req.body.email;
   const isValidated = validator.createValidation(req.body);
 
-  const newExternal_entity = {
+  const newExternal_entity = new external_entity(
     name,
     address,
     telephone,
     fax,
     email
-  };
+  );
   if (isValidated.error)
     return res
       .status(400)
       .send({ error: isValidated.error.details[0].message });
-  entities.push(new external_entity(newExternal_entity));
+  entities.push(newExternal_entity);
   return res.json({ data: newExternal_entity });
 });
 
@@ -63,13 +63,13 @@ router.put("/update/:id", (req, res) => {
     const email = req.body.email;
     const isValidated = validator.createValidation(req.body);
 
-    const newExternal_entity = {
+    const newExternal_entity = new external_entity(
       name,
       address,
       telephone,
       fax,
       email
-    };
+    );
     if (isValidated.error)
       return res
         .status(400)
@@ -77,7 +77,7 @@ router.put("/update/:id", (req, res) => {
     const entity = entities.find(entity => entity.id === id);
     const index = entities.indexOf(entity);
     if (index >= 0) {
-      entities.splice(index, 1, new external_entity(newExternal_entity));
+      entities.splice(index, 1, newExternal_entity);
     }
     res.send(entities);
   } catch (error) {
