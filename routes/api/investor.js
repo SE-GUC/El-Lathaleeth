@@ -78,4 +78,79 @@ router.delete("/delete/:id", (req, res) => {
     res.send(investors);
   });
 
+// Updating an exisiting Investor 
+
+router.put('/update/:id',  (req, res) => {
+
+   // console.log("0");
+
+    const id = req.params.id;
+    const firstName = req.body.firstName;
+    const middleName = req.body.middleName;
+    const lastName = req.body.lastName;
+    const gender = req.body.gender;
+    const nationality= req.body.nationality;
+    const investorType= req.body.investorType;  
+    const typeOfID= req.body.typeOfID;
+    const IDNumber= req.body.IDNumber;
+    const dateOfBirth= req.body.dateOfBirth;
+    const address= req.body.address;
+    const phoneNumber= req.body.phoneNumber;
+    const faxNumber= req.body.faxNumber;
+    const email= req.body.email;
+    const capital= req.body.capital;
+    const capitalCurrency= req.body.capitalCurrency;
+
+    const schema = {
+        firstName: Joi.string().min(3).required(),
+        middleName: Joi.string().min(3),
+        lastName: Joi.string().min(3).required(),
+        gender: Joi.any().valid(['male', 'female']).required(), // Drop Down
+        nationality: Joi.string().required(), // Drop Down
+        investorType: Joi.any().valid(['individual', 'company']).required(), // Drop Down
+        typeOfID: Joi.any().valid(['passport', 'id']).required(),// Drop Down
+        IDNumber: Joi.string().min(8).required(),
+        dateOfBirth: Joi.date().required(),
+        address: Joi.string().required(),
+        phoneNumber: Joi.string().length(11),
+        faxNumber: Joi.string(),
+        email: Joi.string().email().required(),
+        capital: Joi.number().required(),
+        capitalCurrency: Joi.string().required() // Drop Down
+        
+      };
+
+   // console.log(id);
+
+    const result = Joi.validate(req.body, schema);
+
+    if (result.error)
+        return res.status(400).send({ error: result.error.details[0].message });
+  
+    const updatedInv = investors.find(function(user) {
+       // console.log("1");
+        return user["id"] === id;
+    });
+
+    updatedInv["firstName"] = firstName;
+    updatedInv["middleName"] = middleName;
+    updatedInv["lastName"] = lastName;
+    updatedInv["gender"] = gender;
+    updatedInv["nationality"] = nationality;
+    updatedInv["investorType"] = investorType;
+    updatedInv["typeOfID"] = typeOfID;
+    updatedInv["IDNumber"] = IDNumber;
+    updatedInv["dateOfBirth"] = dateOfBirth;
+    updatedInv["address"] = address;
+    updatedInv["phoneNumber"] = phoneNumber;
+    updatedInv["faxNumber"] = faxNumber;
+    updatedInv["email"] = email;
+    updatedInv["capital"] = capital;
+    updatedInv["capitalCurrency"] = capitalCurrency;
+  
+   // console.log("3");
+    return res.json({ data: updatedInv });
+
+});
+
 module.exports = router;
