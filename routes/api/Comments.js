@@ -35,14 +35,14 @@ router.put ("/", async (req, res) => {
     const authorType = req.body.authorType;
     const author = req.body.author;
     const text = req.body.text;
-    const postedOn = req.body.postedOn;
+    //const postedOn = req.body.postedOn;
     const read = req.body.read;
     const schema = {
         id: Joi.required(),
         authorType: Joi.string().required(),
         author: Joi.string().required(),
         text: Joi.string().required(),
-        postedOn: Joi.required(),
+        //postedOn: Joi.required(),
         read: Joi.required()
 }
 
@@ -52,11 +52,10 @@ if (result.error)
 return res.status(400).send({ error: result.error.details[0].message });
 
 const newComment = {
-    id: uuid.v4(),
     authorType,
     author,
     text,
-    postedOn,
+    //postedOn,
     read
 };
 comment.push(new Entity_Emp(newComment));
