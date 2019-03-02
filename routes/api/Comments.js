@@ -3,6 +3,26 @@ const router = express.Router()
 const Joi = require("joi")
 
 const Comment = require("../../models/Comment")
+const Reviewer = require("../../models/Reviewer");
+const Lawyer = require("../../models/Lawyer");
+
+const comment = [
+    new Comment(
+        "Reviewer",
+        "ay 7aga",
+        "comment text",
+        "2019-1-1",
+        "read"
+    ),
+    new Comment(
+        "Lawyer",
+        "ay 7aga2",
+        "comment text2",
+        "2019-3-15",
+        "not read"
+    )
+  ];
+
 
 router.post("/", (req, res) => {
     const author_type = req.body.author_type
@@ -23,13 +43,27 @@ router.put ("/", async (req, res) => {
         author: Joi.string().required(),
         text: Joi.string().required(),
         postedOn: Joi.required(),
-        read: Joi.required(),
-)
+        read: Joi.required()
+}
+
 const result = Joi.validate(req.body, schema);
 
-  if (result.error)
-    return res.status(400).send({ error: result.error.details[0].message });
+if (result.error)
+return res.status(400).send({ error: result.error.details[0].message });
 
+const newComment = {
+    id: uuid.v4(),
+    authorType,
+    author,
+    text,
+    postedOn,
+    read
+};
+comment.push(new Entity_Emp(newComment));
+return res.json({ data: newComment });
+});
+
+router.get('/', (req, res) => res.json({ data: comments }))
 router.delete("/", (req, res) => {
     const id = req.params.id;
     const commentdel = Comments.find(commentdel => commentdel.id === id);
