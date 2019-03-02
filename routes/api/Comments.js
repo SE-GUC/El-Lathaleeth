@@ -3,6 +3,7 @@ const router = express.Router();
 const Joi = require("joi");
 
 const Comment = require("../../models/Comment");
+const validator = require("../../validations/commentValidation");
 
 const comments = [
   new Comment("Reviewer", "ay 7aga", "comment text", "2019-1-1", "read"),
@@ -10,23 +11,18 @@ const comments = [
 ];
 
 router.post("/", async (req, res) => {
-  const authorType = req.body.authorType;
+  const author_type = req.body.author_type;
   const author = req.body.author;
   const text = req.body.text;
   const read_at = req.body.read_at;
-  const schema = {
-    authorType: Joi.string().required(),
-    author: Joi.string().required(),
-    text: Joi.string().required(),
-    read_at: Joi.optional()
-  };
 
-  const result = Joi.validate(req.body, schema);
+  const isValidated = validator.createValidation(req.body);
+  if (isValidated.error)
+    return res
+      .status(400)
+      .send({ error: isValidated.error.details[0].message });
 
-  if (result.error)
-    return res.status(400).send({ error: result.error.details[0].message });
-
-  const newComment = new Comment(authorType, author, text, read_at);
+  const newComment = new Comment(author_type, author, text, read_at);
   comments.push(newComment);
   return res.json({ data: newComment });
 });
@@ -45,28 +41,22 @@ router.delete("/delete/:id", (req, res) => {
 
 router.put("/update/:id", async (req, res) => {
   const id = req.params.id;
-  const authorType = req.body.authorType;
+  const author_type = req.body.author_type;
   const author = req.body.author;
   const text = req.body.text;
   const read_at = req.body.read_at;
-  const schema = {
-    authorType: Joi.string().required(),
-    author: Joi.string().required(),
-    text: Joi.string().required(),
-    read_at: Joi.optional()
-  };
 
-  const result = Joi.validate(req.body, schema);
-
-  if (result.error)
-    return res.status(400).send({ error: result.error.details[0].message });
-
-  const newComment = new Comment(authorType, author, text, read_at);
+  const isValidated = validator.createValidation(req.body);
+  if (isValidated.error)
+    return res
+      .status(400)
+      .send({ error: isValidated.error.details[0].message });
   const com = comments.find(com => com.id === id);
-  const index = comments.indexOf(com);
-  if (index >= 0) {
-    comments.splice(index, 1, newComment);
-  }
+  com["author_type"] = author_type;
+  com["author"] = author;
+  com["text"] = text;
+  com["read_at"] = read_at;
+
   res.send(comments);
   return res.json({ data: comments });
 });
