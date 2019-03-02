@@ -2,7 +2,7 @@ const Joi = require('joi')
 
 module.exports = {
     
-    createValidation: (request,formType,investor) => {
+    createValidation: (request,formType) => {
             const SPCschema = {
                law: Joi.string().required(),//drop down menu
                legalForm: Joi.string().required(),//drop down menu
