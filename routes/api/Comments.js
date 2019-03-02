@@ -6,7 +6,7 @@ const Comment = require("../../models/Comment")
 const Reviewer = require("../../models/Reviewer");
 const Lawyer = require("../../models/Lawyer");
 
-const comment = [
+const comments = [
     new Comment(
         "Reviewer",
         "ay 7aga",
@@ -23,8 +23,8 @@ const comment = [
     )
   ];
 
-router.post("/:id", (req, res) => {
-    const id = req.params.Form.id
+router.post("/", (req, res) => {
+    const id = req.params.id;
     const author_type = req.body.author_type
     const author = req.body.author
     const text = req.body.text
@@ -35,14 +35,14 @@ router.put ("/", async (req, res) => {
     const authorType = req.body.authorType;
     const author = req.body.author;
     const text = req.body.text;
-    const postedOn = req.body.postedOn;
+    //const postedOn = req.body.postedOn;
     const read = req.body.read;
     const schema = {
         id: Joi.required(),
         authorType: Joi.string().required(),
         author: Joi.string().required(),
         text: Joi.string().required(),
-        postedOn: Joi.required(),
+        //postedOn: Joi.required(),
         read: Joi.required()
 }
 
@@ -52,14 +52,13 @@ if (result.error)
 return res.status(400).send({ error: result.error.details[0].message });
 
 const newComment = {
-    id: uuid.v4(),
     authorType,
     author,
     text,
-    postedOn,
+    //postedOn,
     read
 };
-comment.push(new Comment(newComment));
+comment.push(new Entity_Emp(newComment));
 return res.json({ data: newComment });
 });
 
@@ -67,10 +66,10 @@ router.get('/', (req, res) => res.json({ data: comments }));
 
 router.delete("/", (req, res) => {
     const id = req.params.id;
-    const commentdel = Comment.find(Comment => Comment.id === id);
-    const index = Comment.indexOf(commentdel);
-    Comment.splice(index);
-    res.send(Comment);
+    const commentdel = comment.find(Comment => Comment.id === id);
+    const index = comment.indexOf(commentdel);
+    comment.splice(index);
+    res.send(comment);
 })
 
 module.exports=router
