@@ -16,9 +16,10 @@ class Form{
         this.createdOn = new Date()
         this.lastTouch = null
         this.status = null
-        this.deadline = new Date().setMonth(this.createdOn.getMonth()+1)
+        this.deadline = "handle deadline later"
         this.id = uuid.v4()
         this.bitIL = bitIL
+        this.comments = []
     };
 
 };
