@@ -3,7 +3,7 @@ const Joi = require('joi');
 const uuid = require('uuid');
 const router = express.Router();
 
-const Investor = require('../../models/Investor').default;
+const Investor = require('../../models/Investor');
 const validator = require("../../validations/investorValidations");
 
 // Temp array to test
