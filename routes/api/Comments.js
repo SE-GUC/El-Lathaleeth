@@ -6,7 +6,7 @@ const Comment = require("../../models/Comment")
 const Reviewer = require("../../models/Reviewer");
 const Lawyer = require("../../models/Lawyer");
 
-const comment = [
+const comments = [
     new Comment(
         "Reviewer",
         "ay 7aga",
