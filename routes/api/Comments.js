@@ -66,10 +66,10 @@ router.get('/', (req, res) => res.json({ data: comments }));
 
 router.delete("/", (req, res) => {
     const id = req.params.id;
-    const commentdel = Comment.find(Comment => Comment.id === id);
-    const index = Comment.indexOf(commentdel);
-    Comment.splice(index);
-    res.send(Comment);
+    const commentdel = comment.find(Comment => Comment.id === id);
+    const index = comment.indexOf(commentdel);
+    comment.splice(index);
+    res.send(comment);
 })
 
 module.exports=router
