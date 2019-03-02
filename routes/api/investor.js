@@ -9,8 +9,8 @@ const validator = require("../../validations/investorValidations");
 // Temp array to test
 
 const investors = [
-        new Investor('Naguib', 'Ramy', 'Sawiras', 'Male // Drop Down', 'Egyptian // Drop Down', 'Individual // Drop Down', 'National ID // Drop Down', '12345678901234', '1960-02-23', '24 Magnolia St., Compound Le Reve, 6th Of October, Giza, Egypt', '01234567890', '+20-2-1234567', '4000 6000 2344 6431', 'nagiub.sawiras@mymail.com', 1000000, 'Euro // Drop Down'),
-        new Investor('Maged', 'Gamal', 'Rashad', 'Male // Drop Down', 'Jordanian // Drop Down', 'Individual // Drop Down', 'Passport // Drop Down', 'A823D09H', '1970-08-12', '324 Gadallah St., Compound Reyan, Abdoun, Amman, Jordan', '+962 79 999 9999', '+962 6 466 3322', '4000 5729 6839 6821', 'maged.rashad@mymail.com', 5000000, 'Dollar // Drop Down')
+        new Investor('Naguib', 'Ramy', 'Sawiras', 'male', 'Egyptian // Drop Down', 'individual', 'id', '12345678901234', '1960-02-23', '24 Magnolia St., Compound Le Reve, 6th Of October, Giza, Egypt', '01234567890', '+20-2-1234567', '4000 6000 2344 6431', 'nagiub.sawiras@mymail.com', 1000000, 'Euro // Drop Down'),
+        new Investor('Maged', 'Gamal', 'Rashad', 'male', 'Jordanian // Drop Down', 'individual', 'passport', 'A823D09H', '1970-08-12', '324 Gadallah St., Compound Reyan, Abdoun, Amman, Jordan', '+962 79 999 9999', '+962 6 466 3322', '4000 5729 6839 6821', 'maged.rashad@mymail.com', 5000000, 'Dollar // Drop Down')
 ];
 
 router.get('/read', (req, res) => res.json({ data: investors }));
