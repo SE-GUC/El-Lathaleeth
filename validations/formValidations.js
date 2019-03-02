@@ -21,7 +21,7 @@ module.exports = {
                 firstName: Joi.string().min(3).required(),
                 middleName: Joi.string().min(3),
                 lastName: Joi.string().min(3).required(),
-                gender: Joi.any().valid(['male', 'female']).required(), // Drop Down
+                gender: Joi.any().valid(['male', 'female']), // Drop Down
                 nationality: Joi.string().required(), // Drop Down
                 investorType: Joi.any().valid(['individual', 'company']), // Drop Down
                 typeOfID: Joi.any().valid(['passport', 'id']).required(),// Drop Down
@@ -33,7 +33,6 @@ module.exports = {
                 email: Joi.string().email().required(),
                 capital: Joi.number().required(),
                 capitalCurrency: Joi.string().required() // Drop Down
-                
                }, //validate all investor stuff at investor wait till he is made
                bitIL: Joi.number(),
                formType: Joi.any().valid(['SPC', 'SSC']).required(),//drop down menu
@@ -69,7 +68,7 @@ module.exports = {
                 firstName: Joi.string().min(3).required(),
                 middleName: Joi.string().min(3),
                 lastName: Joi.string().min(3).required(),
-                gender: Joi.any().valid(['male', 'female']).required(), // Drop Down
+                gender: Joi.any().valid(['male', 'female']), // Drop Down
                 nationality: Joi.string().required(), // Drop Down
                 investorType: Joi.any().valid(['individual', 'company']).required(), // Drop Down
                 typeOfID: Joi.any().valid(['passport', 'id']).required(),// Drop Down
