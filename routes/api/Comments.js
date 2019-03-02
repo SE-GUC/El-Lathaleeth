@@ -69,7 +69,7 @@ router.delete("/", (req, res) => {
     const id = req.params.id;
     const commentdel = comment.find(Comment => Comment.id === id);
     const index = comment.indexOf(commentdel);
-    comment.splice(index);
+    comment.splice(index,1);
     res.send(comment);
 })
 
