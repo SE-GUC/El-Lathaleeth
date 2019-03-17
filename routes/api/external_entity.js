@@ -29,7 +29,12 @@ const entities = [
 ];
 
 router.get("/", (req, res) => res.json({ data: entities }));
+router.get("/byID/:id", (req, res) => {
+  const id = req.params.id;
+  const ent = entities.find(ent => ent.id === id);
+  res.json({ data: ent })
 
+});
 router.post("/", (req, res) => {
   const name = req.body.name;
   const address = req.body.address;
