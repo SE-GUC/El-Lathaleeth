@@ -16,6 +16,12 @@ const investors = [
 
 router.get("/read", (req, res) => res.json({ data: investors }));
 
+router.get("/byID/:id", (req, res) => {
+  const id = req.params.id;
+  const inv = investors.find(inv => inv.id === id);
+  res.json({ data: inv })
+
+});
 // Creating New Investor
 
 router.post("/create", (req, res) => {

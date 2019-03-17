@@ -103,7 +103,12 @@ const forms = [
 ];
 
 router.get("/", (req, res) => res.json({ data: forms }));
+router.get("/byID/:id", (req, res) => {
+  const id = req.params.id;
+  const form = forms.find(form => form.id === id);
+  res.json({ data: form })
 
+});
 router.delete("/delete/:id", (req, res) => {
   const id = req.params.id;
   const form = forms.find(form => form.id === id);
