@@ -28,6 +28,14 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/", (req, res) => res.json({ data: comments }));
+router.get("/byID/:id", (req, res) => {
+  const id = req.params.id;
+  const com = comments.find(com => com.id === id);
+  res.json({ data: com })
+
+});
+
+
 
 router.delete("/delete/:id", (req, res) => {
   const id = req.params.id;

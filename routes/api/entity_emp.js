@@ -37,7 +37,12 @@ const emp = [
 ];
 
 router.get("/", (req, res) => res.json({ data: emp }));
+router.get("/byID/:id", (req, res) => {
+  const id = req.params.id;
+  const empl = emp.find(empl => empl.id === id);
+  res.json({ data: empl })
 
+});
 router.post("/", (req, res) => {
   const firstName = req.body.firstName;
   const middleName = req.body.middleName;
