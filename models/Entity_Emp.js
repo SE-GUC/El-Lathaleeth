@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const EmpSchema = new Schema({
   username: {
@@ -29,8 +29,8 @@ const EmpSchema = new Schema({
   },
   emp_type: {
     type: String,
-    required: true
-    , enum: ['Lawyer', 'Investor', 'Admin']
+    required: true,
+    enum: ["Lawyer", "Investor", "Admin"]
   },
   emp_details: [],
   _id: { type: Schema.ObjectId, auto: true },
@@ -38,7 +38,6 @@ const EmpSchema = new Schema({
     type: Date,
     required: true
   }
-}
-);
+});
 
-module.exports = Entity_Emp = mongoose.model('entity_emp', EmpSchema)
+module.exports = Entity_Emp = mongoose.model("entity_emp", EmpSchema);
