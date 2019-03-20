@@ -9,13 +9,9 @@ const mongoose = require("mongoose");
 
 
 const app = express();
-app.use(express.json());
-const db = require("./config/keys").mongoURI;
-app.get("/", (req, res) => {
-  res.send(`<h1>Welcome to TEST</h1>
-    <a href="/api/entity_emp">Entity_Emp</a>
-    `);
-});
+// DB Config
+const db = require('./config/keys').mongoURI
+
 // Connect to mongo
 mongoose
   .connect(db)
@@ -25,6 +21,7 @@ mongoose
 // Init middleware
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+
 // Direct routes to appropriate files
 
 app.use("/api/entity_emp", entity_emp);
