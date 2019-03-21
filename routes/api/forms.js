@@ -10,6 +10,8 @@ const Investor = require("../../models/Investor");
 
 const validator = require("../../validations/formValidations");
 
+const mongoose = require("mongoose");
+
 const forms = [
   new Form(
     0,
@@ -117,50 +119,18 @@ router.delete("/delete/:id", (req, res) => {
   res.send(forms);
 });
 
-router.post("/post", async (req, res) => {
-  //const { } = req.body;
-  const formType = req.body.formType;
-  const location =req.body.location;
-  const address=location["address"]
-  const city=location["city"]
-  const town=location["town"]
-  const arabicName = req.body.arabicName;
-  const englishName = req.body.englishName;
-  const phone = req.body.phone;
-  const fax = req.body.fax;
-  const investor = req.body.investor;
-  const boardOfDirectors = req.body.boardOfDirectors;
-  const capitalCurr = req.body.capitalCurr;
-  const capitalVal = req.body.capitalVal;
-  const law = req.body.law;
-  const legalForm = req.body.legalForm;
-    console.log(location["address"])
-  const bitIL = req.body.bitIL;
+
+
+//creating new form Mongo
+
+router.post("/create/", async (req, res) => {
   try {
-    const isValidated = validator.createValidation(req.body, formType);
+    const isValidated = validator.createValidation(req.body);
     if (isValidated.error)
       return res
         .status(400)
         .send({ error: isValidated.error.details[0].message });
-    const newForm = new Form (
-        bitIL,
-        law,
-        legalForm,
-        formType,
-        arabicName,
-        englishName,
-        address,
-        town,
-        city,
-        phone,
-        fax,
-        investor,
-        capitalCurr,
-        capitalVal,
-        boardOfDirectors
-     
-    );
-    forms.push(newForm);
+    const newForm = await forms.create(req.body);
     res.json({ msg: "Form was created successfully", data: newForm });
   } catch (error) {
     // We will be handling the error later
