@@ -11,7 +11,7 @@ router.get('/get', async (req,res) => {
 })
 
 // GET BY ID: select * from investors where id = _
-router.get("/getbyID/:id", (req, res) => {
+router.get("/getbyID/:id", async (req, res) => {
   const id = req.params.id;
   //const investor = await Investor.findById(id)
   const investor = await Investor.findOne({id})
@@ -21,7 +21,7 @@ router.get("/getbyID/:id", (req, res) => {
 })
 
 // CREATE: insert into investors
-router.post("/create", (req, res) => {
+router.post("/create", async (req, res) => {
   try {
     const isValidated = validator.createValidation(req.body)
     if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
@@ -35,7 +35,7 @@ router.post("/create", (req, res) => {
 })
 
 // DELETE: delete * from investors where id = _
-router.delete("/delete/:id", (req, res) => {
+router.delete("/delete/:id", async (req, res) => {
   try {
     const id = req.params.id
     const deletedInvestor = await Investor.findByIdAndRemove(id)
@@ -48,7 +48,7 @@ router.delete("/delete/:id", (req, res) => {
 })
 
 // UPDATE: update investors set _ = _ ...etc 
-router.put("/update/:id", (req, res) => {
+router.put("/update/:id", async (req, res) => {
   try {
     const id = req.params.id
     const investor = await Investor.findOne({id})
