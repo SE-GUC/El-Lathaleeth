@@ -1,8 +1,9 @@
-class Reviewer {
-  constructor(pending_forms, reviewed_forms) {
-    this.pending_forms = pending_forms;
-    this.reviewed_forms = reviewed_forms;
-  }
-}
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-module.exports = Reviewer;
+const RevSchema = new Schema({
+  pending_forms: [],
+  reviewed_forms: []
+});
+
+module.exports = Reviewer = mongoose.model("reviewer", RevSchema);
