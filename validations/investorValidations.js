@@ -7,10 +7,10 @@ module.exports = {
             firstName: Joi.string().min(3).required(),
             middleName: Joi.string().min(3),
             lastName: Joi.string().min(3).required(),
-            gender: Joi.any().valid(['male', 'female']).required(), // Drop Down
+            gender: Joi.any().valid(["Male", "Female"]).required(), // Drop Down
             nationality: Joi.string().required(), // Drop Down
-            investorType: Joi.any().valid(['individual', 'company']).required(), // Drop Down
-            typeOfID: Joi.any().valid(['passport', 'id']).required(),// Drop Down
+            investorType: Joi.any().valid(["Individual", "Company"]).required(), // Drop Down
+            typeOfID: Joi.any().valid(["Passport", "Id"]).required(),// Drop Down
             IDNumber: Joi.string().min(8).required(),
             dateOfBirth: Joi.date().required(),
             address: Joi.string().required(),
