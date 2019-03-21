@@ -1,10 +1,11 @@
-class Lawyer {
-  constructor(pending_forms, reviewed_forms, speciality, education) {
-    this.pending_forms = pending_forms;
-    this.reviewed_forms = reviewed_forms;
-    this.speciality = speciality;
-    this.education = education;
-  }
-}
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-module.exports = Lawyer;
+const LawSchema = new Schema({
+  pending_forms: [],
+  reviewed_forms: [],
+  speciality: { type: String, required: true },
+  education: { type: String, required: true }
+});
+
+module.exports = Lawyer = mongoose.model("lawyer", LawSchema);

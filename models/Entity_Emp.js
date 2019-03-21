@@ -1,35 +1,43 @@
-const uuidv4 = require("uuid/v4");
-class Entity_Emp {
-  constructor(
-    username,
-    password,
-    email,
-    firstName,
-    middleName,
-    lastName,
-    dateOfBirth,
-    emp_type,
-    emp_details,
-    joined_on
-  ) {
-    this.username = username;
-    this.password = password;
-    this.email = email;
-    this.id = uuidv4();
-    this.dateOfBirth = new Date(dateOfBirth);
-    // this.fullName=function() {
-    // return this.firstName + " " +this.middleName+" "+this.lastName;}
-    this.firstName = firstName;
-    this.middleName = middleName;
-    this.lastName = lastName;
-    this.emp_type = emp_type;
-    this.emp_details = emp_details;
-    this.joined_on = new Date(joined_on);
-    //     this.age=function _calculateAge(birthday) { // birthday is a date
-    //         var ageDifMs = Date.now() - dateOfBirth.getTime();
-    //         var ageDate = new Date(ageDifMs); // miliseconds from epoch
-    //         return Math.abs(ageDate.getUTCFullYear() - 1970);}
-  }
-}
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-module.exports = Entity_Emp;
+const EmpSchema = new Schema({
+  username: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true
+  },
+  dateOfBirth: {
+    type: Date,
+    required: true
+  },
+  firstName: {
+    type: String
+  },
+  middleName: {
+    type: String
+  },
+  lastName: {
+    type: String
+  },
+  emp_type: {
+    type: String,
+    required: true,
+    enum: ["Lawyer", "Investor", "Admin"]
+  },
+  emp_details: [],
+  _id: { type: Schema.ObjectId, auto: true },
+  joined_on: {
+    type: Date,
+    required: true
+  }
+});
+
+module.exports = Entity_Emp = mongoose.model("entity_emp", EmpSchema);

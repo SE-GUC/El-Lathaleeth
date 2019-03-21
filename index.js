@@ -2,21 +2,33 @@ const express = require("express");
 const entity_emp = require("./routes/api/entity_emp");
 const forms = require("./routes/api/forms");
 const investor = require("./routes/api/investor");
+const comments = require("./routes/api/comments");
+const external_entity = require("./routes/api/external_entity");
+const mongoose = require("mongoose");
+
+
 
 const app = express();
-app.use(express.json());
+// DB Config
+const db = require('./config/keys').mongoURI
 
-app.get("/", (req, res) => {
-  res.send(`<h1>Welcome to TEST</h1>
-    <a href="/api/entity_emp">Entity_Emp</a>
-    `);
-});
+// Connect to mongo
+mongoose
+  .connect(db)
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(err => console.log(err))
+
+// Init middleware
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
 
 // Direct routes to appropriate files
 
 app.use("/api/entity_emp", entity_emp);
 app.use("/api/forms", forms);
 app.use("/api/investor", investor);
+app.use("/api/comments", comments);
+app.use("/api/external_entity", external_entity);
 
 // Handling 404
 app.use((req, res) => {
