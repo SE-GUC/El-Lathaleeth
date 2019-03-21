@@ -51,14 +51,14 @@ router.put("/update/:id", async (req, res) => {
   }
 });
 
-router.delete("/delete/:id", (req, res) => {
-  console.log(9);
-  const id = req.params.id;
-  const employee = emp.find(emp => emp.id === id);
-  const index = emp.indexOf(employee);
-  if (index >= 0) {
-    emp.splice(index, 1);
-  }
-  res.send(emp);
+router.delete("/delete/:id", async (req, res) => {
+try{
+  const id = req.params.id
+  const deleteEmp =  await Entity_Emp.findByIdAndDelete(id)
+  res.json({msg: "Employee deleted successfully"})
+}
+catch(error){
+  //we will be handling the error later
+}
 });
 module.exports = router;
