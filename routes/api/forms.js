@@ -78,7 +78,7 @@ const mongoose = require("mongoose");
 //     "لينا للانتاج",
 //     "Lina Productions",
 //     "Apart2",
-     "Sheikh Zayed",
+//    "Sheikh Zayed",
 //     "Giza",
 //     "012223533443",
 //     "23344",
@@ -123,7 +123,7 @@ router.delete("/delete/:id", (req, res) => {
 
 //creating new form Mongo
 
-router.post("/create/", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const isValidated = validator.createValidation(req.body);
     if (isValidated.error)

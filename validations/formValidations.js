@@ -8,7 +8,7 @@ module.exports = {
 			legalForm: Joi.string().required(), //drop down menu
 			arabicName: Joi.string().required(), //make sure in next sprint that name of comapny is unique
 			englishName: Joi.string(),
-			location: {
+			address: {
 				address: Joi.string().required(),
 				city: Joi.string().required(),
 				town: Joi.string().required(),
