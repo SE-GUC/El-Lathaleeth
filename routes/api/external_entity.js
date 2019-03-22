@@ -2,7 +2,7 @@ const express = require("express");
 const Joi = require("joi");
 const router = express.Router();
 const mongoose = require('mongoose')
-const external_entity = require("../../models/External_Entity");
+const external_entity = require("../../models/external_entity");
 const validator = require("../../validations/external_entityValidations");
 
 router.get('/', async (req,res) => {
