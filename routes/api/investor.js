@@ -1,6 +1,7 @@
 const express = require("express")
+const Joi = require("joi")
 const router = express.Router()
-
+const mongoose = require("mongoose")
 const Investor = require('../../models/Investor')
 const validator = require("../../validations/investorValidations")
 

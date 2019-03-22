@@ -14,7 +14,6 @@ const InvestorSchema = new Schema({
       type: String,
       required: true
     },
-   // fullname: {},
     gender: {
       type: String,
       required: true,
@@ -66,7 +65,7 @@ const InvestorSchema = new Schema({
     capitalCurrency: {
       type: String,
       required: true
-    },
+    }
 });
 
 module.exports = Investor = mongoose.model("investor", InvestorSchema );
