@@ -26,15 +26,15 @@ router.post("/", async (req, res) => {
 }  
 });
 //update
-router.put("/:id", async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
-    const id = req.params.id;
-    const external_entity = await external_entity.findOne({id})
-    if(!external_entity) return res.status(404).send({error: 'external_entity does not exist'})
+    const id = req.params.id
+    const external_entity1 = await external_entity.findOne(id)
+    if(!external_entity1) return res.status(404).send({error: 'external_entity does not exist'})
     const isValidated = validator.updateValidation(req.body)
     if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-    const updated_external_entity = await external_entity.updateOne(req.body)
-    return res.json({msg: 'Book updated successfully'})
+    const updatedexternal_entity = await external_entity.updateOne(req.body)
+    res.json({ msg: "external_entity updated successfully" })
   } 
   catch (error) {
     console.log(error);
