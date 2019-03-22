@@ -78,7 +78,7 @@ const mongoose = require("mongoose");
 //     "لينا للانتاج",
 //     "Lina Productions",
 //     "Apart2",
-//    "Sheikh Zayed",
+ //    "Sheikh Zayed",
 //     "Giza",
 //     "012223533443",
 //     "23344",
@@ -121,12 +121,28 @@ router.delete("/delete/:id", (req, res) => {
 
 
 
-//creating new form Mongo
+//creating new SPC form Mongo
 
-router.post("/", async (req, res) => {
+router.post("/SPC/", async (req, res) => {
   try {
-    const isValidated = validator.createValidation(req.body);
-    if (isValidated.error)
+    const isValidated = validator.createValidation(req.body,'SPC');  
+  if (isValidated.error)
+      return res
+        .status(400)
+        .send({ error: isValidated.error.details[0].message });
+    const newForm = await Form.create(req.body);
+    res.json({ msg: "Form was created successfully", data: newForm });
+  } catch (error) {
+    // We will be handling the error later
+    console.log(error);
+  }
+});
+//creating new SSC form Mongo
+
+router.post("/SSC", async (req, res) => {
+  try {
+    const isValidated = validator.createValidation(req.body,'SSC');  
+  if (isValidated.error)
       return res
         .status(400)
         .send({ error: isValidated.error.details[0].message });
