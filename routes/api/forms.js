@@ -139,7 +139,7 @@ router.post("/SPC/", async (req, res) => {
 });
 //creating new SSC form Mongo
 
-router.post("/SSC", async (req, res) => {
+router.post("/SSC/", async (req, res) => {
   try {
     const isValidated = validator.createValidation(req.body,'SSC');  
   if (isValidated.error)
