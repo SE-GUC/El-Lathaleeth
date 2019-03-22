@@ -14,10 +14,16 @@ router.get("/", async (req, res) => {
   res.json({ data: emps });
 });
 
-router.get("/byID/:id", (req, res) => {
-  const id = req.params.id;
-  const empl = emp.find(empl => empl.id === id);
-  res.json({ data: empl });
+router.get("/byID/:id", async (req, res) => {
+  try{
+    const id = req.params.id;
+    const findEmp = await Entity_Emp.findById(id)
+    if (!emp) return res.status(404).send({error: "Employee does not exist"})
+    res.json({msg:"Employee found", data: empl });
+  }
+  catch(error){
+    // Error will be handled later
+  }
 });
 router.post("/", async (req, res) => {
   try {
@@ -51,14 +57,14 @@ router.put("/update/:id", async (req, res) => {
   }
 });
 
-router.delete("/delete/:id", (req, res) => {
-  console.log(9);
-  const id = req.params.id;
-  const employee = emp.find(emp => emp.id === id);
-  const index = emp.indexOf(employee);
-  if (index >= 0) {
-    emp.splice(index, 1);
-  }
-  res.send(emp);
+router.delete("/delete/:id", async (req, res) => {
+try{
+  const id = req.params.id
+  const deleteEmp =  await Entity_Emp.findByIdAndDelete(id)
+  res.json({msg: "Employee successfully deleted"})
+}
+catch(error){
+  //Error will be handled later
+}
 });
 module.exports = router;

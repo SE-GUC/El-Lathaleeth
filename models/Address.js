@@ -1,9 +1,21 @@
-class Address {
-	constructor(address, town, city) {
-		this.address = address;
-		this.city = city;
-		this.town = town;
-	}
-}
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-module.exports = Address;
+const AddressSchema = new Schema({
+	address: {
+		type: String,
+		required: true
+	  },
+	  city: {
+		type: String,
+		required: true
+	  },
+	  town: {
+		type: String,
+		required: true
+	  },
+
+})	
+
+
+module.exports = Address = mongoose.model("address", AddressSchema);
