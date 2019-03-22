@@ -24,9 +24,9 @@ const FormSchema = new Schema({
   englishName: {
     type: String,
   },
-	address: [{type: Schema.ObjectId, ref: 'Address'}],
+  address: [{type: Schema.ObjectId, ref: 'Address'}],
   phone:{
-    type: Number
+    type: String
   },
   fax: {
     type: String
@@ -62,8 +62,11 @@ formId: {
    type: Number
  },
  comments: {
-   type: [String]
+   type: []
+ },
+ investor: {
+   type: []
  }
 })
 
-module.exports = Form = mongoose.model("form", FormSchema);
+module.exports = Form = mongoose.model("forms", FormSchema);

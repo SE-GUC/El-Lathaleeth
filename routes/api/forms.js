@@ -12,99 +12,99 @@ const validator = require("../../validations/formValidations");
 
 const mongoose = require("mongoose");
 
-const forms = [
-  new Form(
-    0,
-    "Laws drop down menu",
-    "Legal form of company drop down",
-    "SSC",
-    "???? ???????",
-    "Lina Productions",
-    "Apart2",
-    "Sheikh Zayed",
-    "Giza",
-    "012223533443",
-    "23344",
-    new Investor(
-      "Ms",
-      "Potato",
-      "Head",
-      "female",
-      "Egypt",
-      "individual",
-      "passport",
-      "22221123",
-      new Date("1970-03-25"),
-      new Address("Apart 2", "Sheikh Zayed", "Giza"),
-      "01111111111",
-      "fax",
-      "farmer@gmail.com",
-      10000000,
-      "EGP"
-    ),
-    "Euro",
-    500000,
-    [
-      new Director(
-        "Mohamed",
-        "individual",
-        "male",
-        "Egypt",
-        "passport",
-        "A2938920",
-        new Date("1970-03-25"),
-        "address",
-        "manager"
-      ),
-      new Director(
-        "Ali",
-        "individual",
-        "male",
-        "Egypt",
-        "passport",
-        "A2938920",
-        new Date("1970-03-25"),
-        "address",
-        "manager2"
-      )
-    ]
-  ),
+// const forms = [1
+//   new Form(
+//     0,
+//     "Laws drop down menu",
+//     "Legal form of company drop down",
+//     "SSC",
+//     "???? ???????",
+//     "Lina Productions",
+//     "Apart2",
+//     "Sheikh Zayed",
+//     "Giza",
+//     "012223533443",
+//     "23344",
+//     new Investor(
+//       "Ms",
+//       "Potato",
+//       "Head",
+//       "female",
+//       "Egypt",
+//       "individual",
+//       "passport",
+//       "22221123",
+//       new Date("1970-03-25"),
+//       new Address("Apart 2", "Sheikh Zayed", "Giza"),
+//       "01111111111",
+//       "fax",
+//       "farmer@gmail.com",
+//       10000000,
+//       "EGP"
+//     ),
+//     "Euro",
+//     500000,
+//     [
+//       new Director(
+//         "Mohamed",
+//         "individual",
+//         "male",
+//         "Egypt",
+//         "passport",
+//         "A2938920",
+//         new Date("1970-03-25"),
+//         "address",
+//         "manager"
+//       ),
+//       new Director(
+//         "Ali",
+//         "individual",
+//         "male",
+//         "Egypt",
+//         "passport",
+//         "A2938920",
+//         new Date("1970-03-25"),
+//         "address",
+//         "manager2"
+//       )
+//     ]
+//   ),
 
-  new Form(
-    1,
-    "Laws drop down menu",
-    "Legal form of company drop down",
-    "SPC",
-    "لينا للانتاج",
-    "Lina Productions",
-    "Apart2",
-    "Sheikh Zayed",
-    "Giza",
-    "012223533443",
-    "23344",
-    new Investor(
-      "Mrs",
-      "Potato",
-      "Head",
-      "male",
-      "Egypt",
-      "individual",
-      "passport",
-      "22221123",
-      new Date("1970-03-25"),
-      new Address("Apart 2", "Sheikh Zayed", "Giza"),
-      "01111111111",
-      "fax",
-      "farmera@gmail.com",
-      10000000,
-      "EGP"
-    ),
-    "Euro",
-    500000
-  )
-];
+//   new Form(
+//     1,
+//     "Laws drop down menu",
+//     "Legal form of company drop down",
+//     "SPC",
+//     "لينا للانتاج",
+//     "Lina Productions",
+//     "Apart2",
+     "Sheikh Zayed",
+//     "Giza",
+//     "012223533443",
+//     "23344",
+//     new Investor(
+//       "Mrs",
+//       "Potato",
+//       "Head",
+//       "male",
+//       "Egypt",
+//       "individual",
+//       "passport",
+//       "22221123",
+//       new Date("1970-03-25"),
+//       new Address("Apart 2", "Sheikh Zayed", "Giza"),
+//       "01111111111",
+//       "fax",
+//       "farmera@gmail.com",
+//       10000000,
+//       "EGP"
+//     ),
+//     "Euro",
+//     500000
+//   )
+// ];
 
-router.get("/", (req, res) => res.json({ data: forms }));
+router.get("/", (req, res) => res.json({ data: Forms }));
 router.get("/byID/:id", (req, res) => {
   const id = req.params.id;
   const form = forms.find(form => form.id === id);
@@ -130,7 +130,7 @@ router.post("/create/", async (req, res) => {
       return res
         .status(400)
         .send({ error: isValidated.error.details[0].message });
-    const newForm = await forms.create(req.body);
+    const newForm = await Form.create(req.body);
     res.json({ msg: "Form was created successfully", data: newForm });
   } catch (error) {
     // We will be handling the error later
