@@ -15,7 +15,7 @@ router.get("/getbyID/:id", async (req, res) => {
   try {
   const id = req.params.id;
   //const investor = await Investor.findById(id)
-  const investor = await Investor.findOne({id})
+  const investor = await Investor.findById(id)
   if(!investor) return res.status(404).send({error: "Investor does not exist"})
   res.json({msg:"Employee found", data: investor })
   }
@@ -57,14 +57,14 @@ router.delete("/delete/:id", async (req, res) => {
 router.put("/update/:id", async (req, res) => {
   try {
     const id = req.params.id
-    const investor = await Investor.findOne(id)
+    const investor = await Investor.findById(id)
     if(!investor) 
       return res.status(404).send({error: "Investor does not exist"})
     const isValidated = validator.updateValidation(req.body)
     if (isValidated.error) 
       return res.status(400).send({ error: isValidated.error.details[0].message })
     const updatedInvestor = await Investor.updateOne(req.body)
-    res.json({msg: "Investor updated successfully", data: investor})
+    res.json({msg: "Investor updated successfully"})
    }
    catch(error) {
        // We will be handling the error later
