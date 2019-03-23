@@ -1,14 +1,28 @@
-const uuid = require("uuid");
+const mongoose = require('mongoose');
+//const Schema = mongoose.Schema;
 
-class External_Entity {
-  constructor(name, address, telephone, fax, email) {
-    this.name = name;
-    this.address = address;
-    this.telephone = telephone;
-    this.fax = fax;
-    this.email = email;
-    this.id = uuid.v4();
-  }
-}
+const external_entity_Schema = new mongoose.Schema({
+  name: {
+      type: String,
+      required: true
+  },
+  address: {
+      type: String,
+      required: true
+  },
+  telephone: {
+      type: Number,
+      required: true
+  },
+  fax: {
+      type: Number, 
+      required: true
+  },
+  email: {
+      type: String,
+      required: true
+    }
+});
+module.exports = external_entity = mongoose.model("external_entities", external_entity_Schema);
 
-module.exports = External_Entity;
+

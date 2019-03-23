@@ -10,7 +10,9 @@ const Investor = require("../../models/Investor");
 
 const validator = require("../../validations/formValidations");
 
-// const forms = [
+const mongoose = require("mongoose");
+
+// const forms = [1
 //   new Form(
 //     0,
 //     "Laws drop down menu",
@@ -76,7 +78,7 @@ const validator = require("../../validations/formValidations");
 //     "لينا للانتاج",
 //     "Lina Productions",
 //     "Apart2",
-//     "Sheikh Zayed",
+ //    "Sheikh Zayed",
 //     "Giza",
 //     "012223533443",
 //     "23344",
@@ -102,7 +104,7 @@ const validator = require("../../validations/formValidations");
 //   )
 // ];
 
-router.get("/", (req, res) => res.json({ data: forms }));
+router.get("/", (req, res) => res.json({ data: Forms }));
 router.get("/byID/:id", (req, res) => {
   const id = req.params.id;
   const form = forms.find(form => form.id === id);
@@ -117,50 +119,34 @@ router.delete("/delete/:id", (req, res) => {
   res.send(forms);
 });
 
-router.post("/post", async (req, res) => {
-  //const { } = req.body;
-  const formType = req.body.formType;
-  const location =req.body.location;
-  const address=location["address"]
-  const city=location["city"]
-  const town=location["town"]
-  const arabicName = req.body.arabicName;
-  const englishName = req.body.englishName;
-  const phone = req.body.phone;
-  const fax = req.body.fax;
-  const investor = req.body.investor;
-  const boardOfDirectors = req.body.boardOfDirectors;
-  const capitalCurr = req.body.capitalCurr;
-  const capitalVal = req.body.capitalVal;
-  const law = req.body.law;
-  const legalForm = req.body.legalForm;
-    console.log(location["address"])
-  const bitIL = req.body.bitIL;
+
+
+//creating new SPC form Mongo
+
+router.post("/SPC/", async (req, res) => {
   try {
-    const isValidated = validator.createValidation(req.body, formType);
-    if (isValidated.error)
+    const isValidated = validator.createValidation(req.body,'SPC');  
+  if (isValidated.error)
       return res
         .status(400)
         .send({ error: isValidated.error.details[0].message });
-    const newForm = new Form (
-        bitIL,
-        law,
-        legalForm,
-        formType,
-        arabicName,
-        englishName,
-        address,
-        town,
-        city,
-        phone,
-        fax,
-        investor,
-        capitalCurr,
-        capitalVal,
-        boardOfDirectors
-     
-    );
-    forms.push(newForm);
+    const newForm = await Form.create(req.body);
+    res.json({ msg: "Form was created successfully", data: newForm });
+  } catch (error) {
+    // We will be handling the error later
+    console.log(error);
+  }
+});
+//creating new SSC form Mongo
+
+router.post("/SSC/", async (req, res) => {
+  try {
+    const isValidated = validator.createValidation(req.body,'SSC');  
+  if (isValidated.error)
+      return res
+        .status(400)
+        .send({ error: isValidated.error.details[0].message });
+    const newForm = await Form.create(req.body);
     res.json({ msg: "Form was created successfully", data: newForm });
   } catch (error) {
     // We will be handling the error later
