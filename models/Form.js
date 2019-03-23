@@ -1,11 +1,10 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const investorSchema=require ("./Investor").schema
-const BoardOfDirectorSchema = require("./BoardOfDirector").schema
-const commentSchema=require("./Comment").schema
+const investorSchema = require("./Investor").schema;
+const BoardOfDirectorSchema = require("./BoardOfDirector").schema;
+const commentSchema = require("./Comment").schema;
 
 const FormSchema = new Schema({
-  
   law: {
     type: String,
     required: true
@@ -24,22 +23,19 @@ const FormSchema = new Schema({
     required: true
   },
   englishName: {
-    type: String,
+    type: String
   },
-  address:{
-  type:String,
-  required: true
-   } ,
-  phone:{
+  address: {
+    type: String,
+    required: true
+  },
+  phone: {
     type: String
   },
   fax: {
     type: String
   },
-  boardOfDirectors: 
-    [{ type: BoardOfDirectorSchema, required:true}],
-
-
+  boardOfDirectors: [{ type: BoardOfDirectorSchema, required: true }],
 
   capitalCurr: {
     type: String,
@@ -49,30 +45,30 @@ const FormSchema = new Schema({
     type: Number,
     required: true
   },
- createdOn: {
-   type: Date,
-   required: true
- },
-lastTouch: {
-  type: String
-},
-status: {
-  type: String
-},
-formId: {
-  type: Schema.ObjectId, 
-  auto: true
- },
- deadline: {
-   type: Date,
- },
- bitIL: {
-   type: Number
- },
- comments: {
-   type: commentSchema
- },
-  investor: { type: investorSchema,required:true  }
-})
+  createdOn: {
+    type: Date,
+    required: true
+  },
+  lastTouch: {
+    type: String
+  },
+  status: {
+    type: String
+  },
+  formId: {
+    type: Schema.ObjectId,
+    auto: true
+  },
+  deadline: {
+    type: Date
+  },
+  bitIL: {
+    type: Number
+  },
+  comments: {
+    type: commentSchema
+  },
+  investor: { type: investorSchema, required: true }
+});
 
 module.exports = Form = mongoose.model("forms", FormSchema);

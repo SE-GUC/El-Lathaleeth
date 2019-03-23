@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const EmpScheme = require("./Entity_Emp").schema;
 
-
 const ComSchema = new Schema({
   author_type: {
     type: String,
@@ -13,15 +12,12 @@ const ComSchema = new Schema({
     type: EmpScheme,
     required: true
   },
-  text:{
-    type:String,
-    required:true
+  text: {
+    type: String,
+    required: true
   },
-  postedOn:{type: Date,required:true},
-  read_at:{type: Date}
-
-
-
+  postedOn: { type: Date, required: true },
+  read_at: { type: Date }
 });
 // const uuid = require("uuid");
 // class Comment {
