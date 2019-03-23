@@ -2,7 +2,10 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const BoardOfDirectorSchema = new Schema ({
-	address: [{type: Schema.ObjectId, ref: 'Address'}],
+	address: {
+		type: String,
+		required: true
+	},
 	birthdate: {
 		type: Date,
 		required: true

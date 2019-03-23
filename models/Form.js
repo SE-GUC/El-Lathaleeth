@@ -24,7 +24,10 @@ const FormSchema = new Schema({
   englishName: {
     type: String,
   },
-  address: [{type: Schema.ObjectId, ref: 'Address'}],
+  address:{
+  type:String,
+  required: true
+   } ,
   phone:{
     type: String
   },

@@ -8,11 +8,7 @@ module.exports = {
 			legalForm: Joi.string().required(), //drop down menu
 			arabicName: Joi.string().required(), //make sure in next sprint that name of comapny is unique
 			englishName: Joi.string(),
-			address: {
-				address: Joi.string().required(),
-				city: Joi.string().required(),
-				town: Joi.string().required(),
-			},
+			address: Joi.string().required(),
 			phone: Joi.string().length(11),
 			fax: Joi.string(),
 			capitalCurr: Joi.string().required(), //drop down menu
@@ -76,11 +72,9 @@ module.exports = {
 			legalForm: Joi.string().required(), //drop down menu
 			arabicName: Joi.string().required(), //make sure in next sprint that name of comapny is unique
 			englishName: Joi.string(),
-			location: {
+		
 				address: Joi.string().required(),
-				city: Joi.string().required(),
-				town: Joi.string().required(),
-			},
+				
 			phone: Joi.string().length(11),
 			fax: Joi.string(),
 			capitalCurr: Joi.string().required(), //drop down menu
