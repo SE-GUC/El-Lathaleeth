@@ -1,15 +1,49 @@
-class BoardOfDirector {
-	constructor(name, typeInves, gender, nationality, typeID, idNum, birthdate, address, position) {
-		this.address = address;
-		this.birthdate = birthdate;
-		this.gender = gender;
-		this.idNum = idNum;
-		this.name = name;
-		this.nationality = nationality;
-		this.position = position;
-		this.typeID = typeID;
-		this.typeInves = typeInves;
-	}
-}
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-module.exports = BoardOfDirector;
+const BoardOfDirectorSchema = new Schema({
+  address: {
+    type: String,
+    required: true
+  },
+  birthdate: {
+    type: Date,
+    required: true
+  },
+  gender: {
+    type: String,
+    enum: ["male", "female"],
+    required: true
+  },
+  idNum: {
+    type: String,
+    min: 8,
+    required: true
+  },
+  name: {
+    type: String,
+    required: true
+  },
+  nationality: {
+    type: String,
+    required: true
+  },
+  position: {
+    type: String
+  },
+  typeID: {
+    type: String,
+    enum: ["passport", "id"],
+    required: true
+  },
+  typeInves: {
+    type: String,
+    enum: ["individual", "corprate"],
+    required: true
+  }
+});
+
+module.exports = BoardOfDirector = mongoose.model(
+  "BoardOfDirector",
+  BoardOfDirectorSchema
+);

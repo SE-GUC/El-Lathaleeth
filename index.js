@@ -4,16 +4,23 @@ const forms = require("./routes/api/forms");
 const investor = require("./routes/api/investor");
 const comments = require("./routes/api/comments");
 const external_entity = require("./routes/api/external_entity");
+const mongoose = require("mongoose");
+
 
 
 const app = express();
-app.use(express.json());
+// DB Config
+const db = require('./config/keys').mongoURI
+const dbConfig = {useNewUrlParser: true};
+// Connect to mongo
+mongoose
+  .connect(db,dbConfig)
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(err => console.log(err))
 
-app.get("/", (req, res) => {
-  res.send(`<h1>Welcome to TEST</h1>
-    <a href="/api/entity_emp">Entity_Emp</a>
-    `);
-});
+// Init middleware
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
 
 // Direct routes to appropriate files
 

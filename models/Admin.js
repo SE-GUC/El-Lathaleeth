@@ -1,7 +1,9 @@
-class Admin {
-  constructor(registered_investors) {
-    this.registered_investors = registered_investors
-  }
-}
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+const formScheme = require("./Form").schema;
 
-module.exports = Admin;
+const AdminSchema = new Schema({
+  registered_investors: { type: formScheme }
+});
+
+module.exports = Admin = mongoose.model("admin", AdminSchema);

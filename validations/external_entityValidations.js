@@ -2,20 +2,37 @@ const Joi = require("joi");
 
 module.exports = {
   createValidation: request => {
-    const direcSchema = {
+    const createSchema = {
+      name: Joi.string()
+        .min(3)
+        .max(100)
+        .required(),
+      address: Joi.string()
+        .min(3)
+        .max(100)
+        .required(),
+      telephone: Joi.number().required(),
+      fax: Joi.number().required(),
       email: Joi.string()
         .email()
-        .required(),
-      fax: Joi.string().required(),
-      telephone: Joi.string().required(),
-      address: Joi.required(),
-      name: Joi.string().required()
+        .required()
     };
 
-    return Joi.validate(request, direcSchema);
+    return Joi.validate(request, createSchema);
   },
 
   updateValidation: request => {
+    const updateSchema = {
+      name: Joi.string()
+        .min(3)
+        .max(100),
+      address: Joi.string()
+        .min(3)
+        .max(100),
+      telephone: Joi.number(),
+      fax: Joi.number(),
+      email: Joi.string().email()
+    };
     return Joi.validate(request, updateSchema);
   }
 };
