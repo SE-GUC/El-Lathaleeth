@@ -167,48 +167,21 @@ router.post("/SSC/", async (req, res) => {
 });
 
 //Updating a form
-router.put("/update/:id", (req, res) => {
-  const id = req.params.id;
-  const formType = req.body.formType;
-  const location = req.body.location; //location contain town,city,address
-  const arabicName = req.body.arabicName;
-  const englishName = req.body.englishName;
-  const phone = req.body.phone;
-  const fax = req.body.fax;
-  const investor = req.body.investor; //investor array of info about current user
-  const boardOfDirectors = req.body.boardOfDirectors; //table with BOD info
-  const capitalCurr = req.body.capitalCurr;
-  const capitalVal = req.body.capitalVal;
-  const law = req.body.law;
-  const legalForm = req.body.legalForm;
-  const bitIL = req.body.bitIL;
+router.put('/:id', async (req, res) => {
   try {
-    const isValidated = validator.createValidation(req.body, formType);
-    if (isValidated.error)
-      return res
-        .status(400)
-        .send({ error: isValidated.error.details[0].message });
+    const id = req.params.id
+    const form = await Form.findOne(id)
+    if (!form) return res.status(404).send({ error: 'Form does not exist' })
+    if(form.formType==="SPC")
+    const isValidated = validator.updateValidation(req.body,"SPC")
+    else
+      const isValidated = validator.updateValidation(req.body, "SCC")
 
-    const updatedForm = forms.find(function(form) {
-      console.log("1");
-      return form["id"] === id;
-    });
-    updatedForm["location"] = location;
-    updatedForm["arabicName"] = arabicName;
-    updatedForm["englishName"] = englishName;
-    updatedForm["phone"] = phone;
-    updatedForm["fax"] = fax;
-    updatedForm["investor"] = investor;
-    updatedForm["boardOfDirectors"] = boardOfDirectors;
-    updatedForm["capitalCurr"] = capitalCurr;
-    updatedForm["capitalVal"] = capitalVal;
-    updatedForm["law"] = law;
-    updatedForm["legalForm"] = legalForm;
-    updatedForm["bitIL"] = bitIL;
-    console.log("Form has been updated");
-    return res.json({ data: updatedForm });
-  } catch (error) {
-    // We will be handling the error later
+    if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+    const updatedForm = await Form.updateOne(req.body)
+    res.json({ msg: "Form updated successfully" })
+  }
+  catch (error) {
     console.log(error);
   }
 });
