@@ -78,7 +78,11 @@ const mongoose = require("mongoose");
 //     "لينا للانتاج",
 //     "Lina Productions",
 //     "Apart2",
+<<<<<<< HEAD
      "Sheikh Zayed",
+=======
+ //    "Sheikh Zayed",
+>>>>>>> 58d1d7af2e5e01cc8f71fc38d97ea5df5ccb1f27
 //     "Giza",
 //     "012223533443",
 //     "23344",
@@ -103,6 +107,15 @@ const mongoose = require("mongoose");
 //     500000
 //   )
 // ];
+<<<<<<< HEAD
+=======
+
+router.get("/", (req, res) => res.json({ data: Forms }));
+router.get("/byID/:id", (req, res) => {
+  const id = req.params.id;
+  const form = forms.find(form => form.id === id);
+  res.json({ data: form })
+>>>>>>> 58d1d7af2e5e01cc8f71fc38d97ea5df5ccb1f27
 
 //router.get("/", (req, res) => res.json({ data: Forms }));
 router.get('/', async (req,res) => {
@@ -134,12 +147,37 @@ router.delete("/delete/:id", async (req, res) => {
 
 
 
+<<<<<<< HEAD
 //creating new form Mongo
 
 router.post("/create/", async (req, res) => {
   try {
     const isValidated = validator.createValidation(req.body);
     if (isValidated.error)
+=======
+//creating new SPC form Mongo
+
+router.post("/SPC/", async (req, res) => {
+  try {
+    const isValidated = validator.createValidation(req.body,'SPC');  
+  if (isValidated.error)
+      return res
+        .status(400)
+        .send({ error: isValidated.error.details[0].message });
+    const newForm = await Form.create(req.body);
+    res.json({ msg: "Form was created successfully", data: newForm });
+  } catch (error) {
+    // We will be handling the error later
+    console.log(error);
+  }
+});
+//creating new SSC form Mongo
+
+router.post("/SSC/", async (req, res) => {
+  try {
+    const isValidated = validator.createValidation(req.body,'SSC');  
+  if (isValidated.error)
+>>>>>>> 58d1d7af2e5e01cc8f71fc38d97ea5df5ccb1f27
       return res
         .status(400)
         .send({ error: isValidated.error.details[0].message });

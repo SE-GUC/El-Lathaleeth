@@ -11,10 +11,10 @@ const mongoose = require("mongoose");
 const app = express();
 // DB Config
 const db = require('./config/keys').mongoURI
-
+const dbConfig = {useNewUrlParser: true};
 // Connect to mongo
 mongoose
-  .connect(db)
+  .connect(db,dbConfig)
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.log(err))
 
