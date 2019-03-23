@@ -16,7 +16,7 @@ const BoardOfDirectorSchema = new Schema ({
 		required: true
 	},
 	idNum:{
-		type: Number,
+		type: String,
 		min: 8,
 		required: true
 	},

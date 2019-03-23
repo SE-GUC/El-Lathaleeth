@@ -35,14 +35,17 @@ const FormSchema = new Schema({
     type: String
   },
   boardOfDirectors: 
-  [{ type: Schema.ObjectId, ref: 'BoardOfDirector' }],
+  [{ type: Schema.ObjectId, ref: 'BoardOfDirector'}],
+
+
 
   capitalCurr: {
     type: String,
     required: true
   },
   capitalVal: {
-    type: Number
+    type: Number,
+    required: true
   },
  createdOn: {
    type: Date,
@@ -65,11 +68,9 @@ formId: {
    type: Number
  },
  comments: {
-   type: []
+   type: String
  },
- investor: {
-   type: []
- }
+ investor: [{ type: Schema.ObjectId, ref: 'investor' }]
 })
 
 module.exports = Form = mongoose.model("forms", FormSchema);
