@@ -104,7 +104,10 @@ const mongoose = require("mongoose");
 //   )
 // ];
 
-router.get("/", (req, res) => res.json({ data: Forms }));
+router.get("/", async (req, res) => {
+  const frm = await Form.find();
+  res.json({ data: frm });
+});
 router.get("/byID/:id", (req, res) => {
   const id = req.params.id;
   const form = forms.find(form => form.id === id);
