@@ -78,11 +78,7 @@ const mongoose = require("mongoose");
 //     "لينا للانتاج",
 //     "Lina Productions",
 //     "Apart2",
-<<<<<<< HEAD
-     "Sheikh Zayed",
-=======
  //    "Sheikh Zayed",
->>>>>>> 58d1d7af2e5e01cc8f71fc38d97ea5df5ccb1f27
 //     "Giza",
 //     "012223533443",
 //     "23344",
@@ -107,54 +103,36 @@ const mongoose = require("mongoose");
 //     500000
 //   )
 // ];
-<<<<<<< HEAD
-=======
 
-router.get("/", (req, res) => res.json({ data: Forms }));
-router.get("/byID/:id", (req, res) => {
-  const id = req.params.id;
-  const form = forms.find(form => form.id === id);
-  res.json({ data: form })
->>>>>>> 58d1d7af2e5e01cc8f71fc38d97ea5df5ccb1f27
-
-//router.get("/", (req, res) => res.json({ data: Forms }));
 router.get('/', async (req,res) => {
-    const forms = await Form.find()
-    res.json({data: forms})
+  const forms = await Form.find()
+  res.json({data: forms})
 })
 
 router.get("/byID/:id", async (req, res) => {
-  try{
-    const id = req.params.id;
-    const findform = await Form.findById(id)
-    if (!Form) return res.status(404).send({error: "Form does not exist"})
-    res.json({msg:"Form found", data: findform });
-  }
-  catch(error){
-    // Error will be handled later
-  }
+try{
+  const id = req.params.id;
+  const findform = await Form.findById(id)
+  if (!findform) return res.status(404).send({error: "Form does not exist"})
+  res.json({msg:"Form found", data: findform });
+}
+catch(error){
+  // Error will be handled later
+}
 });
 router.delete("/delete/:id", async (req, res) => {
-  try{
-    const id = req.params.id
-    const deleteform =  await Form.findByIdAndDelete(id)
-    res.json({msg: "Form successfully deleted"})
-  }
-  catch(error){
-    //Error will be handled later
-  }
-  });
+try{
+  const id = req.params.id
+  const deleteform =  await Form.findByIdAndDelete(id)
+  res.json({msg: "Form successfully deleted"})
+}
+catch(error){
+  //Error will be handled later
+}
+});
 
 
 
-<<<<<<< HEAD
-//creating new form Mongo
-
-router.post("/create/", async (req, res) => {
-  try {
-    const isValidated = validator.createValidation(req.body);
-    if (isValidated.error)
-=======
 //creating new SPC form Mongo
 
 router.post("/SPC/", async (req, res) => {
@@ -177,7 +155,6 @@ router.post("/SSC/", async (req, res) => {
   try {
     const isValidated = validator.createValidation(req.body,'SSC');  
   if (isValidated.error)
->>>>>>> 58d1d7af2e5e01cc8f71fc38d97ea5df5ccb1f27
       return res
         .status(400)
         .send({ error: isValidated.error.details[0].message });
