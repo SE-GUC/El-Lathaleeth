@@ -16,10 +16,13 @@ router.get("/", async (req, res) => {
 
 router.get("/byID/:id", async (req, res) => {
   try{
+    console.log(0)
     const id = req.params.id;
     const findEmp = await Entity_Emp.findById(id)
-    if (!emp) return res.status(404).send({error: "Employee does not exist"})
-    res.json({msg:"Employee found", data: empl });
+    console.log(findEmp)
+    console.log(0)
+    if (!findEmp) return res.status(404).send({error: "Employee does not exist"})
+    res.json({msg:"Employee found", data: findEmp });
   }
   catch(error){
     // Error will be handled later
