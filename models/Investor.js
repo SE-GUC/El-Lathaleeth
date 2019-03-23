@@ -1,45 +1,70 @@
-const uuid = require("uuid");
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-class Investor {
-  constructor(
-    firstName,
-    middleName,
-    lastName,
-    gender,
-    nationality,
-    investorType,
-    typeOfID,
-    IDNumber,
-    dateOfBirth,
-    address,
-    phoneNumber,
-    faxNumber,
-    creditCardNumber,
-    email,
-    capital,
-    capitalCurrency
-  ) {
-    this.firstName = firstName;
-    this.middleName = middleName;
-    this.lastName = lastName;
-    this.fullname = function() {
-      return this.firstName + " " + this.middleName + " " + this.lastName;
-    };
-    this.gender = gender;
-    this.nationality = nationality;
-    this.investorType = investorType; //available in SSC form but not SPC form
-    this.typeOfID = typeOfID;
-    this.IDNumber = IDNumber;
-    this.dateOfBirth = dateOfBirth;
-    this.address = address;
-    this.phoneNumber = phoneNumber;
-    this.faxNumber = faxNumber;
-    this.creditCardNumber = creditCardNumber;
-    this.email = email;
-    this.capital = capital;
-    this.capitalCurrency = capitalCurrency;
-    this.id = uuid.v4();
-  }
-}
+const InvestorSchema = new Schema({
+    firstName: {
+      type: String,
+      required: true
+    },
+    middleName: {
+      type: String
+    },
+    lastName: {
+      type: String,
+      required: true
+    },
+    gender: {
+      type: String,
+      required: true,
+      enum: ["Male", "Female"]
+    },
+    nationality: {
+      type: String,
+      required: true
+    },
+    investorType: {
+      type: String,
+      required: true,
+      enum: ["Individual", "Company"]
+    },
+    typeOfID: {
+      type: String,
+      required: true,
+      enum: ["Passport", "Id"]
+    },
+    IDNumber: {
+      type: String,
+      required: true
+    },
+    dateOfBirth: {
+      type: Date,
+      required: true
+    },
+    address: {
+      type: String,
+      required: true
+    },
+    phoneNumber: {
+      type: String
+    },
+    faxNumber: {
+      type: String
+    },
+    creditCardNumber: {
+      type: String
+    },
+    email: {
+      type: String,
+      required: true
+    },
+    capital: {
+      type: Number,
+      required: true
+    },
+    capitalCurrency: {
+      type: String,
+      required: true
+    }
+});
 
-module.exports = Investor;
+module.exports = Investor = mongoose.model("investor", InvestorSchema );
