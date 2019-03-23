@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-
+const investorSchema=require ("./Investor").schema
+const BoardOfDirectorSchema = require("./BoardOfDirector").schema
+const commentSchema=require("./Comment").schema
 
 const FormSchema = new Schema({
   
@@ -35,7 +37,7 @@ const FormSchema = new Schema({
     type: String
   },
   boardOfDirectors: 
-  [{ type: Schema.ObjectId, ref: 'BoardOfDirector'}],
+    [{ type: BoardOfDirectorSchema, required:true}],
 
 
 
@@ -68,9 +70,9 @@ formId: {
    type: Number
  },
  comments: {
-   type: String
+   type: commentSchema
  },
- investor: [{ type: Schema.ObjectId, ref: 'investor' }]
+  investor: { type: investorSchema,required:true  }
 })
 
 module.exports = Form = mongoose.model("forms", FormSchema);
