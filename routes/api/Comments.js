@@ -37,7 +37,7 @@ router.get("/byID/:id", async (req, res) => {
     res.json({ msg: "Comment found", data: com });
   }
   catch (error) {
-    // Error will be handled later
+    /// Error will be handled later
   }
 });
 
