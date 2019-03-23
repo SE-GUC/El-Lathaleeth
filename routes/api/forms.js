@@ -104,22 +104,31 @@ const mongoose = require("mongoose");
 //   )
 // ];
 
-router.get("/", async (req, res) => {
-  const frm = await Form.find();
-  res.json({ data: frm });
-});
-router.get("/byID/:id", (req, res) => {
-  const id = req.params.id;
-  const form = forms.find(form => form.id === id);
-  res.json({ data: form })
+router.get('/', async (req,res) => {
+  const forms = await Form.find()
+  res.json({data: forms})
+})
 
-});
-router.delete("/delete/:id", (req, res) => {
+router.get("/byID/:id", async (req, res) => {
+try{
   const id = req.params.id;
-  const form = forms.find(form => form.id === id);
-  const index = forms.indexOf(form);
-  forms.splice(index, 1);
-  res.send(forms);
+  const findform = await Form.findById(id)
+  if (!findform) return res.status(404).send({error: "Form does not exist"})
+  res.json({msg:"Form found", data: findform });
+}
+catch(error){
+  // Error will be handled later
+}
+});
+router.delete("/delete/:id", async (req, res) => {
+try{
+  const id = req.params.id
+  const deleteform =  await Form.findByIdAndDelete(id)
+  res.json({msg: "Form successfully deleted"})
+}
+catch(error){
+  //Error will be handled later
+}
 });
 
 
