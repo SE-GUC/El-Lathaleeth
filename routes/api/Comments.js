@@ -41,7 +41,33 @@ router.get("/byID/:id", async (req, res) => {
   }
 });
 
+router.put("/update/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const com = await Comment.findOne({ _id: id });
+    if (!com) return res.status(404).send({ error: "Comment does not exist" });
+    const isValidated = validator.updateValidation(req.body);
+    if (isValidated.error)
+      return res
+        .status(400)
+        .send({ error: isValidated.error.details[0].message });
+    const updatedCom = await com.updateOne(req.body);
+    res.json({ msg: "Comment updated successfully" });
+  } catch (error) {
+    // We will be handling the error later
+    console.log(error);
+  }
+});
 
+router.delete("/delete/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const com = await Comment.findByIdAndDelete(id);
+    res.json({ msg: "Comment successfully deleted" });
+  } catch (error) {
+    //Error will be handled later
+  }
+});
 
 
 module.exports = router;
