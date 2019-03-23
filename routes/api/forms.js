@@ -169,13 +169,16 @@ router.post("/SSC/", async (req, res) => {
 //Updating a form
 router.put('/:id', async (req, res) => {
   try {
+    var isValidated=null
     const id = req.params.id
-    const form = await Form.findOne(id)
+    const form = await Form.findById(id)
     if (!form) return res.status(404).send({ error: 'Form does not exist' })
-    if(form.formType==="SPC")
-    const isValidated = validator.updateValidation(req.body,"SPC")
-    else
-      const isValidated = validator.updateValidation(req.body, "SCC")
+    console.log(form.formType)
+    if(form.formType==="SPC"){
+     isValidated = validator.updateValidation(req.body,"SPC")}
+    else{
+       isValidated = validator.updateValidation(req.body, "SSC")}
+      console.log(isValidated)
 
     if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
     const updatedForm = await Form.updateOne(req.body)
