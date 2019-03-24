@@ -2,7 +2,7 @@ const express = require("express");
 const entity_emp = require("./routes/api/entity_emp");
 const forms = require("./routes/api/forms");
 const investor = require("./routes/api/investor");
-const comments = require("./routes/api/tmp1");
+const comments = require("./routes/api/comments");
 const external_entity = require("./routes/api/external_entity");
 const mongoose = require("mongoose");
 
