@@ -36,4 +36,6 @@ app.use((req, res) => {
 });
 
 const port = 3000;
-app.listen(port, () => console.log(`Server up and running on port ${port}`));
+app.listen(process.env.PORT || port, () =>
+  console.log(`Server up and running on port ${port}`)
+);
