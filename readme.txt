@@ -1,1 +1,1 @@
-https://se-lathaleeth.herokuapp.com/
+https://lathaleethse.herokuapp.com/
