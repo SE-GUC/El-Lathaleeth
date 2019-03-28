@@ -133,11 +133,12 @@ router.delete("/delete/:id", async (req, res) => {
 });
 
 //As an investor/lawyer I can create Form
-//creating new SPC form Mongo
+//creating new SPC/SSC form Mongo
 
-router.post("/SPC/", async (req, res) => {
+router.post("/create/", async (req, res) => {
+  const formType = req.body.formType
   try {
-    const isValidated = validator.createValidation(req.body, "SPC");
+    const isValidated = validator.createValidation(req.body, formType);
     if (isValidated.error)
       return res
         .status(400)
@@ -149,22 +150,7 @@ router.post("/SPC/", async (req, res) => {
     console.log(error);
   }
 });
-//creating new SSC form Mongo
 
-router.post("/SSC/", async (req, res) => {
-  try {
-    const isValidated = validator.createValidation(req.body, "SSC");
-    if (isValidated.error)
-      return res
-        .status(400)
-        .send({ error: isValidated.error.details[0].message });
-    const newForm = await Form.create(req.body);
-    res.json({ msg: "Form was created successfully", data: newForm });
-  } catch (error) {
-    // We will be handling the error later
-    console.log(error);
-  }
-});
 //As an investor/lawyer I can update Form
 //Updating a form
 router.put("/update/:id", async (req, res) => {
@@ -194,7 +180,6 @@ router.put("/update/:id", async (req, res) => {
 
 //As an investor I can have a lawyer fill my form
 router.post("/sendToAdmin/", async (req, res) => {
-  
     const investor = req.body.investor;
     //const formType = req.body.formType;
     const admin = await Entity_Emp.findOne({'emp_type':'Admin'});
