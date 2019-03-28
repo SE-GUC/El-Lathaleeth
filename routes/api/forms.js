@@ -136,7 +136,7 @@ router.delete("/delete/:id", async (req, res) => {
 //creating new SPC/SSC form Mongo
 
 router.post("/create/", async (req, res) => {
-  const formType = req.body.formType
+  const formType = req.body.formType;
   try {
     const isValidated = validator.createValidation(req.body, formType);
     if (isValidated.error)
@@ -180,11 +180,22 @@ router.put("/update/:id", async (req, res) => {
 
 //As an investor I can have a lawyer fill my form
 router.post("/sendToAdmin/", async (req, res) => {
-    const investor = req.body.investor;
-    //const formType = req.body.formType;
-    const admin = await Entity_Emp.findOne({'emp_type':'Admin'});
-    admin.admin_details.investors_to_assign.push(investor.id);
-    return res.json({data: admin.admin_details.investors_to_assign})
+  const investor = req.body.investor;
+  //const formType = req.body.formType;
+  const admin = await Entity_Emp.findOneAndUpdate(
+    { emp_type: "Admin" },
+    { $push: { investors_to_assign: investor.id } },
+    { new: true },
+    (err, doc) => {
+      if (err) {
+        console.log("Something wrong when updating data!");
+      }
+
+      console.log(doc);
+    }
+  );
+  admin.admin_details.investors_to_assign.push(investor.id);
+  return res.json({ data: admin.admin_details.investors_to_assign });
 });
 //As an investor/lawyer I can view status of form
 router.get("/statusByID/:id", async (req, res) => {
