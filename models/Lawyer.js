@@ -11,6 +11,10 @@ const LawSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'forms'
   }],
+  to_be_filled_for: [{
+    type: Schema.Types.ObjectId,
+    ref: 'investor'
+  }],
   filled_forms: [{
     type: Schema.Types.ObjectId,
     ref: 'forms'

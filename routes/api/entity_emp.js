@@ -68,5 +68,40 @@ router.delete("/delete/:id", async (req, res) => {
   } catch (error) {
     //Error will be handled later
   }
+}); 
+// not working do not copy from this VVVV
+router.put("/assignLawyer/:lawyerid/:investorid/:adminid", async (req, res) => {
+  try {
+    const id = req.params.lawyerid;
+    const investorid = req.params.investorid;
+    const adminid = req.params.adminid;
+    const emp = await Entity_Emp.findById( id);
+    if (!emp) return res.status(404).send({ error: "Employee does not exist" });
+      if(emp.emp_type!=='Lawyer')
+        return res.status(400)
+          .send("You must assign a Lawyer to fill form");
+    
+    const admin = await Entity_Emp.findById(adminid);
+    admin.admin_details.investors_to_assign.filter(function (value, index, arr) {
+
+      return value !==investorid ;
+
+    }); 
+    delete admin._id
+    delete admin.admin_details._id
+    console.log(admin)
+
+   const test= await Entity_Emp.updateOne(admin);
+    emp.lawyer_details.to_be_filled_for.push(investorid)
+    delete emp._id
+    delete emp.lawyer_details._id
+    const test1 = await Entity_Emp.updateOne(emp);
+    res.json({ data:test });
+
+  } catch (error) {
+    // We will be handling the error later
+    console.log(error);
+  }
 });
+
 module.exports = router;
