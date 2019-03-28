@@ -184,6 +184,7 @@ router.post("/sendToAdmin/", async (req, res) => {
     //const formType = req.body.formType;
     const admin = await Entity_Emp.findOne({'emp_type':'Admin'});
     admin.admin_details.investors_to_assign.push(investor.id);
+    return res.json({data: admin.admin_details.investors_to_assign})
 });
 //As an investor/lawyer I can view status of form
 router.get("/statusByID/:id", async (req, res) => {
