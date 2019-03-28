@@ -6,6 +6,7 @@ const Entity_Emp = require("../../models/Entity_Emp");
 const Reviewer = require("../../models/Reviewer");
 const Lawyer = require("../../models/Lawyer");
 const validator = require("../../validations/entity_empValidations");
+const formvalidator = require("../../validations/formValidations");
 // const Form = require("../../models/Form");
 const Admin = require("../../models/Admin");
 
@@ -69,7 +70,40 @@ router.delete("/delete/:id", async (req, res) => {
     //Error will be handled later
   }
 }); 
-// not working do not copy from this VVVV
+//deletes all instances of investor in to be filled for
+router.post("/lawyerfillform/:lawyerid/:investorid", async (req, res) => {
+  try {
+    const type = req.body.formType
+
+      const isValidated = formvalidator.createValidation(req.body, type);
+      if (isValidated.error)
+        return res
+          .status(400)
+          .send({ error: isValidated.error.details[0].message });
+      const newForm = await Form.create(req.body);
+    
+  const lawyerid=req.params.lawyerid
+  const investorid=req.params.investorid
+  Entity_Emp.findByIdAndUpdate(lawyerid,
+    { $pull: { "lawyer_details.to_be_filled_for": investorid } },
+    { safe: true, upsert: true },
+    function (err, doc) {
+      if (err) {
+        console.log(err);
+      } else {
+        //do stuff
+      }
+    }
+  );
+  res.json({ msg: "Form was created successfully", data: newForm });
+  }
+  catch (error) {
+    // We will be handling the error later
+    console.log(error);
+  }
+
+});
+
 router.put("/assignLawyer/:lawyerid/:investorid/:adminid", async (req, res) => {
   try {
     const id = req.params.lawyerid;
@@ -77,25 +111,46 @@ router.put("/assignLawyer/:lawyerid/:investorid/:adminid", async (req, res) => {
     const adminid = req.params.adminid;
     const emp = await Entity_Emp.findById( id);
     if (!emp) return res.status(404).send({ error: "Employee does not exist" });
+    console.log(emp.emp_type);
       if(emp.emp_type!=='Lawyer')
         return res.status(400)
           .send("You must assign a Lawyer to fill form");
     
-    const admin = await Entity_Emp.findById(adminid);
-    admin.admin_details.investors_to_assign.filter(function (value, index, arr) {
+    // admin.admin_details.investors_to_assign.filter(function (value, index, arr) {
 
-      return value !==investorid ;
+    //   return value !==investorid ;
 
-    }); 
-    delete admin._id
-    delete admin.admin_details._id
-    console.log(admin)
+    // }); 
+    const emp1 = await Entity_Emp.findById(adminid);
+    if (!emp1) return res.status(404).send({ error: "Employee does not exist" });
+    console.log(emp1.emp_type);
+    if (emp1.emp_type !== 'Admin')
+      return res.status(400)
+        .send("You must be an admin");
+    Entity_Emp.findByIdAndUpdate(adminid,
+      { $pull: { "admin_details.investors_to_assign": investorid} },
+      { safe: true, upsert: true },
+      function (err, doc) {
+        if (err) {
+          console.log(err);
+        } else {
+          //do stuff
+        }
+      }
+    );
+    const admin = await Entity_Emp.findById(adminid)
 
-   const test= await Entity_Emp.updateOne(admin);
-    emp.lawyer_details.to_be_filled_for.push(investorid)
-    delete emp._id
-    delete emp.lawyer_details._id
-    const test1 = await Entity_Emp.updateOne(emp);
+    const test = await Entity_Emp.findByIdAndUpdate(id, 
+      { $push: { "lawyer_details.to_be_filled_for": investorid } },
+      { safe: true, upsert: true },
+      function (err, doc) {
+        if (err) {
+          console.log(err);
+        } else {
+          //do stuff
+        }
+      }
+    );
     res.json({ data:test });
 
   } catch (error) {
