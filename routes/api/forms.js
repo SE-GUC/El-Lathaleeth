@@ -7,6 +7,8 @@ const Form = require("../../models/Form");
 const Director = require("../../models/BoardOfDirector");
 const Address = require("../../models/Address");
 const Investor = require("../../models/Investor");
+const Entity_Emp = require("../../models/Entity_Emp");
+const Admin = require("../../models/Admin");
 
 const validator = require("../../validations/formValidations");
 
@@ -130,27 +132,13 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 
-//creating new SPC form Mongo
+//As an investor/lawyer I can create Form
+//creating new SPC/SSC form Mongo
 
-router.post("/SPC/", async (req, res) => {
+router.post("/create/", async (req, res) => {
+  const formType = req.body.formType;
   try {
-    const isValidated = validator.createValidation(req.body, "SPC");
-    if (isValidated.error)
-      return res
-        .status(400)
-        .send({ error: isValidated.error.details[0].message });
-    const newForm = await Form.create(req.body);
-    res.json({ msg: "Form was created successfully", data: newForm });
-  } catch (error) {
-    // We will be handling the error later
-    console.log(error);
-  }
-});
-//creating new SSC form Mongo
-
-router.post("/SSC/", async (req, res) => {
-  try {
-    const isValidated = validator.createValidation(req.body, "SSC");
+    const isValidated = validator.createValidation(req.body, formType);
     if (isValidated.error)
       return res
         .status(400)
@@ -163,6 +151,7 @@ router.post("/SSC/", async (req, res) => {
   }
 });
 
+//As an investor/lawyer I can update Form
 //Updating a form
 router.put("/update/:id", async (req, res) => {
   try {
@@ -189,4 +178,35 @@ router.put("/update/:id", async (req, res) => {
   }
 });
 
+//As an investor I can have a lawyer fill my form
+router.post("/sendToAdmin/", async (req, res) => {
+  const investor = req.body.investor;
+  //const formType = req.body.formType;
+  const admin = await Entity_Emp.findOneAndUpdate(
+    { emp_type: "Admin" },
+    { $push: { investors_to_assign: investor.id } },
+    { new: true },
+    (err, doc) => {
+      if (err) {
+        console.log("Something wrong when updating data!");
+      }
+
+      console.log(doc);
+    }
+  );
+  admin.admin_details.investors_to_assign.push(investor.id);
+  return res.json({ data: admin.admin_details.investors_to_assign });
+});
+//As an investor/lawyer I can view status of form
+router.get("/statusByID/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const findform = await Form.findById(id);
+    if (!findform)
+      return res.status(404).send({ error: "Form does not exist" });
+    res.json({ msg: "Status found", data: findform.status });
+  } catch (error) {
+    // Error will be handled later
+  }
+});
 module.exports = router;
