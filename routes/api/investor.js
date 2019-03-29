@@ -29,7 +29,8 @@ router.get("/getbyID/:id", async (req, res) => {
 router.get("/getFormsByID/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    const forms = await Form.findOne( { 'Investor.IDNumber' : id } );
+    const forms = await Form.find( { 'Form.formId' : id } );
+    console.log(forms)
     if (!forms)
       return res.status(404).send({ error: "Investor does not have forms" });
     res.json({ msg: "forms found", data: forms });
