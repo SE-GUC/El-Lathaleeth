@@ -188,14 +188,13 @@ router.post("/sendToAdmin/", async (req, res) => {
     { new: true },
     (err, doc) => {
       if (err) {
-        console.log("Something wrong when updating data!");
+        console.log("Something wrong");
       }
 
       console.log(doc);
     }
   );
-  admin.admin_details.investors_to_assign.push(investor.id);
-  return res.json({ data: admin.admin_details.investors_to_assign });
+  return res.json({ msg: "sent info to admin" });
 });
 //As an investor/lawyer I can view status of form
 router.get("/statusByID/:id", async (req, res) => {
