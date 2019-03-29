@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const Investor = require("../../models/Investor");
 const validator = require("../../validations/investorValidations");
+const Form = require("../../models/Form");
 
 // GET: select * from investors
 router.get("/get", async (req, res) => {
@@ -25,6 +26,17 @@ router.get("/getbyID/:id", async (req, res) => {
   }
 });
 
+router.get("/getFormsByID/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const forms = await Form.findOne( { 'Investor.IDNumber' : id } );
+    if (!forms)
+      return res.status(404).send({ error: "Investor does not have forms" });
+    res.json({ msg: "forms found", data: forms });
+  } catch (error) {
+    console.log(error);
+  }
+});
 // CREATE: insert into investors
 router.post("/create", async (req, res) => {
   try {
