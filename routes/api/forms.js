@@ -9,6 +9,7 @@ const Address = require("../../models/Address");
 const Investor = require("../../models/Investor");
 
 const validator = require("../../validations/formValidations");
+const commValidator =  require("../../validations/commentValidation");
 
 const mongoose = require("mongoose");
 
@@ -195,8 +196,11 @@ router.put("/commentOnForm/:id", async (req, res) => {
     const id = req.params.id;
     const form = await Form.findById(id);
     if (!form) return res.status(404).send({ error: "Form does not exist"});
+    const isValidated = commValidator.createValidation(req.body);
+    if (isValidated.error)return res.status(400).send({ error: isValidated.error.details[0].message });
+    const com = await Comment.create(req.body);
     const test =  await Form.findByIdAndUpdate(id,
-      { $push: {comments: comment}},
+      { $push: {comments: com}},
       { safe: true, upsert: true},
       function(err, doc){
         if(err){
