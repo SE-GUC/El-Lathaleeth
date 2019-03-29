@@ -68,7 +68,8 @@ module.exports = {
         .email()
         .required(),
       capital: Joi.number().required(),
-      capitalCurrency: Joi.string().required() // Drop Down
+      capitalCurrency: Joi.string().required(), // Drop Down
+      investorFormID: Joi.string().optional()
     };
     const SPCschema = {
       law: Joi.string().required(), //drop down menu
@@ -205,20 +206,18 @@ module.exports = {
       typeOfID: Joi.any()
         .valid(["passport", "id"])
         .required(), // Drop Down
-      IDNumber: Joi.string()
-        .min(8)
-        .required(),
+      IDNumber: Joi.string().min(8).required(),
       dateOfBirth: Joi.date().required(),
       address: Joi.string().required(),
       phoneNumber: Joi.string().length(11),
       faxNumber: Joi.string(),
       creditCardNumber: Joi.string().creditCard(),
-      email: Joi.string()
-        .email()
-        .required(),
+      email: Joi.string().email().required(),
       capital: Joi.number().required(),
-      capitalCurrency: Joi.string().required() // Drop Down
+      capitalCurrency: Joi.string().required(),// Drop Down
+      investorFormID: Joi.string().optional()
     };
+
     const SPCschema = {
       law: Joi.string().required(), //drop down menu
       legalForm: Joi.string().required(), //drop down menu
