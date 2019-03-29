@@ -14,6 +14,10 @@ router.get("/", async (req, res) => {
   const emps = await Entity_Emp.find();
   res.json({ data: emps });
 });
+// router.get("/law", async (req, res) => {
+//   const emps = await Lawyer.find();
+//   res.json({ data: emps });
+// });
 
 router.get("/byID/:id", async (req, res) => {
   try {
@@ -53,8 +57,8 @@ router.put("/update/:id", async (req, res) => {
       return res
         .status(400)
         .send({ error: isValidated.error.details[0].message });
-    const updatedEmp = await Entity_Emp.updateOne(req.body);
-    res.json({ msg: "Employee updated successfully" });
+    const updatedEmp = await Entity_Emp.findByIdAndUpdate(id, req.body, { new: true });
+    res.json({ msg: "Employee updated successfully" ,data:updatedEmp});
   } catch (error) {
     // We will be handling the error later
     console.log(error);
