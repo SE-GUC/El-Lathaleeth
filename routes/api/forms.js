@@ -189,4 +189,29 @@ router.put("/update/:id", async (req, res) => {
   }
 });
 
+//as an investor I can create comments on a form
+router.put("/commentOnForm/:id", async (req, res) => {
+  try{
+    const id = req.params.id;
+    const form = await Form.findById(id);
+    if (!form) return res.status(404).send({ error: "Form does not exist"});
+    const test =  await Form.findByIdAndUpdate(id,
+      { $push: {comments: comment}},
+      { safe: true, upsert: true},
+      function(err, doc){
+        if(err){
+          console.log(err);
+        }else{
+          //do stuff
+        }
+      }
+    );
+    res.json({data:test});
+  }
+  catch(error){
+    console.log(error)
+    //error will be handled later
+  }
+})
+
 module.exports = router;
