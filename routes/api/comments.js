@@ -51,6 +51,7 @@ router.put("/update/:id", async (req, res) => {
       return res
         .status(400)
         .send({ error: isValidated.error.details[0].message });
+
     const updatedCom = await Comment.findByIdAndUpdate(id,req.body);
     res.json({ msg: "Comment updated successfully" ,data: updatedCom});
   } catch (error) {
