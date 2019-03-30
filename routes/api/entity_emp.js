@@ -99,7 +99,7 @@ router.post("/lawyerfillform/:lawyerid/:investorid", async (req, res) => {
   const investorid=req.params.investorid
   Entity_Emp.findByIdAndUpdate(lawyerid,
     { $pull: { "lawyer_details.to_be_filled_for": investorid } },
-    { safe: true, upsert: true },
+    { safe: true },
     function (err, doc) {
       if (err) {
         console.log(err);
