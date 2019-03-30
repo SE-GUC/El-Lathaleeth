@@ -4,10 +4,7 @@ const mongoose = require("mongoose");
 const Investor = require("../../models/Investor");
 const validator = require("../../validations/investorValidations");
 const Form = require("../../models/Form");
-<<<<<<< HEAD
-=======
 const formvalidator = require("../../validations/formValidations");
->>>>>>> bf8d30ab9a36d01101257a99f4fc9065e651c80a
 
 // GET: select * from investors
 router.get("/get", async (req, res) => {
@@ -26,19 +23,6 @@ router.get("/getbyID/:id", async (req, res) => {
     res.json({ msg: "Employee found", data: investor });
   } catch (error) {
     // We will be handling the error later
-    console.log(error);
-  }
-});
-
-router.get("/getFormsByID/:id", async (req, res) => {
-  try {
-    const id = req.params.id;
-    const forms = await Form.find( { 'Form.formId' : id } );
-    console.log(forms)
-    if (!forms)
-      return res.status(404).send({ error: "Investor does not have forms" });
-    res.json({ msg: "forms found", data: forms });
-  } catch (error) {
     console.log(error);
   }
 });
