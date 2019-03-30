@@ -27,9 +27,9 @@ const formFunctions = {
     );
     return form;
   },
-  sendToAdmin: async () => {
+  sendToAdmin: async (idi,ida) => {
     const form = await axios.post(
-      "http://localhost:3000/api/forms/sendToAdmin/"
+      "http://localhost:3000/api/forms/sendToAdmin/"+idi+'/'+ida
     );
     return form;
   },
