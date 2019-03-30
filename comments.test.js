@@ -2,15 +2,15 @@ const comm_funcs = require("./funcs/comment_funcs");
 
 test("Testing Create Actually Creates Comment", async () => {
         expect.assertions(1);
-        const response = await comm_funcs.getComment();
-        const oldLength = response1.data.data.length;
+        const response = await comm_funcs.getComments();
+        const oldLength = response.data.data.length;
         const created = await comm_funcs.createComment({
             author_type: "Reviewer",
             author: "5c9fcd3e1d8fa137a812d237",
             text: "google",
             postedOn: "2015-10-02"
         });
-        const response1 = await comm_funcs.getComment();
+        const response1 = await comm_funcs.getComments();
         const newLength = response1.data.data.length;
         expect(newLength).toEqual(oldLength + 1);
     },30000);
