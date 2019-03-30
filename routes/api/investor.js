@@ -4,6 +4,10 @@ const mongoose = require("mongoose");
 const Investor = require("../../models/Investor");
 const validator = require("../../validations/investorValidations");
 const Form = require("../../models/Form");
+<<<<<<< HEAD
+=======
+const formvalidator = require("../../validations/formValidations");
+>>>>>>> bf8d30ab9a36d01101257a99f4fc9065e651c80a
 
 // GET: select * from investors
 router.get("/get", async (req, res) => {
@@ -75,11 +79,34 @@ router.put("/update/:id", async (req, res) => {
       return res.status(404).send({ error: "Investor does not exist" });
     const isValidated = validator.updateValidation(req.body);
     if (isValidated.error)
-      return res
-        .status(400)
-        .send({ error: isValidated.error.details[0].message });
-    const updatedInvestor = await Investor.updateOne(req.body);
-    res.json({ msg: "Investor updated successfully" });
+      return res.status(400).send({ error: isValidated.error.details[0].message });
+    const updatedInvestor = await Investor.findByIdAndUpdate(id, req.body, {new:true});
+
+    const up = await Form.update(
+        {"investor.investorFormID": id}, //query
+        {$set: {"investor": updatedInvestor}},
+        {multi: true}, //for multiple documents
+        function (err, model) {
+          if (err) {
+            console.log(err);
+            return res.send(err);
+          }
+        }
+    );
+
+    const up2 = await Form.update(
+      {"investor._id": id}, //query
+      {$set: {"investor.investorFormID": id}},
+      {multi: true}, //for multiple documents
+      function (err, model) {
+        if (err) {
+          console.log(err);
+          return res.send(err);
+        }
+      }
+  );
+
+    res.json({ msg: "Investor updated in investors and forms successfully", data:updatedInvestor });
   } catch (error) {
     // We will be handling the error later
     console.log(error);

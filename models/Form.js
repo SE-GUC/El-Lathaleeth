@@ -65,9 +65,9 @@ const FormSchema = new Schema({
   bitIL: {
     type: Number
   },
-  comments: {
+  comments: [{
     type: commentSchema
-  },
+  }],
   investor: { type: investorSchema, required: true }
 });
 

@@ -1,8 +1,9 @@
 const Joi = require("joi");
 
+
 module.exports = {
   createValidation: (request, formType) => {
-    const empSchema = {
+    const empSchema ={
       email: Joi.string()
         .email()
         .required(),
@@ -31,7 +32,7 @@ module.exports = {
       author_type: Joi.string()
         .valid(["Lawyer", "Reviewer"])
         .required(),
-      author: Joi.object(empSchema),
+      author: Joi.required(),
       text: Joi.string().required(),
       read_at: Joi.optional(),
       postedOn: Joi.optional(),
@@ -68,7 +69,8 @@ module.exports = {
         .email()
         .required(),
       capital: Joi.number().required(),
-      capitalCurrency: Joi.string().required() // Drop Down
+      capitalCurrency: Joi.string().required(), // Drop Down
+      investorFormID: Joi.string().optional()
     };
     const SPCschema = {
       law: Joi.string().required(), //drop down menu
@@ -86,7 +88,8 @@ module.exports = {
       lastTouch: Joi.string(),
       status: Joi.string(),
       deadline: Joi.date(),
-      bitIL: Joi.number(),
+      bitIL: Joi.number().any()
+      .valid([0, 1]),
       formType: Joi.any()
         .valid(["SPC", "SSC"])
         .required(), //drop down menu
@@ -133,7 +136,8 @@ module.exports = {
       lastTouch: Joi.string(),
       status: Joi.string(),
       deadline: Joi.date(),
-      bitIL: Joi.number(),
+      bitIL: Joi.number().any()
+      .valid([0, 1]),
       formType: Joi.any()
         .valid(["SPC", "SSC"])
         .required(), //drop down menu maybe same as up
@@ -180,7 +184,7 @@ module.exports = {
       author_type: Joi.string()
         .valid(["Lawyer", "Reviewer"])
         .required(),
-      author: Joi.object(empSchema),
+      author: Joi.required(),
       text: Joi.string().required(),
       read_at: Joi.optional(),
       postedOn: Joi.optional(),
@@ -205,20 +209,22 @@ module.exports = {
       typeOfID: Joi.any()
         .valid(["passport", "id"])
         .required(), // Drop Down
-      IDNumber: Joi.string()
-        .min(8)
-        .required(),
+      IDNumber: Joi.string().min(8).required(),
       dateOfBirth: Joi.date().required(),
       address: Joi.string().required(),
       phoneNumber: Joi.string().length(11),
       faxNumber: Joi.string(),
       creditCardNumber: Joi.string().creditCard(),
-      email: Joi.string()
-        .email()
-        .required(),
+      email: Joi.string().email().required(),
       capital: Joi.number().required(),
-      capitalCurrency: Joi.string().required() // Drop Down
+
+      capitalCurrency: Joi.string().required(),// Drop Down
+      investorFormID: Joi.string().optional(), 
+      _id:Joi.optional()
+      // Drop Down
+
     };
+
     const SPCschema = {
       law: Joi.string().required(), //drop down menu
       legalForm: Joi.string().required(), //drop down menu
