@@ -1,4 +1,4 @@
-const comm_funcs = require("./funcs/comment_funcs");
+const comm_funcs = require("../funcs/comment_funcs");
 
 test("Testing Create Actually Creates Comment", async () => {
         expect.assertions(1);
