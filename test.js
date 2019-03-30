@@ -11,7 +11,7 @@ test('', async () => {
 });
 
 
-test("Create Form SSC", async ()=>{
+test("Create Form", async ()=>{
   const formsLength = await Form.getForm();
   var form = {
     "formType": "SSC",
@@ -36,4 +36,4 @@ test("Create Form SSC", async ()=>{
   const formsLengthPlusOne = await Form.
   expect(formsLength.data.data.length + 1).toEqual(formsLengthPlusOne.data.data.length)
 });
-const emp_funcs = require("./funcs/entity_emp_funcs");
+
