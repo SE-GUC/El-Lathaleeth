@@ -42,7 +42,7 @@ test("Creating Form", async ()=>{
   });
   const response1 = await form_funcs.getForms();
   expect(response1.data.data.length).toEqual(oldLength + 1);
-});
+},100000);
 
 test("Testing Create Actually Creates with correct values", async () => {
   expect.assertions(3);
@@ -86,7 +86,7 @@ test("Testing Create Actually Creates with correct values", async () => {
   expect(response1.data.data.englishName).toEqual(created.data.data.englishName);
   expect(response1.data.data.phone).toEqual(created.data.data.phone);
   expect(response1.data.data.bitIL).toEqual(created.data.data.bitIL);
-});
+},100000);
 
 test("Testing Creating with wrong data types", async () => {
   expect.assertions(1);
@@ -131,4 +131,4 @@ test("Testing Creating with wrong data types", async () => {
   expect(error.message).toEqual("Request failed with status code 400");
   //400 bad request that we send when joi validation fails
 }
-});
+},100000);
