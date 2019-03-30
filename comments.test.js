@@ -2,6 +2,8 @@ const comm_funcs = require("./funcs/comment_funcs");
 
 test("Testing Create Actually Creates Comment", async () => {
         expect.assertions(1);
+        const response = await comm_funcs.getComment();
+        const oldLength = response1.data.data.length;
         const created = await comm_funcs.createComment({
             "author_type": "Reviewer",
             "author": "5c9e3fc1cb28604a9cebbe13",
@@ -18,7 +20,7 @@ test("Testing updating a comment", async () => {
     const created = await comm_funcs.createComment({
         "author_type": "Reviewer",
         "author": "5c9e3fc1cb28602a9cebbe13",
-        "text": "shite comment",
+        "text": "bad comment",
         "postedOn": "2010-02-02"
     });
     const update_comm = await comm_funcs.updateComment(created.data.data._id,{
