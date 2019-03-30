@@ -1,8 +1,9 @@
 const Joi = require("joi");
 
+
 module.exports = {
   createValidation: (request, formType) => {
-    const empSchema = {
+    const empSchema ={
       email: Joi.string()
         .email()
         .required(),
@@ -87,7 +88,8 @@ module.exports = {
       lastTouch: Joi.string(),
       status: Joi.string(),
       deadline: Joi.date(),
-      bitIL: Joi.number(),
+      bitIL: Joi.number().any()
+      .valid([0, 1]),
       formType: Joi.any()
         .valid(["SPC", "SSC"])
         .required(), //drop down menu
@@ -134,7 +136,8 @@ module.exports = {
       lastTouch: Joi.string(),
       status: Joi.string(),
       deadline: Joi.date(),
-      bitIL: Joi.number(),
+      bitIL: Joi.number().any()
+      .valid([0, 1]),
       formType: Joi.any()
         .valid(["SPC", "SSC"])
         .required(), //drop down menu maybe same as up
@@ -214,8 +217,12 @@ module.exports = {
       creditCardNumber: Joi.string().creditCard(),
       email: Joi.string().email().required(),
       capital: Joi.number().required(),
+
       capitalCurrency: Joi.string().required(),// Drop Down
       investorFormID: Joi.string().optional()
+      _id:Joi.optional()
+      // Drop Down
+
     };
 
     const SPCschema = {

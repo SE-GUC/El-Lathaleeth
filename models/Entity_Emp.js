@@ -34,9 +34,9 @@ const EmpSchema = new Schema({
     required: true,
     enum: ["Lawyer", "Investor", "Admin"]
   },
-  lawyer_details:{type:LawSchema},
-  reviewer_details:{type:RevSchema},
-  admin_details:{type: AdminSchema},
+  lawyer_details: { type: LawSchema },
+  reviewer_details: { type: RevSchema },
+  admin_details: { type: AdminSchema },
   _id: { type: Schema.Types.ObjectId, auto: true },
   joined_on: {
     type: Date,
