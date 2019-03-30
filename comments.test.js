@@ -1,5 +1,18 @@
 const comm_funcs = require("./funcs/comment_funcs");
 
+test("Testing Create Actually Creates in DB", async () => {
+    expect.assertions(1);
+    const response = await emp_funcs.getComments();
+    const oldLength = response.data.data.length;
+    const created = await emp_funcs.createComment({
+        
+
+});
+ const response1 = await emp_funcs.getComments();
+ const newLength = response1.data.data.length;
+ expect(newLength).toEqual(oldLength + 1);
+});
+
 test("Testing updating a comment", async () => {
     expect.assertions(1);
     const created = await comm_funcs.createComment({
