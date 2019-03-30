@@ -11,6 +11,7 @@ const Entity_Emp = require("../../models/Entity_Emp");
 const Admin = require("../../models/Admin");
 
 const validator = require("../../validations/formValidations");
+const commValidator =  require("../../validations/commentValidation");
 
 const mongoose = require("mongoose");
 
@@ -178,6 +179,34 @@ router.put("/update/:id", async (req, res) => {
   }
 });
 
+//as an investor I can create comments on a form
+router.put("/commentOnForm/:id", async (req, res) => {
+  try{
+    const id = req.params.id;
+    const form = await Form.findById(id);
+    if (!form) return res.status(404).send({ error: "Form does not exist"});
+    const isValidated = commValidator.createValidation(req.body);
+    if (isValidated.error)return res.status(400).send({ error: isValidated.error.details[0].message });
+    const com = await Comment.create(req.body);
+    const test =  await Form.findByIdAndUpdate(id,
+      { $push: {comments: com}},
+      { safe: true, upsert: true},
+      function(err, doc){
+        if(err){
+          console.log(err);
+        }else{
+          //do stuff
+        }
+      }
+    );
+    res.json({data:test});
+  }
+  catch(error){
+    console.log(error)
+    //error will be handled later
+  }
+})
+
 //As an investor I can have a lawyer fill my form
 router.post("/sendToAdmin/:idi/:ida", async (req, res) => {
   //const investor = req.body.investor;
@@ -210,4 +239,5 @@ router.get("/statusByID/:id", async (req, res) => {
     // Error will be handled later
   }
 });
+
 module.exports = router;
