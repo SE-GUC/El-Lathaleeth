@@ -89,6 +89,7 @@ module.exports = {
       status: Joi.string(),
       deadline: Joi.date(),
       bitIL: Joi.number().valid([0, 1]),
+      comments: Joi.object(commentSchema),
       formType: Joi.any()
         .valid(["SPC", "SSC"])
         .required(), //drop down menu
@@ -241,6 +242,7 @@ module.exports = {
       status: Joi.string(),
       deadline: Joi.date(),
       bitIL: Joi.number(),
+      comments: Joi.object(commentSchema),
       formType: Joi.any()
         .valid(["SPC", "SSC"])
         .required(), //drop down menu

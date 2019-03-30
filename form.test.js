@@ -37,7 +37,10 @@ test("Creating Form", async ()=>{
     "lastTouch": "_iddddd",
     "status": "active",
     "deadline": "2019-06-06",
-    "bitIL": 0
+    "bitIL": 0,
+    "comments": {
+
+    }
   });
   const response1 = await form_funcs.getForms();
   expect(response1.data.data.length).toEqual(oldLength + 1);

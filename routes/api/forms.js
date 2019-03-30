@@ -239,5 +239,16 @@ router.get("/statusByID/:id", async (req, res) => {
     // Error will be handled later
   }
 });
+router.get("/formComment/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const findform = await Form.findById(id);
+    if (!findform)
+      return res.status(404).send({ error: "Form does not exist" });
+    res.json({ msg: "Comment form", data: findform.comments });
+  } catch (error) {
+    // Error will be handled later
+  }
+});
 
 module.exports = router;
