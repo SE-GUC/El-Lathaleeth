@@ -27,7 +27,7 @@ test("Testing 'get all investors' and 'create investor' adds the new investor to
         const newinvestors = await investor_funcs.getAllInvestors();
         const newLength = newinvestors.data.data.length;
         expect(newLength).toEqual(oldLength+1);
-    }
+    },100000
 );
 
 //tests create and delete
@@ -58,7 +58,7 @@ test("Testing 'create investor' and 'delete investor' removes the new investor f
         const newinvestors = await investor_funcs.getAllInvestors();
         const newLength = newinvestors.data.data.length;
         expect(newLength).toEqual(oldLength);
-    }
+    },100000
 );
 
 //tests create and getByID
@@ -85,7 +85,7 @@ test("Testing 'create investor' and 'get by id' gets the new investor from inves
         });
         const getInvestor = await investor_funcs.getInvestorByID(newInvestor.data.data._id);
         expect(getInvestor.data.data._id).toEqual(newInvestor.data.data._id);
-    }
+    },100000
 );
 
 //response.data.data[0].title
@@ -174,7 +174,7 @@ test("Testing 'create investor' and 'update investor' inserts new investor and u
         },newInvestor.data.data._id);
         const getInvestor = await investor_funcs.getInvestorByID(newInvestor.data.data._id);
         expect(getInvestor.data.data.firstName).toEqual(updatedInvestor.data.data.firstName);
-    }
+    },100000
 );
 
 /*
