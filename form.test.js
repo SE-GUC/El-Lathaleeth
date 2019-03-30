@@ -42,6 +42,7 @@ test("Creating Form", async ()=>{
   const response1 = await form_funcs.getForms();
   expect(response1.data.data.length).toEqual(oldLength + 1);
 });
+
 test("Testing Create Actually Creates with correct values", async () => {
   expect.assertions(3);
   const created = await form_funcs.createForm({
@@ -84,6 +85,7 @@ test("Testing Create Actually Creates with correct values", async () => {
   expect(response1.data.data.phone).toEqual(created.data.data.phone);
   expect(response1.data.data.bitIL).toEqual(created.data.data.bitIL);
 });
+
 test("Testing Creating with wrong data types", async () => {
   expect.assertions(1);
   try {
