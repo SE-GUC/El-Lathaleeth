@@ -1,14 +1,5 @@
-const emp_funcs = require('./funcs/entity_emp_funcs');
 const forms_func = require('./funcs/forms_funcs');
 const Form = require("./models/Form");
-const comment_funcs = require('./funcs/comment_funcs');
-
-test('', async () => {
-    expect.assertions(1)
-    const response = await emp_funcs.getEntity_Emp()
-    expect(response.data.data[0].username).toEqual("ALIouidan");
-});
-
 
 test("Create Form", async ()=>{
   const formsLength = await Form.getForm();
