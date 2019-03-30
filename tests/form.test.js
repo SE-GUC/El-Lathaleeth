@@ -1,4 +1,4 @@
-const form_funcs = require("./funcs/form_funcs");
+const form_funcs = require("../funcs/form_funcs");
 
 test("Creating Form", async () => {
   expect.assertions(1);

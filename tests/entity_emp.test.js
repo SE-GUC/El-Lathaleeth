@@ -1,6 +1,6 @@
-const emp_funcs = require("./funcs/entity_emp_funcs");
-const investor_funcs = require("./funcs/investor_funcs");
-const form_funcs = require("./funcs/form_funcs");
+const emp_funcs = require("../funcs/entity_emp_funcs");
+const investor_funcs = require("../funcs/investor_funcs");
+const form_funcs = require("../funcs/form_funcs");
 test("Testing Create Actually Creates in DB", async () => {
   expect.assertions(1);
   const response = await emp_funcs.getEntity_Emp();
@@ -260,78 +260,6 @@ test("testing delete with incorrect id", async () => {
 //others are done
 test('Testing Investor choosing to have laweyr fill form, then admin assigns a lawyer', async () => {
     expect.assertions(3)
-    const investor = {
-        firstName: "Nadeen",
-        middleName: "Adel",
-        lastName: "Riad",
-        gender: "female",
-        nationality: "Egyptian",
-        investorType: "individual",
-        typeOfID: "id",
-        IDNumber: "1234567890",
-        dateOfBirth: "1997-09-30T00:00:00.000Z",
-        address: "New Cairo",
-        phoneNumber: "01117208627",
-        faxNumber: "1234A1234",
-        creditCardNumber: "4024007158885060",
-        email: "nadeen@gmail.com",
-        capital: 1000000,
-        capitalCurrency: "EGP"
-    }
-    const lawyer = {lawyer_details: {
-        pending_forms: [],
-        reviewed_forms: [],
-        to_be_filled_for: [],
-        filled_forms: [],
-        speciality: "mo7amy 5ol3",
-        education: "Bsc."
-        },
-        admin_details: {
-            registered_investors: [],
-            investors_to_assign: []
-        },
-        reviewer_details: {
-            pending_forms: [],
-            reviewed_forms: [],
-        },
-        username: "Alsouidan",
-        password: "mshwed h2oklmdvol",
-        email: "Hwedfdghi@gmail.com",
-        dateOfBirth: "1998-02-02",
-        firstName: "Ali",
-        middleName: "Amr",
-        lastName: "Souidan",
-        emp_type: "Lawyer",
-        joined_on: "2018-02-15T00:00:00.000Z"
-}
-    const admin = {
-        lawyer_details: {
-            pending_forms: [],
-            reviewed_forms: [],
-            to_be_filled_for: [],
-            filled_forms: [],
-            speciality: "mo7amy 5ol3",
-            education: "Bsc."
-        },
-        admin_details: {
-            registered_investors: [],
-            investors_to_assign: []
-        },
-        reviewer_details: {
-            pending_forms: [],
-            reviewed_forms: [],
-        },
-        username: "Alsouidan",
-        password: "mshwed h2oklmdvol",
-        email: "Hwedfdghi@gmail.com",
-        dateOfBirth: "1998-02-02",
-        firstName: "Ali",
-        middleName: "Amr",
-        lastName: "Souidan",
-        emp_type: "Admin",
-        joined_on: "2018-02-15T00:00:00.000Z"
-    }
-
     const inv = await investor_funcs.createNewInvestor({
         firstName: "somefirstname",
         middleName: "somemiddlename",
@@ -420,162 +348,137 @@ test('Testing Investor choosing to have laweyr fill form, then admin assigns a l
     
 },10000
 );
-// test('Testing Investor choosing to have laweyr fill form, then admin assigns a lawyer, then lawyer fills form', async () => {
-//     expect.assertions(3)
-//     const investor = {
-//         firstName: "Nadeen",
-//         middleName: "Adel",
-//         lastName: "Riad",
-//         gender: "female",
-//         nationality: "Egyptian",
-//         investorType: "individual",
-//         typeOfID: "id",
-//         IDNumber: "1234567890",
-//         dateOfBirth: "1997-09-30T00:00:00.000Z",
-//         address: "New Cairo",
-//         phoneNumber: "01117208627",
-//         faxNumber: "1234A1234",
-//         creditCardNumber: "4024007158885060",
-//         email: "nadeen@gmail.com",
-//         capital: 1000000,
-//         capitalCurrency: "EGP"
-//     }
-//     const lawyer = {
-//         lawyer_details: {
-//             pending_forms: [],
-//             reviewed_forms: [],
-//             to_be_filled_for: [],
-//             filled_forms: [],
-//             speciality: "mo7amy 5ol3",
-//             education: "Bsc."
-//         },
-//         admin_details: {
-//             registered_investors: [],
-//             investors_to_assign: []
-//         },
-//         reviewer_details: {
-//             pending_forms: [],
-//             reviewed_forms: [],
-//         },
-//         username: "Alsouidan",
-//         password: "mshwed h2oklmdvol",
-//         email: "Hwedfdghi@gmail.com",
-//         dateOfBirth: "1998-02-02",
-//         firstName: "Ali",
-//         middleName: "Amr",
-//         lastName: "Souidan",
-//         emp_type: "Lawyer",
-//         joined_on: "2018-02-15T00:00:00.000Z"
-//     }
-//     const admin = {
-//         lawyer_details: {
-//             pending_forms: [],
-//             reviewed_forms: [],
-//             to_be_filled_for: [],
-//             filled_forms: [],
-//             speciality: "mo7amy 5ol3",
-//             education: "Bsc."
-//         },
-//         admin_details: {
-//             registered_investors: [],
-//             investors_to_assign: []
-//         },
-//         reviewer_details: {
-//             pending_forms: [],
-//             reviewed_forms: [],
-//         },
-//         username: "Alsouidan",
-//         password: "mshwed h2oklmdvol",
-//         email: "Hwedfdghi@gmail.com",
-//         dateOfBirth: "1998-02-02",
-//         firstName: "Ali",
-//         middleName: "Amr",
-//         lastName: "Souidan",
-//         emp_type: "Admin",
-//         joined_on: "2018-02-15T00:00:00.000Z"
-//     }
+test('Testing Investor choosing to have laweyr fill form, then admin assigns a lawyer, then lawyer fills form', async () => {
+    expect.assertions(2)
+    const inv = await investor_funcs.createNewInvestor({
+        firstName: "somefirstname",
+        middleName: "somemiddlename",
+        lastName: "somelastname",
+        gender: "female",
+        nationality: "Egyptian",
+        investorType: "individual",
+        typeOfID: "id",
+        IDNumber: "1234567890",
+        dateOfBirth: "1999-09-19",
+        address: "my address",
+        phoneNumber: "01234567890",
+        faxNumber: "1234A1234",
+        creditCardNumber: "4024007158885060",
+        email: "some_email@gmail.com",
+        capital: "100000",
+        capitalCurrency: "Euro"
+    });
+    const adm = await emp_funcs.createEntity_Emp({
+        lawyer_details: {
+            pending_forms: [],
+            reviewed_forms: [],
+            to_be_filled_for: [],
+            filled_forms: [],
+            speciality: "mo7amy 5ol3",
+            education: "Bsc."
+        },
+        admin_details: {
+            registered_investors: [],
+            investors_to_assign: []
+        },
+        reviewer_details: {
+            pending_forms: [],
+            reviewed_forms: []
+        },
+        username: "Alsouidan",
+        password: "mshwed h2oklmdvol",
+        email: "Hwedfdghi@gmail.com",
+        dateOfBirth: "1998-02-02",
+        firstName: "Ali",
+        middleName: "Amr",
+        lastName: "Souidan",
+        emp_type: "Admin",
+        joined_on: "2018-02-15T00:00:00.000Z"
+    });
+    const law = await emp_funcs.createEntity_Emp({
+        lawyer_details: {
+            pending_forms: [],
+            reviewed_forms: [],
+            to_be_filled_for: [],
+            filled_forms: [],
+            speciality: "mo7amy 5ol3",
+            education: "Bsc."
+        },
+        admin_details: {
+            registered_investors: [],
+            investors_to_assign: []
+        },
+        reviewer_details: {
+            pending_forms: [],
+            reviewed_forms: [],
+        },
+        username: "Alsouidan",
+        password: "mshwed h2oklmdvol",
+        email: "Hwedfdghi@gmail.com",
+        dateOfBirth: "1998-02-02",
+        firstName: "Ali",
+        middleName: "Amr",
+        lastName: "Souidan",
+        emp_type: "Lawyer",
+        joined_on: "2018-02-15T00:00:00.000Z"
+    });
+    const sent_to = await form_funcs.sendToAdmin(inv.data.data._id, adm.data.data._id);
+    const assigned = await emp_funcs.assignLawyer(
+        law.data.data._id,
+        inv.data.data._id,
+        adm.data.data._id
+    );
+    const filled_form = await emp_funcs.lawyerFillForm(
+      law.data.data._id,
+      inv.data.data._id,
+      {
+        formType: "SPC",
+        address: "Bouja",
+        arabicName: "???? ???????",
+        englishName: "Lina Productions",
+        phone: "11111111111",
+        fax: "23344",
+        investor: {
+          firstName: "Nadeen",
+          middleName: "Amr",
+          lastName: "Riad",
+          gender: "female",
+          nationality: "Egyptian",
+          investorType: "individual",
+          typeOfID: "id",
+          IDNumber: "1234567890",
+          dateOfBirth: "1970-03-21",
+          address: "Some place",
+          phoneNumber: "01117208627",
+          faxNumber: "1234A1234",
+          creditCardNumber: "4024007158885060",
+          email: "hello@gmail.com",
+          capital: "1000000",
+          capitalCurrency: "Euro",
+          investorFormID: inv.data.data._id
+        },
+        capitalCurr: "Euro",
+        capitalVal: 500000,
+        law: "Laws drop down menu",
+        legalForm: "Legal form of company drop down",
+        createdOn: "2019-03-02T19:55:25.722Z",
+        lastTouch: "_iddddd",
+        status: "active",
+        deadline: "2019-06-06",
+        bitIL: 0,
+        comments: []
+      }
+    );
+    const new_law = await emp_funcs.getEntity_EmpbyID(law.data.data._id)
+    expect(new_law.data.data.lawyer_details.to_be_filled_for).not.toContain(inv.data.data._id)
+    expect(filled_form.data.data.investor.investorFormID).toEqual(
+      inv.data.data._id
+    );
 
-//     const inv = await investor_funcs.createNewInvestor({
-//         firstName: "somefirstname",
-//         middleName: "somemiddlename",
-//         lastName: "somelastname",
-//         gender: "female",
-//         nationality: "Egyptian",
-//         investorType: "individual",
-//         typeOfID: "id",
-//         IDNumber: "1234567890",
-//         dateOfBirth: "1999-09-19",
-//         address: "my address",
-//         phoneNumber: "01234567890",
-//         faxNumber: "1234A1234",
-//         creditCardNumber: "4024007158885060",
-//         email: "some_email@gmail.com",
-//         capital: "100000",
-//         capitalCurrency: "Euro"
-//     });
-//     const adm = await emp_funcs.createEntity_Emp({
-//         lawyer_details: {
-//             pending_forms: [],
-//             reviewed_forms: [],
-//             to_be_filled_for: [],
-//             filled_forms: [],
-//             speciality: "mo7amy 5ol3",
-//             education: "Bsc."
-//         },
-//         admin_details: {
-//             registered_investors: [],
-//             investors_to_assign: []
-//         },
-//         reviewer_details: {
-//             pending_forms: [],
-//             reviewed_forms: []
-//         },
-//         username: "Alsouidan",
-//         password: "mshwed h2oklmdvol",
-//         email: "Hwedfdghi@gmail.com",
-//         dateOfBirth: "1998-02-02",
-//         firstName: "Ali",
-//         middleName: "Amr",
-//         lastName: "Souidan",
-//         emp_type: "Admin",
-//         joined_on: "2018-02-15T00:00:00.000Z"
-//     });
-//     const law = await emp_funcs.createEntity_Emp({
-//         lawyer_details: {
-//             pending_forms: [],
-//             reviewed_forms: [],
-//             to_be_filled_for: [],
-//             filled_forms: [],
-//             speciality: "mo7amy 5ol3",
-//             education: "Bsc."
-//         },
-//         admin_details: {
-//             registered_investors: [],
-//             investors_to_assign: []
-//         },
-//         reviewer_details: {
-//             pending_forms: [],
-//             reviewed_forms: [],
-//         },
-//         username: "Alsouidan",
-//         password: "mshwed h2oklmdvol",
-//         email: "Hwedfdghi@gmail.com",
-//         dateOfBirth: "1998-02-02",
-//         firstName: "Ali",
-//         middleName: "Amr",
-//         lastName: "Souidan",
-//         emp_type: "Lawyer",
-//         joined_on: "2018-02-15T00:00:00.000Z"
-//     });
-//     const sent_to = await form_funcs.sendToAdmin(inv.data.data._id, adm.data.data._id);
-//     const new_adm = await emp_funcs.getEntity_EmpbyID(adm.data.data._id)
-//     const assigned = await emp_funcs.assignLawyer(
-//         law.data.data._id,
-//         inv.data.data._id,
-//         adm.data.data._id
-//     );
+
+
     
 
 
-// }, 10000
-// );
+}, 10000
+);
