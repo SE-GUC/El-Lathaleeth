@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const emp_funcs = require('./funcs/entity_emp_funcs');
 const forms_func = require('./funcs/forms_funcs');
 const Form = require("./models/Form");
@@ -37,6 +36,4 @@ test("Create Form SSC", async ()=>{
   const formsLengthPlusOne = await Form.
   expect(formsLength.data.data.length + 1).toEqual(formsLengthPlusOne.data.data.length)
 });
-=======
 const emp_funcs = require("./funcs/entity_emp_funcs");
->>>>>>> Dev
