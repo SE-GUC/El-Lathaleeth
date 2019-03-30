@@ -32,11 +32,11 @@ const EmpSchema = new Schema({
   emp_type: {
     type: String,
     required: true,
-    enum: ["Lawyer", "Investor", "Admin"]
+    enum: ["Lawyer", "Reviewer", "Admin"]
   },
-  lawyer_details: { type: LawSchema },
-  reviewer_details: { type: RevSchema },
-  admin_details: { type: AdminSchema },
+  lawyer_details: { type: LawSchema, required: true},
+  reviewer_details: { type: RevSchema, required: true},
+  admin_details: { type: AdminSchema , required:true},
   _id: { type: Schema.Types.ObjectId, auto: true },
   joined_on: {
     type: Date,

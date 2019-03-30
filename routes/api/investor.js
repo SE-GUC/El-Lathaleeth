@@ -32,7 +32,8 @@ router.post("/create", async (req, res) => {
   try {
     const isValidated = validator.createValidation(req.body);
     if (isValidated.error)
-      return res.status(400).send({ error: "Invalid field datatype(s) enetered" });
+      //return res.status(400).send({ error: isValidated.error.details[0].message });
+      return res.status(400).send({ error: "Invalid datatype entered for one or more of the fields" });
     const newInvestor = await Investor.create(req.body);
     res.json({ msg: "Investor was created successfully", data: newInvestor });
   } catch (error) {
@@ -45,6 +46,9 @@ router.post("/create", async (req, res) => {
 router.delete("/delete/:id", async (req, res) => {
   try {
     const id = req.params.id;
+    const investor = await Investor.findById(id);
+    if (!investor)
+      return res.status(404).send({ error: "Investor does not exist" });
     const deletedInvestor = await Investor.findByIdAndRemove(id);
     res.json({ msg: "Investor was deleted successfully" });
   } catch (error) {
@@ -62,7 +66,8 @@ router.put("/update/:id", async (req, res) => {
       return res.status(404).send({ error: "Investor does not exist" });
     const isValidated = validator.updateValidation(req.body);
     if (isValidated.error)
-      return res.status(400).send({ error: "Invalid field datatype(s) enetered" });
+      //return res.status(400).send({ error: isValidated.error.details[0].message });
+      return res.status(400).send({ error: "Invalid datatype entered for one or more of the fields" });
     const updatedInvestor = await Investor.findByIdAndUpdate(id, req.body, {new:true});
 
     const up = await Form.update(
@@ -93,6 +98,16 @@ router.put("/update/:id", async (req, res) => {
   } catch (error) {
     // We will be handling the error later
     console.log(error);
+  }
+});
+
+router.delete("/deleteAll/", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deleteInvestor = await Investor.remove({});
+    res.json({ msg: "All Investors have been successfully deleted" });
+  } catch (error) {
+    //Error will be handled later
   }
 });
 
