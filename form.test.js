@@ -38,9 +38,7 @@ test("Creating Form", async ()=>{
     "status": "active",
     "deadline": "2019-06-06",
     "bitIL": 0,
-    "comments": {
-
-    }
+    "comments": []
   });
   const response1 = await form_funcs.getForms();
   expect(response1.data.data.length).toEqual(oldLength + 1);
@@ -81,7 +79,8 @@ test("Testing Create Actually Creates with correct values", async () => {
     "lastTouch": "_iddddd",
     "status": "active",
     "deadline": "2019-06-06",
-    "bitIL": 0
+    "bitIL": 0,
+    "comments": []
   });
   const response1 = await form_funcs.getFormByID(created.data.data._id); 
   expect(response1.data.data.englishName).toEqual(created.data.data.englishName);
@@ -125,7 +124,8 @@ test("Testing Creating with wrong data types", async () => {
     "lastTouch": "_iddddd",
     "status": "active",
     "deadline": "2019-06-06",
-    "bitIL": "INVALID DATA"
+    "bitIL": "INVALID DATA",
+    "comments": []
   });
 } catch (error) {
   expect(error.message).toEqual("Request failed with status code 400");

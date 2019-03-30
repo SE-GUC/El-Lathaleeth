@@ -89,7 +89,7 @@ module.exports = {
       status: Joi.string(),
       deadline: Joi.date(),
       bitIL: Joi.number().valid([0, 1]),
-      comments: Joi.object(commentSchema),
+      comments: Joi.required(),
       formType: Joi.any()
         .valid(["SPC", "SSC"])
         .required(), //drop down menu
@@ -142,7 +142,7 @@ module.exports = {
         .valid(["SPC", "SSC"])
         .required(), //drop down menu maybe same as up
       investor: Joi.object(investorSchema).required(),
-      comments: Joi.object(commentSchema),
+      comments: Joi.required(),
       boardOfDirectors: Joi.array()
         .min(1)
         .items(Joi.object(direcSchema).required())
@@ -242,7 +242,7 @@ module.exports = {
       status: Joi.string(),
       deadline: Joi.date(),
       bitIL: Joi.number(),
-      comments: Joi.object(commentSchema),
+      comments: Joi.required(),
       formType: Joi.any()
         .valid(["SPC", "SSC"])
         .required(), //drop down menu
@@ -294,7 +294,7 @@ module.exports = {
         .valid(["SPC", "SSC"])
         .required(), //drop down menu maybe same as up
       investor: Joi.object(investorSchema).required(),
-      comments: Joi.object(commentSchema),
+      comments: Joi.required(),
       boardOfDirectors: Joi.array()
         .min(1)
         .items(Joi.object(direcSchema).required())
