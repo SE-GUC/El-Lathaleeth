@@ -230,7 +230,7 @@ test("Testing Getting by id with an incorrect id", async () => {
  catch(error){
   expect(error.message).toEqual("Request failed with status code 404");
  }
-},10000);
+},30000);
 
 test("Testing Delete with correct id", async () => {
   try{
@@ -245,7 +245,7 @@ test("Testing Delete with correct id", async () => {
   catch(error){
     //
   }
-});
+},30000);
 
 test("testing delete with incorrect id", async () => {
   try{
@@ -255,7 +255,7 @@ test("testing delete with incorrect id", async () => {
   catch(error){
     expect(error.message).toEqual("Request failed with status code 404")
   }
-},10000)
+},30000)
 //this one will be tricky as it is dependant on other user stories yet to be done, so I will postpone till
 //others are done
 test('Testing Investor choosing to have laweyr fill form, then admin assigns a lawyer', async () => {
