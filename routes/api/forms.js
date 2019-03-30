@@ -172,8 +172,8 @@ router.put("/update/:id", async (req, res) => {
       return res
         .status(400)
         .send({ error: isValidated.error.details[0].message });
-    const updatedForm = await Form.updateOne(req.body);
-    res.json({ msg: "Form updated successfully" });
+    const updatedForm = await Form.findByIdAndUpdate(id,req.body, {new:true});
+    res.json({ msg: "Form updated successfully", data:updatedForm });
   } catch (error) {
     console.log(error);
   }
@@ -209,8 +209,6 @@ router.put("/commentOnForm/:id", async (req, res) => {
 
 //As an investor I can have a lawyer fill my form
 router.post("/sendToAdmin/:idi/:ida", async (req, res) => {
-  //const investor = req.body.investor;
-  //const formType = req.body.formType;
   const idi = req.params.idi;
   const ida = req.params.ida;
   const admin = await Entity_Emp.findByIdAndUpdate(
