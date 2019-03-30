@@ -1,9 +1,10 @@
-const forms_func = require('./funcs/forms_funcs');
-const Form = require("./models/Form");
+const form_funcs = require('./funcs/form_funcs');
 
-test("Create Form", async ()=>{
-  const formsLength = await Form.getForm();
-  var form = {
+test("Creating Form", async ()=>{
+  expect.assertions(1);
+  const response = await form_funcs.getForms();
+  const oldLength = response.data.data.length;
+  const create = await form_funcs.createForm({
     "formType": "SPC",
     "address": "Bouja",
     "arabicName": "???? ???????",
@@ -14,10 +15,10 @@ test("Create Form", async ()=>{
       "firstName": "Nadeen",
       "middleName": "Amr",
       "lastName": "Riad",
-      "gender": "Female",
+      "gender": "female",
       "nationality": "Egyptian",
-      "investorType": "Individual",
-      "typeOfID": "Id",
+      "investorType": "individual",
+      "typeOfID": "id",
       "IDNumber": "1234567890",
       "dateOfBirth": "1970-03-21",
       "address": "Some place",
@@ -37,9 +38,9 @@ test("Create Form", async ()=>{
     "status": "active",
     "deadline": "2019-06-06",
     "bitIL": 0
-  }
-  const response = await forms_func.createSSCForm(form);
-  const formsLengthPlusOne = await Form.
-  expect(formsLength.data.data.length + 1).toEqual(formsLengthPlusOne.data.data.length)
+  });
+  const response1 = await form_funcs.getForms();
+  expect(response1.data.data.length).toEqual(oldLength + 1);
+ 
 });
 

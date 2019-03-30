@@ -46,7 +46,7 @@ const formFunctions = {
   },
   createForm: async requestBody => {
     const createdForm = await axios.post(
-      "http://localhost:3000/api/forms/",
+      "http://localhost:3000/api/forms/create/",
       requestBody
     );
     return createdForm

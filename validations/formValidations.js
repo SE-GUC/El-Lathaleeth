@@ -88,8 +88,7 @@ module.exports = {
       lastTouch: Joi.string(),
       status: Joi.string(),
       deadline: Joi.date(),
-      bitIL: Joi.number().any()
-      .valid([0, 1]),
+      bitIL: Joi.number().valid([0, 1]),
       formType: Joi.any()
         .valid(["SPC", "SSC"])
         .required(), //drop down menu
@@ -136,7 +135,7 @@ module.exports = {
       lastTouch: Joi.string(),
       status: Joi.string(),
       deadline: Joi.date(),
-      bitIL: Joi.number().any()
+      bitIL: Joi.number()
       .valid([0, 1]),
       formType: Joi.any()
         .valid(["SPC", "SSC"])
