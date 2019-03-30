@@ -74,15 +74,15 @@ router.delete("/delete/:id", async (req, res) => {
     //Error will be handled later
   }
 }); 
-// router.delete("/deleteAll/", async (req, res) => {
-//   try {
-//     const id = req.params.id;
-//     const deleteEmp = await Entity_Emp.remove({});
-//     res.json({ msg: "Employee successfully deleted" });
-//   } catch (error) {
-//     //Error will be handled later
-//   }
-// }); 
+router.delete("/deleteAll/", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deleteEmp = await Entity_Emp.remove({});
+    res.json({ msg: "Employee successfully deleted" });
+  } catch (error) {
+    //Error will be handled later
+  }
+}); 
 //deletes all instances of investor in to be filled for
 router.post("/lawyerfillform/:lawyerid/:investorid", async (req, res) => {
   try {
