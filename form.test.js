@@ -43,4 +43,28 @@ test("Creating Form", async ()=>{
   expect(response1.data.data.length).toEqual(oldLength + 1);
  
 });
+test("Testing Getting by id with a correct id", async () =>{
+  try{
+    expect.assertions(1);
+    const allForms  =  await form_funcs.getForms();
+    const response = await form_funcs.getFormByID(allForms.data.data[0]._id);
+    expect(response.data.data.length).toEqual(1);
+
+
+  }
+  catch(error){
+    // expect(error.message).toEqual("Employee does not exist");
+  }
+},30000);
+
+test("Testing Getting by id with an incorrect id", async () => {
+ try{
+  expect.assertions(1);
+  const response = await form_funcs.getFormByID("5c9e425d2fee3419ac5abd74");
+  expect(response.data.data.length).toEqual(0);
+ }
+ catch(error){
+  expect(error.message).toEqual("Request failed with status code 404")
+ }
+});
 
