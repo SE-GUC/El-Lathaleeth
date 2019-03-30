@@ -131,9 +131,9 @@ router.put("/assignLawyer/:lawyerid/:investorid/:adminid", async (req, res) => {
     if (emp1.emp_type !== 'Admin')
       return res.status(400)
         .send("You must be an admin");
-    Entity_Emp.findByIdAndUpdate(adminid,
+    Entity_Emp.update({"emp_type":"Admin"}, //not working as should
       { $pull: { "admin_details.investors_to_assign": investorid} },
-      { safe: true, upsert: true },
+      { safe: true,multi: true },
       function (err, doc) {
         if (err) {
           console.log(err);
