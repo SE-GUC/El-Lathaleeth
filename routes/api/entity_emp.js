@@ -69,6 +69,7 @@ router.delete("/delete/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const deleteEmp = await Entity_Emp.findByIdAndDelete(id);
+    if(!deleteEmp) return res.status(404).send({ error: "Employee does not exist"});
     res.json({ msg: "Employee successfully deleted" });
   } catch (error) {
     //Error will be handled later

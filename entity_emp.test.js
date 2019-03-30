@@ -157,6 +157,56 @@ test("Testing Creating with wrong data types", async () => {
     //400 bad request that we send when joi validation fails
   }
 });
+
+test("Testing Getting by id with a correct id", async () =>{
+  try{
+    expect.assertions(1);
+    const allEmps  =  await emp_funcs.getEntity_Emp();
+    const response = await emp_funcs.getEntity_EmpbyID(allEmps.data.data[0]._id);
+    expect(response.data.data.length).toEqual(1);
+
+
+  }
+  catch(error){
+    // expect(error.message).toEqual("Employee does not exist");
+  }
+},30000);
+
+test("Testing Getting by id with an incorrect id", async () => {
+ try{
+  expect.assertions(1);
+  const response = await emp_funcs.getEntity_EmpbyID("5c9e425d2fee3419ac5abd70");
+  expect(response.data.data.length).toEqual(0);
+ }
+ catch(error){
+  expect(error.message).toEqual("Request failed with status code 404");
+ }
+});
+
+test("Testing Delete with correct id", async () => {
+  try{
+    expect.assertions(1);
+    const allEmps = await emp_funcs.getEntity_Emp();
+    const oldLength = allEmps.data.data.length;
+    const response =  await emp_funcs.deleteEntity_Emp(allEmps.data.data[0]._id);
+    const after = await emp_funcs.getEntity_Emp();
+    const newLength = after.data.data.length;
+    expect(newLength).toEqual(oldLength-1);
+  }
+  catch(error){
+    //
+  }
+});
+
+test("testing delete with incorrect id", async () => {
+  try{
+    expect.assertions(1);
+    const response = await emp_funcs.deleteEntity_Emp("5c9e425d2fee3419ac5abd71");
+  }
+  catch(error){
+    expect(error.message).toEqual("Request failed with status code 404")
+  }
+})
 //this one will be tricky as it is dependant on other user stories yet to be done, so I will postpone till
 //others are done
 // test('Testing Creating Admin that assigns lawyer to fill form, then lawyer fills form for investor', async () => {
