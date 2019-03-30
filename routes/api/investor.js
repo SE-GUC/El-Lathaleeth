@@ -32,9 +32,7 @@ router.post("/create", async (req, res) => {
   try {
     const isValidated = validator.createValidation(req.body);
     if (isValidated.error)
-      return res
-        .status(400)
-        .send({ error: isValidated.error.details[0].message });
+      return res.status(400).send({ error: "Invalid field datatype(s) enetered" });
     const newInvestor = await Investor.create(req.body);
     res.json({ msg: "Investor was created successfully", data: newInvestor });
   } catch (error) {
@@ -64,7 +62,7 @@ router.put("/update/:id", async (req, res) => {
       return res.status(404).send({ error: "Investor does not exist" });
     const isValidated = validator.updateValidation(req.body);
     if (isValidated.error)
-      return res.status(400).send({ error: isValidated.error.details[0].message });
+      return res.status(400).send({ error: "Invalid field datatype(s) enetered" });
     const updatedInvestor = await Investor.findByIdAndUpdate(id, req.body, {new:true});
 
     const up = await Form.update(
