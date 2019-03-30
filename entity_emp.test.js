@@ -99,7 +99,7 @@ test("Testing Create and then updating", async () => {
     lastName: "Souidan",
     emp_type: "Lawyer",
     joined_on: "2018-02-15T00:00:00.000Z"
-  });
+  }, 100000);
   const response1 = await emp_funcs.updateEntity_Emp(
     {
           lawyer_details: {

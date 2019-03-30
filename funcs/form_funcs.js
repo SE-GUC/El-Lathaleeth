@@ -1,7 +1,6 @@
 const axios = require("axios");
 const formFunctions = {
-
-// form functions so far
+  // form functions so far
   getForms: async () => {
     const forms = await axios.get("http://localhost:3000/api/forms/");
     return forms;
@@ -17,13 +16,16 @@ const formFunctions = {
     return form;
   },
   createForm: async requestBody => {
-    const form = await axios.post("http://localhost:3000/api/forms/create/",
-    requestBody);
+    const form = await axios.post(
+      "http://localhost:3000/api/forms/create/",
+      requestBody
+    );
     return form;
   },
-  updateForm: async id => {
+  updateForm: async (requestBody, id) => {
     const form = await axios.put(
-      "http://localhost:3000/api/forms/update/" + id
+      "http://localhost:3000/api/forms/update/" + id,
+      requestBody
     );
     return form;
   },
