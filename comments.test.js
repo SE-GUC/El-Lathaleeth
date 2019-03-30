@@ -5,10 +5,10 @@ test("Testing Create Actually Creates Comment", async () => {
         const response = await comm_funcs.getComment();
         const oldLength = response1.data.data.length;
         const created = await comm_funcs.createComment({
-            "author_type": "Reviewer",
-            "author": "5c9e3fc1cb28604a9cebbe13",
-            "text": "google",
-            "postedOn": "2015-10-02"
+            author_type: "Reviewer",
+            author: "5c9fcd3e1d8fa137a812d237",
+            text: "google",
+            postedOn: "2015-10-02"
         });
         const response1 = await comm_funcs.getComment();
         const newLength = response1.data.data.length;
@@ -18,16 +18,16 @@ test("Testing Create Actually Creates Comment", async () => {
 test("Testing updating a comment", async () => {
     expect.assertions(1);
     const created = await comm_funcs.createComment({
-        "author_type": "Reviewer",
-        "author": "5c9e3fc1cb28602a9cebbe13",
-        "text": "bad comment",
-        "postedOn": "2010-02-02"
+        author_type: "Reviewer",
+        author: "5c9fcd3e1d8fa137a812d237",
+        text: "bad comment",
+        postedOn: "2010-02-02"
     });
     const update_comm = await comm_funcs.updateComment(created.data.data._id,{
-        "author_type": "Reviewer",
-        "author": "5c9e3fc1cb28602a9cebbe13",
-        "text": "guut comment",
-        "postedOn": "2010-02-02"
+        author_type: "Reviewer",
+        author: "5c9fcd3e1d8fa137a812d237",
+        text: "guut comment",
+        postedOn: "2010-02-02"
     });
     expect(update_comm.data.data.text).toEqual("guut comment");
 },30000);
