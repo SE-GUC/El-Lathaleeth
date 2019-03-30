@@ -8,12 +8,9 @@ test("Testing Create Actually Creates Comment", async () => {
             "text": "google",
             "postedOn": "2015-10-02"
         });
-        const response = await comm_funcs.getComments();
-        const commlength = response.data.data.length;
-        const create_comm = await comm_funcs.createComment(created.data.data._id);
-        const response2 = await comm_funcs.getComments();
-        const commlength2 = response2.data.data.length;
-        expect(commlength2).toEqual(commlength + 1);
+        const response1 = await comm_funcs.getEntity_Emp();
+  const newLength = response1.data.data.length;
+  expect(newLength).toEqual(oldLength + 1);
     },30000);
 
 test("Testing updating a comment", async () => {
