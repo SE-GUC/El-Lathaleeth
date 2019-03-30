@@ -133,7 +133,7 @@ test("Testing Create and then updating", async () => {
 
   expect(response1.data.data.firstName).toEqual("Ahmed");
   expect(response1.data.data.username).toEqual(created.data.data.username);
-});
+},100000);
 test("Testing Creating then Deleting an Entity_Employee", async () => {
   expect.assertions(1);
 
@@ -163,7 +163,7 @@ test("Testing Creating then Deleting an Entity_Employee", async () => {
     lastName: "Souidan",
     emp_type: "Lawyer",
     joined_on: "2018-02-15T00:00:00.000Z"
-  });
+  },100000);
   const response = await emp_funcs.getEntity_Emp();
   const oldLength = response.data.data.length;
   const response1 = await emp_funcs.deleteEntity_Emp(created.data.data._id);
