@@ -1,8 +1,6 @@
 const investor_funcs = require("./funcs/investor_funcs");
 const form_funcs = require("./funcs/form_funcs");
 
-
-
 //tests get and create
 test("Testing 'get all investors' and 'create investor' adds the new investor to investors array/list",
     async() => {
@@ -350,8 +348,6 @@ test("Testing 'delete investor' using wrong/non existant investor id",
     100000
 );
 
-/*
-
 //tests create and update investor within form
 test("Testing 'create investor' and 'update investor' inserts new investor and updates their data in investor and forms",
     async() => {
@@ -402,7 +398,8 @@ test("Testing 'create investor' and 'update investor' inserts new investor and u
                 capital: "100000",
                 capitalCurrency: "Euro",
                 investorFormID: invid
-            },                  
+            },
+            comments: [],                  
             createdOn:"2019-03-29",
             capitalCurr:"EGP",
             capitalVal:1000000, 
@@ -421,6 +418,7 @@ test("Testing 'create investor' and 'update investor' inserts new investor and u
             ]
         
         });
+        const formid = newForm.data.data._id;
         const updatedInvestor = await investor_funcs.updateExistingInvestor({
             firstName: "updatedfirstname2",
 	        middleName: "updatedmiddlename2",
@@ -439,11 +437,12 @@ test("Testing 'create investor' and 'update investor' inserts new investor and u
 	        capital: "100000",
 	        capitalCurrency: "Euro"
         },newInvestor.data.data._id);
+
+        const updatedForm = await form_funcs.getFormByID(formid);
         const getInvestor = await investor_funcs.getInvestorByID(newInvestor.data.data._id);
         expect(getInvestor.data.data.firstName).toEqual(updatedInvestor.data.data.firstName);
-        expect(newForm.data.data.investor.firstName).toEqual(updatedInvestor.data.data.firstName);
+        expect(updatedForm.data.data.investor.firstName).toEqual(updatedInvestor.data.data.firstName);
     },
     100000
 );
 
-*/
