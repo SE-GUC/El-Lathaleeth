@@ -179,12 +179,14 @@ router.put("/update/:id", async (req, res) => {
 });
 
 //As an investor I can have a lawyer fill my form
-router.post("/sendToAdmin/", async (req, res) => {
-  const investor = req.body.investor;
+router.post("/sendToAdmin/:idi/:ida", async (req, res) => {
+  //const investor = req.body.investor;
   //const formType = req.body.formType;
-  const admin = await Entity_Emp.findOneAndUpdate(
-    { emp_type: "Admin" },
-    { $push: { investors_to_assign: investor.id } },
+  const idi = req.params.idi;
+  const ida = req.params.ida;
+  const admin = await Entity_Emp.findByIdAndUpdate(
+    {  ida },
+    { $push: { investors_to_assign: idi } },
     { new: true },
     (err, doc) => {
       if (err) {
