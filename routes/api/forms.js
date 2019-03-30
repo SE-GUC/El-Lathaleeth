@@ -214,8 +214,8 @@ router.post("/sendToAdmin/:idi/:ida", async (req, res) => {
   const idi = req.params.idi;
   const ida = req.params.ida;
   const admin = await Entity_Emp.findByIdAndUpdate(
-    {  ida },
-    { $push: { investors_to_assign: idi } },
+    ida ,
+    { $push: { "admin_details.investors_to_assign": idi } },
     { new: true },
     (err, doc) => {
       if (err) {
