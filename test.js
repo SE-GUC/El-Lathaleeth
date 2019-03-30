@@ -1,6 +1,8 @@
 const emp_funcs = require('./funcs/entity_emp_funcs');
 const forms_func = require('./funcs/forms_funcs');
 const Form = require("./models/Form");
+const comment_funcs = require('./funcs/comment_funcs');
+const form_funcs = require('./funcs/form_funcs');
 
 test('', async () => {
     expect.assertions(1)
