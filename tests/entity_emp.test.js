@@ -1,6 +1,6 @@
-const emp_funcs = require("./funcs/entity_emp_funcs");
-const investor_funcs = require("./funcs/investor_funcs");
-const form_funcs = require("./funcs/form_funcs");
+const emp_funcs = require("../funcs/entity_emp_funcs");
+const investor_funcs = require("../funcs/investor_funcs");
+const form_funcs = require("../funcs/form_funcs");
 test("Testing Create Actually Creates in DB", async () => {
   expect.assertions(1);
   const response = await emp_funcs.getEntity_Emp();
