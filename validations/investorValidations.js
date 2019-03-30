@@ -32,7 +32,7 @@ module.exports = {
         .email()
         .required(),
       capital: Joi.number().required(),
-      capitalCurrency: Joi.string().required(),// Drop Down
+      capitalCurrency: Joi.string().required(), // Drop Down
       investorFormID: Joi.string().optional()
     };
 

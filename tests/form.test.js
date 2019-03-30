@@ -255,9 +255,7 @@ test("Testing after creating existing and updated values", async () => {
     newForm.data.data._id
   );
   const getForm = await form_funcs.getFormByID(newForm.data.data._id);
-  expect(getForm.data.data.arabicName).toEqual(
-    updateForm.data.data.arabicName
-  );
+  expect(getForm.data.data.arabicName).toEqual(updateForm.data.data.arabicName);
   expect(getForm.data.data.capitalCurr).toEqual(
     updateForm.data.data.capitalCurr
   );
@@ -266,7 +264,7 @@ test("Testing after creating existing and updated values", async () => {
 //Test update form with invalid info
 test("Testing updating with invalid info", async () => {
   expect.assertions(1);
-  try{
+  try {
     const newForm = await form_funcs.createForm({
       formType: "SPC",
       address: "Bouja",
@@ -342,14 +340,14 @@ test("Testing updating with invalid info", async () => {
       },
       newForm.data.data._id
     );
-  }catch(error) {
-      expect(error.message).toEqual("Request failed with status code 400");
+  } catch (error) {
+    expect(error.message).toEqual("Request failed with status code 400");
   }
 }, 100000);
 //Test update non existant form
 test("Testing updating a none form existing form", async () => {
   expect.assertions(1);
-  try{
+  try {
     const fakeID = "5c9f5c4e3fda262b68e756fb";
     const updateForm = await form_funcs.updateForm(
       {
@@ -390,7 +388,7 @@ test("Testing updating a none form existing form", async () => {
       },
       fakeID
     );
-  }catch(error) {
-      expect(error.message).toEqual("Request failed with status code 404");
+  } catch (error) {
+    expect(error.message).toEqual("Request failed with status code 404");
   }
 }, 100000);
