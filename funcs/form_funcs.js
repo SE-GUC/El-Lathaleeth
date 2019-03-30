@@ -16,19 +16,16 @@ const formFunctions = {
     );
     return form;
   },
-  createForm: async () => {
-    const form = await axios.post("http://localhost:3000/api/forms/create/");
-    return form;
-  },
-  updateForm: async id => {
+  updateForm: async (requestBody,id) => {
     const form = await axios.put(
-      "http://localhost:3000/api/forms/update/" + id
+      "http://localhost:3000/api/forms/update/" + id,
+      requestBody
     );
     return form;
   },
-  sendToAdmin: async () => {
+  sendToAdmin: async (idi,ida) => {
     const form = await axios.post(
-      "http://localhost:3000/api/forms/sendToAdmin/"
+      "http://localhost:3000/api/forms/sendToAdmin/"+idi+"/"+ida
     );
     return form;
   },
