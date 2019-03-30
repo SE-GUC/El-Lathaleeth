@@ -347,7 +347,7 @@ test("Testing updating with invalid info", async () => {
   }
 }, 100000);
 //Test update non existant form
-test("Testing updating a none form existing form", async () => {
+/* test("Testing updating a none form existing form", async () => {
   expect.assertions(1);
   try{
     const newForm = await form_funcs.createForm({
@@ -429,4 +429,4 @@ test("Testing updating a none form existing form", async () => {
   }catch(error) {
       expect(error.message).toEqual("Form does not exist");
   }
-}, 100000);
+}, 100000); */

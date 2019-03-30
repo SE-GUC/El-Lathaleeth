@@ -16,7 +16,16 @@ const formFunctions = {
     );
     return form;
   },
+<<<<<<< HEAD
   updateForm: async (requestBody,id) => {
+=======
+  createForm: async requestBody => {
+    const form = await axios.post("http://localhost:3000/api/forms/create/",
+    requestBody);
+    return form;
+  },
+  updateForm: async id => {
+>>>>>>> 5400123508f3ed11549972f4e280508f8cbc8e86
     const form = await axios.put(
       "http://localhost:3000/api/forms/update/" + id,
       requestBody
@@ -34,13 +43,6 @@ const formFunctions = {
       "http://localhost:3000/api/forms/statusByID/" + id
     );
     return form;
-  },
-  createForm: async requestBody => {
-    const createdForm = await axios.post(
-      "http://localhost:3000/api/forms/create/",
-      requestBody
-    );
-    return createdForm
-  },
+  }
 };
 module.exports = formFunctions;
