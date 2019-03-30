@@ -43,8 +43,12 @@ const functions = {
         return emps;
     },
     lawyerFillForm: async (lawyerid, investorid,body) => {
-        const emps = await axios.put(
-          "http://localhost:3000/api/entity_emp/lawyerfillform/" +lawyerid+'/'+investorid,body
+        const emps = await axios.post(
+          "http://localhost:3000/api/entity_emp/lawyerfillform/"+
+            lawyerid +
+            "/" +
+            investorid,
+          body
         );
         return emps;
     }
