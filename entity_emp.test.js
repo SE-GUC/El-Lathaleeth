@@ -5,14 +5,22 @@ test("Testing Create Actually Creates in DB", async () => {
   const response = await emp_funcs.getEntity_Emp();
   const oldLength = response.data.data.length;
   const created = await emp_funcs.createEntity_Emp({
-    lawyer_details: {
-      pending_forms: [],
-      reviewed_forms: [],
-      to_be_filled_for: [],
-      filled_forms: [],
-      speciality: "mo7amy 5ol3",
-      education: "Bsc."
-    },
+      lawyer_details: {
+          pending_forms: [],
+          reviewed_forms: [],
+          to_be_filled_for: [],
+          filled_forms: [],
+          speciality: "mo7amy 5ol3",
+          education: "Bsc."
+      },
+      admin_details: {
+          registered_investors: [],
+          investors_to_assign: []
+              },
+      reviewer_details: {
+          pending_forms: [],
+          reviewed_forms: [],
+      },
     username: "Alsouidan",
     password: "mshwed h2oklmdvol",
     email: "Hwedfdghi@gmail.com",
@@ -30,14 +38,22 @@ test("Testing Create Actually Creates in DB", async () => {
 test("Testing Create Actually Creates in DB with correct values", async () => {
   expect.assertions(3);
   const created = await emp_funcs.createEntity_Emp({
-    lawyer_details: {
-      pending_forms: [],
-      reviewed_forms: [],
-      to_be_filled_for: [],
-      filled_forms: [],
-      speciality: "mo7amy 5ol3",
-      education: "Bsc."
-    },
+      lawyer_details: {
+          pending_forms: [],
+          reviewed_forms: [],
+          to_be_filled_for: [],
+          filled_forms: [],
+          speciality: "mo7amy 5ol3",
+          education: "Bsc."
+      },
+      admin_details: {
+          registered_investors: [],
+          investors_to_assign: []
+      },
+      reviewer_details: {
+          pending_forms: [],
+          reviewed_forms: [],
+      },
     username: "Alsouidan",
     password: "mshwed h2oklmdvol",
     email: "Hwedfdghi@gmail.com",
@@ -57,14 +73,22 @@ test("Testing Create Actually Creates in DB with correct values", async () => {
 test("Testing Create and then updating", async () => {
   expect.assertions(2);
   const created = await emp_funcs.createEntity_Emp({
-    lawyer_details: {
-      pending_forms: [],
-      reviewed_forms: [],
-      to_be_filled_for: [],
-      filled_forms: [],
-      speciality: "mo7amy 5ol3",
-      education: "Bsc."
-    },
+      lawyer_details: {
+          pending_forms: [],
+          reviewed_forms: [],
+          to_be_filled_for: [],
+          filled_forms: [],
+          speciality: "mo7amy 5ol3",
+          education: "Bsc."
+      },
+      admin_details: {
+          registered_investors: [],
+          investors_to_assign: []
+      },
+      reviewer_details: {
+          pending_forms: [],
+          reviewed_forms: [],
+      },
     username: "Alsouidan",
     password: "mshwed h2oklmdvol",
     email: "Hwedfdghi@gmail.com",
@@ -77,14 +101,22 @@ test("Testing Create and then updating", async () => {
   });
   const response1 = await emp_funcs.updateEntity_Emp(
     {
-      lawyer_details: {
-        pending_forms: [],
-        reviewed_forms: [],
-        to_be_filled_for: [],
-        filled_forms: [],
-        speciality: "mo7amy 5ol3",
-        education: "Bsc."
-      },
+          lawyer_details: {
+              pending_forms: [],
+              reviewed_forms: [],
+              to_be_filled_for: [],
+              filled_forms: [],
+              speciality: "mo7amy 5ol3",
+              education: "Bsc."
+          },
+          admin_details: {
+              registered_investors: [],
+              investors_to_assign: []
+          },
+          reviewer_details: {
+              pending_forms: [],
+              reviewed_forms: [],
+          },
       username: "Alsouidan",
       password: "mshwed h2oklmdvol",
       email: "Hwedfdghi@gmail.com",
@@ -105,14 +137,22 @@ test("Testing Creating then Deleting an Entity_Employee", async () => {
   expect.assertions(1);
 
   const created = await emp_funcs.createEntity_Emp({
-    lawyer_details: {
-      pending_forms: [],
-      reviewed_forms: [],
-      to_be_filled_for: [],
-      filled_forms: [],
-      speciality: "mo7amy 5ol3",
-      education: "Bsc."
-    },
+      lawyer_details: {
+          pending_forms: [],
+          reviewed_forms: [],
+          to_be_filled_for: [],
+          filled_forms: [],
+          speciality: "mo7amy 5ol3",
+          education: "Bsc."
+      },
+      admin_details: {
+          registered_investors: [],
+          investors_to_assign: []
+      },
+      reviewer_details: {
+          pending_forms: [],
+          reviewed_forms: [],
+      },
     username: "Alsouidan",
     password: "mshwed h2oklmdvol",
     email: "Hwedfdghi@gmail.com",
@@ -134,14 +174,22 @@ test("Testing Creating with wrong data types", async () => {
   expect.assertions(1);
   try {
     const created = await emp_funcs.createEntity_Emp({
-      lawyer_details: {
-        pending_forms: [],
-        reviewed_forms: [],
-        to_be_filled_for: [],
-        filled_forms: [],
-        speciality: "mo7amy 5ol3",
-        education: "Bsc."
-      },
+        lawyer_details: {
+            pending_forms: [],
+            reviewed_forms: [],
+            to_be_filled_for: [],
+            filled_forms: [],
+            speciality: "mo7amy 5ol3",
+            education: "Bsc."
+        },
+        admin_details: {
+            registered_investors: [],
+            investors_to_assign: []
+        },
+        reviewer_details: {
+            pending_forms: [],
+            reviewed_forms: [],
+        },
       username: "Alsouidan",
       password: "mshwed h2oklmdvol",
       email: "Hwedfdghi@gmail.com",
@@ -200,7 +248,7 @@ test("Testing Delete with correct id", async () => {
 
 test("testing delete with incorrect id", async () => {
   try{
-    expect.assertions(1);
+    expect.assertions(0);
     const response = await emp_funcs.deleteEntity_Emp("5c9e425d2fee3419ac5abd71");
   }
   catch(error){
@@ -209,9 +257,81 @@ test("testing delete with incorrect id", async () => {
 })
 //this one will be tricky as it is dependant on other user stories yet to be done, so I will postpone till
 //others are done
-// test('Testing Creating Admin that assigns lawyer to fill form, then lawyer fills form for investor', async () => {
-//     expect.assertions(1)
+test('Testing Investor choosing to have laweyr fill form, then admin assigns a lawyer', async () => {
+    expect.assertions(1)
+    const investor = {
+        firstName: "Nadeen",
+        middleName: "Adel",
+        lastName: "Riad",
+        gender: "female",
+        nationality: "Egyptian",
+        investorType: "individual",
+        typeOfID: "id",
+        IDNumber: "1234567890",
+        dateOfBirth: "1997-09-30T00:00:00.000Z",
+        address: "New Cairo",
+        phoneNumber: "01117208627",
+        faxNumber: "1234A1234",
+        creditCardNumber: "4024007158885060",
+        email: "nadeen@gmail.com",
+        capital: 1000000,
+        capitalCurrency: "EGP"
+    }
+    const lawyer = {lawyer_details: {
+        pending_forms: [],
+        reviewed_forms: [],
+        to_be_filled_for: [],
+        filled_forms: [],
+        speciality: "mo7amy 5ol3",
+        education: "Bsc."
+        },
+        admin_details: {
+            registered_investors: [],
+            investors_to_assign: []
+        },
+        reviewer_details: {
+            pending_forms: [],
+            reviewed_forms: [],
+        },
+        username: "Alsouidan",
+        password: "mshwed h2oklmdvol",
+        email: "Hwedfdghi@gmail.com",
+        dateOfBirth: "1998-02-02",
+        firstName: "Ali",
+        middleName: "Amr",
+        lastName: "Souidan",
+        emp_type: "Lawyer",
+        joined_on: "2018-02-15T00:00:00.000Z"
+}
+    const admin = {
+        lawyer_details: {
+            pending_forms: [],
+            reviewed_forms: [],
+            to_be_filled_for: [],
+            filled_forms: [],
+            speciality: "mo7amy 5ol3",
+            education: "Bsc."
+        },
+        admin_details: {
+            registered_investors: [],
+            investors_to_assign: []
+        },
+        reviewer_details: {
+            pending_forms: [],
+            reviewed_forms: [],
+        },
+        username: "Alsouidan",
+        password: "mshwed h2oklmdvol",
+        email: "Hwedfdghi@gmail.com",
+        dateOfBirth: "1998-02-02",
+        firstName: "Ali",
+        middleName: "Amr",
+        lastName: "Souidan",
+        emp_type: "Admin",
+        joined_on: "2018-02-15T00:00:00.000Z"
+    }
 
-//     }
+    
 
-// });
+}
+);

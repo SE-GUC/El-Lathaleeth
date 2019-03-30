@@ -69,12 +69,20 @@ router.delete("/delete/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const deleteEmp = await Entity_Emp.findByIdAndDelete(id);
-    if(!deleteEmp) return res.status(404).send({ error: "Employee does not exist"});
     res.json({ msg: "Employee successfully deleted" });
   } catch (error) {
     //Error will be handled later
   }
 }); 
+// router.delete("/deleteAll/", async (req, res) => {
+//   try {
+//     const id = req.params.id;
+//     const deleteEmp = await Entity_Emp.remove({});
+//     res.json({ msg: "Employee successfully deleted" });
+//   } catch (error) {
+//     //Error will be handled later
+//   }
+// }); 
 //deletes all instances of investor in to be filled for
 router.post("/lawyerfillform/:lawyerid/:investorid", async (req, res) => {
   try {
@@ -132,10 +140,11 @@ router.put("/assignLawyer/:lawyerid/:investorid/:adminid", async (req, res) => {
     if (emp1.emp_type !== 'Admin')
       return res.status(400)
         .send("You must be an admin");
-    Entity_Emp.update({"emp_type":"Admin"}, //not working as should
-      { $pull: { "admin_details.investors_to_assign": investorid} },
-      { safe: true,multi: true },
-      function (err, doc) {
+    Entity_Emp.findByIdAndUpdate(
+      adminid, //not working as should
+      { $pull: { "admin_details.investors_to_assign": investorid } },
+      { safe:true},
+      function(err, doc) {
         if (err) {
           console.log(err);
         } else {
