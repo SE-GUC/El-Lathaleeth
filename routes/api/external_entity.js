@@ -23,7 +23,7 @@ router.get("/byID/:id", async (req, res) => {
 });
 
 //create external entity
-router.post("/", async (req, res) => {
+router.post("/create/", async (req, res) => {
   try {
     const isValidated = validator.createValidation(req.body);
     if (isValidated.error)
@@ -55,7 +55,7 @@ router.put("/update/:id", async (req, res) => {
   }
 });
 //delete
-router.delete("/:id", async (req, res) => {
+router.delete("/delete/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const deleted_external_entity = await external_entity.findByIdAndRemove(id);
