@@ -263,5 +263,170 @@ test("Testing after creating existing and updated values", async () => {
   );
   expect(getForm.data.data.status).toEqual(updateForm.data.data.status);
 }, 100000);
-//Test update form with wrong info
+//Test update form with invalid info
+test("Testing updating with invalid info", async () => {
+  expect.assertions(1);
+  try{
+    const newForm = await form_funcs.createForm({
+      formType: "SPC",
+      address: "Bouja",
+      arabicName: "???? ???????",
+      englishName: "Lina Productions",
+      phone: "11111111111",
+      fax: "23344",
+      investor: {
+        firstName: "Nadeen",
+        middleName: "Amr",
+        lastName: "Riad",
+        gender: "female",
+        nationality: "Egyptian",
+        investorType: "individual",
+        typeOfID: "id",
+        IDNumber: "1234567890",
+        dateOfBirth: "1970-03-21",
+        address: "Some place",
+        phoneNumber: "01117208627",
+        faxNumber: "1234A1234",
+        creditCardNumber: "4024007158885060",
+        email: "hello@gmail.com",
+        capital: "1000000",
+        capitalCurrency: "Euro"
+      },
+      capitalCurr: "Euro",
+      capitalVal: 500000,
+      law: "Laws drop down menu",
+      legalForm: "Legal form of company drop down",
+      createdOn: "2019-03-02T19:55:25.722Z",
+      lastTouch: "_iddddd",
+      status: "active",
+      deadline: "2019-06-06",
+      bitIL: 0,
+      comments: []
+    });
+    const updateForm = await form_funcs.updateForm(
+      {
+        formType: "SPC",
+        address: "Bouja",
+        arabicName: "NewArabicName",
+        englishName: "Lina Productions",
+        phone: "11111111111",
+        fax: "23344",
+        investor: {
+          firstName: "Nadeen",
+          middleName: "Amr",
+          lastName: "Riad",
+          gender: "female",
+          nationality: "Egyptian",
+          investorType: "individual",
+          typeOfID: "id",
+          IDNumber: "1234567890",
+          dateOfBirth: "1970-03-21",
+          address: "Some place",
+          phoneNumber: "01117208627",
+          faxNumber: "1234A1234",
+          creditCardNumber: "4024007158885060",
+          email: "hello@gmail.com",
+          capital: "1000000",
+          capitalCurrency: "Euro"
+        },
+        capitalCurr: "Dollar",
+        capitalVal: 500000,
+        law: "Laws drop down menu",
+        legalForm: "Legal form of company drop down",
+        createdOn: "2019-03-02T19:55:25.722Z",
+        lastTouch: "_iddddd",
+        status: "active",
+        deadline: "Hello I am wrong data!",
+        bitIL: 0,
+        comments: []
+      },
+      newForm.data.data._id
+    );
+  }catch(error) {
+      expect(error.message).toEqual("Request failed with status code 400");
+  }
+}, 100000);
 //Test update non existant form
+test("Testing updating a none form existing form", async () => {
+  expect.assertions(1);
+  try{
+    const newForm = await form_funcs.createForm({
+      formType: "SPC",
+      address: "Bouja",
+      arabicName: "???? ???????",
+      englishName: "Lina Productions",
+      phone: "11111111111",
+      fax: "23344",
+      investor: {
+        firstName: "Nadeen",
+        middleName: "Amr",
+        lastName: "Riad",
+        gender: "female",
+        nationality: "Egyptian",
+        investorType: "individual",
+        typeOfID: "id",
+        IDNumber: "1234567890",
+        dateOfBirth: "1970-03-21",
+        address: "Some place",
+        phoneNumber: "01117208627",
+        faxNumber: "1234A1234",
+        creditCardNumber: "4024007158885060",
+        email: "hello@gmail.com",
+        capital: "1000000",
+        capitalCurrency: "Euro"
+      },
+      capitalCurr: "Euro",
+      capitalVal: 500000,
+      law: "Laws drop down menu",
+      legalForm: "Legal form of company drop down",
+      createdOn: "2019-03-02T19:55:25.722Z",
+      lastTouch: "_iddddd",
+      status: "active",
+      deadline: "2019-06-06",
+      bitIL: 0,
+      comments: []
+    });
+    const fakeID = newForm.data.data._id+1
+    const updateForm = await form_funcs.updateForm(
+      {
+        formType: "SPC",
+        address: "Bouja",
+        arabicName: "NewArabicName",
+        englishName: "Lina Productions",
+        phone: "11111111111",
+        fax: "23344",
+        investor: {
+          firstName: "Nadeen",
+          middleName: "Amr",
+          lastName: "Riad",
+          gender: "female",
+          nationality: "Egyptian",
+          investorType: "individual",
+          typeOfID: "id",
+          IDNumber: "1234567890",
+          dateOfBirth: "1970-03-21",
+          address: "Some place",
+          phoneNumber: "01117208627",
+          faxNumber: "1234A1234",
+          creditCardNumber: "4024007158885060",
+          email: "hello@gmail.com",
+          capital: "1000000",
+          capitalCurrency: "Euro"
+        },
+        capitalCurr: "Dollar",
+        capitalVal: 500000,
+        law: "Laws drop down menu",
+        legalForm: "Legal form of company drop down",
+        createdOn: "2019-03-02T19:55:25.722Z",
+        lastTouch: "_iddddd",
+        status: "active",
+        deadline: "Hello I am wrong data!",
+        bitIL: 0,
+        comments: []
+      },
+      fakeID
+    );
+  }catch(error) {
+      expect(error.message).toEqual("Form does not exist");
+  }
+}, 100000);
