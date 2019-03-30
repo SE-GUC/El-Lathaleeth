@@ -123,11 +123,9 @@ test("Testing Creating with wrong data types", async () => {
     "status": "active",
     "deadline": "2019-06-06",
     "bitIL": "INVALID DATA"
-  }),
+  });
+} catch (error) {
+  expect(error.message).toEqual("Request failed with status code 400");
+  //400 bad request that we send when joi validation fails
 }
-   catch (error) {
-    expect(error.message).toEqual("Request failed with status code 400");
-    //400 bad request that we send when joi validation fails
-  }
 });
-
