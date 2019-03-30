@@ -16,8 +16,9 @@ const formFunctions = {
     );
     return form;
   },
-  createForm: async () => {
-    const form = await axios.post("http://localhost:3000/api/forms/create/");
+  createForm: async requestBody => {
+    const form = await axios.post("http://localhost:3000/api/forms/create/",
+    requestBody);
     return form;
   },
   updateForm: async id => {
