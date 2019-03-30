@@ -32,11 +32,10 @@ router.get("/", async (req, res) => {
 router.get("/byID/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    const com = await Comment.findById(id)
-    if (!com) return res.status(404).send({ error: "Comment does not exist" })
+    const com = await Comment.findById(id);
+    if (!com) return res.status(404).send({ error: "Comment does not exist" });
     res.json({ msg: "Comment found", data: com });
-  }
-  catch (error) {
+  } catch (error) {
     /// Error will be handled later
   }
 });
@@ -52,8 +51,10 @@ router.put("/update/:id", async (req, res) => {
         .status(400)
         .send({ error: isValidated.error.details[0].message });
 
-    const updatedCom = await Comment.findByIdAndUpdate(id,req.body,{new:true});
-    res.json({ msg: "Comment updated successfully" ,data: updatedCom});
+    const updatedCom = await Comment.findByIdAndUpdate(id, req.body, {
+      new: true
+    });
+    res.json({ msg: "Comment updated successfully", data: updatedCom });
   } catch (error) {
     // We will be handling the error later
     console.log(error);
@@ -69,6 +70,5 @@ router.delete("/delete/:id", async (req, res) => {
     //Error will be handled later
   }
 });
-
 
 module.exports = router;
