@@ -520,7 +520,7 @@ test("Creating Form, assign it to lawyer,deleteing the form, and checking it got
   const formId= created.data.data._id;
   const response5 = await emp_funcs.getEntity_Emp();
   const oldLengthl = response5.data.data.length;
-  const createdLawyer =emp_funcs.createEntity_Emp({
+  const createdLawyer = await emp_funcs.createEntity_Emp({
     lawyer_details: {
       pending_forms: [formId],
       reviewed_forms: [formId],
