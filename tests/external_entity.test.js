@@ -1,4 +1,4 @@
-const external_entity_funcs = require('./funcs/external_entity_fn');
+const external_entity_funcs = require('../funcs/external_entity_fn');
 
 test("Testing Create in DB", async () => {
     expect.assertions(1);
@@ -50,17 +50,18 @@ test("Testing Create in DB", async () => {
     }
     )
     const response1 = await external_entity_funcs.updateExternal_entity(
-     created.data.data._id, {
+      {
       name: "externalentity455",
       address: "address4",
       telephone: "200004",
       fax: "200040",
       email: "external_entity4@gmail.com"
-    }
-    )
+    },
+    created.data.data._id
+    );
     const response = await external_entity_funcs.getExternal_entityByID(created.data.data._id);
     expect(response1.data.data.name).toEqual(response.data.data.name);
-  },200000);
+  },100000);
 
   test("Testing Deleting", async () => {
     expect.assertions(1);
@@ -96,3 +97,22 @@ test("Testing Create in DB", async () => {
       expect(error.message).toEqual("Request failed with status code 400");
     }
   },100000);
+
+  test("Testing Getting by id with an incorrect id", async () => {
+    try {
+      expect.assertions(1);
+      const response = await external_entity_funcs.getExternal_entityByID("534");
+      expect(response.data.data.length).toEqual(0);
+    } catch (error) {
+      expect(error.message).toEqual("Request failed with status code 404");
+    }
+  }, 100000);
+
+  test("testing delete with incorrect id", async () => {
+    try {
+      expect.assertions(0);
+      const response = await external_entity_funcs.deleteExternal_entity("508");
+    } catch (error) {
+      expect(error.message).toEqual("Request failed with status code 404");
+    }
+  }, 100000);
