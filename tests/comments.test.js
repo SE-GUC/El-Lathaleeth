@@ -94,6 +94,3 @@ test("Testing deleting a comment", async () => {
 afterAll(async () => {
   const msg = await comm_funcs.deleteAllComment()
 });
-beforeAll(async () => {
-  const msg = await comm_funcs.deleteAllComment()
-});

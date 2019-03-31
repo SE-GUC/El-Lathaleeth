@@ -46,6 +46,18 @@ const formFunctions = {
       "http://localhost:3000/api/forms/deleteAll/" 
     );
     return form;
-  }
+  },
+  lawyerReview: async (idl, id) => {
+    const form = await axios.put(
+      "http://localhost:3000/api/forms/lawyerReview/" + idl + "/" + id
+    );
+    return form;
+  },
+  reviewerReview: async (idr, id) => {
+    const form = await axios.put(
+      "http://localhost:3000/api/forms/reviewerReview/" + idr + "/" + id
+    );
+    return form;
+  },
 };
 module.exports = formFunctions;
