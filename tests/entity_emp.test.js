@@ -359,6 +359,7 @@ test("Testing Investor choosing to have laweyr fill form, then admin assigns a l
   expect(new_law.data.data.lawyer_details.to_be_filled_for).toContain(
     inv.data.data._id
   );
+  const deleteinv=await investor_funcs.deleteExistingInvestor(inv.data.data._id)
 }, 10000);
 test("Testing Investor choosing to have laweyr fill form, then admin assigns a lawyer, then lawyer fills form", async () => {
   expect.assertions(2);
@@ -491,4 +492,11 @@ test("Testing Investor choosing to have laweyr fill form, then admin assigns a l
   expect(filled_form.data.data.investor.investorFormID).toEqual(
     inv.data.data._id
   );
+  const deleteForm=await form_funcs.deleteForm(filled_form.data.data._id)
 }, 10000);
+afterAll(async () => {
+  const msg= await emp_funcs.deleteAllEntity_Emp() 
+});
+beforeAll(async () => {
+  const msg = await emp_funcs.deleteAllEntity_Emp()
+});

@@ -518,8 +518,6 @@ test("Creating Form, assign it to lawyer,deleteing the form, and checking it got
     comments: []
   });
   const formId= created.data.data._id;
-  const response5 = await emp_funcs.getEntity_Emp();
-  const oldLengthl = response5.data.data.length;
   const createdLawyer = await emp_funcs.createEntity_Emp({
     lawyer_details: {
       pending_forms: [formId],
@@ -547,9 +545,6 @@ test("Creating Form, assign it to lawyer,deleteing the form, and checking it got
     emp_type: "Lawyer",
     joined_on: "2018-02-15T00:00:00.000Z"
   });
-  const response6 = await emp_funcs.getEntity_Emp();
-  const newLengthl = response6.data.data.length;
-  expect(newLengthl).toEqual(oldLengthl + 1);
   const response = await form_funcs.getForms();
   const response1 = await form_funcs.deleteForm(formId);
   const updatedEmp=await emp_funcs.getEntity_EmpbyID(createdLawyer.data.data._id);
@@ -562,6 +557,7 @@ test("Creating Form, assign it to lawyer,deleteing the form, and checking it got
 },
 100000
 );
+
 test("Creating Form, assign it to Reviewer,deleteing the form, and checking it got deleted from Reviewer arrays", async ()=>{
   expect.assertions(3);
   const created = await form_funcs.createForm({
@@ -642,3 +638,12 @@ test("Creating Form, assign it to Reviewer,deleteing the form, and checking it g
 },
 100000
 );
+
+
+afterAll(async () => {
+  const msg = await form_funcs.deleteAllForms()
+});
+beforeAll(async () => {
+  const msg = await form_funcs.deleteAllForms();
+});
+
