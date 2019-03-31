@@ -15,98 +15,6 @@ const commValidator = require("../../validations/commentValidation");
 
 const mongoose = require("mongoose");
 
-// const forms = [1
-//   new Form(
-//     0,
-//     "Laws drop down menu",
-//     "Legal form of company drop down",
-//     "SSC",
-//     "???? ???????",
-//     "Lina Productions",
-//     "Apart2",
-//     "Sheikh Zayed",
-//     "Giza",
-//     "012223533443",
-//     "23344",
-//     new Investor(
-//       "Ms",
-//       "Potato",
-//       "Head",
-//       "female",
-//       "Egypt",
-//       "individual",
-//       "passport",
-//       "22221123",
-//       new Date("1970-03-25"),
-//       new Address("Apart 2", "Sheikh Zayed", "Giza"),
-//       "01111111111",
-//       "fax",
-//       "farmer@gmail.com",
-//       10000000,
-//       "EGP"
-//     ),
-//     "Euro",
-//     500000,
-//     [
-//       new Director(
-//         "Mohamed",
-//         "individual",
-//         "male",
-//         "Egypt",
-//         "passport",
-//         "A2938920",
-//         new Date("1970-03-25"),
-//         "address",
-//         "manager"
-//       ),
-//       new Director(
-//         "Ali",
-//         "individual",
-//         "male",
-//         "Egypt",
-//         "passport",
-//         "A2938920",
-//         new Date("1970-03-25"),
-//         "address",
-//         "manager2"
-//       )
-//     ]
-//   ),
-
-//   new Form(
-//     1,
-//     "Laws drop down menu",
-//     "Legal form of company drop down",
-//     "SPC",
-//     "لينا للانتاج",
-//     "Lina Productions",
-//     "Apart2",
-//    "Sheikh Zayed",
-//     "Giza",
-//     "012223533443",
-//     "23344",
-//     new Investor(
-//       "Mrs",
-//       "Potato",
-//       "Head",
-//       "male",
-//       "Egypt",
-//       "individual",
-//       "passport",
-//       "22221123",
-//       new Date("1970-03-25"),
-//       new Address("Apart 2", "Sheikh Zayed", "Giza"),
-//       "01111111111",
-//       "fax",
-//       "farmera@gmail.com",
-//       10000000,
-//       "EGP"
-//     ),
-//     "Euro",
-//     500000
-//   )
-// ];
-
 router.get("/", async (req, res) => {
   const forms = await Form.find();
   res.json({ data: forms });
@@ -123,10 +31,39 @@ router.get("/byID/:id", async (req, res) => {
     // Error will be handled later
   }
 });
+router.get("/byInvestorID/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const findInvestorform = await Form.find({"investor.investorFormID" : id});
+    if (!findInvestorform)
+      return res.status(404).send({ error: "Form does not exist" });
+    res.json({ msg: "Form found", data: findInvestorform });
+  } catch (error) {
+    // Error will be handled later
+  }
+});
 router.delete("/delete/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const deleteform = await Form.findByIdAndDelete(id);
+    const deletelawyerformpending = await Entity_Emp.updateMany({"emp_type":'Lawyer',"lawyer_details.pending_forms":id},
+    {$pull:{"lawyer_details.pending_forms":id}}
+    )
+    const deletelawyerformreviewed = await Entity_Emp.updateMany({"emp_type":'Lawyer',"lawyer_details.reviewed_forms":id},
+    {$pull:{"lawyer_details.reviewed_forms":id}}
+    )
+    const deletelawyerformfilled = await Entity_Emp.updateMany({"emp_type":'Lawyer',"lawyer_details.filled_forms":id},
+    {$pull:{"lawyer_details.filled_forms":id}}
+    )
+    const deletereviewerformpending = await Entity_Emp.updateMany({"emp_type":'Reviewer',"reviewer_details.pending_forms":id},
+    {$pull:{"reviewer_details.pending_forms":id}}
+    )
+    const deletereviewerformreviewed = await Entity_Emp.updateMany({"emp_type":'Reviewer',"reviewer_details.reviewed_forms":id},
+    {$pull:{"reviewer_details.reviewed_forms":id}}
+    )
+    
+    if (!deleteform)
+      return res.status(404).send({ error: "Form Id Not Found" });
     res.json({ msg: "Form successfully deleted" });
   } catch (error) {
     //Error will be handled later
@@ -251,6 +188,15 @@ router.get("/formComment/:id", async (req, res) => {
     res.json({ msg: "Comment form", data: findform.comments });
   } catch (error) {
     // Error will be handled later
+  }
+});
+router.delete("/deleteAll/", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deleteForm = await Form.remove({});
+    res.json({ msg: "Forms successfully deleted" });
+  } catch (error) {
+    //Error will be handled later
   }
 });
 

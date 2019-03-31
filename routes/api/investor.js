@@ -26,7 +26,6 @@ router.get("/getbyID/:id", async (req, res) => {
     console.log(error);
   }
 });
-
 // CREATE: insert into investors
 router.post("/create", async (req, res) => {
   try {
