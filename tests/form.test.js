@@ -489,10 +489,10 @@ test("Creating Form, assign it to lawyer,deleteing the form, and checking it got
     phone: "11111111111",
     fax: "23344",
     investor: {
-      firstName: "Nadeen",
+      firstName: "Naka",
       middleName: "Amr",
       lastName: "Riad",
-      gender: "female",
+      gender: "male",
       nationality: "Egyptian",
       investorType: "individual",
       typeOfID: "id",
@@ -520,7 +520,7 @@ test("Creating Form, assign it to lawyer,deleteing the form, and checking it got
   const formId= created.data.data._id;
   const response5 = await emp_funcs.getEntity_Emp();
   const oldLengthl = response5.data.data.length;
-  const createdLawyer =await emp_funcs.createEntity_Emp({
+  const createdLawyer =emp_funcs.createEntity_Emp({
     lawyer_details: {
       pending_forms: [formId],
       reviewed_forms: [formId],
@@ -529,23 +529,30 @@ test("Creating Form, assign it to lawyer,deleteing the form, and checking it got
       speciality: "mo7amy 5ol3",
       education: "Bsc."
     },
-    username: "Alsouidan",
+    admin_details: {
+      registered_investors: [],
+      investors_to_assign: []
+    },
+    reviewer_details: {
+      pending_forms: [],
+      reviewed_forms: []
+    },
+    username: "Naka",
     password: "mshwed h2oklmdvol",
-    email: "Hwedfdghi@gmail.com",
+    email: "Hwedfnakai@gmail.com",
     dateOfBirth: "1998-02-14T00:00:00.000Z",
-    firstName: "Ali",
+    firstName: "naka",
     middleName: "Amr",
     lastName: "Souidan",
     emp_type: "Lawyer",
     joined_on: "2018-02-15T00:00:00.000Z"
   });
-  const response = await form_funcs.getForms();
   const response6 = await emp_funcs.getEntity_Emp();
   const newLengthl = response6.data.data.length;
   expect(newLengthl).toEqual(oldLengthl + 1);
+  const response = await form_funcs.getForms();
   const oldLength = response.data.data.length;
-  const response1 = await form_funcs.deleteForm(created.data.data._id);
-  expect(1).toEqual(1);
+  const response1 = await form_funcs.deleteForm(formId);
   const response2 = await form_funcs.getForms();
   const newLength = response2.data.data.length;
   expect(newLength).toEqual(oldLength - 1);
