@@ -11,101 +11,9 @@ const Entity_Emp = require("../../models/Entity_Emp");
 const Admin = require("../../models/Admin");
 
 const validator = require("../../validations/formValidations");
-const commValidator =  require("../../validations/commentValidation");
+const commValidator = require("../../validations/commentValidation");
 
 const mongoose = require("mongoose");
-
-// const forms = [1
-//   new Form(
-//     0,
-//     "Laws drop down menu",
-//     "Legal form of company drop down",
-//     "SSC",
-//     "???? ???????",
-//     "Lina Productions",
-//     "Apart2",
-//     "Sheikh Zayed",
-//     "Giza",
-//     "012223533443",
-//     "23344",
-//     new Investor(
-//       "Ms",
-//       "Potato",
-//       "Head",
-//       "female",
-//       "Egypt",
-//       "individual",
-//       "passport",
-//       "22221123",
-//       new Date("1970-03-25"),
-//       new Address("Apart 2", "Sheikh Zayed", "Giza"),
-//       "01111111111",
-//       "fax",
-//       "farmer@gmail.com",
-//       10000000,
-//       "EGP"
-//     ),
-//     "Euro",
-//     500000,
-//     [
-//       new Director(
-//         "Mohamed",
-//         "individual",
-//         "male",
-//         "Egypt",
-//         "passport",
-//         "A2938920",
-//         new Date("1970-03-25"),
-//         "address",
-//         "manager"
-//       ),
-//       new Director(
-//         "Ali",
-//         "individual",
-//         "male",
-//         "Egypt",
-//         "passport",
-//         "A2938920",
-//         new Date("1970-03-25"),
-//         "address",
-//         "manager2"
-//       )
-//     ]
-//   ),
-
-//   new Form(
-//     1,
-//     "Laws drop down menu",
-//     "Legal form of company drop down",
-//     "SPC",
-//     "لينا للانتاج",
-//     "Lina Productions",
-//     "Apart2",
-//    "Sheikh Zayed",
-//     "Giza",
-//     "012223533443",
-//     "23344",
-//     new Investor(
-//       "Mrs",
-//       "Potato",
-//       "Head",
-//       "male",
-//       "Egypt",
-//       "individual",
-//       "passport",
-//       "22221123",
-//       new Date("1970-03-25"),
-//       new Address("Apart 2", "Sheikh Zayed", "Giza"),
-//       "01111111111",
-//       "fax",
-//       "farmera@gmail.com",
-//       10000000,
-//       "EGP"
-//     ),
-//     "Euro",
-//     500000
-//   )
-// ];
 
 router.get("/", async (req, res) => {
   const forms = await Form.find();
@@ -123,10 +31,39 @@ router.get("/byID/:id", async (req, res) => {
     // Error will be handled later
   }
 });
+router.get("/byInvestorID/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const findInvestorform = await Form.find({"investor.investorFormID" : id});
+    if (!findInvestorform)
+      return res.status(404).send({ error: "Form does not exist" });
+    res.json({ msg: "Form found", data: findInvestorform });
+  } catch (error) {
+    // Error will be handled later
+  }
+});
 router.delete("/delete/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const deleteform = await Form.findByIdAndDelete(id);
+    const deletelawyerformpending = await Entity_Emp.updateMany({"emp_type":'Lawyer',"lawyer_details.pending_forms":id},
+    {$pull:{"lawyer_details.pending_forms":id}}
+    )
+    const deletelawyerformreviewed = await Entity_Emp.updateMany({"emp_type":'Lawyer',"lawyer_details.reviewed_forms":id},
+    {$pull:{"lawyer_details.reviewed_forms":id}}
+    )
+    const deletelawyerformfilled = await Entity_Emp.updateMany({"emp_type":'Lawyer',"lawyer_details.filled_forms":id},
+    {$pull:{"lawyer_details.filled_forms":id}}
+    )
+    const deletereviewerformpending = await Entity_Emp.updateMany({"emp_type":'Reviewer',"reviewer_details.pending_forms":id},
+    {$pull:{"reviewer_details.pending_forms":id}}
+    )
+    const deletereviewerformreviewed = await Entity_Emp.updateMany({"emp_type":'Reviewer',"reviewer_details.reviewed_forms":id},
+    {$pull:{"reviewer_details.reviewed_forms":id}}
+    )
+    
+    if (!deleteform)
+      return res.status(404).send({ error: "Form Id Not Found" });
     res.json({ msg: "Form successfully deleted" });
   } catch (error) {
     //Error will be handled later
@@ -172,8 +109,10 @@ router.put("/update/:id", async (req, res) => {
       return res
         .status(400)
         .send({ error: isValidated.error.details[0].message });
-    const updatedForm = await Form.findByIdAndUpdate(id,req.body, {new:true});
-    res.json({ msg: "Form updated successfully", data:updatedForm });
+    const updatedForm = await Form.findByIdAndUpdate(id, req.body, {
+      new: true
+    });
+    res.json({ msg: "Form updated successfully", data: updatedForm });
   } catch (error) {
     console.log(error);
   }
@@ -181,38 +120,41 @@ router.put("/update/:id", async (req, res) => {
 
 //as an investor I can create comments on a form
 router.put("/commentOnForm/:id", async (req, res) => {
-  try{
+  try {
     const id = req.params.id;
     const form = await Form.findById(id);
-    if (!form) return res.status(404).send({ error: "Form does not exist"});
+    if (!form) return res.status(404).send({ error: "Form does not exist" });
     const isValidated = commValidator.createValidation(req.body);
-    if (isValidated.error)return res.status(400).send({ error: isValidated.error.details[0].message });
+    if (isValidated.error)
+      return res
+        .status(400)
+        .send({ error: isValidated.error.details[0].message });
     const com = await Comment.create(req.body);
-    const test =  await Form.findByIdAndUpdate(id,
-      { $push: {comments: com}},
-      { safe: true, upsert: true},
-      function(err, doc){
-        if(err){
+    const test = await Form.findByIdAndUpdate(
+      id,
+      { $push: { comments: com } },
+      { safe: true, upsert: true },
+      function(err, doc) {
+        if (err) {
           console.log(err);
-        }else{
+        } else {
           //do stuff
         }
       }
     );
-    res.json({data:test});
-  }
-  catch(error){
-    console.log(error)
+    res.json({ data: test });
+  } catch (error) {
+    console.log(error);
     //error will be handled later
   }
-})
+});
 
 //As an investor I can have a lawyer fill my form
 router.post("/sendToAdmin/:idi/:ida", async (req, res) => {
   const idi = req.params.idi;
   const ida = req.params.ida;
   const admin = await Entity_Emp.findByIdAndUpdate(
-    ida ,
+    ida,
     { $push: { "admin_details.investors_to_assign": idi } },
     { new: true },
     (err, doc) => {
@@ -246,6 +188,15 @@ router.get("/formComment/:id", async (req, res) => {
     res.json({ msg: "Comment form", data: findform.comments });
   } catch (error) {
     // Error will be handled later
+  }
+});
+router.delete("/deleteAll/", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deleteForm = await Form.remove({});
+    res.json({ msg: "Forms successfully deleted" });
+  } catch (error) {
+    //Error will be handled later
   }
 });
 

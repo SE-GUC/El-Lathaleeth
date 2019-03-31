@@ -36,20 +36,30 @@ const functions = {
     );
     return emps;
   },
-    assignLawyer: async (lawyerid,investorid,adminid) => {
-        const emps = await axios.put(
-            "http://localhost:3000/api/entity_emp/assignLawyer/" + lawyerid+'/'+investorid+'/'+adminid
-        );
-        return emps;
-    },
-    lawyerFillForm: async (lawyerid, investorid,body) => {
-        const emps = await axios.post(
-          "http://localhost:3000/api/entity_emp/lawyerfillform/"+
-            lawyerid +
-            "/" +
-            investorid,
-          body
-        );
+  assignLawyer: async (lawyerid, investorid, adminid) => {
+    const emps = await axios.put(
+      "http://localhost:3000/api/entity_emp/assignLawyer/" +
+        lawyerid +
+        "/" +
+        investorid +
+        "/" +
+        adminid
+    );
+    return emps;
+  },
+  lawyerFillForm: async (lawyerid, investorid, body) => {
+    const emps = await axios.post(
+      "http://localhost:3000/api/entity_emp/lawyerfillform/" +
+        lawyerid +
+        "/" +
+        investorid,
+      body
+    );
+    return emps;
+  },
+    deleteAllEntity_Emp: async () => {
+        const emps = await axios.delete(
+            "http://localhost:3000/api/entity_emp/deleteAll/"        );
         return emps;
     }
 };

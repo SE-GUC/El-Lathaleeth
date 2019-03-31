@@ -1,9 +1,8 @@
 const Joi = require("joi");
 
-
 module.exports = {
   createValidation: (request, formType) => {
-    const empSchema ={
+    const empSchema = {
       email: Joi.string()
         .email()
         .required(),
@@ -136,8 +135,7 @@ module.exports = {
       lastTouch: Joi.string(),
       status: Joi.string().valid(["posted","lawyer check","reviewer check","company declared"]),
       deadline: Joi.date(),
-      bitIL: Joi.number()
-      .valid([0, 1]),
+      bitIL: Joi.number().valid([0, 1]),
       formType: Joi.any()
         .valid(["SPC", "SSC"])
         .required(), //drop down menu maybe same as up
@@ -209,20 +207,23 @@ module.exports = {
       typeOfID: Joi.any()
         .valid(["passport", "id"])
         .required(), // Drop Down
-      IDNumber: Joi.string().min(8).required(),
+      IDNumber: Joi.string()
+        .min(8)
+        .required(),
       dateOfBirth: Joi.date().required(),
       address: Joi.string().required(),
       phoneNumber: Joi.string().length(11),
       faxNumber: Joi.string(),
       creditCardNumber: Joi.string().creditCard(),
-      email: Joi.string().email().required(),
+      email: Joi.string()
+        .email()
+        .required(),
       capital: Joi.number().required(),
 
-      capitalCurrency: Joi.string().required(),// Drop Down
-      investorFormID: Joi.string().optional(), 
-      _id:Joi.optional()
+      capitalCurrency: Joi.string().required(), // Drop Down
+      investorFormID: Joi.string().optional(),
+      _id: Joi.optional()
       // Drop Down
-
     };
 
     const SPCschema = {

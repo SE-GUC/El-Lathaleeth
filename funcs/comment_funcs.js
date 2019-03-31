@@ -11,16 +11,16 @@ const commentFunctions = {
     );
     return comment;
   },
-  createComment: async () => {
-    const comment = await axios.post("http://localhost:3000/api/comments/");
+  createComment: async (body) => {
+    const comment = await axios.post("http://localhost:3000/api/comments/",body);
     return comment;
   },
-  updateComment: async (id) => {
-    const comment = await axios.put("http://localhost:3000/api/comments/update/"+id);
+  updateComment: async (id,body) => {
+    const comment = await axios.put("http://localhost:3000/api/comments/update/"+id,body);
     return comment;
   },
   deleteComment: async (id) => {
-    const comment = await axios.delete("http://localhost:3000/api/comments/delete"+id);
+    const comment = await axios.delete("http://localhost:3000/api/comments/delete/"+id);
     return comment;
   },
 };

@@ -29,15 +29,21 @@ const formFunctions = {
     );
     return form;
   },
-  sendToAdmin: async (idi,ida) => {
+  sendToAdmin: async (idi, ida) => {
     const form = await axios.post(
-      "http://localhost:3000/api/forms/sendToAdmin/"+idi+'/'+ida
+      "http://localhost:3000/api/forms/sendToAdmin/" + idi + "/" + ida
     );
     return form;
   },
   viewStatus: async id => {
     const form = await axios.get(
       "http://localhost:3000/api/forms/statusByID/" + id
+    );
+    return form;
+  },
+   deleteAllForms: async () => {
+    const form = await axios.delete(
+      "http://localhost:3000/api/forms/deleteAll/" 
     );
     return form;
   }
