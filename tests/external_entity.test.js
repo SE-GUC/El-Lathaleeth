@@ -110,7 +110,7 @@ test("Testing Create in DB", async () => {
 
   test("testing delete with incorrect id", async () => {
     try {
-      expect.assertions(0);
+      expect.assertions(1);
       const response = await external_entity_funcs.deleteExternal_entity("508");
     } catch (error) {
       expect(error.message).toEqual("Request failed with status code 404");
