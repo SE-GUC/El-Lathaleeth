@@ -67,7 +67,9 @@ test("Testing Getting by id with an incorrect id", async () => {
  catch(error){
   expect(error.message).toEqual("Request failed with status code 404")
  }
-});
+},
+100000
+);
 test("Creating Form, then deleting a form", async ()=>{
   expect.assertions(1);
   const created = await form_funcs.createForm({
@@ -112,9 +114,11 @@ test("Creating Form, then deleting a form", async ()=>{
   const newLength = response2.data.data.length;
   expect(newLength).toEqual(oldLength - 1);
  
-});
+},
+100000
+);
 test("Creating Form, assign it to lawyer,deleteing the form, and checking it got deleted from lawyer arrays", async ()=>{
-  expect.assertions(4);
+  expect.assertions(5);
   const created = await form_funcs.createForm({
     "formType": "SPC",
     "address": "Bouja",
@@ -152,7 +156,6 @@ test("Creating Form, assign it to lawyer,deleteing the form, and checking it got
   });
   const formId= created.data.data._id;
   const response5 = await emp_funcs.getEntity_Emp();
-  expect(1).toEqual(1);
   const oldLengthl = response5.data.data.length;
   const createdLawyer =await emp_funcs.createEntity_Emp({
     lawyer_details: {
@@ -185,12 +188,12 @@ test("Creating Form, assign it to lawyer,deleteing the form, and checking it got
   const updatedEmp=await emp_funcs.getEntity_EmpbyID(createdLawyer.data.data._id);
   const pArrayLength= updatedEmp.data.data.lawyer_details.pending_forms.length;
   const rArrayLength= updatedEmp.data.data.lawyer_details.reviewed_forms.length;
-  const fAarrayLength= updatedEmp.data.data.lawyer_details.filled_forms.length;
+  const fArrayLength= updatedEmp.data.data.lawyer_details.filled_forms.length;
   expect(pArrayLength).toEqual(0);
   expect(rArrayLength).toEqual(0);
   expect(fArrayLength).toEqual(0);
-  
- 
-});
+},
+100000
+);
 
 
