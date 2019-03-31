@@ -16,6 +16,10 @@ const external_entity_functions = {
                 const external_entity = await axios.delete("http://localhost:3000/api/external_entity/delete/" + id);
                 return external_entity;
               },
+        deleteAllExternal_entity: async id => {
+                const external_entity = await axios.delete("http://localhost:3000/api/external_entity/deleteAll/");
+                return external_entity;
+        },
         updateExternal_entity: async (requestBody, id) => {
                 const external_entity = await axios.put("http://localhost:3000/api/external_entity/update/" + id, requestBody);
                 return external_entity;

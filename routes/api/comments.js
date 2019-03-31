@@ -70,5 +70,12 @@ router.delete("/delete/:id", async (req, res) => {
     //Error will be handled later
   }
 });
-
+router.delete("/deleteAll/", async (req, res) => {
+  try {
+    const deletee = await Comment.remove({});
+    res.json({ msg: "Forms successfully deleted" });
+  } catch (error) {
+    //Error will be handled later
+  }
+});
 module.exports = router;

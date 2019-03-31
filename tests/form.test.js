@@ -418,7 +418,7 @@ test("Testing Getting by id with an incorrect id", async () => {
   } catch (error) {
     expect(error.message).toEqual("Request failed with status code 404");
   }
-}, 30000);
+}, 100000);
 
 test("testing delete with incorrect id", async () => {
   try {
@@ -480,7 +480,7 @@ test("Creating Form, then deleting a form", async ()=>{
 100000
 );
 test("Creating Form, assign it to lawyer,deleteing the form, and checking it got deleted from lawyer arrays", async ()=>{
-  expect.assertions(4);
+  expect.assertions(3);
   const created = await form_funcs.createForm({
     formType: "SPC",
     address: "Bouja",
@@ -547,6 +547,8 @@ test("Creating Form, assign it to lawyer,deleteing the form, and checking it got
   });
   const response = await form_funcs.getForms();
   const response1 = await form_funcs.deleteForm(formId);
+  const response2 = await form_funcs.getForms();
+  const newLength = response2.data.data.length;
   const updatedEmp=await emp_funcs.getEntity_EmpbyID(createdLawyer.data.data._id);
   const pArrayLength= updatedEmp.data.data.lawyer_details.pending_forms.length;
   const rArrayLength= updatedEmp.data.data.lawyer_details.reviewed_forms.length;
@@ -559,7 +561,7 @@ test("Creating Form, assign it to lawyer,deleteing the form, and checking it got
 );
 
 test("Creating Form, assign it to Reviewer,deleteing the form, and checking it got deleted from Reviewer arrays", async ()=>{
-  expect.assertions(3);
+  expect.assertions(2);
   const created = await form_funcs.createForm({
     formType: "SPC",
     address: "Bouja",
@@ -591,7 +593,7 @@ test("Creating Form, assign it to Reviewer,deleteing the form, and checking it g
     legalForm: "Legal form of company drop down",
     createdOn: "2019-03-02T19:55:25.722Z",
     lastTouch: "_iddddd",
-    status: "active",
+    status: "posted",
     deadline: "2019-06-06",
     bitIL: 0,
     comments: []
@@ -626,9 +628,6 @@ test("Creating Form, assign it to Reviewer,deleteing the form, and checking it g
     emp_type: "Reviewer",
     joined_on: "2018-02-15T00:00:00.000Z"
   });
-  const response6 = await emp_funcs.getEntity_Emp();
-  const newLengthl = response6.data.data.length;
-  expect(newLengthl).toEqual(oldLengthl + 1);
   const response1 = await form_funcs.deleteForm(formId);
   const updatedEmp=await emp_funcs.getEntity_EmpbyID(createdReviewer.data.data._id);
   const pArrayLength= updatedEmp.data.data.reviewer_details.pending_forms.length;
