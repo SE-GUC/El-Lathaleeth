@@ -40,8 +40,8 @@ router.post("/create/", async (req, res) => {
 router.put("/update/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    const external_entity = await external_entity.findOne({ _id: id });
-    if (!external_entity)
+    const external_ent = await external_entity.findOne({ _id: id });
+    if (!external_ent)
       return res.status(404).send({ error: "External entity does not exist" });
     const isValidated = validator.updateValidation(req.body);
     if (isValidated.error)
@@ -59,6 +59,10 @@ router.delete("/delete/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const deleted_external_entity = await external_entity.findByIdAndRemove(id);
+    if (!deleted_external_entity)
+      return res
+        .status(404)
+        .send({ error: "External entity does not exist" });
     res.json({ data: deleted_external_entity });
   } catch (error) {
     console.log(error);

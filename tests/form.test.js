@@ -480,7 +480,7 @@ test("Creating Form, then deleting a form", async ()=>{
 100000
 );
 test("Creating Form, assign it to lawyer,deleteing the form, and checking it got deleted from lawyer arrays", async ()=>{
-  expect.assertions(4);
+  expect.assertions(3);
   const created = await form_funcs.createForm({
     formType: "SPC",
     address: "Bouja",
@@ -550,7 +550,6 @@ test("Creating Form, assign it to lawyer,deleteing the form, and checking it got
   const response1 = await form_funcs.deleteForm(formId);
   const response2 = await form_funcs.getForms();
   const newLength = response2.data.data.length;
-  expect(newLength).toEqual(oldLength - 1);
   const updatedEmp=await emp_funcs.getEntity_EmpbyID(createdLawyer.data.data._id);
   const pArrayLength= updatedEmp.data.data.lawyer_details.pending_forms.length;
   const rArrayLength= updatedEmp.data.data.lawyer_details.reviewed_forms.length;
