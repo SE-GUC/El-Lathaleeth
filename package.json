@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "start": "node index",
-    "dev": "nodemon index"
+    "dev": "nodemon index",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.18.0",
     "bcryptjs": "^2.4.3",
     "express": "^4.16.4",
     "joi": "^14.3.1",
@@ -22,5 +24,8 @@
   },
   "engines": {
     "node": "10.x"
+  },
+  "devDependencies": {
+    "jest": "^24.5.0"
   }
 }

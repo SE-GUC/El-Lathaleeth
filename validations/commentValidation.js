@@ -31,7 +31,7 @@ module.exports = {
       author_type: Joi.string()
         .valid(["Lawyer", "Reviewer"])
         .required(),
-      author: Joi.object(empSchema),
+      author: Joi.required(),
       text: Joi.string().required(),
       read_at: Joi.optional(),
       postedOn: Joi.optional(),
@@ -71,7 +71,7 @@ module.exports = {
       author_type: Joi.string()
         .valid(["Lawyer", "Reviewer"])
         .required(),
-      author: Joi.object(empSchema),
+      author: Joi.required(),
       text: Joi.string().required(),
       read_at: Joi.optional(),
       postedOn: Joi.optional(),

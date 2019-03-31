@@ -53,11 +53,8 @@ const FormSchema = new Schema({
     type: String
   },
   status: {
-    type: String
-  },
-  formId: {
-    type: Schema.ObjectId,
-    auto: true
+    type: String,
+    enum: ["posted","lawyer check","reviewer check","company declared","awaiting payment","paid"]
   },
   deadline: {
     type: Date
@@ -65,9 +62,9 @@ const FormSchema = new Schema({
   bitIL: {
     type: Number
   },
-  comments: {
+  comments: [{
     type: commentSchema
-  },
+  }],
   investor: { type: investorSchema, required: true }
 });
 

@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const EmpScheme = require("./Entity_Emp").schema;
-
 const ComSchema = new Schema({
   author_type: {
     type: String,
@@ -9,7 +7,8 @@ const ComSchema = new Schema({
     enum: ["Lawyer", "Reviewer"]
   },
   author: {
-    type: EmpScheme,
+    type:Schema.Types.ObjectId,
+    ref: 'entity_emp',
     required: true
   },
   text: {

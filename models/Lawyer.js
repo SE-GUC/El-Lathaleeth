@@ -3,8 +3,22 @@ const Schema = mongoose.Schema;
 const formScheme = require("./Form").schema;
 
 const LawSchema = new Schema({
-  pending_forms: [{ type: formScheme }],
-  reviewed_forms: [{ type: formScheme }],
+  pending_forms: [{
+    type: Schema.Types.ObjectId,
+    ref: 'forms'
+     }],
+  reviewed_forms: [{
+    type: Schema.Types.ObjectId,
+    ref: 'forms'
+  }],
+  to_be_filled_for: [{
+    type: Schema.Types.ObjectId,
+    ref: 'investor'
+  }],
+  filled_forms: [{
+    type: Schema.Types.ObjectId,
+    ref: 'forms'
+  }],
   speciality: { type: String, required: true },
   education: { type: String, required: true }
 });

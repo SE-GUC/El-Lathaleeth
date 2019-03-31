@@ -31,7 +31,7 @@ module.exports = {
       author_type: Joi.string()
         .valid(["Lawyer", "Reviewer"])
         .required(),
-      author: Joi.object(empSchema),
+      author: Joi.required(),
       text: Joi.string().required(),
       read_at: Joi.optional(),
       postedOn: Joi.optional(),
@@ -68,7 +68,8 @@ module.exports = {
         .email()
         .required(),
       capital: Joi.number().required(),
-      capitalCurrency: Joi.string().required() // Drop Down
+      capitalCurrency: Joi.string().required(), // Drop Down
+      investorFormID: Joi.string().optional()
     };
     const SPCschema = {
       law: Joi.string().required(), //drop down menu
@@ -84,9 +85,10 @@ module.exports = {
         .required(),
       createdOn: Joi.date().required(),
       lastTouch: Joi.string(),
-      status: Joi.string(),
+      status: Joi.any().valid(["posted","lawyer check","reviewer check","company declared","paid","awaiting payment"]),
       deadline: Joi.date(),
-      bitIL: Joi.number(),
+      bitIL: Joi.number().valid([0, 1]),
+      comments: Joi.required(),
       formType: Joi.any()
         .valid(["SPC", "SSC"])
         .required(), //drop down menu
@@ -131,14 +133,14 @@ module.exports = {
 
       createdOn: Joi.date().required(),
       lastTouch: Joi.string(),
-      status: Joi.string(),
+      status: Joi.any().valid(["posted","lawyer check","reviewer check","company declared","paid","awaiting payment"]),
       deadline: Joi.date(),
-      bitIL: Joi.number(),
+      bitIL: Joi.number().valid([0, 1]),
       formType: Joi.any()
         .valid(["SPC", "SSC"])
         .required(), //drop down menu maybe same as up
       investor: Joi.object(investorSchema).required(),
-      comments: Joi.object(commentSchema),
+      comments: Joi.required(),
       boardOfDirectors: Joi.array()
         .min(1)
         .items(Joi.object(direcSchema).required())
@@ -180,7 +182,7 @@ module.exports = {
       author_type: Joi.string()
         .valid(["Lawyer", "Reviewer"])
         .required(),
-      author: Joi.object(empSchema),
+      author: Joi.required(),
       text: Joi.string().required(),
       read_at: Joi.optional(),
       postedOn: Joi.optional(),
@@ -217,8 +219,13 @@ module.exports = {
         .email()
         .required(),
       capital: Joi.number().required(),
-      capitalCurrency: Joi.string().required() // Drop Down
+
+      capitalCurrency: Joi.string().required(), // Drop Down
+      investorFormID: Joi.string().optional(),
+      _id: Joi.optional()
+      // Drop Down
     };
+
     const SPCschema = {
       law: Joi.string().required(), //drop down menu
       legalForm: Joi.string().required(), //drop down menu
@@ -233,9 +240,10 @@ module.exports = {
         .required(),
       createdOn: Joi.date().required(),
       lastTouch: Joi.string(),
-      status: Joi.string(),
+      status: Joi.any().valid(["posted","lawyer check","reviewer check","company declared","paid","awaiting payment"]),
       deadline: Joi.date(),
       bitIL: Joi.number(),
+      comments: Joi.required(),
       formType: Joi.any()
         .valid(["SPC", "SSC"])
         .required(), //drop down menu
@@ -280,14 +288,14 @@ module.exports = {
 
       createdOn: Joi.date().required(),
       lastTouch: Joi.string(),
-      status: Joi.string(),
+      status: Joi.any().valid(["posted","lawyer check","reviewer check","company declared","paid","awaiting payment"]),
       deadline: Joi.date(),
       bitIL: Joi.number(),
       formType: Joi.any()
         .valid(["SPC", "SSC"])
         .required(), //drop down menu maybe same as up
       investor: Joi.object(investorSchema).required(),
-      comments: Joi.object(commentSchema),
+      comments: Joi.required(),
       boardOfDirectors: Joi.array()
         .min(1)
         .items(Joi.object(direcSchema).required())
