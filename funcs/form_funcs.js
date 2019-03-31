@@ -40,6 +40,12 @@ const formFunctions = {
       "http://localhost:3000/api/forms/statusByID/" + id
     );
     return form;
+  },
+   deleteAllForms: async () => {
+    const form = await axios.delete(
+      "http://localhost:3000/api/forms/deleteAll/" 
+    );
+    return form;
   }
 };
 module.exports = formFunctions;

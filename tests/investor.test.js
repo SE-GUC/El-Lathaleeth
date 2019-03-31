@@ -500,3 +500,11 @@ test("Testing 'create investor' and 'update investor' inserts new investor and u
     updatedInvestor.data.data.firstName
   );
 }, 100000);
+
+afterAll(async () => {
+	const msg = await investor_funcs.deleteAllInvestor()
+});
+beforeAll(async () => {
+	const msg = await investor_funcs.deleteAllInvestor()
+});
+
