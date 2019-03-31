@@ -85,7 +85,7 @@ module.exports = {
         .required(),
       createdOn: Joi.date().required(),
       lastTouch: Joi.string(),
-      status: Joi.string(),
+      status: Joi.any().valid(["posted","lawyer check","reviewer check","company declared","paid","awaiting payment"]),
       deadline: Joi.date(),
       bitIL: Joi.number().valid([0, 1]),
       comments: Joi.required(),
@@ -133,7 +133,7 @@ module.exports = {
 
       createdOn: Joi.date().required(),
       lastTouch: Joi.string(),
-      status: Joi.string(),
+      status: Joi.any().valid(["posted","lawyer check","reviewer check","company declared","paid","awaiting payment"]),
       deadline: Joi.date(),
       bitIL: Joi.number().valid([0, 1]),
       formType: Joi.any()
@@ -240,7 +240,7 @@ module.exports = {
         .required(),
       createdOn: Joi.date().required(),
       lastTouch: Joi.string(),
-      status: Joi.string(),
+      status: Joi.any().valid(["posted","lawyer check","reviewer check","company declared","paid","awaiting payment"]),
       deadline: Joi.date(),
       bitIL: Joi.number(),
       comments: Joi.required(),
@@ -288,7 +288,7 @@ module.exports = {
 
       createdOn: Joi.date().required(),
       lastTouch: Joi.string(),
-      status: Joi.string(),
+      status: Joi.any().valid(["posted","lawyer check","reviewer check","company declared","paid","awaiting payment"]),
       deadline: Joi.date(),
       bitIL: Joi.number(),
       formType: Joi.any()

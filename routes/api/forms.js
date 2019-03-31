@@ -199,5 +199,49 @@ router.delete("/deleteAll/", async (req, res) => {
     //Error will be handled later
   }
 });
+//As as lawyer I can review form
+router.put("/lawyerReview/:idl/:id", async (req, res) => {
+  try {
+    const idl = req.params.idl;
+    const id = req.params.id;
+    const form = await Form.findById(id);
+    if (!form) return res.status(404).send({ error: "Form does not exist" });
+    const findLawyer = await Entity_Emp.findById(idl);
+    if (!findLawyer)
+    return res.status(404).send({ error: "Reviewer does not exist" });
+    const updatedForm = await Form.findByIdAndUpdate(
+      id,
+      { $set: { status:"lawyer check",
+      lastTouch: "reviewed by lawyer: " + idl } },
+      {new: true}
+      
+    );
+    res.json({ msg: "Form reviewed successfully", data: updatedForm });
+  } catch (error) {
+    console.log(error);
+  }
+});
+router.put("/reviewerReview/:idr/:id", async (req, res) => {
+  try {
+    const idr = req.params.idr;
+    const id = req.params.id;
+    const form = await Form.findById(id);
+    if (!form) return res.status(404).send({ error: "Form does not exist" });
+    const findRev = await Entity_Emp.findById(idr);
+    if (!findRev)
+    return res.status(404).send({ error: "Reviewer does not exist" });
+    const updatedForm = await Form.findByIdAndUpdate(
+      id,
+      { $set:
+       { status:"review check",
+      lastTouch: "reviewed by reviewer: " + idr } },
+      {new: true}
+      
+    );
+    res.json({ msg: "Form reviewed successfully", data: updatedForm });
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 module.exports = router;

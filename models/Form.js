@@ -53,7 +53,8 @@ const FormSchema = new Schema({
     type: String
   },
   status: {
-    type: String
+    type: String,
+    enum: ["posted","lawyer check","reviewer check","company declared","awaiting payment","paid"]
   },
   deadline: {
     type: Date
