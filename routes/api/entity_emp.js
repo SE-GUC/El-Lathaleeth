@@ -19,6 +19,20 @@ router.get("/", async (req, res) => {
 //   res.json({ data: emps });
 // });
 
+router.get("/revform/:id", async (req, res) => {
+  try{
+    const id = req.params.id
+    const emp = await Entity_Emp.findById(id)
+    if (!emp)
+      return res.status(404).send({ error: "Reviewer does not exist" });
+    const rev_form = await emp.reviewer_details.reviewed_forms
+    res.json({ data: rev_form });
+  }
+  catch (error) {
+    console.log(error);
+  }
+});
+
 router.get("/byID/:id", async (req, res) => {
   try {
     console.log(0);
