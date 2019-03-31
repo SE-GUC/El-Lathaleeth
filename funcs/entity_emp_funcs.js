@@ -56,6 +56,11 @@ const functions = {
       body
     );
     return emps;
-  }
+  },
+    deleteAllEntity_Emp: async () => {
+        const emps = await axios.delete(
+            "http://localhost:3000/api/entity_emp/deleteAll/"        );
+        return emps;
+    }
 };
 module.exports = functions;
