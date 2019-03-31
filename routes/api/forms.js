@@ -233,7 +233,7 @@ router.put("/reviewerReview/:idr/:id", async (req, res) => {
     const updatedForm = await Form.findByIdAndUpdate(
       id,
       { $set:
-       { status:"review check",
+       { status:"reviewer check",
       lastTouch: "reviewed by reviewer: " + idr } },
       {new: true}
       

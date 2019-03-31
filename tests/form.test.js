@@ -560,7 +560,8 @@ test("Creating Form, assign it to lawyer,deleteing the form, and checking it got
 100000
 );
 
-test("Creating Form, assign it to Reviewer,deleteing the form, and checking it got deleted from Reviewer arrays", async ()=>{
+test("Creating Form, assign it to Reviewer,deleteing the form, and checking it got deleted from Reviewer arrays",
+ async ()=>{
   expect.assertions(2);
   const created = await form_funcs.createForm({
     formType: "SPC",
@@ -599,8 +600,6 @@ test("Creating Form, assign it to Reviewer,deleteing the form, and checking it g
     comments: []
   });
   const formId= created.data.data._id;
-  const response5 = await emp_funcs.getEntity_Emp();
-  const oldLengthl = response5.data.data.length;
   const createdReviewer = await emp_funcs.createEntity_Emp({
     lawyer_details: {
       pending_forms: [],
@@ -639,9 +638,157 @@ test("Creating Form, assign it to Reviewer,deleteing the form, and checking it g
 );
 
 
-afterAll(async () => {
-  const msg = await form_funcs.deleteAllForms()
-});
+test("status of form changes after being reviewed by lawyer", async () => {
+  expect.assertions(1);
+  const newForm = await form_funcs.createForm({
+    formType: "SPC",
+    address: "Bouja",
+    arabicName: "???? ???????",
+    englishName: "Lina Productions",
+    phone: "11111111111",
+    fax: "23344",
+    investor: {
+      firstName: "Nadeen",
+      middleName: "Amr",
+      lastName: "Riad",
+      gender: "female",
+      nationality: "Egyptian",
+      investorType: "individual",
+      typeOfID: "id",
+      IDNumber: "1234567890",
+      dateOfBirth: "1970-03-21",
+      address: "Some place",
+      phoneNumber: "01117208627",
+      faxNumber: "1234A1234",
+      creditCardNumber: "4024007158885060",
+      email: "hello@gmail.com",
+      capital: "1000000",
+      capitalCurrency: "Euro"
+    },
+    capitalCurr: "Euro",
+    capitalVal: 500000,
+    law: "Laws drop down menu",
+    legalForm: "Legal form of company drop down",
+    createdOn: "2019-03-02T19:55:25.722Z",
+    lastTouch: "_iddddd",
+    status: "posted",
+    deadline: "2019-06-06",
+    bitIL: 0,
+    comments: []
+  });
+  const newLawyer = await emp_funcs.createEntity_Emp(
+    {
+      lawyer_details: {
+        pending_forms: [],
+        reviewed_forms: [],
+        to_be_filled_for: [],
+        filled_forms: [],
+        speciality: "mo7amy 5ol3",
+        education: "Bsc."
+      },
+      admin_details: {
+        registered_investors: [],
+        investors_to_assign: []
+      },
+      reviewer_details: {
+        pending_forms: [],
+        reviewed_forms: []
+      },
+      username: "Alsouidan",
+      password: "mshwed h2oklmdvol",
+      email: "Hwedfdghi@gmail.com",
+      dateOfBirth: "1998-02-14T00:00:00.000Z",
+      firstName: "Ali",
+      middleName: "Amr",
+      lastName: "Souidan",
+      emp_type: "Lawyer",
+      joined_on: "2018-02-15T00:00:00.000Z"
+    });
+  
+  const reviewedForm = await form_funcs.lawyerReview (
+    newLawyer.data.data._id,
+    newForm.data.data._id
+  );
+  const getForm = await form_funcs.getFormByID(reviewedForm.data.data._id);
+  expect(getForm.data.data.status).toEqual("lawyer check");
+}, 100000);
+
+test("status of form changes after being reviewed by reviewer", async () => {
+  expect.assertions(1);
+  const newForm = await form_funcs.createForm({
+    formType: "SPC",
+    address: "Bouja",
+    arabicName: "???? ???????",
+    englishName: "Lina Productions",
+    phone: "11111111111",
+    fax: "23344",
+    investor: {
+      firstName: "Nadeen",
+      middleName: "Amr",
+      lastName: "Riad",
+      gender: "female",
+      nationality: "Egyptian",
+      investorType: "individual",
+      typeOfID: "id",
+      IDNumber: "1234567890",
+      dateOfBirth: "1970-03-21",
+      address: "Some place",
+      phoneNumber: "01117208627",
+      faxNumber: "1234A1234",
+      creditCardNumber: "4024007158885060",
+      email: "hello@gmail.com",
+      capital: "1000000",
+      capitalCurrency: "Euro"
+    },
+    capitalCurr: "Euro",
+    capitalVal: 500000,
+    law: "Laws drop down menu",
+    legalForm: "Legal form of company drop down",
+    createdOn: "2019-03-02T19:55:25.722Z",
+    lastTouch: "_iddddd",
+    status: "posted",
+    deadline: "2019-06-06",
+    bitIL: 0,
+    comments: []
+  });
+  const newReviewer = await emp_funcs.createEntity_Emp(
+    {
+      lawyer_details: {
+        pending_forms: [],
+        reviewed_forms: [],
+        to_be_filled_for: [],
+        filled_forms: [],
+        speciality: "mo7amy 5ol3",
+        education: "Bsc."
+      },
+      admin_details: {
+        registered_investors: [],
+        investors_to_assign: []
+      },
+      reviewer_details: {
+        pending_forms: [],
+        reviewed_forms: []
+      },
+      username: "Alsouidan",
+      password: "mshwed h2oklmdvol",
+      email: "Hwedfdghi@gmail.com",
+      dateOfBirth: "1998-02-14T00:00:00.000Z",
+      firstName: "Ali",
+      middleName: "Amr",
+      lastName: "Souidan",
+      emp_type: "Reviewer",
+      joined_on: "2018-02-15T00:00:00.000Z"
+    });
+  
+  const reviewedForm = await form_funcs.reviewerReview (
+    newReviewer.data.data._id,
+    newForm.data.data._id
+  );
+  const getForm = await form_funcs.getFormByID(reviewedForm.data.data._id);
+  expect(getForm.data.data.status).toEqual("reviewer check");
+}, 100000);
+
+
 beforeAll(async () => {
   const msg = await form_funcs.deleteAllForms();
 });
