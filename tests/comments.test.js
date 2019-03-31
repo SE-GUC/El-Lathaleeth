@@ -90,3 +90,10 @@ test("Testing deleting a comment", async () => {
   const commlength2 = response2.data.data.length;
   expect(commlength2).toEqual(commlength - 1);
 }, 30000);
+
+afterAll(async () => {
+  const msg = await comm_funcs.deleteAllComment()
+});
+beforeAll(async () => {
+  const msg = await comm_funcs.deleteAllComment()
+});

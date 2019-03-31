@@ -123,3 +123,9 @@ test("Testing deleting an external entity with wrong Id", async () => {
     expect(error.message).toEqual("Request failed with status code 404");
   }
 }, 30000);
+afterAll(async () => {
+  const msg = await external_entity_funcs.deleteAllExternal_entity();
+});
+beforeAll(async () => {
+  const msg = await external_entity_funcs.deleteAllExternal_entity();
+});

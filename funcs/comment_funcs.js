@@ -19,6 +19,10 @@ const commentFunctions = {
     const comment = await axios.put("http://localhost:3000/api/comments/update/"+id,body);
     return comment;
   },
+  deleteAllComment: async (id) => {
+    const comment = await axios.delete("http://localhost:3000/api/comments/deleteAll/");
+    return comment;
+  },
   deleteComment: async (id) => {
     const comment = await axios.delete("http://localhost:3000/api/comments/delete/"+id);
     return comment;
