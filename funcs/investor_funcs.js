@@ -25,8 +25,11 @@ const investor_functions = {
     deleteExistingInvestor: async id => {
         const deletedInvestor = await axios.delete("http://localhost:3000/api/investor/delete/"+id);
         return deletedInvestor;
-    }
-
+    },
+    deleteAllInvestor: async () => {
+        const deletedInvestors = await axios.delete("http://localhost:3000/api/investor/deleteAll/");
+        return deletedInvestors;
+    },
 };
 
 module.exports = investor_functions;
