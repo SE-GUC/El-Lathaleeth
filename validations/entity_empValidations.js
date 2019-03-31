@@ -27,7 +27,7 @@ module.exports = {
       joined_on: Joi.date().required(),
       lawyer_details: Joi.optional(),
       admin_details: Joi.optional(),
-      reviewer_details: Joi.optional(),
+      reviewer_details: Joi.optional()
     };
 
     return Joi.validate(request, direcSchema);
@@ -57,9 +57,9 @@ module.exports = {
         .required(),
       id: Joi.optional(),
       joined_on: Joi.date().required(),
-      lawyer_details:Joi.optional(),
-      admin_details:Joi.optional(),
-      reviewer_details:Joi.optional(),
+      lawyer_details: Joi.optional(),
+      admin_details: Joi.optional(),
+      reviewer_details: Joi.optional()
     };
 
     return Joi.validate(request, updateSchema);

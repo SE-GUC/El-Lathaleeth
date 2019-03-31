@@ -11,7 +11,7 @@ const Entity_Emp = require("../../models/Entity_Emp");
 const Admin = require("../../models/Admin");
 
 const validator = require("../../validations/formValidations");
-const commValidator =  require("../../validations/commentValidation");
+const commValidator = require("../../validations/commentValidation");
 
 const mongoose = require("mongoose");
 
@@ -109,8 +109,10 @@ router.put("/update/:id", async (req, res) => {
       return res
         .status(400)
         .send({ error: isValidated.error.details[0].message });
-    const updatedForm = await Form.updateOne(req.body);
-    res.json({ msg: "Form updated successfully" });
+    const updatedForm = await Form.findByIdAndUpdate(id, req.body, {
+      new: true
+    });
+    res.json({ msg: "Form updated successfully", data: updatedForm });
   } catch (error) {
     console.log(error);
   }
@@ -118,41 +120,42 @@ router.put("/update/:id", async (req, res) => {
 
 //as an investor I can create comments on a form
 router.put("/commentOnForm/:id", async (req, res) => {
-  try{
+  try {
     const id = req.params.id;
     const form = await Form.findById(id);
-    if (!form) return res.status(404).send({ error: "Form does not exist"});
+    if (!form) return res.status(404).send({ error: "Form does not exist" });
     const isValidated = commValidator.createValidation(req.body);
-    if (isValidated.error)return res.status(400).send({ error: isValidated.error.details[0].message });
+    if (isValidated.error)
+      return res
+        .status(400)
+        .send({ error: isValidated.error.details[0].message });
     const com = await Comment.create(req.body);
-    const test =  await Form.findByIdAndUpdate(id,
-      { $push: {comments: com}},
-      { safe: true, upsert: true},
-      function(err, doc){
-        if(err){
+    const test = await Form.findByIdAndUpdate(
+      id,
+      { $push: { comments: com } },
+      { safe: true, upsert: true },
+      function(err, doc) {
+        if (err) {
           console.log(err);
-        }else{
+        } else {
           //do stuff
         }
       }
     );
-    res.json({data:test});
-  }
-  catch(error){
-    console.log(error)
+    res.json({ data: test });
+  } catch (error) {
+    console.log(error);
     //error will be handled later
   }
-})
+});
 
 //As an investor I can have a lawyer fill my form
 router.post("/sendToAdmin/:idi/:ida", async (req, res) => {
-  //const investor = req.body.investor;
-  //const formType = req.body.formType;
   const idi = req.params.idi;
   const ida = req.params.ida;
   const admin = await Entity_Emp.findByIdAndUpdate(
-    {  ida },
-    { $push: { investors_to_assign: idi } },
+    ida,
+    { $push: { "admin_details.investors_to_assign": idi } },
     { new: true },
     (err, doc) => {
       if (err) {
@@ -174,6 +177,26 @@ router.get("/statusByID/:id", async (req, res) => {
     res.json({ msg: "Status found", data: findform.status });
   } catch (error) {
     // Error will be handled later
+  }
+});
+router.get("/formComment/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const findform = await Form.findById(id);
+    if (!findform)
+      return res.status(404).send({ error: "Form does not exist" });
+    res.json({ msg: "Comment form", data: findform.comments });
+  } catch (error) {
+    // Error will be handled later
+  }
+});
+router.delete("/deleteAll/", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deleteForm = await Form.remove({});
+    res.json({ msg: "Forms successfully deleted" });
+  } catch (error) {
+    //Error will be handled later
   }
 });
 
