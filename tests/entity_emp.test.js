@@ -497,6 +497,3 @@ test("Testing Investor choosing to have laweyr fill form, then admin assigns a l
 afterAll(async () => {
   const msg= await emp_funcs.deleteAllEntity_Emp() 
 });
-beforeAll(async () => {
-  const msg = await emp_funcs.deleteAllEntity_Emp()
-});

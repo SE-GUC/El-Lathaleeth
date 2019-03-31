@@ -1,4 +1,4 @@
-const external_entity_funcs = require('./funcs/external_entity_fn');
+const external_entity_funcs = require('../funcs/external_entity_fn');
 
 test("Testing Create in DB", async () => {
     expect.assertions(1);
