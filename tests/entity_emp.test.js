@@ -479,7 +479,7 @@ test("Testing Investor choosing to have laweyr fill form, then admin assigns a l
       legalForm: "Legal form of company drop down",
       createdOn: "2019-03-02T19:55:25.722Z",
       lastTouch: "_iddddd",
-      status: "active",
+      status: "posted",
       deadline: "2019-06-06",
       bitIL: 0,
       comments: []

@@ -36,7 +36,7 @@ test("Creating Form", async () => {
     legalForm: "Legal form of company drop down",
     createdOn: "2019-03-02T19:55:25.722Z",
     lastTouch: "_iddddd",
-    status: "active",
+    status: "posted",
     deadline: "2019-06-06",
     bitIL: 0,
     comments: []
@@ -78,7 +78,7 @@ test("Testing Create Actually Creates with correct values", async () => {
     legalForm: "Legal form of company drop down",
     createdOn: "2019-03-02T19:55:25.722Z",
     lastTouch: "_iddddd",
-    status: "active",
+    status: "posted",
     deadline: "2019-06-06",
     bitIL: 0,
     comments: []
@@ -125,7 +125,7 @@ test("Testing Creating with wrong data types", async () => {
       legalForm: "Legal form of company drop down",
       createdOn: "2019-03-02T19:55:25.722Z",
       lastTouch: "_iddddd",
-      status: "active",
+      status: "posted",
       deadline: "2019-06-06",
       bitIL: "INVALID DATA",
       comments: []
@@ -169,7 +169,7 @@ test("Testing view status after creating ", async () => {
     legalForm: "Legal form of company drop down",
     createdOn: "2019-03-02T19:55:25.722Z",
     lastTouch: "_iddddd",
-    status: "active",
+    status: "posted",
     deadline: "2019-06-06",
     bitIL: 0,
     comments: []
@@ -211,7 +211,7 @@ test("Testing after creating existing and updated values", async () => {
     legalForm: "Legal form of company drop down",
     createdOn: "2019-03-02T19:55:25.722Z",
     lastTouch: "_iddddd",
-    status: "active",
+    status: "posted",
     deadline: "2019-06-06",
     bitIL: 0,
     comments: []
@@ -248,7 +248,7 @@ test("Testing after creating existing and updated values", async () => {
       legalForm: "Legal form of company drop down",
       createdOn: "2019-03-02T19:55:25.722Z",
       lastTouch: "_iddddd",
-      status: "active",
+      status: "posted",
       deadline: "2019-06-06",
       bitIL: 0,
       comments: []
@@ -297,7 +297,7 @@ test("Testing updating with invalid info", async () => {
       legalForm: "Legal form of company drop down",
       createdOn: "2019-03-02T19:55:25.722Z",
       lastTouch: "_iddddd",
-      status: "active",
+      status: "posted",
       deadline: "2019-06-06",
       bitIL: 0,
       comments: []
@@ -334,7 +334,7 @@ test("Testing updating with invalid info", async () => {
         legalForm: "Legal form of company drop down",
         createdOn: "2019-03-02T19:55:25.722Z",
         lastTouch: "_iddddd",
-        status: "active",
+        status: "posted",
         deadline: "Hello I am wrong data!",
         bitIL: 0,
         comments: []
@@ -382,7 +382,7 @@ test("Testing updating a none form existing form", async () => {
         legalForm: "Legal form of company drop down",
         createdOn: "2019-03-02T19:55:25.722Z",
         lastTouch: "_iddddd",
-        status: "active",
+        status: "posted",
         deadline: "Hello I am wrong data!",
         bitIL: 0,
         comments: []
@@ -406,7 +406,7 @@ test("Testing Getting by id with a correct id", async () =>{
   catch(error){
     // expect(error.message).toEqual("Employee does not exist");
   }
-},30000);
+},100000);
 
 test("Testing Getting by id with an incorrect id", async () => {
   try {
@@ -429,7 +429,7 @@ test("testing delete with incorrect id", async () => {
   } catch (error) {
     expect(error.message).toEqual("Request failed with status code 404");
   }
-}, 30000);
+}, 100000);
 
 test("Creating Form, then deleting a form", async ()=>{
   expect.assertions(1);
@@ -464,7 +464,7 @@ test("Creating Form, then deleting a form", async ()=>{
     legalForm: "Legal form of company drop down",
     createdOn: "2019-03-02T19:55:25.722Z",
     lastTouch: "_iddddd",
-    status: "active",
+    status: "posted",
     deadline: "2019-06-06",
     bitIL: 0,
     comments: []
@@ -512,7 +512,7 @@ test("Creating Form, assign it to lawyer,deleteing the form, and checking it got
     legalForm: "Legal form of company drop down",
     createdOn: "2019-03-02T19:55:25.722Z",
     lastTouch: "_iddddd",
-    status: "active",
+    status: "posted",
     deadline: "2019-06-06",
     bitIL: 0,
     comments: []
