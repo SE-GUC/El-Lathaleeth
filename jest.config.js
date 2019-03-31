@@ -1,4 +1,6 @@
 module.exports = {
   testEnvironment: "node",
-  verbose: true
+  verbose: true,
+  setupFiles: ["./tests/runtime.js"]
+
 };
