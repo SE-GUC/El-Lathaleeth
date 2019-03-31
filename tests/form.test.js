@@ -600,8 +600,6 @@ test("Creating Form, assign it to Reviewer,deleteing the form, and checking it g
     comments: []
   });
   const formId= created.data.data._id;
-  const response5 = await emp_funcs.getEntity_Emp();
-  const oldLengthl = response5.data.data.length;
   const createdReviewer = await emp_funcs.createEntity_Emp({
     lawyer_details: {
       pending_forms: [],
@@ -638,6 +636,7 @@ test("Creating Form, assign it to Reviewer,deleteing the form, and checking it g
 },
 100000
 );
+
 
 test("status of form changes after being reviewed by lawyer", async () => {
   expect.assertions(1);
@@ -789,7 +788,8 @@ test("status of form changes after being reviewed by reviewer", async () => {
   expect(getForm.data.data.status).toEqual("reviewer check");
 }, 100000);
 
-afterAll(async () => {
-  const msg = await form_funcs.deleteAllForms()
+
+beforeAll(async () => {
+  const msg = await form_funcs.deleteAllForms();
 });
 
