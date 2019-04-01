@@ -789,7 +789,7 @@ test("status of form changes after being reviewed by reviewer", async () => {
 }, 100000);
 
 
-beforeAll(async () => {
+afterAll(async () => {
   const msg = await form_funcs.deleteAllForms();
 });
 
