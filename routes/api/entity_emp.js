@@ -187,4 +187,5 @@ router.put("/assignLawyer/:lawyerid/:investorid/:adminid", async (req, res) => {
   }
 });
 
+
 module.exports = router;
