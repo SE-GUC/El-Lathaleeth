@@ -9,6 +9,10 @@ const FormSchema = new Schema({
     type: String,
     required: true
   },
+  // caseNumber:{
+  //   type: Number,
+  //   required:true
+  // },
   legalForm: {
     type: String,
     required: true
@@ -65,6 +69,10 @@ const FormSchema = new Schema({
   comments: [{
     type: commentSchema
   }],
+  cost:{
+    type: Number
+  }
+  ,
   investor: { type: investorSchema, required: true }
 });
 

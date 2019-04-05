@@ -12,20 +12,20 @@ const commentFunctions = {
     return comment;
   },
   createComment: async (body) => {
-    const comment = await axios.post("http://localhost:3000/api/comments/",body);
+    const comment = await axios.post("http://localhost:5000/api/comments/",body);
     return comment;
   },
   updateComment: async (id,body) => {
-    const comment = await axios.put("http://localhost:3000/api/comments/update/"+id,body);
+    const comment = await axios.put("http://localhost:5000/api/comments/"+id,body);
     return comment;
   },
-  deleteAllComment: async (id) => {
-    const comment = await axios.delete("http://localhost:3000/api/comments/deleteAll/");
+  deleteAllComment: async () => {
+    const comment = await axios.delete("http://localhost:5000/api/comments/deleteAll/");
     return comment;
   },
   deleteComment: async (id) => {
-    const comment = await axios.delete("http://localhost:3000/api/comments/delete/"+id);
+    const comment = await axios.delete("http://localhost:5000/api/comments/"+id);
     return comment;
-  },
+  }
 };
 module.exports = commentFunctions;

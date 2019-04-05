@@ -10,6 +10,7 @@ const formvalidator = require("../../validations/formValidations");
 // const Form = require("../../models/Form");
 const Admin = require("../../models/Admin");
 
+
 router.get("/", async (req, res) => {
   const emps = await Entity_Emp.find();
   res.json({ data: emps });
@@ -33,7 +34,7 @@ router.get("/revform/:id", async (req, res) => {
   }
 });
 
-router.get("/byID/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     console.log(0);
     const id = req.params.id;
@@ -61,7 +62,7 @@ router.post("/", async (req, res) => {
     console.log(error);
   }
 });
-router.put("/update/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const emp = await Entity_Emp.findOne({ _id: id });
@@ -81,7 +82,7 @@ router.put("/update/:id", async (req, res) => {
   }
 });
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const deleteEmp = await Entity_Emp.findByIdAndDelete(id);
@@ -90,17 +91,18 @@ router.delete("/delete/:id", async (req, res) => {
     //Error will be handled later
   }
 });
-router.delete("/deleteAll/", async (req, res) => {
+router.delete("/deleteAll", async (req, res) => {
   try {
-    const id = req.params.id;
+    console.log("test1")
     const deleteEmp = await Entity_Emp.remove({});
+    console.log("test2")
     res.json({ msg: "Employee successfully deleted" });
   } catch (error) {
     //Error will be handled later
   }
 });
 //deletes all instances of investor in to be filled for
-router.post("/lawyerfillform/:lawyerid/:investorid", async (req, res) => {
+router.post("/lawyerfillform/:lawyerid/", async (req, res) => {
   try {
     const type = req.body.formType;
 
@@ -112,10 +114,9 @@ router.post("/lawyerfillform/:lawyerid/:investorid", async (req, res) => {
     const newForm = await Form.create(req.body);
 
     const lawyerid = req.params.lawyerid;
-    const investorid = req.params.investorid;
    await Entity_Emp.findByIdAndUpdate(
       lawyerid,
-      { $pull: { "lawyer_details.to_be_filled_for": investorid } },
+     { $push: { "lawyer_details.filled_forms": newForm.id } },
       { safe: true },
       function(err, doc) {
         if (err) {
@@ -131,32 +132,21 @@ router.post("/lawyerfillform/:lawyerid/:investorid", async (req, res) => {
     console.log(error);
   }
 });
-
-router.put("/assignLawyer/:lawyerid/:investorid/:adminid", async (req, res) => {
+router.post("/registerEmployee/:adminid/", async (req, res) => {
   try {
-    const id = req.params.lawyerid;
-    const investorid = req.params.investorid;
-    const adminid = req.params.adminid;
-    const emp = await Entity_Emp.findById(id);
-    if (!emp) return res.status(404).send({ error: "Employee does not exist" });
-    console.log(emp.emp_type);
-    if (emp.emp_type !== "Lawyer")
-      return res.status(400).send("You must assign a Lawyer to fill form");
+    const type = req.body.formType;
 
-    // admin.admin_details.investors_to_assign.filter(function (value, index, arr) {
+    const isValidated = validator.createValidation(req.body, type);
+    if (isValidated.error)
+      return res
+        .status(400)
+        .send({ error: isValidated.error.details[0].message });
+    const newEmp = await Entity_Emp.create(req.body);
 
-    //   return value !==investorid ;
-
-    // });
-    const emp1 = await Entity_Emp.findById(adminid);
-    if (!emp1)
-      return res.status(404).send({ error: "Employee does not exist" });
-    console.log(emp1.emp_type);
-    if (emp1.emp_type !== "Admin")
-      return res.status(400).send("You must be an admin");
-    Entity_Emp.findByIdAndUpdate(
-      adminid, //not working as should
-      { $pull: { "admin_details.investors_to_assign": investorid } },
+    const admin = req.params.adminid;
+    await Entity_Emp.findByIdAndUpdate(
+      admin,
+      { $push: { "admin_details.registered_employees": newEmp.id } },
       { safe: true },
       function(err, doc) {
         if (err) {
@@ -166,26 +156,15 @@ router.put("/assignLawyer/:lawyerid/:investorid/:adminid", async (req, res) => {
         }
       }
     );
-    const admin = await Entity_Emp.findById(adminid);
-
-    const test = await Entity_Emp.findByIdAndUpdate(
-      id,
-      { $push: { "lawyer_details.to_be_filled_for": investorid } },
-      { safe: true, upsert: true },
-      function(err, doc) {
-        if (err) {
-          console.log(err);
-        } else {
-          //do stuff
-        }
-      }
-    );
-    res.json({ data: test });
+    res.json({ msg: " was created successfully", data: newEmp });
   } catch (error) {
     // We will be handling the error later
     console.log(error);
   }
 });
+
+
+
 
 
 module.exports = router;

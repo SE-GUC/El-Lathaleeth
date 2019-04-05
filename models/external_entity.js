@@ -21,6 +21,10 @@ const external_entity_Schema = new mongoose.Schema({
   email: {
     type: String,
     required: true
+  },
+  url:{
+    type: String,
+    required: true
   }
 });
 module.exports = external_entity = mongoose.model(
