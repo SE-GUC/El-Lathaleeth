@@ -10,7 +10,8 @@ test("Testing Create in DB", async () => {
             address: "address4",
             telephone: "200004",
             fax: "200040",
-            email: "external_entity4@gmail.com"
+            email: "external_entity4@gmail.com",
+            url: "gmail.com"
         }
     );
     const response1 = await external_entity_funcs.getExternal_entity();
@@ -26,7 +27,9 @@ test("Testing Create in DB", async () => {
             address: "address5",
             telephone: "200005",
             fax: "200050",
-            email: "external_entity5@gmail.com"
+            email: "external_entity5@gmail.com",
+            url: "gmail.com"
+
         }
     );
     const response = await external_entity_funcs.getExternal_entityByID(create.data.data._id)
@@ -46,7 +49,9 @@ test("Testing Create in DB", async () => {
         address: "address4",
         telephone: "200004",
         fax: "200040",
-        email: "external_entity4@gmail.com"
+        email: "external_entity4@gmail.com",
+        url: "gmail.com"
+
     }
     )
     const response1 = await external_entity_funcs.updateExternal_entity(
@@ -55,7 +60,9 @@ test("Testing Create in DB", async () => {
       address: "address4",
       telephone: "200004",
       fax: "200040",
-      email: "external_entity4@gmail.com"
+      email: "external_entity4@gmail.com",
+        url: "gmail.com"
+
       }, created.data.data._id
     )
     const response = await external_entity_funcs.getExternal_entityByID(created.data.data._id);
@@ -70,7 +77,9 @@ test("Testing Create in DB", async () => {
         address: "address22",
         telephone: "2000022",
         fax: "221922",
-        email: "external_entity22@gmail.com"
+        email: "external_entity22@gmail.com",
+        url: "gmail.com"
+
         }
     )
     const response = await external_entity_funcs.getExternal_entity();
@@ -90,7 +99,9 @@ test("Testing Create in DB", async () => {
             "address": "address5",
             "telephone": "200005",
             "fax": "hello",
-            "email": "external_entity5@gmail.com"
+            "email": "external_entity5@gmail.com",
+            "url": "gmail.com"
+
       });
     } catch (error) {
       expect(error.message).toEqual("Request failed with status code 400");
@@ -106,7 +117,9 @@ test("Testing updating an external entity with wrong Id", async () => {
         address: "address22",
         telephone: "2000022",
         fax: "221922",
-        email: "external_entity22@gmail.com"
+        email: "external_entity22@gmail.com",
+        url: "gmail.com"
+
       }, "5c9fcd3e1d8fa137a812d237"
     );
   } catch (error) {
@@ -123,9 +136,9 @@ test("Testing deleting an external entity with wrong Id", async () => {
     expect(error.message).toEqual("Request failed with status code 404");
   }
 }, 30000);
-afterAll(async () => {
-  const msg = await external_entity_funcs.deleteAllExternal_entity();
-});
-beforeAll(async () => {
-  const msg = await external_entity_funcs.deleteAllExternal_entity();
-});
+// afterAll(async () => {
+//   const msg = await external_entity_funcs.deleteAllExternal_entity();
+// });
+// beforeAll(async () => {
+//   const msg = await external_entity_funcs.deleteAllExternal_entity();
+// });

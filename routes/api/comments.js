@@ -29,7 +29,7 @@ router.get("/", async (req, res) => {
   const com = await Comment.find();
   res.json({ data: com });
 });
-router.get("/byID/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const com = await Comment.findById(id);
@@ -40,7 +40,7 @@ router.get("/byID/:id", async (req, res) => {
   }
 });
 
-router.put("/update/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const com = await Comment.findOne({ _id: id });
@@ -61,7 +61,7 @@ router.put("/update/:id", async (req, res) => {
   }
 });
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const com = await Comment.findByIdAndDelete(id);

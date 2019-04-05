@@ -10,11 +10,11 @@ const mongoose = require("mongoose");
 
 const app = express();
 // DB Config
-const db = require('./config/keys').mongoURI
+const uri = require('./config/keys').mongoURI
 const dbConfig = {useNewUrlParser: true};
 // Connect to mongo
-mongoose
-  .connect(db,dbConfig)
+const db1= mongoose
+  .connect(uri,dbConfig)
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.log(err))
 
@@ -23,7 +23,9 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 // Direct routes to appropriate files
-
+// const testDb = db1.db("test");
+// testDb.createCollection("counters");
+// testDb.counters.insert({ _id: "productid", sequence_value: 0 })
 app.use("/api/entity_emp", entity_emp);
 app.use("/api/forms", forms);
 app.use("/api/investor", investor);
@@ -35,7 +37,7 @@ app.use((req, res) => {
   res.status(404).send({ err: "We can not find what you are looking for" });
 });
 
-const port = 3000;
+const port = 5000;
 app.listen(process.env.PORT || port, () =>
   console.log(`Server up and running on port ${port}`)
 );

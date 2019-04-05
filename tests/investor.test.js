@@ -501,8 +501,8 @@ test("Testing 'create investor' and 'update investor' inserts new investor and u
   );
 }, 100000);
 
-afterAll(async () => {
-	const msg = await investor_funcs.deleteAllInvestor()
-});
+// afterAll(async () => {
+// 	const msg = await investor_funcs.deleteAllInvestor()
+// });
 
 

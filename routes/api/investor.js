@@ -7,13 +7,13 @@ const Form = require("../../models/Form");
 const formvalidator = require("../../validations/formValidations");
 
 // GET: select * from investors
-router.get("/get", async (req, res) => {
+router.get("/", async (req, res) => {
   const investors = await Investor.find();
   res.json({ data: investors });
 });
 
 // GET BY ID: select * from investors where id = _
-router.get("/getbyID/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const id = req.params.id;
     //const investor = await Investor.findById(id)
@@ -27,7 +27,7 @@ router.get("/getbyID/:id", async (req, res) => {
   }
 });
 // CREATE: insert into investors
-router.post("/create", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const isValidated = validator.createValidation(req.body);
     if (isValidated.error)
@@ -46,7 +46,7 @@ router.post("/create", async (req, res) => {
 });
 
 // DELETE: delete * from investors where id = _
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const investor = await Investor.findById(id);
@@ -61,7 +61,7 @@ router.delete("/delete/:id", async (req, res) => {
 });
 
 // UPDATE: update investors set _ = _ ...etc
-router.put("/update/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const investor = await Investor.findById(id);
@@ -115,7 +115,6 @@ router.put("/update/:id", async (req, res) => {
 
 router.delete("/deleteAll/", async (req, res) => {
   try {
-    const id = req.params.id;
     const deleteInvestor = await Investor.remove({});
     res.json({ msg: "All Investors have been successfully deleted" });
   } catch (error) {

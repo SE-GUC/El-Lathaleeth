@@ -92,7 +92,9 @@ module.exports = {
       formType: Joi.any()
         .valid(["SPC", "SSC"])
         .required(), //drop down menu
-      investor: Joi.object(investorSchema).required()
+      investor: Joi.object(investorSchema).required(),
+      formNumber: Joi.optional(),
+      cost:Joi.number().optional()
     };
 
     const direcSchema = {
@@ -141,6 +143,8 @@ module.exports = {
         .required(), //drop down menu maybe same as up
       investor: Joi.object(investorSchema).required(),
       comments: Joi.required(),
+      formNumber:Joi.optional(),
+      cost: Joi.number().optional(),
       boardOfDirectors: Joi.array()
         .min(1)
         .items(Joi.object(direcSchema).required())
@@ -244,6 +248,8 @@ module.exports = {
       deadline: Joi.date(),
       bitIL: Joi.number(),
       comments: Joi.required(),
+      cost: Joi.number().optional(),
+      formNumber: Joi.optional(),
       formType: Joi.any()
         .valid(["SPC", "SSC"])
         .required(), //drop down menu
@@ -288,7 +294,15 @@ module.exports = {
 
       createdOn: Joi.date().required(),
       lastTouch: Joi.string(),
-      status: Joi.any().valid(["posted","lawyer check","reviewer check","company declared","paid","awaiting payment"]),
+      formNumber: Joi.optional(),
+      status: Joi.any().valid([
+        "posted",
+        "lawyer check",
+        "reviewer check",
+        "company declared",
+        "paid",
+        "awaiting payment"
+      ]),
       deadline: Joi.date(),
       bitIL: Joi.number(),
       formType: Joi.any()
@@ -296,6 +310,7 @@ module.exports = {
         .required(), //drop down menu maybe same as up
       investor: Joi.object(investorSchema).required(),
       comments: Joi.required(),
+      cost: Joi.number().optional(),
       boardOfDirectors: Joi.array()
         .min(1)
         .items(Joi.object(direcSchema).required())

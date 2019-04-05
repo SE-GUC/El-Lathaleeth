@@ -522,13 +522,12 @@ test("Creating Form, assign it to lawyer,deleteing the form, and checking it got
     lawyer_details: {
       pending_forms: [formId],
       reviewed_forms: [formId],
-      to_be_filled_for: [],
       filled_forms: [formId],
       speciality: "mo7amy 5ol3",
       education: "Bsc."
     },
     admin_details: {
-      registered_investors: [],
+      registered_employees: [],
       investors_to_assign: []
     },
     reviewer_details: {
@@ -604,13 +603,12 @@ test("Creating Form, assign it to Reviewer,deleteing the form, and checking it g
     lawyer_details: {
       pending_forms: [],
       reviewed_forms: [],
-      to_be_filled_for: [],
       filled_forms: [],
       speciality: "none",
       education: "none"
     },
     admin_details: {
-      registered_investors: [],
+      registered_employees: [],
       investors_to_assign: []
     },
     reviewer_details: {
@@ -681,13 +679,13 @@ test("status of form changes after being reviewed by lawyer", async () => {
       lawyer_details: {
         pending_forms: [],
         reviewed_forms: [],
-        to_be_filled_for: [],
+ 
         filled_forms: [],
         speciality: "mo7amy 5ol3",
         education: "Bsc."
       },
       admin_details: {
-        registered_investors: [],
+        registered_employees: [],
         investors_to_assign: []
       },
       reviewer_details: {
@@ -756,13 +754,13 @@ test("status of form changes after being reviewed by reviewer", async () => {
       lawyer_details: {
         pending_forms: [],
         reviewed_forms: [],
-        to_be_filled_for: [],
+ 
         filled_forms: [],
         speciality: "mo7amy 5ol3",
         education: "Bsc."
       },
       admin_details: {
-        registered_investors: [],
+        registered_employees: [],
         investors_to_assign: []
       },
       reviewer_details: {
