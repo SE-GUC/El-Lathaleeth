@@ -2,12 +2,12 @@ const axios = require("axios");
 const commentFunctions = {
   // comment functions so far
   getComments: async () => {
-    const comments = await axios.get("http://localhost:3000/api/comments/");
+    const comments = await axios.get("http://localhost:5000/api/comments/");
     return comments;
   },
   getComment: async id => {
     const comment = await axios.get(
-      "http://localhost:3000/api/comments/byID/" + id
+      "http://localhost:5000/api/comments/byID/" + id
     );
     return comment;
   },
