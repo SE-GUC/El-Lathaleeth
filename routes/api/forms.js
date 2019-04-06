@@ -31,6 +31,26 @@ router.get("/:id", async (req, res) => {
     // Error will be handled later
   }
 });
+router.get("/getPending/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const emp = await Entity_Emp.findById(id)
+      .populate("lawyer_details.pending_forms")
+      .populate("reviewer_details.pending_forms");
+    let forms = [];
+    let formObjects = [];
+    if (!emp) return res.status(404).send({ error: "Employee does not exist" });
+    emp.lawyer_details.pending_forms.map(formID => {
+      if (forms.indexOf(formID) === -1) forms.push(formID);
+    });
+    emp.reviewer_details.pending_forms.map(formID => {
+      if (forms.indexOf(formID) === -1) forms.push(formID);
+    });
+    res.json({ msg: "Form found", data: forms });
+  } catch (error) {
+    // Error will be handled later
+  }
+});
 router.get("/cost/:id", async (req, res) => {
   try {
     const id = req.params.id;
@@ -45,7 +65,7 @@ router.get("/cost/:id", async (req, res) => {
 router.get("/byInvestorID/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    const findInvestorform = await Form.find({"investor.investorFormID" : id});
+    const findInvestorform = await Form.find({ "investor.investorFormID": id });
     if (!findInvestorform)
       return res.status(404).send({ error: "Form does not exist" });
     res.json({ msg: "Form found", data: findInvestorform });
@@ -57,22 +77,27 @@ router.delete("/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const deleteform = await Form.findByIdAndDelete(id);
-    const deletelawyerformpending = await Entity_Emp.updateMany({"emp_type":'Lawyer',"lawyer_details.pending_forms":id},
-    {$pull:{"lawyer_details.pending_forms":id}}
-    )
-    const deletelawyerformreviewed = await Entity_Emp.updateMany({"emp_type":'Lawyer',"lawyer_details.reviewed_forms":id},
-    {$pull:{"lawyer_details.reviewed_forms":id}}
-    )
-    const deletelawyerformfilled = await Entity_Emp.updateMany({"emp_type":'Lawyer',"lawyer_details.filled_forms":id},
-    {$pull:{"lawyer_details.filled_forms":id}}
-    )
-    const deletereviewerformpending = await Entity_Emp.updateMany({"emp_type":'Reviewer',"reviewer_details.pending_forms":id},
-    {$pull:{"reviewer_details.pending_forms":id}}
-    )
-    const deletereviewerformreviewed = await Entity_Emp.updateMany({"emp_type":'Reviewer',"reviewer_details.reviewed_forms":id},
-    {$pull:{"reviewer_details.reviewed_forms":id}}
-    )
-    
+    const deletelawyerformpending = await Entity_Emp.updateMany(
+      { emp_type: "Lawyer", "lawyer_details.pending_forms": id },
+      { $pull: { "lawyer_details.pending_forms": id } }
+    );
+    const deletelawyerformreviewed = await Entity_Emp.updateMany(
+      { emp_type: "Lawyer", "lawyer_details.reviewed_forms": id },
+      { $pull: { "lawyer_details.reviewed_forms": id } }
+    );
+    const deletelawyerformfilled = await Entity_Emp.updateMany(
+      { emp_type: "Lawyer", "lawyer_details.filled_forms": id },
+      { $pull: { "lawyer_details.filled_forms": id } }
+    );
+    const deletereviewerformpending = await Entity_Emp.updateMany(
+      { emp_type: "Reviewer", "reviewer_details.pending_forms": id },
+      { $pull: { "reviewer_details.pending_forms": id } }
+    );
+    const deletereviewerformreviewed = await Entity_Emp.updateMany(
+      { emp_type: "Reviewer", "reviewer_details.reviewed_forms": id },
+      { $pull: { "reviewer_details.reviewed_forms": id } }
+    );
+
     if (!deleteform)
       return res.status(404).send({ error: "Form Id Not Found" });
     res.json({ msg: "Form successfully deleted" });
@@ -203,19 +228,25 @@ router.put("/lawyerReview/:idl/:id", async (req, res) => {
     if (!form) return res.status(404).send({ error: "Form does not exist" });
     const findLawyer = await Entity_Emp.findById(idl);
     if (!findLawyer)
-    return res.status(404).send({ error: "Reviewer does not exist" });
+      return res.status(404).send({ error: "Reviewer does not exist" });
     const updatedForm = await Form.findByIdAndUpdate(
       id,
-      { $set: { status:"lawyer check",
-      lastTouch: "reviewed by lawyer: " + idl } },
-      {new: true}
-      
+      {
+        $set: {
+          status: "lawyer check",
+          lastTouch: "reviewed by lawyer: " + idl
+        }
+      },
+      { new: true }
     );
     await Entity_Emp.findByIdAndUpdate(
       idl,
-      { $push: { "lawyer_details.reviewed_forms": updatedForm.id },$pull:{"lawyer_details.pending_forms": updatedForm.id}},
+      {
+        $push: { "lawyer_details.reviewed_forms": updatedForm.id },
+        $pull: { "lawyer_details.pending_forms": updatedForm.id }
+      },
       { safe: true },
-      function (err, doc) {
+      function(err, doc) {
         if (err) {
           console.log(err);
         } else {
@@ -237,11 +268,10 @@ router.put("/formPaid/:id", async (req, res) => {
       id,
       {
         $set: {
-          status: "paid",
+          status: "paid"
         }
       },
       { new: true }
-
     );
     res.json({ msg: "Form paid successfully", data: updatedForm });
   } catch (error) {
@@ -252,17 +282,15 @@ router.put("/generateCost/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const form = await Form.findById(id);
-    let money
+    let money;
     if (!form) return res.status(404).send({ error: "Form does not exist" });
-    if (0.001 * form.capitalVal<100){
-    money=100
-    }
-    else{
-      if (0.001 * form.capitalVal > 1000){
-        money=1000
-      }
-      else{
-        money=0.001*form.capitalVal
+    if (0.001 * form.capitalVal < 100) {
+      money = 100;
+    } else {
+      if (0.001 * form.capitalVal > 1000) {
+        money = 1000;
+      } else {
+        money = 0.001 * form.capitalVal;
       }
     }
     const updatedForm = await Form.findByIdAndUpdate(
@@ -287,18 +315,23 @@ router.put("/reviewerReview/:idr/:id", async (req, res) => {
     if (!form) return res.status(404).send({ error: "Form does not exist" });
     const findRev = await Entity_Emp.findById(idr);
     if (!findRev)
-    return res.status(404).send({ error: "Reviewer does not exist" });
+      return res.status(404).send({ error: "Reviewer does not exist" });
     const updatedForm = await Form.findByIdAndUpdate(
       id,
-      { $set:
-       { status:"reviewer check",
-      lastTouch: "reviewed by reviewer: " + idr } },
-      {new: true}
-      
+      {
+        $set: {
+          status: "reviewer check",
+          lastTouch: "reviewed by reviewer: " + idr
+        }
+      },
+      { new: true }
     );
     await Entity_Emp.findByIdAndUpdate(
       idr,
-      { $push: { "reviewer_details.reviewed_forms": updatedForm.id }, $pull: { "reviewer_details.pending_forms": updatedForm.id } },
+      {
+        $push: { "reviewer_details.reviewed_forms": updatedForm.id },
+        $pull: { "reviewer_details.pending_forms": updatedForm.id }
+      },
       { safe: true },
       function(err, doc) {
         if (err) {
