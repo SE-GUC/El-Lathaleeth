@@ -23,8 +23,8 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 // Direct routes to appropriate files
-// const testDb = db1.db("test");
-// testDb.createCollection("counters");
+// const testD  b = mongoose.connection;
+// testDb.createCollection("Counters");
 // testDb.counters.insert({ _id: "productid", sequence_value: 0 })
 app.use("/api/entity_emp", entity_emp);
 app.use("/api/forms", forms);
