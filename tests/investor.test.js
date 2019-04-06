@@ -1,5 +1,7 @@
 const investor_funcs = require("../funcs/investor_funcs");
 const form_funcs = require("../funcs/form_funcs");
+const mongoose = require("mongoose");
+
 
 //tests get and create
 test("Testing 'get all investors' and 'create investor' adds the new investor to investors array/list", async () => {
@@ -504,7 +506,5 @@ test("Testing 'create investor' and 'update investor' inserts new investor and u
 afterAll(async () => {
 	const msg = await investor_funcs.deleteAllInvestor()
 });
-beforeAll(async () => {
-	const msg = await investor_funcs.deleteAllInvestor()
-});
+
 

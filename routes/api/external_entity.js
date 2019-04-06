@@ -4,13 +4,15 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const external_entity = require("../../models/external_entity");
 const validator = require("../../validations/external_entityValidations");
+const axios = require("axios");
+const Form = require("../../models/Form");
 
 router.get("/", async (req, res) => {
   const entities = await external_entity.find();
   res.json({ data: entities });
 });
 
-router.get("/byID/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const findExternal_entity = await external_entity.findById(id);
@@ -23,7 +25,7 @@ router.get("/byID/:id", async (req, res) => {
 });
 
 //create external entity
-router.post("/create/", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const isValidated = validator.createValidation(req.body);
     if (isValidated.error)
@@ -37,11 +39,11 @@ router.post("/create/", async (req, res) => {
   }
 });
 //update
-router.put("/update/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    const external_entity = await external_entity.findOne({ _id: id });
-    if (!external_entity)
+    const external_ent = await external_entity.findOne({ _id: id });
+    if (!external_ent)
       return res.status(404).send({ error: "External entity does not exist" });
     const isValidated = validator.updateValidation(req.body);
     if (isValidated.error)
@@ -55,13 +57,44 @@ router.put("/update/:id", async (req, res) => {
   }
 });
 //delete
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const deleted_external_entity = await external_entity.findByIdAndRemove(id);
+    if (!deleted_external_entity)
+      return res
+        .status(404)
+        .send({ error: "External entity does not exist" });
     res.json({ data: deleted_external_entity });
   } catch (error) {
     console.log(error);
+  }
+});
+
+router.post("/deleteAll/", async (req, res) => {
+  try {
+    const deletee = await external_entity.remove({});
+    res.json({ msg: "Forms successfully deleted" });
+  } catch (error) {
+    //Error will be handled later
+  }
+});
+//not tested
+router.post("/notifyExt/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const form=await Form.findById(id)
+    const exts = await external_entity.find();
+    exts.forEach(async (err, item) =>{
+      await axios.post(
+        item.url,
+        form
+      );
+
+    })
+    res.json({ msg: "All External Entities are notified" });
+  } catch (error) {
+    //Error will be handled later
   }
 });
 

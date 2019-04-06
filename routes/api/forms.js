@@ -2,7 +2,7 @@ const express = require("express");
 const Joi = require("joi");
 const router = express.Router();
 const uuid = require("uuid");
-
+const form_funcs = require("../../funcs/form_funcs");
 const Form = require("../../models/Form");
 const Director = require("../../models/BoardOfDirector");
 const Address = require("../../models/Address");
@@ -20,13 +20,24 @@ router.get("/", async (req, res) => {
   res.json({ data: forms });
 });
 
-router.get("/byID/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const findform = await Form.findById(id);
     if (!findform)
       return res.status(404).send({ error: "Form does not exist" });
     res.json({ msg: "Form found", data: findform });
+  } catch (error) {
+    // Error will be handled later
+  }
+});
+router.get("/cost/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const findform = await Form.findById(id);
+    if (!findform)
+      return res.status(404).send({ error: "Form does not exist" });
+    res.json({ msg: "Form found", data: findform.cost });
   } catch (error) {
     // Error will be handled later
   }
@@ -42,7 +53,7 @@ router.get("/byInvestorID/:id", async (req, res) => {
     // Error will be handled later
   }
 });
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const deleteform = await Form.findByIdAndDelete(id);
@@ -73,7 +84,7 @@ router.delete("/delete/:id", async (req, res) => {
 //As an investor/lawyer I can create Form
 //creating new SPC/SSC form Mongo
 
-router.post("/create/", async (req, res) => {
+router.post("/", async (req, res) => {
   const formType = req.body.formType;
   try {
     const isValidated = validator.createValidation(req.body, formType);
@@ -81,6 +92,8 @@ router.post("/create/", async (req, res) => {
       return res
         .status(400)
         .send({ error: isValidated.error.details[0].message });
+    // const formNumber=form_funcs.getNextSequenceValue("productid");
+    // req.body[formNumber]=formNumber
     const newForm = await Form.create(req.body);
     res.json({ msg: "Form was created successfully", data: newForm });
   } catch (error) {
@@ -91,7 +104,7 @@ router.post("/create/", async (req, res) => {
 
 //As an investor/lawyer I can update Form
 //Updating a form
-router.put("/update/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
     var isValidated = null;
     const id = req.params.id;
@@ -149,24 +162,6 @@ router.put("/commentOnForm/:id", async (req, res) => {
   }
 });
 
-//As an investor I can have a lawyer fill my form
-router.post("/sendToAdmin/:idi/:ida", async (req, res) => {
-  const idi = req.params.idi;
-  const ida = req.params.ida;
-  const admin = await Entity_Emp.findByIdAndUpdate(
-    ida,
-    { $push: { "admin_details.investors_to_assign": idi } },
-    { new: true },
-    (err, doc) => {
-      if (err) {
-        console.log("Something wrong");
-      }
-
-      console.log(doc);
-    }
-  );
-  return res.json({ msg: "sent info to admin" });
-});
 //As an investor/lawyer I can view status of form
 router.get("/statusByID/:id", async (req, res) => {
   try {
@@ -190,13 +185,132 @@ router.get("/formComment/:id", async (req, res) => {
     // Error will be handled later
   }
 });
-router.delete("/deleteAll/", async (req, res) => {
+router.post("/deleteAll/", async (req, res) => {
   try {
     const id = req.params.id;
     const deleteForm = await Form.remove({});
     res.json({ msg: "Forms successfully deleted" });
   } catch (error) {
     //Error will be handled later
+  }
+});
+//As as lawyer I can review form
+router.put("/lawyerReview/:idl/:id", async (req, res) => {
+  try {
+    const idl = req.params.idl;
+    const id = req.params.id;
+    const form = await Form.findById(id);
+    if (!form) return res.status(404).send({ error: "Form does not exist" });
+    const findLawyer = await Entity_Emp.findById(idl);
+    if (!findLawyer)
+    return res.status(404).send({ error: "Reviewer does not exist" });
+    const updatedForm = await Form.findByIdAndUpdate(
+      id,
+      { $set: { status:"lawyer check",
+      lastTouch: "reviewed by lawyer: " + idl } },
+      {new: true}
+      
+    );
+    await Entity_Emp.findByIdAndUpdate(
+      idl,
+      { $push: { "lawyer_details.reviewed_forms": updatedForm.id },$pull:{"lawyer_details.pending_forms": updatedForm.id}},
+      { safe: true },
+      function (err, doc) {
+        if (err) {
+          console.log(err);
+        } else {
+          //do stuff
+        }
+      }
+    );
+    res.json({ msg: "Form reviewed successfully", data: updatedForm });
+  } catch (error) {
+    console.log(error);
+  }
+});
+router.put("/formPaid/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const form = await Form.findById(id);
+    if (!form) return res.status(404).send({ error: "Form does not exist" });
+    const updatedForm = await Form.findByIdAndUpdate(
+      id,
+      {
+        $set: {
+          status: "paid",
+        }
+      },
+      { new: true }
+
+    );
+    res.json({ msg: "Form paid successfully", data: updatedForm });
+  } catch (error) {
+    console.log(error);
+  }
+});
+router.put("/generateCost/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const form = await Form.findById(id);
+    let money
+    if (!form) return res.status(404).send({ error: "Form does not exist" });
+    if (0.001 * form.capitalVal<100){
+    money=100
+    }
+    else{
+      if (0.001 * form.capitalVal > 1000){
+        money=1000
+      }
+      else{
+        money=0.001*form.capitalVal
+      }
+    }
+    const updatedForm = await Form.findByIdAndUpdate(
+      id,
+      {
+        $set: {
+          cost: money
+        }
+      },
+      { new: true }
+    );
+    res.json({ msg: "Form paid successfully", data: updatedForm });
+  } catch (error) {
+    console.log(error);
+  }
+});
+router.put("/reviewerReview/:idr/:id", async (req, res) => {
+  try {
+    const idr = req.params.idr;
+    const id = req.params.id;
+    const form = await Form.findById(id);
+    if (!form) return res.status(404).send({ error: "Form does not exist" });
+    const findRev = await Entity_Emp.findById(idr);
+    if (!findRev)
+    return res.status(404).send({ error: "Reviewer does not exist" });
+    const updatedForm = await Form.findByIdAndUpdate(
+      id,
+      { $set:
+       { status:"reviewer check",
+      lastTouch: "reviewed by reviewer: " + idr } },
+      {new: true}
+      
+    );
+    await Entity_Emp.findByIdAndUpdate(
+      idr,
+      { $push: { "reviewer_details.reviewed_forms": updatedForm.id }, $pull: { "reviewer_details.pending_forms": updatedForm.id } },
+      { safe: true },
+      function(err, doc) {
+        if (err) {
+          console.log(err);
+        } else {
+          //do stuff
+        }
+      }
+    );
+    res.json({ msg: "Form reviewed successfully", data: updatedForm });
+  } catch (error) {
+    console.log(error);
   }
 });
 
