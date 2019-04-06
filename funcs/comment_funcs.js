@@ -20,7 +20,7 @@ const commentFunctions = {
     return comment;
   },
   deleteAllComment: async () => {
-    const comment = await axios.delete("http://localhost:5000/api/comments/deleteAll/");
+    const comment = await axios.post("http://localhost:5000/api/comments/deleteAll/");
     return comment;
   },
   deleteComment: async (id) => {

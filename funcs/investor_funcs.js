@@ -27,7 +27,7 @@ const investor_functions = {
         return deletedInvestor;
     },
     deleteAllInvestor: async () => {
-        const deletedInvestors = await axios.delete("http://localhost:5000/api/investor/deleteAll/");
+        const deletedInvestors = await axios.post("http://localhost:5000/api/investor/deleteAll/");
         return deletedInvestors;
     }
 };

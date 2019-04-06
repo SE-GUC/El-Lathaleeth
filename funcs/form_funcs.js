@@ -42,7 +42,7 @@ const formFunctions = {
     return form;
   },
    deleteAllForms: async () => {
-    const form = await axios.delete(
+    const form = await axios.post(
       "http://localhost:5000/api/forms/deleteAll/" 
     );
     return form;

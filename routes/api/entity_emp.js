@@ -10,7 +10,6 @@ const formvalidator = require("../../validations/formValidations");
 // const Form = require("../../models/Form");
 const Admin = require("../../models/Admin");
 
-
 router.get("/", async (req, res) => {
   const emps = await Entity_Emp.find();
   res.json({ data: emps });
@@ -21,15 +20,13 @@ router.get("/", async (req, res) => {
 // });
 
 router.get("/revform/:id", async (req, res) => {
-  try{
-    const id = req.params.id
-    const emp = await Entity_Emp.findById(id)
-    if (!emp)
-      return res.status(404).send({ error: "Reviewer does not exist" });
-    const rev_form = await emp.reviewer_details.reviewed_forms
+  try {
+    const id = req.params.id;
+    const emp = await Entity_Emp.findById(id);
+    if (!emp) return res.status(404).send({ error: "Reviewer does not exist" });
+    const rev_form = await emp.reviewer_details.reviewed_forms;
     res.json({ data: rev_form });
-  }
-  catch (error) {
+  } catch (error) {
     console.log(error);
   }
 });
@@ -91,14 +88,14 @@ router.delete("/:id", async (req, res) => {
     //Error will be handled later
   }
 });
-router.delete("/deleteAll", async (req, res) => {
+router.post("/deleteAll", async (req, res) => {
   try {
-    console.log("test1")
+    console.log("test1");
     const deleteEmp = await Entity_Emp.remove({});
-    console.log("test2")
+    console.log("test2");
     res.json({ msg: "Employee successfully deleted" });
   } catch (error) {
-    //Error will be handled later
+    console.log("error");
   }
 });
 //deletes all instances of investor in to be filled for
@@ -114,9 +111,9 @@ router.post("/lawyerfillform/:lawyerid/", async (req, res) => {
     const newForm = await Form.create(req.body);
 
     const lawyerid = req.params.lawyerid;
-   await Entity_Emp.findByIdAndUpdate(
+    await Entity_Emp.findByIdAndUpdate(
       lawyerid,
-     { $push: { "lawyer_details.filled_forms": newForm.id } },
+      { $push: { "lawyer_details.filled_forms": newForm.id } },
       { safe: true },
       function(err, doc) {
         if (err) {
@@ -163,8 +160,76 @@ router.post("/registerEmployee/:adminid/", async (req, res) => {
   }
 });
 
+router.put("/laywerReserveForm/:idl/:id", async (req, res) => {
+  try {
+    const idl = req.params.idl;
+    const id = req.params.id;
+    const form = await Form.findById(id);
+    if (!form) return res.status(404).send({ error: "Form does not exist" });
+    const findLawyer = await Entity_Emp.findById(idl);
+    if (!findLawyer)
+      return res.status(404).send({ error: "Lawyer does not exist" });
+    const updatedForm = await Form.findByIdAndUpdate(
+      id,
+      {
+        $set: {
+          status: "pending"
+        }
+      },
+      { new: true }
+    );
+    await Entity_Emp.findByIdAndUpdate(
+      idl,
+      { $push: { "lawyer_details.pending_forms": updatedForm.id } },
+      { safe: true },
+      function(err, doc) {
+        if (err) {
+          console.log(err);
+        } else {
+          //do stuff
+        }
+      }
+    );
+    res.json({ msg: "Form reserved successfully", data: updatedForm });
+  } catch (error) {
+    console.log(error);
+  }
+});
 
-
-
+router.put("/reviewerReserveForm/:idl/:id", async (req, res) => {
+  try {
+    const idl = req.params.idl;
+    const id = req.params.id;
+    const form = await Form.findById(id);
+    if (!form) return res.status(404).send({ error: "Form does not exist" });
+    const findLawyer = await Entity_Emp.findById(idl);
+    if (!findLawyer)
+      return res.status(404).send({ error: "Reviewer does not exist" });
+    const updatedForm = await Form.findByIdAndUpdate(
+      id,
+      {
+        $set: {
+          status: "pending"
+        }
+      },
+      { new: true }
+    );
+    await Entity_Emp.findByIdAndUpdate(
+      idl,
+      { $push: { "reviewer_details.pending_forms": updatedForm.id } },
+      { safe: true },
+      function(err, doc) {
+        if (err) {
+          console.log(err);
+        } else {
+          //do stuff
+        }
+      }
+    );
+    res.json({ msg: "Form reserved successfully", data: updatedForm });
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 module.exports = router;
