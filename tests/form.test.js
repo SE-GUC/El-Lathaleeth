@@ -787,7 +787,7 @@ test("status of form changes after being reviewed by reviewer", async () => {
 }, 100000);
 
 
-afterAll(async () => {
-  const msg = await form_funcs.deleteAllForms();
-});
+// afterAll(async () => {
+//   const msg = await form_funcs.deleteAllForms();
+// });
 
