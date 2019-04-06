@@ -10,9 +10,7 @@ const formFunctions = {
     return form;
   },
   deleteForm: async id => {
-    const form = await axios.delete(
-      "http://localhost:5000/api/forms/" + id
-    );
+    const form = await axios.delete("http://localhost:5000/api/forms/" + id);
     return form;
   },
   createForm: async requestBody => {
@@ -41,10 +39,8 @@ const formFunctions = {
     );
     return form;
   },
-   deleteAllForms: async () => {
-    const form = await axios.post(
-      "http://localhost:5000/api/forms/deleteAll/" 
-    );
+  deleteAllForms: async () => {
+    const form = await axios.post("http://localhost:5000/api/forms/deleteAll/");
     return form;
   },
   lawyerReview: async (idl, id) => {
@@ -59,15 +55,14 @@ const formFunctions = {
     );
     return form;
   },
-   getNextSequenceValue:(sequenceName)=>{
-
+  getNextSequenceValue: sequenceName => {
     var sequenceDocument = db.counters.findAndModify({
       query: { _id: sequenceName },
       update: { $inc: { sequence_value: 1 } },
       new: true
     });
 
-return sequenceDocument.sequence_value;
-}
+    return sequenceDocument.sequence_value;
+  }
 };
 module.exports = formFunctions;
