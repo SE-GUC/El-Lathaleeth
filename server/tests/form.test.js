@@ -558,15 +558,10 @@ test("Creating Form, assign it to lawyer,deleteing the form, and checking it got
 },
 100000
 );
-<<<<<<< HEAD:tests/form.test.js
-test("Creating Form, assign it to Reviewer,deleteing the form, and checking it got deleted from Reviewer arrays", async ()=>{
-  expect.assertions(3);
-=======
 
 test("Creating Form, assign it to Reviewer,deleteing the form, and checking it got deleted from Reviewer arrays",
  async ()=>{
   expect.assertions(2);
->>>>>>> f11d9e93518b1a021f0659ec2cb867702890ecab:server/tests/form.test.js
   const created = await form_funcs.createForm({
     formType: "SPC",
     address: "Bouja",
@@ -640,14 +635,6 @@ test("Creating Form, assign it to Reviewer,deleteing the form, and checking it g
 100000
 );
 
-<<<<<<< HEAD:tests/form.test.js
-afterAll(async () => {
-  const msg = await form_funcs.deleteAllForms()
-});
-beforeAll(async () => {
-  const msg = await form_funcs.deleteAllForms();
-});
-=======
 
 test("status of form changes after being reviewed by lawyer", async () => {
   expect.assertions(1);
@@ -804,4 +791,3 @@ afterAll(async () => {
   const msg = await form_funcs.deleteAllForms();
 });
 
->>>>>>> f11d9e93518b1a021f0659ec2cb867702890ecab:server/tests/form.test.js
