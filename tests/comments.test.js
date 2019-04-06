@@ -91,6 +91,6 @@ test("Testing deleting a comment", async () => {
   expect(commlength2).toEqual(commlength - 1);
 }, 30000);
 
-// afterAll(async () => {
-//   const msg = await comm_funcs.deleteAllComment()
-// });
+afterAll(async () => {
+  const msg = await comm_funcs.deleteAllComment()
+});

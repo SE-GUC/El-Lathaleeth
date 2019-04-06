@@ -5,9 +5,7 @@ const functions = {
     return emps;
   },
   getEntity_EmpbyID: async id => {
-    const emps = await axios.get(
-      "http://localhost:5000/api/entity_emp/" + id
-    );
+    const emps = await axios.get("http://localhost:5000/api/entity_emp/" + id);
     return emps;
   },
   createEntity_Emp: async requestBody => {
@@ -36,18 +34,38 @@ const functions = {
     );
     return emps;
   },
-  lawyerFillForm: async (lawyerid,  body) => {
+  lawyerFillForm: async (lawyerid, body) => {
     const emps = await axios.post(
-      "http://localhost:5000/api/entity_emp/lawyerfillform/" +
-        lawyerid,
+      "http://localhost:5000/api/entity_emp/lawyerfillform/" + lawyerid,
       body
     );
     return emps;
   },
-    deleteAllEntity_Emp: async () => {
-        const emps = await axios.delete(
-            "http://localhost:5000/api/entity_emp/deleteAll/"        );
-        return emps;
-    }
+  deleteAllEntity_Emp: async () => {
+    const emps = await axios.post(
+      "http://localhost:5000/api/entity_emp/deleteAll/"
+    );
+    return emps;
+  },
+  lawyerReserveForm: async (idl, id) => {
+    const emp = await axios.put(
+      "http://localhost:5000/api/entity_emp/laywerReserveForm/" +
+        idl +
+        "/" +
+        id
+    );
+
+    return emp;
+  },
+  reviewerReserveForm: async (idl, id) => {
+    const emp = await axios.put(
+      "http://localhost:5000/api/entity_emp/reviewerReserveForm/" +
+        idl +
+        "/" +
+        id
+    );
+
+    return emp;
+  }
 };
 module.exports = functions;

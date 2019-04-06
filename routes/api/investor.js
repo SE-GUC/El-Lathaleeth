@@ -113,7 +113,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/deleteAll/", async (req, res) => {
+router.post("/deleteAll/", async (req, res) => {
   try {
     const deleteInvestor = await Investor.remove({});
     res.json({ msg: "All Investors have been successfully deleted" });
