@@ -5,7 +5,7 @@ const investor = require("./routes/api/investor");
 const comments = require("./routes/api/comments");
 const external_entity = require("./routes/api/external_entity");
 const mongoose = require("mongoose");
-
+var cors = require("cors");
 
 
 const app = express();
@@ -20,6 +20,7 @@ const db1= mongoose
 
 // Init middleware
 app.use(express.json())
+app.use(cors());
 app.use(express.urlencoded({ extended: false }))
 
 // Direct routes to appropriate files
@@ -31,6 +32,7 @@ app.use("/api/forms", forms);
 app.use("/api/investor", investor);
 app.use("/api/comments", comments);
 app.use("/api/external_entity", external_entity);
+
 
 // Handling 404
 app.use((req, res) => {
