@@ -10,7 +10,7 @@ import "bootstrap/dist/css/bootstrap.css";
 
 
 import "./App.css";
-const axios = require("axios");
+
 
 // const form_funcs = require("./funcs/form_funcs");
 class App extends Component {
