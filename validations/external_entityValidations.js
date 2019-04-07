@@ -15,7 +15,8 @@ module.exports = {
       fax: Joi.number().required(),
       email: Joi.string()
         .email()
-        .required()
+        .required(),
+      url: Joi.string().required()
     };
 
     return Joi.validate(request, createSchema);
@@ -31,7 +32,8 @@ module.exports = {
         .max(100),
       telephone: Joi.number(),
       fax: Joi.number(),
-      email: Joi.string().email()
+      email: Joi.string().email(),
+      url: Joi.string().required()
     };
     return Joi.validate(request, updateSchema);
   }

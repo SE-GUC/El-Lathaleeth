@@ -9,6 +9,10 @@ const FormSchema = new Schema({
     type: String,
     required: true
   },
+  // caseNumber:{
+  //   type: Number,
+  //   required:true
+  // },
   legalForm: {
     type: String,
     required: true
@@ -54,7 +58,15 @@ const FormSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ["posted","lawyer check","reviewer check","company declared","awaiting payment","paid"]
+    enum: [
+      "posted",
+      "lawyer check",
+      "reviewer check",
+      "company declared",
+      "awaiting payment",
+      "paid",
+      "pending"
+    ]
   },
   deadline: {
     type: Date
@@ -62,9 +74,14 @@ const FormSchema = new Schema({
   bitIL: {
     type: Number
   },
-  comments: [{
-    type: commentSchema
-  }],
+  comments: [
+    {
+      type: commentSchema
+    }
+  ],
+  cost: {
+    type: Number
+  },
   investor: { type: investorSchema, required: true }
 });
 
