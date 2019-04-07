@@ -1,8 +1,10 @@
 import React, { Component } from "react";
-import { Route, NavLink, HashRouter,Nav } from "react-router-dom";
+import { Route, NavLink, HashRouter } from "react-router-dom";
 import LawyerPage from "./pages/LawyerPage";
 import lawyerPendingForms from "./pages/lawyerPendingForms";
 import InvestorPage from "./pages/InvestorPage";
+import trackCasePage from "./pages/trackCasePage";
+
 import "bootstrap/dist/css/bootstrap.css";
 
 
@@ -57,6 +59,17 @@ class App extends Component {
               >
                 My Companies
               </a>
+              <a
+                class="nav-link"
+                id="v-pills-messages-tab"
+                data-toggle="pill"
+                href="#/trackCasePage"
+                role="tab"
+                aria-controls="v-pills-messages"
+                aria-selected="false"
+              >
+                Track my Case
+              </a>
             </div>
             <div class="tab-content" id="v-pills-tabContent">
               <div
@@ -81,25 +94,7 @@ class App extends Component {
             component={lawyerPendingForms}
           />
           <Route path="/InvestorPage" component={InvestorPage} />
-          <Nav
-            activeKey="/home"
-            onSelect={selectedKey => alert(`selected ${selectedKey}`)}
-          >
-            <Nav.Item>
-              <Nav.Link href="/home">Active</Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link eventKey="link-1">Link</Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link eventKey="link-2">Link</Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link eventKey="disabled" disabled>
-                Disabled
-    </Nav.Link>
-            </Nav.Item>
-          </Nav>;
+          <Route path="/trackCasePage" component={trackCasePage} />
         </div>
       </HashRouter>
     );
