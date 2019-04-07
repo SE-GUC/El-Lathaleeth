@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import FormList from "../components/FormList";
 import DetailedFormList from "../components/DetailedFormList";
 const axios = require("axios");
 
@@ -16,7 +15,7 @@ class lawyerPendingForms extends Component {
             console.log(res.data.data);
             this.setState({ forms: res.data.data });
           });
-    };
+    };  
 
     render() {
         console.log(this.state.forms);
@@ -35,7 +34,7 @@ class lawyerPendingForms extends Component {
         });
 
         const reserve = await axios.put(
-          "http://localhost:5000/api/forms/lawyerReview/" +
+          "http://localhost:5000/api/forms/review/" +
             idl +
             "/" +
             id

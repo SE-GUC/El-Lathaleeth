@@ -45,13 +45,13 @@ const formFunctions = {
   },
   lawyerReview: async (idl, id) => {
     const form = await axios.put(
-      "http://localhost:5000/api/forms/lawyerReview/" + idl + "/" + id
+      "http://localhost:5000/api/forms/review/" + idl + "/" + id
     );
     return form;
   },
   reviewerReview: async (idr, id) => {
     const form = await axios.put(
-      "http://localhost:5000/api/forms/reviewerReview/" + idr + "/" + id
+      "http://localhost:5000/api/forms/review/" + idr + "/" + id
     );
     return form;
   },
