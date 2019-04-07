@@ -2,12 +2,14 @@ import React, { Component } from "react";
 import { Route, NavLink, HashRouter } from "react-router-dom";
 import LawyerPage from "./pages/LawyerPage";
 import lawyerPendingForms from "./pages/lawyerPendingForms";
+import lawyer_workspace from "./pages/lawyer_workspace";
 import InvestorPage from "./pages/InvestorPage";
 import trackCasePage from "./pages/trackCasePage";
 import Nav from "react-bootstrap/Nav";
 import "bootstrap/dist/css/bootstrap.css";
 import RegisterEmployee  from "./pages/RegisterEmployee";
 import "./App.css";
+
 
 
 // const form_funcs = require("./funcs/form_funcs");
@@ -68,17 +70,17 @@ class App extends Component {
               >
                 Track my Case
               </a>
-              {/* <a
+              <a
                 class="nav-link"
                 id="v-pills-messages-tab"
                 data-toggle="pill"
-                href="#/RegisterEmployee"
+                href="#/lawyer_workspace"
                 role="tab"
                 aria-controls="v-pills-messages"
                 aria-selected="false"
               >
-                Register Employee
-              </a> */}
+                Workspace
+              </a>
             </div>
             <div class="tab-content" id="v-pills-tabContent">
               <div
@@ -105,6 +107,7 @@ class App extends Component {
           <Route path="/InvestorPage" component={InvestorPage} />
           <Route path="/RegisterEmployee" component={RegisterEmployee} />
           <Route path="/trackCasePage" component={trackCasePage} />
+          <Route path="/lawyer_workspace" component={lawyer_workspace} />
           <Nav variant="pills" defaultActiveKey="/home">
             <Nav.Item>
               <Nav.Link href="#/LawyerPage">About</Nav.Link>
