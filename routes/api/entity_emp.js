@@ -224,5 +224,46 @@ router.put("/reserveForm/:idl/:id", async (req, res) => {
   }
    
 });
-
+router.get("/workSpace/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const findEmp = await Entity_Emp.findById(id);
+    const pending_forms=[]
+    const reviewed_forms=[]
+    const filled_forms=[]
+    if (!findEmp) return res.status(404).send({ error: "Employee does not exist" });
+    if (findEmp.emp_type === 'Lawyer') {
+      const emp = await Entity_Emp.findById(id)
+        .populate("lawyer_details.pending_forms")
+        .populate("lawyer_details.reviewed_forms").populate("lawyer_details.filled_forms")
+      emp.lawyer_details.pending_forms.map(formID => {
+        if (pending_forms.indexOf(formID) === -1) pending_forms.push(formID);
+      });
+      emp.lawyer_details.filled_forms.map(formID => {
+        if (filled_forms.indexOf(formID) === -1)
+          filled_forms.push(formID);
+      });
+      emp.lawyer_details.reviewed_forms.map(formID => {
+        if (reviewed_forms.indexOf(formID) === -1)
+          reviewed_forms.push(formID);
+      });
+    }
+    else if(findEmp.emp_type==='Reviewer'){
+      const emp = await Entity_Emp.findById(id)
+        .populate("reviewer_details.pending_forms")
+        .populate("reviewer_details.reviewed_forms")
+      emp.reviewer_details.pending_forms.map(formID => {
+        if (pending_forms.indexOf(formID) === -1)
+          pending_forms.push(formID);
+      });
+      emp.reviewer_details.reviewed_forms.map(formID => {
+        if (reviewed_forms.indexOf(formID) === -1)
+          reviewed_forms.push(formID);
+      });
+    }
+    res.json({ pending_forms: pending_forms, reviewed_forms: reviewed_forms, filled_forms: filled_forms});
+  } catch (error) {
+    console.log(error);
+  }
+});
 module.exports = router;
