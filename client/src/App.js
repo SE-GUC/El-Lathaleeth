@@ -6,9 +6,7 @@ import InvestorPage from "./pages/InvestorPage";
 import trackCasePage from "./pages/trackCasePage";
 import Nav from "react-bootstrap/Nav";
 import "bootstrap/dist/css/bootstrap.css";
-
-
-
+import RegisterEmployee  from "./pages/RegisterEmployee";
 import "./App.css";
 
 
@@ -70,6 +68,17 @@ class App extends Component {
               >
                 Track my Case
               </a>
+              {/* <a
+                class="nav-link"
+                id="v-pills-messages-tab"
+                data-toggle="pill"
+                href="#/RegisterEmployee"
+                role="tab"
+                aria-controls="v-pills-messages"
+                aria-selected="false"
+              >
+                Register Employee
+              </a> */}
             </div>
             <div class="tab-content" id="v-pills-tabContent">
               <div
@@ -94,6 +103,7 @@ class App extends Component {
             component={lawyerPendingForms}
           />
           <Route path="/InvestorPage" component={InvestorPage} />
+          <Route path="/RegisterEmployee" component={RegisterEmployee} />
           <Route path="/trackCasePage" component={trackCasePage} />
           <Nav variant="pills" defaultActiveKey="/home">
             <Nav.Item>
@@ -102,10 +112,9 @@ class App extends Component {
             <Nav.Item>
               <Nav.Link href="#/LawyerPage">Contact Us</Nav.Link>
             </Nav.Item>
-              <Nav.Item>
-                <Nav.Link href="#/LawyerPage">Meet El Lathaleeth</Nav.Link>
-              </Nav.Item>
-            
+            <Nav.Item>
+              <Nav.Link href="#/LawyerPage">Meet El Lathaleeth</Nav.Link>
+            </Nav.Item>
           </Nav>
           ;
         </div>
