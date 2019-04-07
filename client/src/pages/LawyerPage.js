@@ -144,7 +144,7 @@ class LawyerPage extends Component {
     });
 
     const reserve = await axios.put(
-      "http://localhost:5000/api/entity_emp/laywerReserveForm/" + idl + "/" + id
+      "http://localhost:5000/api/entity_emp/reserveForm/" + idl + "/" + id
     );
   };
 }
