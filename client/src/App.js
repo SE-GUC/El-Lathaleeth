@@ -3,10 +3,10 @@ import { Route, NavLink, HashRouter } from "react-router-dom";
 import LawyerPage from "./pages/LawyerPage";
 import lawyerPendingForms from "./pages/lawyerPendingForms";
 import InvestorPage from "./pages/InvestorPage";
-
+import RevFormsPage from "./pages/RevFormsPage";
 
 import "./App.css";
-const axios = require("axios");
+
 
 
 // const form_funcs = require("./funcs/form_funcs");
@@ -21,12 +21,13 @@ class App extends Component {
        <li><NavLink to="/LawyerPage">LawyerPage</NavLink></li>  
        <li><NavLink to="/lawyerPendingForms">My Pending Forms</NavLink></li> 
        <li><NavLink to="/InvestorPage">My Companies</NavLink></li>         
-        
+       <li><NavLink to="/RevFormsPage">My Reviewed Forms</NavLink></li>
+
           </ul>
           <Route path="/LawyerPage" component={LawyerPage} />
           <Route path="/lawyerPendingForms" component={lawyerPendingForms} />
           <Route path="/InvestorPage" component={InvestorPage} />
-
+          <Route path="/RevFormsPage" component={RevFormsPage} />
         </div>
       </HashRouter>
     );
