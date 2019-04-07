@@ -21,7 +21,7 @@ class lawyerPendingForms extends Component {
         console.log(this.state.forms);
         return (
             <div className="lawyerPendingForms">
-                <DetailedFormList reviewForm={this.reviewForm} forms={this.state.forms} />
+                <DetailedFormList reviewForm={this.reviewForm} addComment={this.addComment} forms={this.state.forms} />
             </div>
         );
     }
@@ -40,6 +40,20 @@ class lawyerPendingForms extends Component {
             id
         );
     };
+    addComment = async (id,body) => {
+        this.setState({
+            forms: this.state.forms.map(form => {
+                if (form._id === id){
+                    form.comments.push(body)
+                }
+            })
+        })
+        const add = await axios.put(
+            "http://localhost:5000/api/forms/commentOnForm/" +
+              id 
+          );
+
+    }
 }
 
 export default lawyerPendingForms;

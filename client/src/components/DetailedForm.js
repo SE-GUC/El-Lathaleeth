@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 export class DetailedForm extends Component {
          state = { clicked: false };
+          handleChange = (event) => {
+          this.setState({value: event.target.value});
+         }
          render() {
              let content = ""
              for (let p in this.props.form) {
@@ -18,6 +21,28 @@ export class DetailedForm extends Component {
                  </h5>
                  <p class="card-text">
                  {content}
+                 <div class="ui input">
+                  <input type="text" placeholder="Write comment" 
+                  value={this.state.value}
+                  onChange={this.handleChange} />
+
+                  <button type="button"
+                  onClick={this.props.addComment.bind(
+                    this,
+                    this.props.form._id,
+                    {
+                     authorType:"Reviewer",
+                     author: "5ca9ea8fd0935b3388eaa962",
+                     text: this.state.value,
+                     postedOn: Date().now
+                    }
+                  )}
+                  class="btn btn-outline-secondary btn-sm"
+                  >
+                  {" "}
+                    Add Comment
+                  </button>{" "}
+                 </div>
                  </p>
                  <button
                    type="button"
@@ -31,6 +56,9 @@ export class DetailedForm extends Component {
                    {" "}
                    Approve This Case
                  </button>{" "}
+
+                 
+
                </div>
              </div>
            );
