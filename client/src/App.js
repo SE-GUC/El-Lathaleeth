@@ -4,7 +4,7 @@ import LawyerPage from "./pages/LawyerPage";
 import lawyerPendingForms from "./pages/lawyerPendingForms";
 import InvestorPage from "./pages/InvestorPage";
 import trackCasePage from "./pages/trackCasePage";
-
+import Nav from "react-bootstrap/Nav";
 import "bootstrap/dist/css/bootstrap.css";
 
 
@@ -95,6 +95,11 @@ class App extends Component {
           />
           <Route path="/InvestorPage" component={InvestorPage} />
           <Route path="/trackCasePage" component={trackCasePage} />
+          <Nav variant="pills" defaultActiveKey="/home">
+            <Nav.Item>
+              <Nav.Link href="#/LawyerPage">About</Nav.Link>
+            </Nav.Item>
+          </Nav>;
         </div>
       </HashRouter>
     );
