@@ -16,7 +16,6 @@ class App extends Component {
         <div className="App">
           <h1>Summerge Lathaleeth</h1>
           <ul className="header">
-          
             <div
               class="nav flex-column nav-pills"
               id="v-pills-tab"
@@ -45,6 +44,17 @@ class App extends Component {
               >
                 Pending Forms
               </a>
+              <a
+                class="nav-link"
+                id="v-pills-messages-tab"
+                data-toggle="pill"
+                href="#/InvestorPage"
+                role="tab"
+                aria-controls="v-pills-messages"
+                aria-selected="false"
+              >
+                My Companies
+              </a>
             </div>
             <div class="tab-content" id="v-pills-tabContent">
               <div
@@ -64,14 +74,11 @@ class App extends Component {
             </div>
           </ul>
           <Route path="/LawyerPage" component={LawyerPage} />
-          <Route path="/lawyerPendingForms" component={lawyerPendingForms} />
-       <li><NavLink to="/LawyerPage">LawyerPage</NavLink></li>  
-       <li><NavLink to="/lawyerPendingForms">My Pending Forms</NavLink></li> 
-       <li><NavLink to="/InvestorPage">My Companies</NavLink></li>         
-          <Route path="/LawyerPage" component={LawyerPage} />
-          <Route path="/lawyerPendingForms" component={lawyerPendingForms} />
+          <Route
+            path="/lawyerPendingForms"
+            component={lawyerPendingForms}
+          />
           <Route path="/InvestorPage" component={InvestorPage} />
-
         </div>
       </HashRouter>
     );
