@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+// import { Button, Form } from "semantic-ui-react";
 import "bootstrap/dist/css/bootstrap.css";
 export class DetailedForm extends Component {
          state = { clicked: false };
@@ -32,6 +33,10 @@ export class DetailedForm extends Component {
                    Approve This Case
                  </button>{" "}
                </div>
+                   {/* <Form reply>
+                       <Form.TextArea />
+                       <Button content='Add Comment' labelPosition='left' icon='edit' primary />
+                   </Form> */}
              </div>
            );
          }
