@@ -185,7 +185,7 @@ router.get("/formComment/:id", async (req, res) => {
     // Error will be handled later
   }
 });
-router.delete("/deleteAll/", async (req, res) => {
+router.post("/deleteAll/", async (req, res) => {
   try {
     const id = req.params.id;
     const deleteForm = await Form.remove({});
@@ -213,7 +213,7 @@ router.put("/lawyerReview/:idl/:id", async (req, res) => {
     );
     await Entity_Emp.findByIdAndUpdate(
       idl,
-      { $push: { "lawyer_details.reviewed_forms": updatedForm.id } },
+      { $push: { "lawyer_details.reviewed_forms": updatedForm.id },$pull:{"lawyer_details.pending_forms": updatedForm.id}},
       { safe: true },
       function (err, doc) {
         if (err) {
@@ -298,7 +298,7 @@ router.put("/reviewerReview/:idr/:id", async (req, res) => {
     );
     await Entity_Emp.findByIdAndUpdate(
       idr,
-      { $push: { "reviewer_details.reviewed_forms": updatedForm.id } },
+      { $push: { "reviewer_details.reviewed_forms": updatedForm.id }, $pull: { "reviewer_details.pending_forms": updatedForm.id } },
       { safe: true },
       function(err, doc) {
         if (err) {

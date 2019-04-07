@@ -71,7 +71,7 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-router.delete("/deleteAll/", async (req, res) => {
+router.post("/deleteAll/", async (req, res) => {
   try {
     const deletee = await external_entity.remove({});
     res.json({ msg: "Forms successfully deleted" });
