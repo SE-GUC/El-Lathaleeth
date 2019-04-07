@@ -3,6 +3,12 @@ import "bootstrap/dist/css/bootstrap.css";
 export class DetailedForm extends Component {
          state = { clicked: false };
          render() {
+             let content = ""
+             for (let p in this.props.form) {
+                 if (this.props.form.hasOwnProperty(p)) {
+                     content +=  p + " : " + this.props.form[p] + "\n";
+                 }
+             }    
            return (
              <div class="card">
                <div class="card-header">{this.props.form.formType}</div>
@@ -11,13 +17,13 @@ export class DetailedForm extends Component {
                    Mr./Mrs. {this.props.form.investor.firstName}
                  </h5>
                  <p class="card-text">
-                   <p class="card-text" />
+                 {content}
                  </p>
                  <button
                    type="button"
                    onClick={this.props.reviewForm.bind(
                      this,
-                     "5ca8d9c18bc46d2d88c6a9bd",
+                     "5ca9ea8fd0935b3388eaa962",
                      this.props.form._id
                    )}
                    class="btn btn-success"
