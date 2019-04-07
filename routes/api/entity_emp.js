@@ -160,7 +160,7 @@ router.post("/registerEmployee/:adminid/", async (req, res) => {
   }
 });
 
-router.put("/laywerReserveForm/:idl/:id", async (req, res) => {
+router.put("/reserveForm/:idl/:id", async (req, res) => {
   try {
     const idl = req.params.idl;
     const id = req.params.id;
@@ -168,68 +168,61 @@ router.put("/laywerReserveForm/:idl/:id", async (req, res) => {
     if (!form) return res.status(404).send({ error: "Form does not exist" });
     const findLawyer = await Entity_Emp.findById(idl);
     if (!findLawyer)
-      return res.status(404).send({ error: "Lawyer does not exist" });
-    const updatedForm = await Form.findByIdAndUpdate(
-      id,
-      {
-        $set: {
-          status: "pending"
-        }
-      },
-      { new: true }
-    );
-    await Entity_Emp.findByIdAndUpdate(
-      idl,
-      { $push: { "lawyer_details.pending_forms": updatedForm.id } },
-      { safe: true },
-      function(err, doc) {
-        if (err) {
-          console.log(err);
-        } else {
-          //do stuff
-        }
+      return res.status(404).send({ error: "Employee does not exist" });
+      else
+      if(findLawyer.emp_type==='Lawyer'){
+        const updatedForm = await Form.findByIdAndUpdate(
+          id,
+          {
+            $set: {
+              status: "pending"
+            }
+          },
+          { new: true }
+        );
+        await Entity_Emp.findByIdAndUpdate(
+          idl,
+          { $push: { "lawyer_details.pending_forms": updatedForm.id } },
+          { safe: true },
+          function (err, doc) {
+            if (err) {
+              console.log(err);
+            } else {
+              //do stuff
+            }
+          }
+        );
+        res.json({ msg: "Form reserved successfully", data: updatedForm });
+      } 
+      else if(findLawyer.emp_type==='Reviewer'){
+        const updatedForm = await Form.findByIdAndUpdate(
+          id,
+          {
+            $set: {
+              status: "pending"
+            }
+          },
+          { new: true }
+        );
+        await Entity_Emp.findByIdAndUpdate(
+          idl,
+          { $push: { "reviewer_details.pending_forms": updatedForm.id } },
+          { safe: true },
+          function (err, doc) {
+            if (err) {
+              console.log(err);
+            } else {
+              //do stuff
+            }
+          }
+        );
+        res.json({ msg: "Form reserved successfully", data: updatedForm });
       }
-    );
-    res.json({ msg: "Form reserved successfully", data: updatedForm });
-  } catch (error) {
+      }
+  catch (error) {
     console.log(error);
   }
-});
-
-router.put("/reviewerReserveForm/:idl/:id", async (req, res) => {
-  try {
-    const idl = req.params.idl;
-    const id = req.params.id;
-    const form = await Form.findById(id);
-    if (!form) return res.status(404).send({ error: "Form does not exist" });
-    const findLawyer = await Entity_Emp.findById(idl);
-    if (!findLawyer)
-      return res.status(404).send({ error: "Reviewer does not exist" });
-    const updatedForm = await Form.findByIdAndUpdate(
-      id,
-      {
-        $set: {
-          status: "pending"
-        }
-      },
-      { new: true }
-    );
-    await Entity_Emp.findByIdAndUpdate(
-      idl,
-      { $push: { "reviewer_details.pending_forms": updatedForm.id } },
-      { safe: true },
-      function(err, doc) {
-        if (err) {
-          console.log(err);
-        } else {
-          //do stuff
-        }
-      }
-    );
-    res.json({ msg: "Form reserved successfully", data: updatedForm });
-  } catch (error) {
-    console.log(error);
-  }
+   
 });
 router.get("/workSpace/:id", async (req, res) => {
   try {
