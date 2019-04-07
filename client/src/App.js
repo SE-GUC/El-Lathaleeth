@@ -99,7 +99,15 @@ class App extends Component {
             <Nav.Item>
               <Nav.Link href="#/LawyerPage">About</Nav.Link>
             </Nav.Item>
-          </Nav>;
+            <Nav.Item>
+              <Nav.Link href="#/LawyerPage">Contact Us</Nav.Link>
+            </Nav.Item>
+              <Nav.Item>
+                <Nav.Link href="#/LawyerPage">Meet El Lathaleeth</Nav.Link>
+              </Nav.Item>
+            
+          </Nav>
+          ;
         </div>
       </HashRouter>
     );
