@@ -147,6 +147,7 @@ class LawyerPage extends Component {
       "http://localhost:5000/api/entity_emp/reserveForm/" + idl + "/" + id
     );
   };
+ 
 }
 
 export default LawyerPage;
