@@ -49,7 +49,7 @@ const functions = {
   },
   lawyerReserveForm: async (idl, id) => {
     const emp = await axios.put(
-      "http://localhost:5000/api/entity_emp/laywerReserveForm/" +
+      "http://localhost:5000/api/entity_emp/reserveForm/" +
         idl +
         "/" +
         id
@@ -59,7 +59,7 @@ const functions = {
   },
   reviewerReserveForm: async (idl, id) => {
     const emp = await axios.put(
-      "http://localhost:5000/api/entity_emp/reviewerReserveForm/" +
+      "http://localhost:5000/api/entity_emp/reserveForm/" +
         idl +
         "/" +
         id
