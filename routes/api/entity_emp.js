@@ -155,7 +155,7 @@ router.post("/lawyerfillform/:lawyerid/", async (req, res) => {
     const lawyerid = req.params.lawyerid;
     await Entity_Emp.findByIdAndUpdate(
       lawyerid,
-      { $push: { "lawyer_details.filled_forms": newForm.id } },
+      { $addToSet: { "lawyer_details.filled_forms": newForm.id } },
       { safe: true },
       function(err, doc) {
         if (err) {
@@ -185,7 +185,7 @@ router.post("/registerEmployee/:adminid/", async (req, res) => {
     const admin = req.params.adminid;
     await Entity_Emp.findByIdAndUpdate(
       admin,
-      { $push: { "admin_details.registered_employees": newEmp.id } },
+      { $addToSet: { "admin_details.registered_employees": newEmp.id } },
       { safe: true },
       function(err, doc) {
         if (err) {
@@ -224,7 +224,7 @@ router.put("/reserveForm/:idl/:id", async (req, res) => {
         );
         await Entity_Emp.findByIdAndUpdate(
           idl,
-          { $push: { "lawyer_details.pending_forms": updatedForm.id } },
+          { $addToSet: { "lawyer_details.pending_forms": updatedForm.id } },
           { safe: true },
           function (err, doc) {
             if (err) {
@@ -248,7 +248,7 @@ router.put("/reserveForm/:idl/:id", async (req, res) => {
         );
         await Entity_Emp.findByIdAndUpdate(
           idl,
-          { $push: { "reviewer_details.pending_forms": updatedForm.id } },
+          { $addToSet: { "reviewer_details.pending_forms": updatedForm.id } },
           { safe: true },
           function (err, doc) {
             if (err) {

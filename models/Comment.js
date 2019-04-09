@@ -16,7 +16,10 @@ const ComSchema = new Schema({
     required: true
   },
   postedOn: { type: Date, required: true },
-  read_at: { type: Date }
+  read_at: { type: Date },
+  commentFormId: {
+    type: String
+  }
 });
 // const uuid = require("uuid");
 // class Comment {

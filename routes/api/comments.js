@@ -39,7 +39,12 @@ router.get("/:id", async (req, res) => {
     /// Error will be handled later
   }
 });
-
+//doesn't update in form still needs more work, worst case we will remove the comments
+// model due to its redundancy,
+//its extremeley redundant as we can directly embed the comment object as a whole w 5alas,
+//this can work we can put add a route in form directly that updates the embedded comment
+// and not the one in the backend,short term solution as we still have the redundant collection
+//note to self when you have time remove this entire mess.
 router.put("/:id", async (req, res) => {
   try {
     const id = req.params.id;
@@ -54,6 +59,31 @@ router.put("/:id", async (req, res) => {
     const updatedCom = await Comment.findByIdAndUpdate(id, req.body, {
       new: true
     });
+    console.log(id)
+    const up = await Form.findOneAndUpdate(
+      { "comments._id":id}, //query
+      { $pull: { comments: {commentFormId:id} } },
+      { new:true }, //for multiple documents
+      function (err, model) {
+        if (err) {
+          console.log(err);
+          return res.send(err);
+        }
+      }
+    );
+console.log(up)
+    const up2 = await Form.findByIdAndUpdate(up._id, //query
+      { $addToSet: { comments: updatedCom } },
+      { multi: true }, //for multiple documents
+      function (err, model) {
+        if (err) {
+          console.log(err);
+          return res.send(err);
+        }
+      }
+    );
+    console.log(up2)
+
     res.json({ msg: "Comment updated successfully", data: updatedCom });
   } catch (error) {
     // We will be handling the error later
