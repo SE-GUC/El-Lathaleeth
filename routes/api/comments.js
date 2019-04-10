@@ -61,7 +61,7 @@ router.put("/:id", async (req, res) => {
     });
     console.log(id)
     const up = await Form.findOneAndUpdate(
-      { "comments._id":id}, //query
+      { "comments.$._id":id}, //query
       { $pull: { comments: {commentFormId:id} } },
       { new:true }, //for multiple documents
       function (err, model) {

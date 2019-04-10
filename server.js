@@ -22,6 +22,9 @@ const db1= mongoose
 app.use(express.json())
 app.use(cors());
 app.use(express.urlencoded({ extended: false }))
+app.use(passport.initialize())
+require('./config/passport')(passport)
+
 
 // Direct routes to appropriate files
 // const testD  b = mongoose.connection;

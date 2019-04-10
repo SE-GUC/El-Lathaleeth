@@ -9,7 +9,7 @@ const validator = require("../../validations/entity_empValidations");
 const formvalidator = require("../../validations/formValidations");
 // const Form = require("../../models/Form");
 const Admin = require("../../models/Admin");
-
+const tokenKey = require('../../config/keys').secretOrKey
 router.get("/", async (req, res) => {
   const emps = await Entity_Emp.find();
   res.json({ data: emps });
@@ -173,13 +173,16 @@ router.post("/lawyerfillform/:lawyerid/", async (req, res) => {
 });
 router.post("/registerEmployee/:adminid/", async (req, res) => {
   try {
-    const type = req.body.formType;
 
-    const isValidated = validator.createValidation(req.body, type);
+    const isValidated = validator.createValidation(req.body);
     if (isValidated.error)
       return res
         .status(400)
         .send({ error: isValidated.error.details[0].message });
+    let user = await Entity_Emp.findOne({ email });
+    if (user) return res.status(400).json({ email: 'Email already exists' });
+     user = await Entity_Emp.findOne({ username });
+    if (user) return res.status(400).json({ username: 'Username already exists' });
     const newEmp = await Entity_Emp.create(req.body);
 
     const admin = req.params.adminid;
@@ -307,5 +310,24 @@ router.get("/workSpace/:id", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
+});
+router.post('/login', async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const user = await Entity_Emp.findOne({ username });
+    if (!user) return res.status(404).json({ username: 'Username does not exist' });
+    const match = bcrypt.compareSync(password, user.password);
+    if (match) {
+      const payload = {
+        id: user.id,
+        name: user.username,
+        email: user.email,
+        type:user.emp_type
+      }
+      const token = jwt.sign(payload, tokenKey, { expiresIn: '1h' })
+      return res.json({ token: `Bearer ${token}` })
+    }
+    else return res.status(400).send({ password: 'Wrong password' });
+  } catch (e) { }
 });
 module.exports = router;
