@@ -1,15 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const Joi = require("joi");
-const mongoose = require("mongoose");
 const Entity_Emp = require("../../models/Entity_Emp");
-const Reviewer = require("../../models/Reviewer");
-const Lawyer = require("../../models/Lawyer");
 const validator = require("../../validations/entity_empValidations");
 const formvalidator = require("../../validations/formValidations");
-// const Form = require("../../models/Form");
-const Admin = require("../../models/Admin");
+const Form = require("../../models/Form");
 const tokenKey = require('../../config/keys').secretOrKey
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken')
 router.get("/", async (req, res) => {
   const emps = await Entity_Emp.find();
   res.json({ data: emps });
@@ -173,6 +170,9 @@ router.post("/lawyerfillform/:lawyerid/", async (req, res) => {
 });
 router.post("/registerEmployee/:adminid/", async (req, res) => {
   try {
+    const email=req.body.email
+    const username = req.body.username
+    const password = req.body.password
 
     const isValidated = validator.createValidation(req.body);
     if (isValidated.error)
@@ -183,7 +183,9 @@ router.post("/registerEmployee/:adminid/", async (req, res) => {
     if (user) return res.status(400).json({ email: 'Email already exists' });
      user = await Entity_Emp.findOne({ username });
     if (user) return res.status(400).json({ username: 'Username already exists' });
-    const newEmp = await Entity_Emp.create(req.body);
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(password, salt);
+    const newEmp = await Entity_Emp.create({...req.body,password:hashedPassword});
 
     const admin = req.params.adminid;
     await Entity_Emp.findByIdAndUpdate(
@@ -317,6 +319,7 @@ router.post('/login', async (req, res) => {
     const user = await Entity_Emp.findOne({ username });
     if (!user) return res.status(404).json({ username: 'Username does not exist' });
     const match = bcrypt.compareSync(password, user.password);
+
     if (match) {
       const payload = {
         id: user.id,
@@ -324,8 +327,9 @@ router.post('/login', async (req, res) => {
         email: user.email,
         type:user.emp_type
       }
+
       const token = jwt.sign(payload, tokenKey, { expiresIn: '1h' })
-      return res.json({ token: `Bearer ${token}` })
+      return res.json({ token: `Bearer ${token}`,type:user.emp_type,id:user._id })
     }
     else return res.status(400).send({ password: 'Wrong password' });
   } catch (e) { }

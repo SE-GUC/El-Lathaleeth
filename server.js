@@ -6,6 +6,8 @@ const comments = require("./routes/api/comments");
 const external_entity = require("./routes/api/external_entity");
 const mongoose = require("mongoose");
 var cors = require("cors");
+const passport = require('passport')
+
 
 
 const app = express();
