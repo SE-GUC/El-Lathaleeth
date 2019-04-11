@@ -16,7 +16,6 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    //const investor = await Investor.findById(id)
     const investor = await Investor.findById(id);
     if (!investor)
       return res.status(404).send({ error: "Investor does not exist" });
@@ -26,18 +25,19 @@ router.get("/:id", async (req, res) => {
     console.log(error);
   }
 });
+
 // CREATE: insert into investors
 router.post("/", async (req, res) => {
   try {
+    const email = req.body.email;
     const isValidated = validator.createValidation(req.body);
     if (isValidated.error)
-      //return res.status(400).send({ error: isValidated.error.details[0].message });
-      return res
-        .status(400)
-        .send({
-          error: "Invalid datatype entered for one or more of the fields"
-        });
-    const newInvestor = await Investor.create(req.body);
+      return res.status(400).send({error: "Invalid datatype entered for one or more of the fields"});
+    let inv = await Investor.findOne({ email });
+    if (inv) return res.status(400).json({ email: "Email already exists" });
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(password, salt);
+    const newInvestor = await Investor.create({...req.body, password: hashedPassword});
     res.json({ msg: "Investor was created successfully", data: newInvestor });
   } catch (error) {
     // We will be handling the error later
@@ -121,15 +121,5 @@ router.post("/deleteAll/", async (req, res) => {
     //Error will be handled later
   }
 });
-// router.put("/resolveComment/:id/:cid", async (req, res) => {
-//   try {
-//     const id = req.params.id;
-//     const cid = req.params.cid;
 
-// Forms.findByIdAndUpdate(id,{$set:{}})
-//     res.json({ msg: "All Investors have been successfully deleted" });
-//   } catch (error) {
-//     //Error will be handled later
-//   }
-// });
 module.exports = router;
