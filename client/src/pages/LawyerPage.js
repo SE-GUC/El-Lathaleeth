@@ -130,10 +130,42 @@ class LawyerPage extends Component {
   render() {
     console.log(this.state.forms);
     return (
-      <div className="LawyerPage">
-        <FormList reserveForm={this.reserveForm} forms={this.state.forms} />
+      <div>
+        <form onSubmit={this.onSubmit}>
+        Enter Case Number: 
+        <input 
+          type="text" 
+          name="CaseNumber" 
+          value={this.state.id}
+          onChange={e => this.handleChange(e)}
+        />
+       <button 
+       onClick={(e) => this.onSubmit(e)}
+       >
+       Search
+       </button> 
+        </form>
+            <div className="LawyerPage">
+            <FormList reserveForm={this.reserveForm} forms={this.state.forms} />
+            </div>
       </div>
     );
+  }
+
+  handleChange = (e) => {
+    this.setState({
+        [e.target.id]: e.target.value
+    })
+}
+onSubmit = (e) => {
+  e.preventDefault();
+}
+  searchForm = async(id) => {
+    this.setState({
+      forms: this.state.forms.filter(form => {
+        return form._id === id;
+      })
+    });
   }
 
   reserveForm = async (idl, id) => {
