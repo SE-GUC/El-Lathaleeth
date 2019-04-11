@@ -23,6 +23,7 @@ export const login = (userData) => dispatch => {
 	const { token } = res.data
 	localStorage.setItem('jwtToken', token)
 	setAuthToken(token)
+	dispatch({...res.data,type:LOGIN})
 
 })
 .catch(err => console.log('error'))
