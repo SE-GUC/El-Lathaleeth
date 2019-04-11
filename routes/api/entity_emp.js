@@ -332,7 +332,7 @@ router.post("/login", async (req, res) => {
 
     if (match) {
       const payload = {
-        id: user.id,
+        id: user._id,
         name: user.username,
         email: user.email,
         type: user.emp_type

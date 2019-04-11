@@ -4,6 +4,9 @@ const mongoose = require("mongoose");
 const Investor = require("../../models/Investor");
 const validator = require("../../validations/investorValidations");
 const Form = require("../../models/Form");
+const tokenKey = require("../../config/keys").secretOrKey;
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const formvalidator = require("../../validations/formValidations");
 
 // GET: select * from investors
@@ -30,6 +33,7 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const email = req.body.email;
+    const password = req.body.password;
     const isValidated = validator.createValidation(req.body);
     if (isValidated.error)
       return res.status(400).send({error: "Invalid datatype entered for one or more of the fields"});
@@ -120,6 +124,33 @@ router.post("/deleteAll/", async (req, res) => {
   } catch (error) {
     //Error will be handled later
   }
+});
+
+//LOGIN: logs in investor if he/she exists
+router.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await Investor.findOne({ email });
+    if (!user)
+      return res.status(404).json({ email: "Email does not exist" });
+    const match = bcrypt.compareSync(password, user.password);
+
+    if (match) {
+
+      const payload = {
+        id: user._id,
+        email: user.email,
+        type: "investor"
+      };
+
+      const token = jwt.sign(payload, tokenKey, { expiresIn: "1h" });
+      return res.json({
+        token: `Bearer ${token}`,
+        type: "investor",
+        id: user._id
+      });
+    } else return res.status(400).send({ password: "Wrong password" });
+  } catch (e) {}
 });
 
 module.exports = router;
