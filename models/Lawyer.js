@@ -15,8 +15,8 @@ const LawSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'forms'
   }],
-  speciality: { type: String, required: true },
-  education: { type: String, required: true }
+  speciality: { type: String },
+  education: { type: String }
 });
 
 module.exports = Lawyer = mongoose.model("lawyer", LawSchema);
