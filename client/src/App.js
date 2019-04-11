@@ -10,7 +10,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import RegisterEmployee from "./pages/RegisterEmployee";
 import "./App.css";
 import Navbar from "./components/layout/Navbar";
-
+ 
 class App extends Component {
   render() {
     return (
