@@ -170,7 +170,7 @@ router.put("/commentOnForm/:id", async (req, res) => {
     const com = await Comment.create(req.body);
     const test = await Form.findByIdAndUpdate(
       id,
-      { $push: { comments: com } },
+      { $addToSet: { comments: {...com.toObject(),commentFormId:com._id} } },
       { safe: true, upsert: true },
       function(err, doc) {
         if (err) {
@@ -243,7 +243,7 @@ router.put("/review/:idl/:id", async (req, res) => {
     await Entity_Emp.findByIdAndUpdate(
       idl,
       {
-        $push: { "lawyer_details.reviewed_forms": updatedForm.id },
+        $addToSet: { "lawyer_details.reviewed_forms": updatedForm.id },
         $pull: { "lawyer_details.pending_forms": updatedForm.id }
       },
       { safe: true },
@@ -270,7 +270,7 @@ router.put("/review/:idl/:id", async (req, res) => {
         await Entity_Emp.findByIdAndUpdate(
           idl,
           {
-            $push: { "reviewer_details.reviewed_forms": updatedForm.id },
+            $addToSet: { "reviewer_details.reviewed_forms": updatedForm.id },
             $pull: { "reviewer_details.pending_forms": updatedForm.id }
           },
           { safe: true },

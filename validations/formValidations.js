@@ -35,7 +35,8 @@ module.exports = {
       text: Joi.string().required(),
       read_at: Joi.optional(),
       postedOn: Joi.optional(),
-      id: Joi.optional()
+      commentFormId: Joi.optional(),
+      _id: Joi.optional()
     };
 
     const investorSchema = {

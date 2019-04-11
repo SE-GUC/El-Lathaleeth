@@ -121,5 +121,15 @@ router.post("/deleteAll/", async (req, res) => {
     //Error will be handled later
   }
 });
+// router.put("/resolveComment/:id/:cid", async (req, res) => {
+//   try {
+//     const id = req.params.id;
+//     const cid = req.params.cid;
 
+// Forms.findByIdAndUpdate(id,{$set:{}})
+//     res.json({ msg: "All Investors have been successfully deleted" });
+//   } catch (error) {
+//     //Error will be handled later
+//   }
+// });
 module.exports = router;

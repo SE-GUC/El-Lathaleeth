@@ -6,6 +6,8 @@ const comments = require("./routes/api/comments");
 const external_entity = require("./routes/api/external_entity");
 const mongoose = require("mongoose");
 var cors = require("cors");
+const passport = require('passport')
+
 
 
 const app = express();
@@ -22,6 +24,9 @@ const db1= mongoose
 app.use(express.json())
 app.use(cors());
 app.use(express.urlencoded({ extended: false }))
+app.use(passport.initialize())
+require('./config/passport')(passport)
+
 
 // Direct routes to appropriate files
 // const testD  b = mongoose.connection;

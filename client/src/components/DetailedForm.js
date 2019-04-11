@@ -1,7 +1,11 @@
 import React, { Component } from "react";
+// import { Button, Form } from "semantic-ui-react";
 import "bootstrap/dist/css/bootstrap.css";
 export class DetailedForm extends Component {
          state = { clicked: false };
+          handleChange = (event) => {
+          this.setState({value: event.target.value});
+         }
          render() {
              let content = ""
              for (let p in this.props.form) {
@@ -17,7 +21,73 @@ export class DetailedForm extends Component {
                    Mr./Mrs. {this.props.form.investor.firstName}
                  </h5>
                  <p class="card-text">
-                 {content}
+                   <p>ID: {this.props.form._id}</p>
+                   <p>Law: {this.props.form.law}</p>
+                   <p>Legal Form: {this.props.form.legalForm}</p>
+                   <p>Form Type: {this.props.form.formType}</p>
+                   <p>Address: {this.props.form.address}</p>
+                   <p>Phone Number: {this.props.form.phone}</p>
+                   <p> Number: {this.props.form.fax}</p>
+                   <p>Created On: {this.props.form.createdOn}</p>
+                   <p>Capital Currency: {this.props.form.capitalCurr}</p>
+                   <p>Capital Value: {this.props.form.capitalVal}</p>
+
+                   {this.props.form.boardOfDirectors.map(BoardOfDirector =>
+                     (
+                       <div>
+                         <p>--Board Of Directors--</p>
+                         Name: {BoardOfDirector.name}
+                         <p></p>
+                         Nationality: {BoardOfDirector.nationality}
+                         <p></p>
+                         Address: {BoardOfDirector.address}
+                         <p></p>
+                         Gender: {BoardOfDirector.gender}
+                         <p></p>
+                         BirthDate: {BoardOfDirector.birthdate}
+                         <p></p>
+                         ID: {BoardOfDirector.idNum}
+                         <p></p>
+                         Type Of ID: {BoardOfDirector.typeID}
+                         <p></p>
+                         Position: {BoardOfDirector.position}
+                         <p></p>
+                       </div>
+                     )
+                   )
+                   }
+                   {this.props.form.comments.map(comment =>
+                     (
+                       <div>
+                         Comment:{comment.text}
+                         <p></p>
+                       </div>
+                     )
+                   )
+                   }
+
+                 <div class="ui input">
+                  <input type="text" placeholder="Write comment" 
+                  value={this.state.value}
+                  onChange={this.handleChange} />
+
+                  <button type="button"
+                  onClick={this.props.addComment.bind(
+                    this,
+                    this.props.form._id,
+                    {
+                      author_type:"Reviewer",
+                     author: "5ca9ea8fd0935b3388eaa962",
+                     text: this.state.value,
+                     postedOn: new Date()
+                    }
+                  )}
+                  class="btn btn-outline-secondary btn-sm"
+                  >
+                  {" "}
+                    Add Comment
+                  </button>{" "}
+                 </div>
                  </p>
                  <button
                    type="button"
@@ -31,10 +101,18 @@ export class DetailedForm extends Component {
                    {" "}
                    Approve This Case
                  </button>{" "}
+
+                 
+
                </div>
+                   {/* <Form reply>
+                       <Form.TextArea />
+                       <Button content='Add Comment' labelPosition='left' icon='edit' primary />
+                   </Form> */}
              </div>
            );
          }
+  
        }
 
 export default DetailedForm;
