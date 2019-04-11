@@ -44,8 +44,12 @@ class Sidenav extends Component {
           <li>
             <div className="divider" />
           </li>
+
           <li>
             <a className="subheader grey darken-3">Admin</a>
+          </li>
+          <li>
+            <a href="#/RegisterEmployee">Register Employees</a>
           </li>
         </ul>
         <a
