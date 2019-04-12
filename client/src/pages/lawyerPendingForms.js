@@ -58,6 +58,14 @@ class lawyerPendingForms extends Component {
       "http://localhost:5000/api/forms/commentOnForm/" + id,
       body
     );
+    const formsData = await axios
+      .get(
+        "http://localhost:5000/api/forms/getPending/5ca9ea8fd0935b3388eaa962"
+      )
+      .then(res => {
+        console.log(res.data.data);
+        this.setState({ forms: res.data.data });
+      });
   };
 }
 

@@ -1,14 +1,8 @@
 const express = require("express");
-const Joi = require("joi");
 const router = express.Router();
-const uuid = require("uuid");
-const form_funcs = require("../../funcs/form_funcs");
 const Form = require("../../models/Form");
-const Director = require("../../models/BoardOfDirector");
-const Address = require("../../models/Address");
-const Investor = require("../../models/Investor");
 const Entity_Emp = require("../../models/Entity_Emp");
-const Admin = require("../../models/Admin");
+const Counter = require("../../models/Counter");
 
 const validator = require("../../validations/formValidations");
 const commValidator = require("../../validations/commentValidation");
@@ -112,14 +106,20 @@ router.delete("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   const formType = req.body.formType;
   try {
+    const incrementer = await Counter.findOne({ name: "formCount" });
     const isValidated = validator.createValidation(req.body, formType);
     if (isValidated.error)
       return res
         .status(400)
         .send({ error: isValidated.error.details[0].message });
-    // const formNumber=form_funcs.getNextSequenceValue("productid");
-    // req.body[formNumber]=formNumber
-    const newForm = await Form.create(req.body);
+    const newForm = await Form.create({
+      ...req.body,
+      caseNumber: incrementer.count
+    });
+    const updatedCount = await Counter.findOneAndUpdate(
+      { name: "formCount" },
+      { $set: { count: incrementer.count + 1 } }
+    );
     res.json({ msg: "Form was created successfully", data: newForm });
   } catch (error) {
     // We will be handling the error later
@@ -170,7 +170,9 @@ router.put("/commentOnForm/:id", async (req, res) => {
     const com = await Comment.create(req.body);
     const test = await Form.findByIdAndUpdate(
       id,
-      { $push: { comments: com } },
+      {
+        $addToSet: { comments: { ...com.toObject(), commentFormId: com._id } }
+      },
       { safe: true, upsert: true },
       function(err, doc) {
         if (err) {
@@ -229,60 +231,60 @@ router.put("/review/:idl/:id", async (req, res) => {
     const findLawyer = await Entity_Emp.findById(idl);
     if (!findLawyer)
       return res.status(404).send({ error: "Reviewer does not exist" });
-      if(findLawyer.emp_type==='Lawyer'){
-    const updatedForm = await Form.findByIdAndUpdate(
-      id,
-      {
-        $set: {
-          status: "lawyer check",
-          lastTouch: "reviewed by lawyer: " + idl
-        }
-      },
-      { new: true }
-    );
-    await Entity_Emp.findByIdAndUpdate(
-      idl,
-      {
-        $push: { "lawyer_details.reviewed_forms": updatedForm.id },
-        $pull: { "lawyer_details.pending_forms": updatedForm.id }
-      },
-      { safe: true },
-      function(err, doc) {
-        if (err) {
-          console.log(err);
-        } else {
-          //do stuff
-        }
-      }
-    );
-    res.json({ msg: "Form reviewed successfully", data: updatedForm });}
-    else if(findLawyer.emp_type==='Reviewer'){
-        const updatedForm = await Form.findByIdAndUpdate(
-          id,
-          {
-            $set: {
-              status: "reviewer check",
-              lastTouch: "reviewed by reviewer: " + idl
-            }
-          },
-          { new: true }
-        );
-        await Entity_Emp.findByIdAndUpdate(
-          idl,
-          {
-            $push: { "reviewer_details.reviewed_forms": updatedForm.id },
-            $pull: { "reviewer_details.pending_forms": updatedForm.id }
-          },
-          { safe: true },
-          function (err, doc) {
-            if (err) {
-              console.log(err);
-            } else {
-              //do stuff
-            }
+    if (findLawyer.emp_type === "Lawyer") {
+      const updatedForm = await Form.findByIdAndUpdate(
+        id,
+        {
+          $set: {
+            status: "lawyer check",
+            lastTouch: "reviewed by lawyer: " + idl
           }
-        );
-        res.json({ msg: "Form reviewed successfully", data: updatedForm });
+        },
+        { new: true }
+      );
+      await Entity_Emp.findByIdAndUpdate(
+        idl,
+        {
+          $addToSet: { "lawyer_details.reviewed_forms": updatedForm.id },
+          $pull: { "lawyer_details.pending_forms": updatedForm.id }
+        },
+        { safe: true },
+        function(err, doc) {
+          if (err) {
+            console.log(err);
+          } else {
+            //do stuff
+          }
+        }
+      );
+      res.json({ msg: "Form reviewed successfully", data: updatedForm });
+    } else if (findLawyer.emp_type === "Reviewer") {
+      const updatedForm = await Form.findByIdAndUpdate(
+        id,
+        {
+          $set: {
+            status: "reviewer check",
+            lastTouch: "reviewed by reviewer: " + idl
+          }
+        },
+        { new: true }
+      );
+      await Entity_Emp.findByIdAndUpdate(
+        idl,
+        {
+          $addToSet: { "reviewer_details.reviewed_forms": updatedForm.id },
+          $pull: { "reviewer_details.pending_forms": updatedForm.id }
+        },
+        { safe: true },
+        function(err, doc) {
+          if (err) {
+            console.log(err);
+          } else {
+            //do stuff
+          }
+        }
+      );
+      res.json({ msg: "Form reviewed successfully", data: updatedForm });
     }
   } catch (error) {
     console.log(error);

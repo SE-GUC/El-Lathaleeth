@@ -2,42 +2,6 @@ const Joi = require("joi");
 
 module.exports = {
   createValidation: (request, formType) => {
-    const empSchema = {
-      email: Joi.string()
-        .email()
-        .required(),
-      firstName: Joi.string()
-        .min(3)
-        .required(),
-      middleName: Joi.string()
-        .min(3)
-        .required(),
-      lastName: Joi.string()
-        .min(3)
-        .required(),
-      username: Joi.string().required(),
-      password: Joi.string()
-        .min(6)
-        .required(),
-      dateOfBirth: Joi.date().required(),
-      emp_type: Joi.any()
-        .valid(["Lawyer", "Reviewer", "Admin"])
-        .required(),
-      id: Joi.optional(),
-      joined_on: Joi.date().required(),
-      emp_details: Joi.required()
-    };
-    const commentSchema = {
-      author_type: Joi.string()
-        .valid(["Lawyer", "Reviewer"])
-        .required(),
-      author: Joi.required(),
-      text: Joi.string().required(),
-      read_at: Joi.optional(),
-      postedOn: Joi.optional(),
-      id: Joi.optional()
-    };
-
     const investorSchema = {
       firstName: Joi.string()
         .min(3)
@@ -157,42 +121,6 @@ module.exports = {
     }
   },
   updateValidation: (request, formType) => {
-    const empSchema = {
-      email: Joi.string()
-        .email()
-        .required(),
-      firstName: Joi.string()
-        .min(3)
-        .required(),
-      middleName: Joi.string()
-        .min(3)
-        .required(),
-      lastName: Joi.string()
-        .min(3)
-        .required(),
-      username: Joi.string().required(),
-      password: Joi.string()
-        .min(6)
-        .required(),
-      dateOfBirth: Joi.date().required(),
-      emp_type: Joi.any()
-        .valid(["Lawyer", "Reviewer", "Admin"])
-        .required(),
-      id: Joi.optional(),
-      joined_on: Joi.date().required(),
-      emp_details: Joi.required()
-    };
-    const commentSchema = {
-      author_type: Joi.string()
-        .valid(["Lawyer", "Reviewer"])
-        .required(),
-      author: Joi.required(),
-      text: Joi.string().required(),
-      read_at: Joi.optional(),
-      postedOn: Joi.optional(),
-      id: Joi.optional()
-    };
-
     const investorSchema = {
       firstName: Joi.string()
         .min(3)
