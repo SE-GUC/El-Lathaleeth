@@ -85,8 +85,8 @@ class RegisterEmployee extends Component {
       dateOfBirth: dateOfBirth,
       password: password,
       email: email,
-      username:username,
-      joined_on:new Date(),
+      username: username,
+      joined_on: new Date(),
       emp_type: emp_type,
       lawyer_details: {
         pending_forms: [],
@@ -96,44 +96,30 @@ class RegisterEmployee extends Component {
         education: education
       },
       admin_details: {
-        registered_employees: [],
+        registered_employees: []
       },
       reviewer_details: {
         pending_forms: [],
-        reviewed_forms: [],
+        reviewed_forms: []
       }
     };
     console.log(body)
     if (formValid(this.state)) {
-      const user =await axios.post(
-        "http://localhost:5000/api/entity_emp/registerEmployee/5caf9d865b54da2c10fe9a62",body
-      )
-      console.log(user)
+      const user = await axios
+        .post(
+          "http://localhost:5000/api/entity_emp/registerEmployee/5caf9d865b54da2c10fe9a62",
+          body
+        )
+        .then(result=> {
       alert("Employee Registered Successfully");
-      this.setState({
-        firstName: null,
-        middleName: null,
-        lastName: null,
-        username: null,
-        dateOfBirth: null,
-        emp_type: null,
-        speciality: null,
-        education: null,
-        email: null,
-        password: null,
-        formErrors: {
-          firstName: "",
-          middleName: "",
-          lastName: "",
-          email: "",
-          password: "",
-          username: "",
-          speciality: "",
-          education: ""
-        },
-        startDate: new Date(),
-        emp_type: "Admin"
-      });
+        })
+        .catch(error => {
+            const err=Object.keys(error.response.data)[0]
+          alert(error.response.data[Object.keys(error.response.data)[0]]);
+          
+        });
+      console.log(user)
+      ;
     } else {
       alert("Please Make Sure All Entries are Correct!");
     }
@@ -173,8 +159,13 @@ class RegisterEmployee extends Component {
       default:
         break;
     }
+    if(value!=="Lawyer" && name==="emp_type"){
+        this.setState({ formErrors, [name]: value,education:null,speciality:null }, () =>
+          console.log(this.state)
+        );
+    }else{
 
-    this.setState({ formErrors, [name]: value }, () => console.log(this.state));
+    this.setState({ formErrors, [name]: value }, () => console.log(this.state));}
   };
 
   render() {
@@ -214,6 +205,7 @@ class RegisterEmployee extends Component {
         </div>
       );
     }
+    
     return (
       <div className="wrRegisterEmployeeer">
         <div className="form-wrRegisterEmployeeer">

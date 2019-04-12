@@ -10,84 +10,80 @@ class LawyerPage extends Component {
 
   //   this.state = { forms:formsData.data.data };
   // }
-  state = { forms: [] };
+  state = { forms: [],displayedForms:[] ,caseNumber:''};
   //view all cases
-  componentDidMount = async () => {
+  componentWillMount = async () => {
     const formsData = await axios
       .get("http://localhost:5000/api/forms/")
       .then(res => {
         console.log(res.data.data);
-        this.setState({ forms: res.data.data });
+        this.setState({
+          forms: res.data.data,
+          displayedForms: res.data.data
+        });
       });
   };
 
   render() {
-    console.log(this.state.forms);
+    console.log(this.state.displayedForms);
     return (
       <div>
         <form>
-        Enter Case Number: 
-        <input 
-          type="text" 
-          name="CaseNumber" 
-          placeholder="Search..."
-          value={this.state.value}
-          onChange={e => this.handleChange(e)}
-        />
-       <button 
-       onClick={this.searchForm.bind(this)}
-       >
-       Search
-       </button> 
-       <button 
-       onClick={this.ViewCases.bind(this)}
-       >
-       View Cases
-       </button> 
-       <button 
-       onClick={this.sortCreationDate.bind(this)}
-       >
-       Sort By Creation Date
-       </button> 
-       <button 
-       onClick={this.sortCaseNum.bind(this)}
-       >
-       Sort By Case Number
-       </button> 
+          Enter Case Number:
+          <input
+            type="text"
+            name="caseNumber"
+            placeholder="Search..."
+            value={this.state.value}
+            onChange={this.handleChange}
+          />
+          <button onClick={this.sortCreationDate.bind(this)}>
+            Sort By Creation Date
+          </button>
+          <button onClick={this.sortCaseNum.bind(this)}>
+            Sort By Case Number
+          </button>
         </form>
-            <div className="LawyerPage">
-            <FormList reserveForm={this.reserveForm} forms={this.state.forms} />
-            </div>
+        <div className="LawyerPage">
+          <FormList
+            reserveForm={this.reserveForm}
+            forms={this.state.displayedForms}
+          />
+        </div>
       </div>
     );
   }
 
   handleChange = (e) => {
-    this.setState({
-        value: e.target.value
-    })
+    e.preventDefault()
+    const { name, value } = e.target;
+    if(value!==""){
+this.setState({
+  displayedForms: this.state.forms.filter(form => {
+
+    return form.caseNumber === parseInt(value);
+  })
+})}else{
+  this.setState({displayedForms:this.state.forms})
 }
-//view all cases
-ViewCases = async () => {
-  const formsData = await axios
-    .get("http://localhost:5000/api/forms/")
-    .then(res => {
-      console.log(res.data.data);
-      this.setState({ forms: res.data.data });
-    });
-};
+}
 //search case
-  searchForm = async() => {
+  searchForm = async(e) => {
+    e.preventDefault()
+    console.log(this.state.value)
     this.setState({
-      forms: this.state.forms.filter(form => {
-        return form._id === this.state.value;
+      displayedForms: this.state.forms.filter(form => {
+        return form.caseNumber === this.state.caseNumber;
       })
     });
   }
 //sort by creation date
-sortCreationDate = async() =>{
+sortCreationDate = async(e) =>{
+      e.preventDefault();
+
   var temp
-  var formTemp  = new Array(this.state.forms)
+  var formTemp  = this.state.forms
+  console.log(formTemp)
   for(var i=1;i<formTemp.length;i++){
     for(var j=i;j>0;j--){
       if(formTemp[j].createdOn<formTemp[j-1].createdOn){
@@ -97,14 +93,17 @@ sortCreationDate = async() =>{
       }
     }
   }
+    console.log(formTemp);
+
   this.setState({
     forms:formTemp
   }) 
 }
-//sort by case number
-  sortCaseNum = async() =>{
+  sortCaseNum = async(e) =>{
+          e.preventDefault();
+
     var temp
-    var formTemp  = new Array(this.state.forms)
+    var formTemp  = this.state.forms
 for(var i=1;i<formTemp.length;i++){
     for(var j=i;j>0;j--){
       if(formTemp[j].caseNumber<formTemp[j-1].caseNumber){
@@ -120,7 +119,7 @@ for(var i=1;i<formTemp.length;i++){
 }
   reserveForm = async (idl, id) => {
     this.setState({
-      forms: this.state.forms.filter(form => {
+      displayedForms: this.state.forms.filter(form => {
         return form._id !== id;
       })
     });
