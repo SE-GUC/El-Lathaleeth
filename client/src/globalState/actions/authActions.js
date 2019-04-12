@@ -24,8 +24,20 @@ export const login = (userData) => dispatch => {
 	localStorage.setItem('jwtToken', token)
 	setAuthToken(token)
 	dispatch({...res.data,type:LOGIN})
+	console.log("yarab")
 
 })
-.catch(err => console.log('error'))
+.catch(err =>{axios
+                .post(
+                  "http://localhost:5000/api/investor/login",
+                  {...userData,email:userData.username}
+                )
+                .then(res => {
+                  const { token } = res.data;
+                  localStorage.setItem("jwtToken", token);
+                  setAuthToken(token);
+                  dispatch({ ...res.data, type: LOGIN });
+                });})
 
 };
+
