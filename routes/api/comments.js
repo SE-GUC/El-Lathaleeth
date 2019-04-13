@@ -3,6 +3,8 @@ const router = express.Router();
 const Joi = require("joi");
 
 const Comment = require("../../models/Comment");
+const Counter = require("../../models/Counter");
+
 const validator = require("../../validations/commentValidation");
 
 // const comments = [
