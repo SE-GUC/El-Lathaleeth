@@ -192,11 +192,26 @@ router.put("/commentOnForm/:id", async (req, res) => {
 //As an investor/lawyer I can view status of form
 router.get("/statusByID/:id", async (req, res) => {
   try {
+    let status
     const id = req.params.id;
     const findform = await Form.find({caseNumber:id});
     if (!findform)
       return res.status(404).send({ error: "Form does not exist" });
-    res.json({ msg: "Status found", data: findform[0].status });
+      switch (findform[0].status) {
+        case "posted":
+          status = "Your Form is Currently Waiting To Be Reviewed by a Lawyer";
+          break;
+        case "reserved":
+          status = "Your Form is Currently Being Reviewed";
+          break;
+        case "reviewer check":
+          status = "Your Form is Currently Awaiting Payment";
+          break;
+        case "lawyer check":
+          status = "Your Form is Currently Waiting to Be Reviewed by a Reviewer";
+          break;
+      }
+    res.json({ msg: "Status found", data: status });
   } catch (error) {
     // Error will be handled later
   }
