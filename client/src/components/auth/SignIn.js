@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import Center from 'react-center';
+import { connect } from "react-redux";
+import { login } from "../../globalState/actions/authActions";
+import PropTypes from "prop-types";
 
 class SignIn extends Component {
+  constructor(props) {
+    super(props);
+  }
   state = {
     email: "",
     password: ""
@@ -11,11 +17,50 @@ class SignIn extends Component {
       [e.target.id]: e.target.value
     });
   };
+  login = () => {
+    // try{
+    this.props.login({
+      username: this.state.email,
+      password: this.state.password
+    })
+  window.location.hash = "#";
+// }
+    // catch(e){
+// alert("Check Fields")
+    // }
+
+  };
   handleSubmit = e => {
     e.preventDefault();
-    console.log(this.state);
+    this.login();
+    // const login = axios
+    //   .put("http://localhost:5000/api/entity_emp/login", {
+    //     username: this.state.username,
+    //     password: this.state.password
+    //   })
+    //   .then(result => {
+    //   })
+    //   .catch(error => {
+    //     const invlogin = axios.put(
+    //       "http://localhost:5000/api/investor/login",
+    //       {
+    //         email: this.state.email,
+    //         password: this.state.password
+    //       }
+    //     );
+    //      const err = Object.keys(error.response.data)[0];
+    //      alert(error.response.data[Object.keys(error.response.data)[0]]);
+    // });;
+
+   
   };
   render() {
+    let test
+    if (this.props.loggedUser.type === "investor") {
+      test = <div>alooooooooooooooooo ya investooor</div>;
+    } else if (this.props.loggedUser.type === "Lawyer") {
+      test = <div>alooooooooooooooooo ya Lawyer</div>;
+    }
     return (
       <Center>
         <form className="white" onSubmit={this.handleSubmit}>
@@ -23,8 +68,8 @@ class SignIn extends Component {
             <h5 className="grey-text text-darken-3">Sign In</h5>
             <div className="container">
               <div className="input-field">
-                <label htmlFor="email">Email</label>
-                <input type="email" id="email" onChange={this.handleChange} />
+                <label htmlFor="email">Email or Username</label>
+                <input  id="email" onChange={this.handleChange} />
               </div>
             </div>
 
@@ -41,11 +86,23 @@ class SignIn extends Component {
             <div className="input-field">
               <button className="btn pink lighten-1 z-depth-0">Login</button>
             </div>
+            {test}
           </div>
         </form>
       </Center>
     );
   }
 }
+SignIn.propTypes = {
+  login: PropTypes.func.isRequired,
+};
+const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isLoggedIn,
+  loggedUser: state.auth.loggedUser
+});
 
-export default SignIn;
+export default connect(
+  mapStateToProps,
+  { login }
+)(SignIn);
+
