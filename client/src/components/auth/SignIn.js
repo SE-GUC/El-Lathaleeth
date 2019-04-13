@@ -17,10 +17,17 @@ class SignIn extends Component {
     });
   };
   login = () => {
+    // try{
     this.props.login({
-      username: this.state.username,
+      username: this.state.email,
       password: this.state.password
-    });
+    })
+  window.location.hash = "#";
+// }
+    // catch(e){
+// alert("Check Fields")
+    // }
+
   };
   handleSubmit = e => {
     e.preventDefault();
@@ -44,9 +51,15 @@ class SignIn extends Component {
     //      alert(error.response.data[Object.keys(error.response.data)[0]]);
     // });;
 
-    console.log(this.state);
+   
   };
   render() {
+    let test
+    if (this.props.loggedUser.type === "investor") {
+      test = <div>alooooooooooooooooo ya investooor</div>;
+    } else if (this.props.loggedUser.type === "Lawyer") {
+      test = <div>alooooooooooooooooo ya Lawyer</div>;
+    }
     return (
       <div className="container">
         <form className="white" onSubmit={this.handleSubmit}>
@@ -55,7 +68,7 @@ class SignIn extends Component {
             <div className="container">
               <div className="input-field">
                 <label htmlFor="email">Email or Username</label>
-                <input type="email" id="email" onChange={this.handleChange} />
+                <input  id="email" onChange={this.handleChange} />
               </div>
             </div>
 
@@ -72,6 +85,7 @@ class SignIn extends Component {
             <div className="input-field">
               <button className="btn pink lighten-1 z-depth-0">Login</button>
             </div>
+            {test}
           </div>
         </form>
       </div>

@@ -171,9 +171,11 @@ class RegisterEmployee extends Component {
   render() {
     const { formErrors } = this.state;
     let lawyerStuff;
+        let lawyerStuff1;
+
     if (this.state.emp_type === "Lawyer") {
       lawyerStuff = (
-        <div>
+        
           <div className="speciality">
             <label htmlFor="speciality">Speciality</label>
             <input
@@ -188,22 +190,23 @@ class RegisterEmployee extends Component {
               <span className="errorMessage">{formErrors.speciality}</span>
             )}
           </div>
-          <div className="education">
-            <label htmlFor="education">Education:</label>
-            <input
-              className={formErrors.education.length > 0 ? "error" : null}
-              placeholder="Education"
-              type="text"
-              name="education"
-              noValidate
-              onChange={this.handleChange}
-            />
-            {formErrors.education.length > 0 && (
-              <span className="errorMessage">{formErrors.education}</span>
-            )}
-          </div>
-        </div>
+         
+        
       );
+      lawyerStuff1 = ( <div className="education">
+         <label htmlFor="education">Education:</label>
+         <input
+           className={formErrors.education.length > 0 ? "error" : null}
+           placeholder="Education"
+           type="text"
+           name="education"
+           noValidate
+           onChange={this.handleChange}
+         />
+         {formErrors.education.length > 0 && (
+           <span className="errorMessage">{formErrors.education}</span>
+         )}
+       </div>)
     }
     
     return (
@@ -228,7 +231,9 @@ class RegisterEmployee extends Component {
             <div className="middleName">
               <label htmlFor="middleName">Middle Name</label>
               <input
-                className={formErrors.middleName.length > 0 ? "error" : null}
+                className={
+                  formErrors.middleName.length > 0 ? "error" : null
+                }
                 placeholder="Middle Name"
                 type="text"
                 name="middleName"
@@ -236,7 +241,9 @@ class RegisterEmployee extends Component {
                 onChange={this.handleChange}
               />
               {formErrors.middleName.length > 0 && (
-                <span className="errorMessage">{formErrors.middleName}</span>
+                <span className="errorMessage">
+                  {formErrors.middleName}
+                </span>
               )}
             </div>
             <div className="lastName">
@@ -326,6 +333,7 @@ class RegisterEmployee extends Component {
             </div>
             {/* <p>{"\n"}</p> */}
             {lawyerStuff}
+            {lawyerStuff1}
             <div className="createAccount">
               <button type="submit">Register New Employee</button>
             </div>
