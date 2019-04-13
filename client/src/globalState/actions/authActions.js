@@ -29,3 +29,17 @@ export const login = (userData) => dispatch => {
 .catch(err => console.log('error'))
 
 };
+
+//investor login
+export const invlogin = (invData) => dispatch => {
+	axios.post('http://localhost:5000/api/investor/login', invData)
+	.then( res => {
+	const { token } = res.data
+	localStorage.setItem('jwtToken', token)
+	setAuthToken(token)
+	dispatch({...res.data,type:LOGIN})
+
+})
+.catch(err => console.log('error'))
+
+};
