@@ -10,6 +10,8 @@ import "bootstrap/dist/css/bootstrap.css";
 import RegisterEmployee from "./pages/RegisterEmployee";
 import "./App.css";
 import Navbar from "./components/layout/Navbar";
+import contactUs from "./pages/contactUs" ;
+import meetUs from "./pages/meetUs" ;
 
 class App extends Component {
   render() {
@@ -23,6 +25,9 @@ class App extends Component {
           <Route path="/RegisterEmployee" component={RegisterEmployee} />
           <Route path="/trackCasePage" component={trackCasePage} />
           <Route path="/lawyer_workspace" component={lawyer_workspace} />
+          <Route path="/contactUs" component={contactUs} />
+          <Route path="/meetUs" component={meetUs} />
+
           <footer class="page-footer grey darken-3 fixed bottom width-100%">
             <div class="container">
               <div class="row">
@@ -36,12 +41,12 @@ class App extends Component {
                   <h5 class="white-text">Links</h5>
                   <ul>
                     <li>
-                      <a class="grey-text text-lighten-3" href="#!">
+                      <a class="grey-text text-lighten-3" href="/meetUs">
                         Meet Lathaleeth
                       </a>
                     </li>
                     <li>
-                      <a class="grey-text text-lighten-3" href="#!">
+                      <a class="grey-text text-lighten-3" href="/contactUs">
                         Contact us
                       </a>
                     </li>
