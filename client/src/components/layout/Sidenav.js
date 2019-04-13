@@ -18,35 +18,35 @@ class Sidenav extends Component {
         <ul id="slide-out" className="sidenav">
           <li />
           <li>
-            <a className="subheader">Lawyer</a>
+            <a className="subheader grey darken-3">Lawyer</a>
           </li>
           <li>
-            <a href="#/LawyerPage">LawyerPage</a>
+            <a href="#/LawyerPage" class="sidenav-close">LawyerPage</a>
           </li>
           <li>
-            <a href="#/lawyer_workspace">Workspace</a>
+            <a href="#/lawyer_workspace" class="sidenav-close">Workspace</a>
           </li>
           <li>
-            <a href="#/lawyerPendingForms">Pending Forms</a>
+            <a href="#/lawyerPendingForms"class="sidenav-close">Pending Forms</a>
           </li>
           <li>
             <div className="divider" />
           </li>
           <li>
-            <a className="subheader">Investor</a>
+            <a className="subheader grey darken-3">Investor</a>
           </li>
           <li>
-            <a href="#/InvestorPage">My Companies</a>
+            <a href="#/InvestorPage"class="sidenav-close">My Companies</a>
           </li>
           <li>
-            <a href="#/trackCasePage">Track my Case</a>
+            <a href="#/trackCasePage"class="sidenav-close">Track my Case</a>
           </li>
           <li>
             <div className="divider" />
           </li>
 
           <li>
-            <a className="subheader">Admin</a>
+            <a className="subheader grey darken-3">Admin</a>
           </li>
           <li>
             <a href="#/RegisterEmployee">Register Employees</a>
