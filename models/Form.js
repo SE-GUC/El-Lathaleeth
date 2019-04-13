@@ -9,10 +9,10 @@ const FormSchema = new Schema({
     type: String,
     required: true
   },
-  // caseNumber:{
-  //   type: Number,
-  //   required:true
-  // },
+  caseNumber:{
+    type: Number,
+    required:true
+  },
   legalForm: {
     type: String,
     required: true

@@ -3,124 +3,81 @@ import { Route, NavLink, HashRouter } from "react-router-dom";
 import LawyerPage from "./pages/LawyerPage";
 import lawyerPendingForms from "./pages/lawyerPendingForms";
 import lawyer_workspace from "./pages/lawyer_workspace";
+import CasePage from "./pages/CasePage";
 import InvestorPage from "./pages/InvestorPage";
 import trackCasePage from "./pages/trackCasePage";
-import Nav from "react-bootstrap/Nav";
+import SignIn from "./components/auth/SignIn";
+import SignUp from "./components/auth/SignUp";
 import "bootstrap/dist/css/bootstrap.css";
-import RegisterEmployee  from "./pages/RegisterEmployee";
+import RegisterEmployee from "./pages/RegisterEmployee";
 import "./App.css";
+import Navbar from "./components/layout/Navbar";
 
-
-
-// const form_funcs = require("./funcs/form_funcs");
 class App extends Component {
   render() {
     return (
       <HashRouter>
-        <div className="App">
-          <h1>Summerge Lathaleeth</h1>
-          <ul className="header">
-            <div
-              class="nav flex-column nav-pills"
-              id="v-pills-tab"
-              role="tablist"
-              aria-orientation="vertical"
-            >
-              <a
-                class="nav-link"
-                id="v-pills-profile-tab"
-                data-toggle="pill"
-                href="#/LawyerPage"
-                role="tab"
-                aria-controls="v-pills-profile"
-                aria-selected="false"
-              >
-                LawyerPage
-              </a>
-              <a
-                class="nav-link"
-                id="v-pills-messages-tab"
-                data-toggle="pill"
-                href="#/lawyerPendingForms"
-                role="tab"
-                aria-controls="v-pills-messages"
-                aria-selected="false"
-              >
-                Pending Forms
-              </a>
-              <a
-                class="nav-link"
-                id="v-pills-messages-tab"
-                data-toggle="pill"
-                href="#/InvestorPage"
-                role="tab"
-                aria-controls="v-pills-messages"
-                aria-selected="false"
-              >
-                My Companies
-              </a>
-              <a
-                class="nav-link"
-                id="v-pills-messages-tab"
-                data-toggle="pill"
-                href="#/trackCasePage"
-                role="tab"
-                aria-controls="v-pills-messages"
-                aria-selected="false"
-              >
-                Track my Case
-              </a>
-              <a
-                class="nav-link"
-                id="v-pills-messages-tab"
-                data-toggle="pill"
-                href="#/lawyer_workspace"
-                role="tab"
-                aria-controls="v-pills-messages"
-                aria-selected="false"
-              >
-                Workspace
-              </a>
-            </div>
-            <div class="tab-content" id="v-pills-tabContent">
-              <div
-                class="tab-pane fade"
-                id="v-pills-profile"
-                role="tabpanel"
-                aria-labelledby="v-pills-profile-tab"
-              />
-              <div
-                class="tab-pane fade"
-                id="v-pills-messages"
-                role="tabpanel"
-                aria-labelledby="v-pills-messages-tab"
-              >
-                {" "}
+        <body className="App">
+          <header>
+            <Navbar />
+          </header>
+          <main>
+            <Route exact path="/LawyerPage" component={LawyerPage} />
+            <Route
+              exact
+              path="/lawyerPendingForms"
+              component={lawyerPendingForms}
+            />
+            <Route exact path="/InvestorPage" component={InvestorPage} />
+            <Route exact path="/CasePage" component={CasePage} />
+
+            <Route
+              exact
+              path="/RegisterEmployee"
+              component={RegisterEmployee}
+            />
+            <Route exact path="/trackCasePage" component={trackCasePage} />
+            <Route
+              exact
+              path="/lawyer_workspace"
+              component={lawyer_workspace}
+            />
+            <Route exact path="/signin" component={SignIn} />
+            <Route exact path="/signup" component={SignUp} />
+          </main>
+          <footer class="page-footer grey darken-3 fixed bottom width-100%">
+            <div class="container">
+              <div class="row">
+                <div class="col l6 s12">
+                  <h5 class="white-text">About</h5>
+                  <p class="grey-text text-lighten-4">
+                    A website by the people for the people.
+                  </p>
+                </div>
+                <div class="col l4 offset-l2 s12">
+                  <h5 class="white-text">Links</h5>
+                  <ul>
+                    <li>
+                      <a class="grey-text text-lighten-3" href="#!">
+                        Meet Lathaleeth
+                      </a>
+                    </li>
+                    <li>
+                      <a class="grey-text text-lighten-3" href="#!">
+                        Contact us
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </ul>
-          <Route path="/LawyerPage" component={LawyerPage} />
-          <Route
-            path="/lawyerPendingForms"
-            component={lawyerPendingForms}
-          />
-          <Route path="/InvestorPage" component={InvestorPage} />
-          <Route path="/RegisterEmployee" component={RegisterEmployee} />
-          <Route path="/trackCasePage" component={trackCasePage} />
-          <Route path="/lawyer_workspace" component={lawyer_workspace} />
-          <Nav variant="pills" defaultActiveKey="/home">
-            <Nav.Item>
-              <Nav.Link href="#/LawyerPage">About</Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link href="#/LawyerPage">Contact Us</Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link href="#/LawyerPage">Meet El Lathaleeth</Nav.Link>
-            </Nav.Item>
-          </Nav>
-          ;
-        </div>
+            <div class="footer-copyright">
+              <div class="container align left">
+                © 2019 Sumerge feat.Lathaleeth
+              </div>
+            </div>
+          </footer>
+        </body>
       </HashRouter>
     );
   }

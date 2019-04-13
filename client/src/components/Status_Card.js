@@ -7,7 +7,7 @@ export class Status_Card extends Component {
         return (
           <div class="card">
             <div class="card-header">
-              Your Form is Currently {this.props.formStatus}
+              {this.props.formStatus}
             </div>
         
           </div>
