@@ -92,6 +92,7 @@ input.error {
   margin-left: 1%;
   margin-right: 1%;
 }
+.education,.speciality{ width: 46%;}
 
 .firstName,
 .lastName,.middleName,.password,.username{

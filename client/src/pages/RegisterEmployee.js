@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import "./RegisterEmployee.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -85,8 +86,8 @@ class RegisterEmployee extends Component {
       dateOfBirth: dateOfBirth,
       password: password,
       email: email,
-      username:username,
-      joined_on:new Date(),
+      username: username,
+      joined_on: new Date(),
       emp_type: emp_type,
       lawyer_details: {
         pending_forms: [],
@@ -96,44 +97,30 @@ class RegisterEmployee extends Component {
         education: education
       },
       admin_details: {
-        registered_employees: [],
+        registered_employees: []
       },
       reviewer_details: {
         pending_forms: [],
-        reviewed_forms: [],
+        reviewed_forms: []
       }
     };
     console.log(body)
     if (formValid(this.state)) {
-      const user =await axios.post(
-        "http://localhost:5000/api/entity_emp/registerEmployee/5caf9d865b54da2c10fe9a62",body
-      )
-      console.log(user)
+      const user = await axios
+        .post(
+          "http://localhost:5000/api/entity_emp/registerEmployee/"+this.props.loggedUser.id,
+          body
+        )
+        .then(result=> {
       alert("Employee Registered Successfully");
-      this.setState({
-        firstName: null,
-        middleName: null,
-        lastName: null,
-        username: null,
-        dateOfBirth: null,
-        emp_type: null,
-        speciality: null,
-        education: null,
-        email: null,
-        password: null,
-        formErrors: {
-          firstName: "",
-          middleName: "",
-          lastName: "",
-          email: "",
-          password: "",
-          username: "",
-          speciality: "",
-          education: ""
-        },
-        startDate: new Date(),
-        emp_type: "Admin"
-      });
+        })
+        .catch(error => {
+            const err=Object.keys(error.response.data)[0]
+          alert(error.response.data[Object.keys(error.response.data)[0]]);
+          
+        });
+      console.log(user)
+      ;
     } else {
       alert("Please Make Sure All Entries are Correct!");
     }
@@ -173,16 +160,23 @@ class RegisterEmployee extends Component {
       default:
         break;
     }
+    if(value!=="Lawyer" && name==="emp_type"){
+        this.setState({ formErrors, [name]: value,education:null,speciality:null }, () =>
+          console.log(this.state)
+        );
+    }else{
 
-    this.setState({ formErrors, [name]: value }, () => console.log(this.state));
+    this.setState({ formErrors, [name]: value }, () => console.log(this.state));}
   };
 
   render() {
     const { formErrors } = this.state;
     let lawyerStuff;
+        let lawyerStuff1;
+
     if (this.state.emp_type === "Lawyer") {
       lawyerStuff = (
-        <div>
+        
           <div className="speciality">
             <label htmlFor="speciality">Speciality</label>
             <input
@@ -197,23 +191,25 @@ class RegisterEmployee extends Component {
               <span className="errorMessage">{formErrors.speciality}</span>
             )}
           </div>
-          <div className="education">
-            <label htmlFor="education">Education:</label>
-            <input
-              className={formErrors.education.length > 0 ? "error" : null}
-              placeholder="Education"
-              type="text"
-              name="education"
-              noValidate
-              onChange={this.handleChange}
-            />
-            {formErrors.education.length > 0 && (
-              <span className="errorMessage">{formErrors.education}</span>
-            )}
-          </div>
-        </div>
+         
+        
       );
+      lawyerStuff1 = ( <div className="education">
+         <label htmlFor="education">Education:</label>
+         <input
+           className={formErrors.education.length > 0 ? "error" : null}
+           placeholder="Education"
+           type="text"
+           name="education"
+           noValidate
+           onChange={this.handleChange}
+         />
+         {formErrors.education.length > 0 && (
+           <span className="errorMessage">{formErrors.education}</span>
+         )}
+       </div>)
     }
+    
     return (
       <div className="wrRegisterEmployeeer">
         <div className="form-wrRegisterEmployeeer">
@@ -236,7 +232,9 @@ class RegisterEmployee extends Component {
             <div className="middleName">
               <label htmlFor="middleName">Middle Name</label>
               <input
-                className={formErrors.middleName.length > 0 ? "error" : null}
+                className={
+                  formErrors.middleName.length > 0 ? "error" : null
+                }
                 placeholder="Middle Name"
                 type="text"
                 name="middleName"
@@ -244,7 +242,9 @@ class RegisterEmployee extends Component {
                 onChange={this.handleChange}
               />
               {formErrors.middleName.length > 0 && (
-                <span className="errorMessage">{formErrors.middleName}</span>
+                <span className="errorMessage">
+                  {formErrors.middleName}
+                </span>
               )}
             </div>
             <div className="lastName">
@@ -334,6 +334,7 @@ class RegisterEmployee extends Component {
             </div>
             {/* <p>{"\n"}</p> */}
             {lawyerStuff}
+            {lawyerStuff1}
             <div className="createAccount">
               <button type="submit">Register New Employee</button>
             </div>
@@ -343,5 +344,11 @@ class RegisterEmployee extends Component {
     );
   }
 }
+ const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isLoggedIn,
+  loggedUser: state.auth.loggedUser
+});
+export default connect(
+  mapStateToProps
+)(RegisterEmployee);
 
-export default RegisterEmployee;
