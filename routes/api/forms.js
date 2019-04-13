@@ -183,7 +183,7 @@ router.put("/commentOnForm/:id", async (req, res) => {
       }
     );
     res.json({ data: test });
-  } catch (error) {
+  } catch (error) { 
     console.log(error);
     //error will be handled later
   }
@@ -193,10 +193,10 @@ router.put("/commentOnForm/:id", async (req, res) => {
 router.get("/statusByID/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    const findform = await Form.findById(id);
+    const findform = await Form.find({caseNumber:id});
     if (!findform)
       return res.status(404).send({ error: "Form does not exist" });
-    res.json({ msg: "Status found", data: findform.status });
+    res.json({ msg: "Status found", data: findform[0].status });
   } catch (error) {
     // Error will be handled later
   }
