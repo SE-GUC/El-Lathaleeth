@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import "./RegisterEmployee.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -107,7 +108,7 @@ class RegisterEmployee extends Component {
     if (formValid(this.state)) {
       const user = await axios
         .post(
-          "http://localhost:5000/api/entity_emp/registerEmployee/5caf9d865b54da2c10fe9a62",
+          "http://localhost:5000/api/entity_emp/registerEmployee/"+this.props.loggedUser.id,
           body
         )
         .then(result=> {
@@ -343,5 +344,11 @@ class RegisterEmployee extends Component {
     );
   }
 }
+ const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isLoggedIn,
+  loggedUser: state.auth.loggedUser
+});
+export default connect(
+  mapStateToProps
+)(RegisterEmployee);
 
-export default RegisterEmployee;

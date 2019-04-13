@@ -1,7 +1,7 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import FormList from "../components/FormList";
 const axios = require("axios");
-
 // const form_funcs = require("./funcs/form_funcs");
 class LawyerPage extends Component {
   // constructor() {
@@ -130,5 +130,11 @@ for(var i=1;i<formTemp.length;i++){
   };
  
 }
+const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isLoggedIn,
+  loggedUser: state.auth.loggedUser
+});
 
-export default LawyerPage;
+export default connect(
+  mapStateToProps
+)(LawyerPage);

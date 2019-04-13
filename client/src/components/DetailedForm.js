@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+
 // import { Button, Form } from "semantic-ui-react";
 import "bootstrap/dist/css/bootstrap.css";
 export class DetailedForm extends Component {
@@ -15,7 +17,9 @@ export class DetailedForm extends Component {
              }    
            return (
              <div class="card">
-               <div class="card-header">{this.props.form.formType}</div>
+               <div class="card-header">
+                 {this.props.form.formType}
+               </div>
                <div class="card-body">
                  <h5 class="card-title">
                    Mr./Mrs. {this.props.form.investor.firstName}
@@ -29,71 +33,72 @@ export class DetailedForm extends Component {
                    <p>Phone Number: {this.props.form.phone}</p>
                    <p> Number: {this.props.form.fax}</p>
                    <p>Created On: {this.props.form.createdOn}</p>
-                   <p>Capital Currency: {this.props.form.capitalCurr}</p>
+                   <p>
+                     Capital Currency: {this.props.form.capitalCurr}
+                   </p>
                    <p>Capital Value: {this.props.form.capitalVal}</p>
 
-                   {this.props.form.boardOfDirectors.map(BoardOfDirector =>
-                     (
+                   {this.props.form.boardOfDirectors.map(
+                     BoardOfDirector => (
                        <div>
                          <p>--Board Of Directors--</p>
                          Name: {BoardOfDirector.name}
-                         <p></p>
+                         <p />
                          Nationality: {BoardOfDirector.nationality}
-                         <p></p>
+                         <p />
                          Address: {BoardOfDirector.address}
-                         <p></p>
+                         <p />
                          Gender: {BoardOfDirector.gender}
-                         <p></p>
+                         <p />
                          BirthDate: {BoardOfDirector.birthdate}
-                         <p></p>
+                         <p />
                          ID: {BoardOfDirector.idNum}
-                         <p></p>
+                         <p />
                          Type Of ID: {BoardOfDirector.typeID}
-                         <p></p>
+                         <p />
                          Position: {BoardOfDirector.position}
-                         <p></p>
+                         <p />
                        </div>
                      )
-                   )
-                   }
-                   {this.props.form.comments.map(comment =>
-                     (
-                       <div>
-                         Comment:{comment.text}
-                         <p></p>
-                       </div>
-                     )
-                   )
-                   }
+                   )}
+                   {this.props.form.comments.map(comment => (
+                     <div>
+                       Comment:{comment.text}
+                       <p />
+                     </div>
+                   ))}
 
-                 <div class="ui input">
-                  <input type="text" placeholder="Write comment" 
-                  value={this.state.value}
-                  onChange={this.handleChange} />
-
-                  <button type="button"
-                  onClick={this.props.addComment.bind(
-                    this,
-                    this.props.form._id,
-                    {
-                      author_type:"Reviewer",
-                     author: "5ca9ea8fd0935b3388eaa962",
-                     text: this.state.value,
-                     postedOn: new Date()
-                    }
-                  )}
-                  class="btn btn-outline-secondary btn-sm"
-                  >
-                  {" "}
-                    Add Comment
-                  </button>{" "}
-                 </div>
+                   <div class="ui input">
+                     <input
+                       type="text"
+                       placeholder="Write comment"
+                       value={this.state.value}
+                       onChange={this.handleChange}
+                     />
+                     <button
+                       type="button"
+                       onClick={this.props.addComment.bind(
+                         this,
+                         this.props.form._id,
+                         {
+                           author_type: this.props.loggedUser.type,
+                           author: this.props.loggedUser.id,
+                           text: this.state.value,
+                           postedOn: new Date()
+                         }
+                       )}
+                       class="btn btn-outline-secondary btn-sm"
+                     >
+                       {" "}
+                       Add Comment
+                     </button>{" "}
+                   </div>
                  </p>
                  <button
                    type="button"
                    onClick={this.props.reviewForm.bind(
                      this,
-                     "5ca9ea8fd0935b3388eaa962",
+                     this.props.loggedUser.id,
                      this.props.form._id
                    )}
                    class="btn btn-success"
@@ -101,11 +106,8 @@ export class DetailedForm extends Component {
                    {" "}
                    Approve This Case
                  </button>{" "}
-
-                 
-
                </div>
-                   {/* <Form reply>
+               {/* <Form reply>
                        <Form.TextArea />
                        <Button content='Add Comment' labelPosition='left' icon='edit' primary />
                    </Form> */}
@@ -114,5 +116,11 @@ export class DetailedForm extends Component {
          }
   
        }
+       const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isLoggedIn,
+  loggedUser: state.auth.loggedUser
+});
+export default connect(
+  mapStateToProps
+)(DetailedForm);
 
-export default DetailedForm;
