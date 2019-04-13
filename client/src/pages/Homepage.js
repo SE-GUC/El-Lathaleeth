@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "../components/layout/Navbar";
 import img from "../components/Assets/InvestInEgypt.jpg";
-import Carousel from "../components/Carousel";
+import "../styles/styles.css";
 import "bootstrap/dist/css/bootstrap.css";
 
 class Homepage extends Component {
@@ -9,16 +9,17 @@ class Homepage extends Component {
     return (
       <React.Fragment>
         <Navbar />
-        <div class="carousel carousel-slider">
-          <a className="carousel-item" href="#one!">
-            <img src={img} alt="hi" />
-          </a>
-          <a className="carousel-item" href="#two!">
-            <img src="https://lorempixel.com/800/400/food/2" alt="hi" />
-          </a>
-          <a className="carousel-item" href="#three!">
-            <img src="https://lorempixel.com/800/400/food/3" alt="hi" />
-          </a>
+        <div className="container-fluid np-padding">
+          <div className="row">
+            <div className="col-md-12">
+              <img src={img} className="img-fluid center-block" alt="hi" />
+            </div>
+          </div>
+        </div>
+        <div className="text-center">
+          <button type="button" className="btn btn-outline-light btn-lg">
+            Invest Now
+          </button>
         </div>
 
         <footer className="page-footer grey darken-3 fixed bottom width-100%">
