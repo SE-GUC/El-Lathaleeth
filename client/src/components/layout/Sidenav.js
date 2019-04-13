@@ -56,6 +56,7 @@ class Sidenav extends Component {
           href="#"
           data-target="slide-out"
           className="sidenav-trigger show-on-large"
+          style={{ textDecoration: 'none', color: 'white' }}
         >
           <i className="material-icons">menu</i>
         </a>
