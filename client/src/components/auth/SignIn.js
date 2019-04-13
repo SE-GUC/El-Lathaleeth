@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Center from 'react-center';
 
 class SignIn extends Component {
   state = {
@@ -16,7 +17,7 @@ class SignIn extends Component {
   };
   render() {
     return (
-      <div className="container">
+      <Center>
         <form className="white" onSubmit={this.handleSubmit}>
           <div className="container center padding-70">
             <h5 className="grey-text text-darken-3">Sign In</h5>
@@ -42,7 +43,7 @@ class SignIn extends Component {
             </div>
           </div>
         </form>
-      </div>
+      </Center>
     );
   }
 }
