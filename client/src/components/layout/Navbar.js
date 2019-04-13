@@ -10,7 +10,7 @@ const Navbar = () => {
       <div className="container">
         <Sidenav />
         <Link to="/" className="brand-logo">
-          <i class="material-icons">donut_small</i>Sumerge Lathaleeth
+          <i className="material-icons">donut_small</i>Sumerge Lathaleeth
         </Link>
         <SignedIn />
         <SignedOut />
