@@ -1,10 +1,11 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 export class FormCard extends Component {
   state = { clicked: false };
   render() {
     return (
       <div class="row">
-        <div class="col s12 m6">
+        <div class="col s12 m6 l3">
           <div class="card">
             <div class="card-content">
               <span class="card-title">
@@ -27,7 +28,7 @@ export class FormCard extends Component {
                   {this.props.form.deadline}
                 </p>
                 <div class="card-action">
-                  <a href="#">View Form</a>
+                  <Link to="/OneForm">View Form</Link>
                 </div>
               </div>
             </div>
