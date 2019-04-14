@@ -45,7 +45,7 @@ class Sidenav extends Component {
             <a className="subheader grey darken-3">Investor</a>
           </li>
           <li>
-            <a href="#/ViewInvestorProfile"class="sidenav-close">View Profile</a>
+            <a href="#/ViewInvestorProfile"class="sidenav-close">My Profile</a>
           </li>
           <li>
             <a href="#/InvestorPage"class="sidenav-close">My Companies</a>

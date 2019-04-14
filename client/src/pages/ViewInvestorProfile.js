@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Link} from 'react-router-dom';
 import 'font-awesome/css/font-awesome.min.css';
@@ -21,8 +22,9 @@ class ViewInvestorProfile extends Component {
     state = { investor: [] };
 
     componentDidMount = async () => {
+        console.log(this.props.loggedUser);
          await axios.get(
-            "http://localhost:5000/api/investor/5cafca0b96a4844b0864c9fe"
+            "http://localhost:5000/api/investor/"+this.props.loggedUser.id
           )
           .then(result => {
             console.log(result.data.data);
@@ -60,8 +62,6 @@ class ViewInvestorProfile extends Component {
                         <li class="list-group-item">Fax: {this.state.investor.faxNumber}</li>
                         <li class="list-group-item">Credit Card: {this.state.investor.creditCardNumber}</li>
                         <li class="list-group-item">Email: {this.state.investor.email}</li>
-                        <li class="list-group-item">Capital: {this.state.investor.capital}</li>
-                        <li class="list-group-item">Capital Currency: {this.state.investor.capitalCurrency}</li>
                     </ul>
                     </p>
                 </div>
@@ -72,5 +72,10 @@ class ViewInvestorProfile extends Component {
 
 }
 
+const mapStateToProps = state => ({
+    isLoggedIn: state.auth.isLoggedIn,
+    loggedUser: state.auth.loggedUser
+  });
 
-export default ViewInvestorProfile;
+export default connect(mapStateToProps)(ViewInvestorProfile);
+  

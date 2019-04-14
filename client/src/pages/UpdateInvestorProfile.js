@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import "../vip.css";
@@ -153,8 +154,9 @@ class UpdateInvestorProfile extends Component {
    };
 
     componentDidMount = async () => {
+      console.log(this.props.loggedUser);
          await axios.get(
-            "http://localhost:5000/api/investor/5cafca0b96a4844b0864c9fe"
+            "http://localhost:5000/api/investor/"+this.props.loggedUser.id
           )
           .then(result => {
             console.log(result.data.data);
@@ -262,7 +264,8 @@ class UpdateInvestorProfile extends Component {
                          //className="form-control"
                          name="password" 
                          noValidate
-                         defaultValue={this.state.investor.password}
+                         //defaultValue={this.state.investor.password}
+                         value=""
                          onChange={this.onChangeInput}
                          />
                         {formErrors.password.length > 0 && (
@@ -390,4 +393,9 @@ class UpdateInvestorProfile extends Component {
     }
 }
 
-export default UpdateInvestorProfile;
+const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isLoggedIn,
+  loggedUser: state.auth.loggedUser
+});
+
+export default connect (mapStateToProps)(UpdateInvestorProfile);
