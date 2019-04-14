@@ -52,7 +52,7 @@ class UpdateInvestorProfile extends Component {
         const { name, value } = e.target;
 
         let formErrors = { ...this.state.formErrors };
-    
+
         switch (name) {
           case "firstName":
             formErrors.firstName =
@@ -82,14 +82,16 @@ class UpdateInvestorProfile extends Component {
           default:
             break;
         }
-    
-        this.setState({ formErrors, [name]: value }, () => console.log(this.state));
+    try{
+        this.setState({ formErrors, investor:{...this.state.investor,[name]:value} }, () => console.log(this.state));
+    }
+    catch(e){}
       };
     //this.setState({[e.target.name]: e.target.value})
 
     submit = async e => {
         e.preventDefault();
-
+      console.log(this.state.investor.address)
         let {
             firstName,
             middleName,
@@ -105,9 +107,10 @@ class UpdateInvestorProfile extends Component {
             phoneNumber,
             faxNumber,
             creditCardNumber,
+            password,
             capital,
             capitalCurrency
-        } = this.state;
+        } = this.state.investor;
 
         let body = {
             firstName: firstName,
@@ -125,6 +128,7 @@ class UpdateInvestorProfile extends Component {
             faxNumber: faxNumber,
             creditCardNumber: creditCardNumber,
             capital: capital,
+            password:password,
             capitalCurrency: capitalCurrency
         };
 

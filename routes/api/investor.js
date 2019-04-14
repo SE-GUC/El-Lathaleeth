@@ -36,7 +36,7 @@ router.post("/", async (req, res) => {
     const password = req.body.password;
     const isValidated = validator.createValidation(req.body);
     if (isValidated.error)
-      return res.status(400).send({error: "Invalid datatype entered for one or more of the fields"});
+      return res.status(400).send({ error: isValidated.error.details[0].message });
     let inv = await Investor.findOne({ email });
     if (inv) return res.status(400).json({ email: "Email already exists" });
     const salt = bcrypt.genSaltSync(10);
