@@ -13,7 +13,7 @@ import SignIn from "../auth/SignIn";
 //   this.setProps({ isLoggedIn: false });
 // };
 const Navbar = () => {
-  let signed
+  let signed 
   try{
   if(this.props.isLoggedIn===true){
     signed=<SignedIn/>

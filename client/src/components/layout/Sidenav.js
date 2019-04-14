@@ -91,6 +91,11 @@ class Sidenav extends Component {
             Fill Form
           </a>
         </li>
+        <li>
+          <a href="#/ViewInvestorProfile" class="sidenav-close">
+            My Profile
+          </a>
+        </li>
       </div>
     );
     let adminstuff=<div>
@@ -127,9 +132,7 @@ class Sidenav extends Component {
           <li>
             <div className="divider" />
           </li>
-<<<<<<< HEAD
           {investorstuff}
-=======
           <li>
             <a className="subheader grey darken-3">Investor</a>
           </li>
@@ -144,7 +147,6 @@ class Sidenav extends Component {
               Track my Case
             </a>
           </li>
->>>>>>> 14af88f9a51bc6f92ce918453f418e301e68260c
           <li>
             <div className="divider" />
           </li>

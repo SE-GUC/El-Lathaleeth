@@ -22,11 +22,11 @@ class SignIn extends Component {
    await  this.props.login({
       username: this.state.email,
       password: this.state.password
-    })
+    }).then(console.log("testing"))
     if(this.props.isLoggedIn){
   window.location.hash = "#";}
-  else{
-    alert("Please Check Fields")
+  else{if(!this.props.isLoggedIn){
+    alert("Please Check Fields")}
   }
 // }
     // catch(e){
@@ -61,9 +61,9 @@ class SignIn extends Component {
   render() {
     let test
     if (this.props.loggedUser.type === "investor") {
-      test = <div>alooooooooooooooooo ya investooor</div>;
+      test = <div>Investor Signed In</div>;
     } else if (this.props.loggedUser.type === "Lawyer") {
-      test = <div>alooooooooooooooooo ya Lawyer</div>;
+      test = <div>Employee Signed In</div>;
     }
     return (
       <Center>
