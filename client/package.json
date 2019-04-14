@@ -19,12 +19,9 @@
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
-<<<<<<< HEAD
     "typescript": "^3.4.3",
-=======
     "react-slick": "^0.23.2",
     "semantic": "0.0.1",
->>>>>>> 78c8ded18c3bade38911d4b5ff64e3d6c29601e3
     "yuk": "^1.1.1",
     "yup": "^0.27.0"
   },

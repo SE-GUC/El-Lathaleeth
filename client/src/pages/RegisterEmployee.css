@@ -85,7 +85,7 @@ input.error {
 .firstName,
 .lastName,
 .email,
-.password,.DateOfBirth,.middleName,.investorType,.education,.speciality,.username {
+.password,.DateOfBirth,.middleName,.Emp_type,.education,.speciality,.username {
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;

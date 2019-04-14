@@ -21,18 +21,11 @@ import Homepage from "./pages/Homepage";
 class App extends Component {
   render() {
     return (
-<<<<<<< HEAD
-      <body className="App">
-        <HashRouter>
-          <header>
-            <Navbar />
-          </header>
-=======
       <HashRouter>
         <body className="App">
-          <Homepage />
->>>>>>> 78c8ded18c3bade38911d4b5ff64e3d6c29601e3
+        <Navbar />
           <main>
+            <Route exact path="/" component={Homepage} />
             <Route exact path="/LawyerPage" component={LawyerPage} />
             <Route
               exact
@@ -41,10 +34,7 @@ class App extends Component {
             />
             <Route exact path="/InvestorPage" component={InvestorPage} />
             <Route exact path="/CasePage" component={CasePage} />
-<<<<<<< HEAD
             <Route exact path="/OneForm" component={OneForm} />
-=======
->>>>>>> 78c8ded18c3bade38911d4b5ff64e3d6c29601e3
             <Route
               exact
               path="/ViewInvestorProfile"
@@ -70,7 +60,6 @@ class App extends Component {
             <Route exact path="/signin" component={SignIn} />
             {<Route exact path="/signup" component={RegisterInvestor} />}
           </main>
-<<<<<<< HEAD
           <footer className="page-footer grey darken-3 fixed bottom width-100%">
             <div className="container">
               <div className="row">
@@ -103,12 +92,9 @@ class App extends Component {
               </div>
             </div>
           </footer>
+          </body>
         </HashRouter>
-      </body>
-=======
-        </body>
-      </HashRouter>
->>>>>>> 78c8ded18c3bade38911d4b5ff64e3d6c29601e3
+      
     );
   }
 }
