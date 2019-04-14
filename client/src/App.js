@@ -14,15 +14,14 @@ import "./App.css";
 import Navbar from "./components/layout/Navbar";
 import ViewInvestorProfile from "./pages/ViewInvestorProfile";
 import UpdateInvestorProfile from "./pages/UpdateInvestorProfile";
+import Homepage from "./pages/Homepage";
 
 class App extends Component {
   render() {
     return (
       <HashRouter>
         <body className="App">
-          <header>
-            <Navbar />
-          </header>
+          <Homepage />
           <main>
             <Route exact path="/LawyerPage" component={LawyerPage} />
             <Route
@@ -32,8 +31,16 @@ class App extends Component {
             />
             <Route exact path="/InvestorPage" component={InvestorPage} />
             <Route exact path="/CasePage" component={CasePage} />
-            <Route exact path="/ViewInvestorProfile" component={ViewInvestorProfile} />
-            <Route exact path="/UpdateInvestorProfile" component={UpdateInvestorProfile} />
+            <Route
+              exact
+              path="/ViewInvestorProfile"
+              component={ViewInvestorProfile}
+            />
+            <Route
+              exact
+              path="/UpdateInvestorProfile"
+              component={UpdateInvestorProfile}
+            />
 
             <Route
               exact
@@ -49,38 +56,6 @@ class App extends Component {
             <Route exact path="/signin" component={SignIn} />
             <Route exact path="/signup" component={SignUp} />
           </main>
-          <footer class="page-footer grey darken-3 fixed bottom width-100%">
-            <div class="container">
-              <div class="row">
-                <div class="col l6 s12">
-                  <h5 class="white-text">About</h5>
-                  <p class="grey-text text-lighten-4">
-                    A website by the people for the people.
-                  </p>
-                </div>
-                <div class="col l4 offset-l2 s12">
-                  <h5 class="white-text">Links</h5>
-                  <ul>
-                    <li>
-                      <a class="grey-text text-lighten-3" href="#!">
-                        Meet Lathaleeth
-                      </a>
-                    </li>
-                    <li>
-                      <a class="grey-text text-lighten-3" href="#!">
-                        Contact us
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="footer-copyright">
-              <div class="container align left">
-                © 2019 Sumerge feat.Lathaleeth
-              </div>
-            </div>
-          </footer>
         </body>
       </HashRouter>
     );
