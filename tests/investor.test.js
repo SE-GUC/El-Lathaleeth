@@ -23,9 +23,7 @@ test("Testing 'get all investors' and 'create investor' adds the new investor to
     faxNumber: "1234A1234",
     creditCardNumber: "4024007158885060",
     email: "some_email@gmail.com",
-    password: "somepass",
-    capital: "100000",
-    capitalCurrency: "Euro"
+    password: "somepass"
   });
   const newinvestors = await investor_funcs.getAllInvestors();
   const newLength = newinvestors.data.data.length;
@@ -52,9 +50,7 @@ test("Testing 'create investor' and 'delete investor' removes the new investor f
     faxNumber: "1234A1234",
     creditCardNumber: "4024007158885060",
     email: "some_email2@gmail.com",
-    password: "somepass",
-    capital: "100000",
-    capitalCurrency: "Euro"
+    password: "somepass"
   });
   const deletedInvestor = await investor_funcs.deleteExistingInvestor(
     newInvestor.data.data._id
@@ -82,9 +78,7 @@ test("Testing 'create investor' and 'get by id' gets the new investor from inves
     faxNumber: "1234A1234",
     creditCardNumber: "4024007158885060",
     email: "some_email3@gmail.com",
-    password: "somepass",
-    capital: "100000",
-    capitalCurrency: "Euro"
+    password: "somepass"
   });
   const getInvestor = await investor_funcs.getInvestorByID(
     newInvestor.data.data._id
@@ -112,9 +106,7 @@ test("Testing 'create investor' adds all fields given with correct values", asyn
     faxNumber: "1234A1234",
     creditCardNumber: "4024007158885060",
     email: "some_email4@gmail.com",
-    password: "somepass",
-    capital: "100000",
-    capitalCurrency: "Euro"
+    password: "somepass"
   });
   const getNewInvestor = await investor_funcs.getInvestorByID(
     newInvestor.data.data._id
@@ -155,12 +147,6 @@ test("Testing 'create investor' adds all fields given with correct values", asyn
   );
   expect(getNewInvestor.data.data.email).toEqual(newInvestor.data.data.email);
   expect(getNewInvestor.data.data.password).toEqual(newInvestor.data.data.password);
-  expect(getNewInvestor.data.data.capital).toEqual(
-    newInvestor.data.data.capital
-  );
-  expect(getNewInvestor.data.data.capitalCurrency).toEqual(
-    newInvestor.data.data.capitalCurrency
-  );
 }, 100000);
 
 //tests create and update
@@ -181,9 +167,7 @@ test("Testing 'create investor' and 'update investor' inserts new investor and u
     faxNumber: "1234A1234",
     creditCardNumber: "4024007158885060",
     email: "some_email5@gmail.com",
-    password: "somepass",
-    capital: "100000",
-    capitalCurrency: "Euro"
+    password: "somepass"
   });
   const updatedInvestor = await investor_funcs.updateExistingInvestor(
     {
@@ -201,9 +185,7 @@ test("Testing 'create investor' and 'update investor' inserts new investor and u
       faxNumber: "1234A1234",
       creditCardNumber: "4024007158885060",
       email: "some_email6@gmail.com",
-      password: "somepass",
-      capital: "100000",
-      capitalCurrency: "Euro"
+      password: "somepass"
     },
     newInvestor.data.data._id
   );
@@ -234,9 +216,7 @@ test("Testing 'create investor' with wrong data types", async () => {
       faxNumber: "1234A1234",
       creditCardNumber: "4024007158885060",
       email: "some_email7@gmail.com",
-      password: "somepass",
-      capital: "100000",
-      capitalCurrency: "Euro"
+      password: "somepass"
     })
     .catch(error =>
       expect(error.response.data.error).toEqual(
@@ -263,9 +243,7 @@ test("Testing 'update investor' with wrong data types", async () => {
     faxNumber: "1234A1234",
     creditCardNumber: "4024007158885060",
     email: "some_email8@gmail.com",
-    password: "somepass",
-    capital: "100000",
-    capitalCurrency: "Euro"
+    password: "somepass"
   });
   const updatedInvestor = await investor_funcs
     .updateExistingInvestor(
@@ -284,9 +262,7 @@ test("Testing 'update investor' with wrong data types", async () => {
         faxNumber: "1234A1234",
         creditCardNumber: "40240060",
         email: "some_email9@gmail.com",
-        password: "somepass",
-        capital: "100000",
-        capitalCurrency: "Euro"
+        password: "somepass"
       },
       newInvestor.data.data._id
     )
@@ -315,9 +291,7 @@ test("Testing 'update investor' with wrong investor id", async () => {
     faxNumber: "1234A1234",
     creditCardNumber: "4024007158885060",
     email: "some_email10@gmail.com",
-    password: "somepass",
-    capital: "100000",
-    capitalCurrency: "Euro"
+    password: "somepass"
   });
   const deletedInvestor = await investor_funcs.deleteExistingInvestor(
     newInvestor.data.data._id
@@ -339,9 +313,7 @@ test("Testing 'update investor' with wrong investor id", async () => {
         faxNumber: "1234A1234",
         creditCardNumber: "4024007158885060",
         email: "some_email11@gmail.com",
-        password: "somepass",
-        capital: "100000",
-        capitalCurrency: "Euro"
+        password: "somepass"
       },
       newInvestor.data.data._id
     )
@@ -368,9 +340,7 @@ test("Testing 'get by id' using wrong/non existant investor id", async () => {
     faxNumber: "1234A1234",
     creditCardNumber: "4024007158885060",
     email: "some_email12@gmail.com",
-    password: "somepass",
-    capital: "100000",
-    capitalCurrency: "Euro"
+    password: "somepass"
   });
   const deletedInvestor = await investor_funcs.deleteExistingInvestor(
     newInvestor.data.data._id
@@ -400,9 +370,7 @@ test("Testing 'delete investor' using wrong/non existant investor id", async () 
     faxNumber: "1234A1234",
     creditCardNumber: "4024007158885060",
     email: "some_email13@gmail.com",
-    password: "somepass",
-    capital: "100000",
-    capitalCurrency: "Euro"
+    password: "somepass"
   });
   const deletedInvestor = await investor_funcs.deleteExistingInvestor(
     newInvestor.data.data._id
@@ -432,9 +400,7 @@ test("Testing 'create investor' and 'update investor' inserts new investor and u
     faxNumber: "1234A1234",
     creditCardNumber: "4024007158885060",
     email: "some_email13@gmail.com",
-    password: "somepass",
-    capital: "100000",
-    capitalCurrency: "Euro"
+    password: "somepass"
   });
   const invid = newInvestor.data.data._id;
   const newForm = await form_funcs.createForm({
@@ -462,8 +428,6 @@ test("Testing 'create investor' and 'update investor' inserts new investor and u
       creditCardNumber: "4024007158885060",
       email: "some_email13@gmail.com",
       password: "somepass",
-      capital: "100000",
-      capitalCurrency: "Euro",
       investorFormID: invid
     },
     comments: [],
@@ -502,8 +466,6 @@ test("Testing 'create investor' and 'update investor' inserts new investor and u
       creditCardNumber: "4024007158885060",
       email: "some_email13@gmail.com",
       password: "somepass",
-      capital: "100000",
-      capitalCurrency: "Euro"
     },
     newInvestor.data.data._id
   );
