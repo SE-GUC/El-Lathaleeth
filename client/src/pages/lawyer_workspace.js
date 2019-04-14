@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Cards from "../components/Cards";
-import { connect } from "react-redux";
 
 
 const axios = require("axios");

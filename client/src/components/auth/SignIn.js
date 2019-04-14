@@ -19,15 +19,16 @@ class SignIn extends Component {
   };
   login =async () => {
     // try{
+      try{
    await  this.props.login({
       username: this.state.email,
       password: this.state.password
-    }).then(console.log("testing"))
-    if(this.props.isLoggedIn){
-  window.location.hash = "#";}
-  else{if(!this.props.isLoggedIn){
-    alert("Please Check Fields")}
-  }
+    }) 
+     window.location.hash = "#";
+}
+catch(e){
+  alert("Check Fields")
+}  
 // }
     // catch(e){
 // alert("Check Fields")
