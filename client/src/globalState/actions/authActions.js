@@ -45,7 +45,7 @@ export const login =  (userData) => dispatch => {
                     payload: { ...res.data },
                     type: LOGIN
                   });
-                });})
+                }).catch(err =>{ throw "Login Failed"});})
 
 };
 
