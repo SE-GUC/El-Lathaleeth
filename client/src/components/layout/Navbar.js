@@ -7,7 +7,7 @@ import SignedOut from "./SignedOut";
 const Navbar = () => {
   return (
     <nav className="nav-wrapper grey darken-3">
-      <div className="container">
+      <div className="container-fluid">
         <Sidenav />
         <Link to="/" className="brand-logo">
           <i className="material-icons">donut_small</i>Sumerge Lathaleeth
