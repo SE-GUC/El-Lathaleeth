@@ -12,8 +12,13 @@ import "bootstrap/dist/css/bootstrap.css";
 import RegisterEmployee from "./pages/RegisterEmployee";
 import "./App.css";
 import Navbar from "./components/layout/Navbar";
+<<<<<<< HEAD
 import OneForm from "./pages/OneForm";
 import RegisterInvestor from "./pages/RegisterInvestor";
+=======
+import ViewInvestorProfile from "./pages/ViewInvestorProfile";
+import UpdateInvestorProfile from "./pages/UpdateInvestorProfile";
+>>>>>>> 5af165e4b2809f639ac40697a000406c1b4be7b4
 
 class App extends Component {
   render() {
@@ -32,7 +37,13 @@ class App extends Component {
             />
             <Route exact path="/InvestorPage" component={InvestorPage} />
             <Route exact path="/CasePage" component={CasePage} />
+<<<<<<< HEAD
             <Route exact path="/OneForm" component ={OneForm} />
+=======
+            <Route exact path="/ViewInvestorProfile" component={ViewInvestorProfile} />
+            <Route exact path="/UpdateInvestorProfile" component={UpdateInvestorProfile} />
+
+>>>>>>> 5af165e4b2809f639ac40697a000406c1b4be7b4
             <Route
               exact
               path="/RegisterEmployee"

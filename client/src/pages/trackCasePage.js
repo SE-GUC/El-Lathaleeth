@@ -15,10 +15,12 @@ class trackCasePage extends Component {
         this.setState({ value: event.target.value });
     }
     search= async(id)=>{
+      try{
         const stat = await axios.get(
           "http://localhost:5000/api/forms//statusByID/"+id
         );
-        this.setState({formStatus:stat.data.data})
+        this.setState({formStatus:stat.data.data})}
+        catch(e){console.log("error")}
     }
     render() {
         console.log(this.state.companies);

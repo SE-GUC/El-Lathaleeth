@@ -19,8 +19,6 @@ module.exports = {
       faxNumber: Joi.string(),
       creditCardNumber: Joi.string().creditCard(),
       email: Joi.string().email().required(),
-      capital: Joi.number().required(),
-      capitalCurrency: Joi.string().required(), // Drop Down
       investorFormID: Joi.string().optional()
     };
 
@@ -105,8 +103,6 @@ module.exports = {
       faxNumber: Joi.string(),
       creditCardNumber: Joi.string().creditCard(),
       email: Joi.string().email().required(),
-      capital: Joi.number().required(),
-      capitalCurrency: Joi.string().required(), // Drop Down
       investorFormID: Joi.string().optional(),
       _id: Joi.optional()
       // Drop Down
