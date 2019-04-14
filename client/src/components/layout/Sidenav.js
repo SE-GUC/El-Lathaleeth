@@ -71,19 +71,28 @@ class Sidenav extends Component {
         </li>
       </div>
     );
-    let investorstuff=<div><li>
-            <a className="subheader grey darken-3">Investor</a>
-          </li>
-          <li>
-            <a href="#/InvestorPage" class="sidenav-close">
-              My Companies
-            </a>
-          </li>
-          <li>
-            <a href="#/trackCasePage" class="sidenav-close">
-              Track my Case
-            </a>
-          </li></div>
+    let investorstuff = (
+      <div>
+        <li>
+          <a className="subheader grey darken-3">Investor</a>
+        </li>
+        <li>
+          <a href="#/InvestorPage" class="sidenav-close">
+            My Companies
+          </a>
+        </li>
+        <li>
+          <a href="#/trackCasePage" class="sidenav-close">
+            Track my Case
+          </a>
+        </li>
+        <li>
+          <a href="#/FillForm" class="sidenav-close">
+            Fill Form
+          </a>
+        </li>
+      </div>
+    );
     let adminstuff=<div>
       <li>
             <a className="subheader grey darken-3">Admin</a>
@@ -124,11 +133,7 @@ class Sidenav extends Component {
           </li>
 
           {adminstuff} */}
-          <li>
-            <a href="#/FillForm" class="sidenav-close">
-              Fill Form
-            </a>
-          </li>
+         
           {displayed}
         </ul>
         <a

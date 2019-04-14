@@ -89,7 +89,7 @@ class FillForms extends Component {
   }
   componentWillMount = async () => {
     const formsData = await axios
-      .get("http://localhost:5000/api/investor/" + "5cb36cd125e61c32f0e28feb")
+      .get("http://localhost:5000/api/investor/" + this.props.loggedUser.id)
       .then(res => {
         console.log(res.data.data);
         this.setState({
@@ -100,7 +100,7 @@ class FillForms extends Component {
   handleSubmit = async e => {
     e.preventDefault();
     const user = await axios.get(
-      "http://localhost:5000/api/investor/" + "5cb36cd125e61c32f0e28feb",
+      "http://localhost:5000/api/investor/" + this.props.loggedUser.id,
       body
     );
     const inv = user.data.data;
@@ -171,6 +171,7 @@ class FillForms extends Component {
         .post("http://localhost:5000/api/forms/", body)
         .then(result => {
           alert("Form Submitted Successfully");
+          window.location.hash = "#";
         })
         .catch(error => {
           const err = Object.keys(error.response.data)[0];
