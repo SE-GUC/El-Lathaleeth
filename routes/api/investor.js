@@ -22,7 +22,7 @@ router.get("/:id", async (req, res) => {
     const investor = await Investor.findById(id);
     if (!investor)
       return res.status(404).send({ error: "Investor does not exist" });
-    res.json({ msg: "Employee found", data: investor });
+    res.json({ msg: "Investor found", data: investor });
   } catch (error) {
     // We will be handling the error later
     console.log(error);
@@ -34,9 +34,10 @@ router.post("/", async (req, res) => {
   try {
     const email = req.body.email;
     const password = req.body.password;
-    const isValidated = validator.createValidation(req.body);
+    const isValidated = validator.createValidation(req.body,req.body.investorType);
     if (isValidated.error)
-      return res.status(400).send({error: "Invalid datatype entered for one or more of the fields"});
+      return res.status(400).send({ error: isValidated.error.details[0].message });
+      //return res.status(400).send({error: "Invalid datatype entered for one or more of the fields"});
     let inv = await Investor.findOne({ email });
     if (inv) return res.status(400).json({ email: "Email already exists" });
     const salt = bcrypt.genSaltSync(10);
@@ -71,14 +72,14 @@ router.put("/:id", async (req, res) => {
     const investor = await Investor.findById(id);
     if (!investor)
       return res.status(404).send({ error: "Investor does not exist" });
-    const isValidated = validator.updateValidation(req.body);
+    const isValidated = validator.updateValidation(req.body,req.body.investorType);
     if (isValidated.error)
-      //return res.status(400).send({ error: isValidated.error.details[0].message });
-      return res
-        .status(400)
-        .send({
-          error: "Invalid datatype entered for one or more of the fields"
-        });
+      return res.status(400).send({ error: isValidated.error.details[0].message });
+      //return res
+      //  .status(400)
+      //  .send({
+      //    error: "Invalid datatype entered for one or more of the fields"
+      //  });
     const updatedInvestor = await Investor.findByIdAndUpdate(id, req.body, {
       new: true
     });

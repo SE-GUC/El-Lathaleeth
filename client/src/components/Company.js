@@ -19,7 +19,7 @@ export class Company extends Component {
                     <p>Form Type: {this.props.form.formType}</p>
                     <p>Address: {this.props.form.address}</p>
                     <p>Phone Number: {this.props.form.phone}</p>
-                    <p> Number: {this.props.form.fax}</p>
+                    <p>Number: {this.props.form.fax}</p>
                     <p>Created On: {this.props.form.createdOn}</p>
                     <p>Capital Currency: {this.props.form.capitalCurr}</p>
                     <p>Capital Value: {this.props.form.capitalVal}</p>
