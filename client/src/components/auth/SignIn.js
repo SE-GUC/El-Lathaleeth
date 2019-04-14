@@ -64,6 +64,8 @@ class SignIn extends Component {
       test = <div>alooooooooooooooooo ya investooor</div>;
     } else if (this.props.loggedUser.type === "Lawyer") {
       test = <div>alooooooooooooooooo ya Lawyer</div>;
+      console.log("IS LOGGED?")
+      console.log(this.props.isLoggedIn)
     }
     return (
       <Center>
