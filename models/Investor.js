@@ -13,7 +13,7 @@ const InvestorSchema = new Schema({
   },
   gender: {
     type: String,
-    enum: ["male", "female"]
+    enum: ["male", "female",null,""]
   },
   nationality: {
     type: String,
@@ -21,14 +21,13 @@ const InvestorSchema = new Schema({
   },
   typeOfID: {
     type: String,
-    enum: ["passport", "id"]
+    enum: ["passport", "national id",null,""]
   },
   IDNumber: {
     type: String
   },
   dateOfBirth: {
-    type: Date,
-    required: true
+    type: Date
   },
   address: {
     type: String,
@@ -48,7 +47,8 @@ const InvestorSchema = new Schema({
     required: true
   },
   password: {
-    type: String
+    type: String,
+    required: true
   },
   investorFormID:{
     type: String

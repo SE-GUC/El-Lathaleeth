@@ -34,7 +34,7 @@ router.post("/", async (req, res) => {
   try {
     const email = req.body.email;
     const password = req.body.password;
-    const isValidated = validator.createValidation(req.body);
+    const isValidated = validator.createValidation(req.body,req.body.investorType);
     if (isValidated.error)
       return res.status(400).send({ error: isValidated.error.details[0].message });
       //return res.status(400).send({error: "Invalid datatype entered for one or more of the fields"});
@@ -72,7 +72,7 @@ router.put("/:id", async (req, res) => {
     const investor = await Investor.findById(id);
     if (!investor)
       return res.status(404).send({ error: "Investor does not exist" });
-    const isValidated = validator.updateValidation(req.body);
+    const isValidated = validator.updateValidation(req.body,req.body.investorType);
     if (isValidated.error)
       return res.status(400).send({ error: isValidated.error.details[0].message });
       //return res
