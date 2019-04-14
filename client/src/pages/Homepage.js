@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "../components/layout/Navbar";
 import img from "../components/Assets/InvestInEgypt.jpg";
+import {NavLink} from 'react-router-dom';
 import "../styles/styles.css";
 import "bootstrap/dist/css/bootstrap.css";
 
@@ -18,7 +19,9 @@ class Homepage extends Component {
         </div>
         <div className="text-center">
           <button type="button" className="btn btn-outline-light btn-lg">
-            Invest Now
+            <NavLink to = '/signup' style={{color: 'white', textDecoration: 'none'}}>
+              Invest Now
+            </NavLink>
           </button>
         </div>
 
