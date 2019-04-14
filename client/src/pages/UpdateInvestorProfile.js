@@ -107,7 +107,7 @@ class UpdateInvestorProfile extends Component {
             creditCardNumber,
             capital,
             capitalCurrency
-        } = this.state.investor;
+        } = this.state;
 
         let body = {
             firstName: firstName,
@@ -135,9 +135,19 @@ class UpdateInvestorProfile extends Component {
                 "http://localhost:5000/api/investor/5cafca0b96a4844b0864c9fe", 
                 body
             )
-            console.log(investor);
-            alert("Your Profile has been successfully edited!");
+            .then(result=> {
+                alert("Profile successfully updated");
+                  })
+                  .catch(error => {
+                    console.log(this.state);
+                      const err=Object.keys(error.response.data)[0]
+                    alert(error.response.data[Object.keys(error.response.data)[0]]);
+                    
+                  });
+            //console.log(investor);
+            //alert("Your Profile has been successfully edited!");
         }else {
+            console.log(this.state);
             alert("Please make sure all fields are entered correctly!");
         }
    };
