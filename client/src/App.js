@@ -7,7 +7,6 @@ import CasePage from "./pages/CasePage";
 import InvestorPage from "./pages/InvestorPage";
 import trackCasePage from "./pages/trackCasePage";
 import SignIn from "./components/auth/SignIn";
-import SignUp from "./components/auth/SignUp";
 import "bootstrap/dist/css/bootstrap.css";
 import RegisterEmployee from "./pages/RegisterEmployee";
 import "./App.css";
@@ -39,7 +38,7 @@ class App extends Component {
               />
               <Route exact path="/InvestorPage" component={InvestorPage} />
               <Route exact path="/CasePage" component={CasePage} />
-              <Route exact path="/OneForm" component={OneForm} />
+    {/*<Route exact path="/OneForm" component={OneForm} />*/}
               <Route
                 exact
                 path="/ViewInvestorProfile"
@@ -94,8 +93,8 @@ class App extends Component {
                     </ul>
                   </div>
                 </div>
-                <div class="footer-copyright">
-                  <div class="container align left">
+                <div className="footer-copyright">
+                  <div className="container align left">
                     © 2019 Sumerge feat.Lathaleeth
                   </div>
                 </div>

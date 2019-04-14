@@ -1,13 +1,20 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
+import { logout } from "../../globalState/actions/authActions";
 
 class SignedIn extends Component {
+  logout = async () => {
+    await this.props.logout();
+      window.location.hash = "#";
+
+  };
   render() {
     return (
       <div>
         <ul className="right">
           <li>
-            <NavLink style={{ textDecoration: "none", color: "white" }} to="/">
+            <NavLink style={{ textDecoration: "none", color: "white" }} to="/" onClick={this.logout}>
               Log Out
             </NavLink>
           </li>
@@ -25,5 +32,13 @@ class SignedIn extends Component {
     );
   }
 }
+const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isLoggedIn,
+  loggedUser: state.auth.loggedUser
+});
 
-export default SignedIn;
+export default connect(
+  mapStateToProps,
+  { logout }
+)(SignedIn);
+
