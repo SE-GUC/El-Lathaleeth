@@ -21,17 +21,17 @@ class Sidenav extends Component {
             <a className="subheader grey darken-3">Lawyer</a>
           </li>
           <li>
-            <a href="#/LawyerPage" class="sidenav-close">
+            <a href="#/LawyerPage" className="sidenav-close">
               LawyerPage
             </a>
           </li>
           <li>
-            <a href="#/lawyer_workspace" class="sidenav-close">
+            <a href="#/lawyer_workspace" className="sidenav-close">
               Workspace
             </a>
           </li>
           <li>
-            <a href="#/lawyerPendingForms" class="sidenav-close">
+            <a href="#/lawyerPendingForms" className="sidenav-close">
               Pending Forms
             </a>
           </li>
@@ -45,12 +45,12 @@ class Sidenav extends Component {
             <a className="subheader grey darken-3">Investor</a>
           </li>
           <li>
-            <a href="#/InvestorPage" class="sidenav-close">
+            <a href="#/InvestorPage" className="sidenav-close">
               My Companies
             </a>
           </li>
           <li>
-            <a href="#/trackCasePage" class="sidenav-close">
+            <a href="#/trackCasePage" className="sidenav-close">
               Track my Case
             </a>
           </li>

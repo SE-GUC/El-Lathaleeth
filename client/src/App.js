@@ -12,6 +12,8 @@ import "bootstrap/dist/css/bootstrap.css";
 import RegisterEmployee from "./pages/RegisterEmployee";
 import "./App.css";
 import Navbar from "./components/layout/Navbar";
+import OneForm from "./pages/OneForm";
+import RegisterInvestor from "./pages/RegisterInvestor";
 
 class App extends Component {
   render() {
@@ -30,7 +32,7 @@ class App extends Component {
             />
             <Route exact path="/InvestorPage" component={InvestorPage} />
             <Route exact path="/CasePage" component={CasePage} />
-
+            <Route exact path="/OneForm" component ={OneForm} />
             <Route
               exact
               path="/RegisterEmployee"
@@ -43,27 +45,27 @@ class App extends Component {
               component={lawyer_workspace}
             />
             <Route exact path="/signin" component={SignIn} />
-            <Route exact path="/signup" component={SignUp} />
+            {<Route exact path="/signup" component={RegisterInvestor} />}
           </main>
-          <footer class="page-footer grey darken-3 fixed bottom width-100%">
-            <div class="container">
-              <div class="row">
-                <div class="col l6 s12">
-                  <h5 class="white-text">About</h5>
-                  <p class="grey-text text-lighten-4">
+          <footer className="page-footer grey darken-3 fixed bottom width-100%">
+            <div className="container">
+              <div className="row">
+                <div className="col l6 s12">
+                  <h5 className="white-text">About</h5>
+                  <p className="grey-text text-lighten-4">
                     A website by the people for the people.
                   </p>
                 </div>
-                <div class="col l4 offset-l2 s12">
-                  <h5 class="white-text">Links</h5>
+                <div className="col l4 offset-l2 s12">
+                  <h5 className="white-text">Links</h5>
                   <ul>
                     <li>
-                      <a class="grey-text text-lighten-3" href="#!">
+                      <a className="grey-text text-lighten-3" href="#!">
                         Meet Lathaleeth
                       </a>
                     </li>
                     <li>
-                      <a class="grey-text text-lighten-3" href="#!">
+                      <a className="grey-text text-lighten-3" href="#!">
                         Contact us
                       </a>
                     </li>
@@ -71,8 +73,8 @@ class App extends Component {
                 </div>
               </div>
             </div>
-            <div class="footer-copyright">
-              <div class="container align left">
+            <div className="footer-copyright">
+              <div className="container align left">
                 © 2019 Sumerge feat.Lathaleeth
               </div>
             </div>

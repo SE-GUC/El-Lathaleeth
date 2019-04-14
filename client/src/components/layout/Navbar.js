@@ -11,7 +11,7 @@ const Navbar = () => {
       <div className="container">
        
         <Link style={{ textDecoration: 'none', color: 'white' }} to="/" className="brand-logo">
-          <i class="material-icons">donut_small</i>Sumerge Lathaleeth
+          <i className="material-icons">donut_small</i>Sumerge Lathaleeth
         </Link>
         <SignedIn />
         <SignedOut />

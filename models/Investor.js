@@ -2,39 +2,29 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const InvestorSchema = new Schema({
-  firstName: {
+  investorType: {
     type: String,
-    required: true
+    required: true,
+    enum: ["individual", "company"]
   },
-  middleName: {
-    type: String
-  },
-  lastName: {
-    type: String,
-    required: true
+  name:{
+    type:String,
+    required:true
   },
   gender: {
     type: String,
-    required: true,
     enum: ["male", "female"]
   },
   nationality: {
     type: String,
     required: true
   },
-  investorType: {
-    type: String,
-    required: true,
-    enum: ["individual", "company"]
-  },
   typeOfID: {
     type: String,
-    required: true,
     enum: ["passport", "id"]
   },
   IDNumber: {
-    type: String,
-    required: true
+    type: String
   },
   dateOfBirth: {
     type: Date,
