@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.css";
+import { connect } from "react-redux";
 export class ListItem extends Component {
   state = { clicked: false };
   render() {
@@ -16,7 +17,7 @@ export class ListItem extends Component {
             type="button"
             onClick={this.props.reserveForm.bind(
               this,
-              "5ca9ea8fd0935b3388eaa962",
+              this.props.loggedUser.id,
               this.props.form._id
             )}
             class="btn btn-danger"
@@ -28,5 +29,11 @@ export class ListItem extends Component {
     );
   }
 }
+const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isLoggedIn,
+  loggedUser: state.auth.loggedUser
+});
+export default connect(
+  mapStateToProps
+)(ListItem);
 
-export default ListItem;

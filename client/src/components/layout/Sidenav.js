@@ -21,13 +21,22 @@ class Sidenav extends Component {
             <a className="subheader grey darken-3">Lawyer</a>
           </li>
           <li>
-            <a href="#/LawyerPage" class="sidenav-close">LawyerPage</a>
+            <a href="#/LawyerPage" class="sidenav-close">
+              LawyerPage
+            </a>
           </li>
           <li>
-            <a href="#/lawyer_workspace" class="sidenav-close">Workspace</a>
+            <a href="#/lawyer_workspace" class="sidenav-close">
+              Workspace
+            </a>
           </li>
           <li>
-            <a href="#/lawyerPendingForms"class="sidenav-close">Pending Forms</a>
+            <a href="#/lawyerPendingForms" class="sidenav-close">
+              Pending Forms
+            </a>
+          </li>
+          <li>
+            <a href="#/CasePage">View All Cases</a>
           </li>
           <li>
             <div className="divider" />
@@ -36,10 +45,15 @@ class Sidenav extends Component {
             <a className="subheader grey darken-3">Investor</a>
           </li>
           <li>
+            <a href="#/ViewInvestorProfile"class="sidenav-close">My Profile</a>
+          </li>
+          <li>
             <a href="#/InvestorPage"class="sidenav-close">My Companies</a>
           </li>
           <li>
-            <a href="#/trackCasePage"class="sidenav-close">Track my Case</a>
+            <a href="#/trackCasePage" class="sidenav-close">
+              Track my Case
+            </a>
           </li>
           <li>
             <div className="divider" />
@@ -50,6 +64,9 @@ class Sidenav extends Component {
           </li>
           <li>
             <a href="#/RegisterEmployee">Register Employees</a>
+          </li>
+          <li>
+            <a href="#/CasePage">View All Cases</a>
           </li>
         </ul>
         <a
