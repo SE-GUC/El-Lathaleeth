@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "../components/layout/Navbar";
 import img from "../components/Assets/InvestInEgypt.jpg";
+import Carousel from "../components/Carousel";
 import "../styles/styles.css";
 import "bootstrap/dist/css/bootstrap.css";
 
@@ -9,6 +10,7 @@ class Homepage extends Component {
     return (
       <React.Fragment>
         <Navbar />
+        <Carousel />
         <div className="container-fluid np-padding">
           <div className="row">
             <div className="col-md-12">

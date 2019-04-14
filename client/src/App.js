@@ -12,12 +12,8 @@ import "bootstrap/dist/css/bootstrap.css";
 import RegisterEmployee from "./pages/RegisterEmployee";
 import "./App.css";
 import Navbar from "./components/layout/Navbar";
-<<<<<<< HEAD
-import Homepage from "./pages/Homepage";
-=======
 import ViewInvestorProfile from "./pages/ViewInvestorProfile";
 import UpdateInvestorProfile from "./pages/UpdateInvestorProfile";
->>>>>>> 5af165e4b2809f639ac40697a000406c1b4be7b4
 
 class App extends Component {
   render() {
@@ -25,11 +21,7 @@ class App extends Component {
       <HashRouter>
         <body className="App">
           <header>
-<<<<<<< HEAD
-            <Homepage />
-=======
             <Navbar />
->>>>>>> 5af165e4b2809f639ac40697a000406c1b4be7b4
           </header>
           <main>
             <Route exact path="/LawyerPage" component={LawyerPage} />
@@ -39,13 +31,18 @@ class App extends Component {
               component={lawyerPendingForms}
             />
             <Route exact path="/InvestorPage" component={InvestorPage} />
-<<<<<<< HEAD
-=======
             <Route exact path="/CasePage" component={CasePage} />
-            <Route exact path="/ViewInvestorProfile" component={ViewInvestorProfile} />
-            <Route exact path="/UpdateInvestorProfile" component={UpdateInvestorProfile} />
+            <Route
+              exact
+              path="/ViewInvestorProfile"
+              component={ViewInvestorProfile}
+            />
+            <Route
+              exact
+              path="/UpdateInvestorProfile"
+              component={UpdateInvestorProfile}
+            />
 
->>>>>>> 5af165e4b2809f639ac40697a000406c1b4be7b4
             <Route
               exact
               path="/RegisterEmployee"
@@ -58,10 +55,6 @@ class App extends Component {
               component={lawyer_workspace}
             />
             <Route exact path="/signin" component={SignIn} />
-<<<<<<< HEAD
-            <Route path="/signup" component={SignUp} />
-          </main>
-=======
             <Route exact path="/signup" component={SignUp} />
           </main>
           <footer class="page-footer grey darken-3 fixed bottom width-100%">
@@ -96,7 +89,6 @@ class App extends Component {
               </div>
             </div>
           </footer>
->>>>>>> 5af165e4b2809f639ac40697a000406c1b4be7b4
         </body>
       </HashRouter>
     );
