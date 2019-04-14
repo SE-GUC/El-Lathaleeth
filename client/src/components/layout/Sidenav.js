@@ -124,6 +124,11 @@ class Sidenav extends Component {
           </li>
 
           {adminstuff} */}
+          <li>
+            <a href="#/FillForm" class="sidenav-close">
+              Fill Form
+            </a>
+          </li>
           {displayed}
         </ul>
         <a

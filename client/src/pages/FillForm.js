@@ -1,11 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import "./FillForms.css";
-import DatePicker from "react-datepicker";
+import "./FillForm.css";
 import "react-datepicker/dist/react-datepicker.css";
 import { ReactDatez, ReduxReactDatez } from "react-datez";
 import "react-datez/dist/css/react-datez.css";
 import Form from "react-bootstrap/Form";
+import {
+  CountryDropdown,
+  RegionDropdown,
+  CountryRegionData
+} from "react-country-region-selector";
 const axios = require("axios");
 
 const emailRegex = RegExp(
@@ -14,8 +18,6 @@ const emailRegex = RegExp(
 
 const formValid = ({ formErrors, ...rest }) => {
   let valid = true;
-  delete rest.speciality;
-  delete rest.education;
   // validate form errors being empty
   Object.values(formErrors).forEach(val => {
     val.length > 0 && (valid = false);
@@ -34,21 +36,50 @@ class FillForms extends Component {
     super(props);
 
     this.state = {
-      englishName: null,
+      boardCount: 0,
+      law: "73",
+      formType: "SPC",
+      legalForm: "null",
+      englishName: "",
+      phone: null,
+      arabicName: null,
+      capitalVal: null,
+      capitalCurr: "$",
+      fax: "",
+      address: null,
+      city: null,
+      country: null,
+      boardOfDirectors: [],
+
+      address1: "",
+      city1: "",
+      country1: "",
+      birthdate: new Date(),
+      gender: "male",
+      idNum: "",
+      name: "",
+      nationality: "",
+      position: "",
+      typeID: "passport",
+        typeInves:"individual",
       formErrors: {
         englishName: "",
+        idNum: "",
         arabicName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        username: "",
-        speciality: "",
-        education: ""
+        capitalVal: "",
+        nationality: "",
+        typeID: ""
       },
-      startDate: new Date(),
-      emp_type: "Admin"
+      startDate: new Date()
     };
     this.handleDateChange = this.handleDateChange.bind(this);
+  }
+  selectCountry(val) {
+    this.setState({ country: val });
+  }
+
+  selectRegion(val) {
+    this.setState({ city: val });
   }
   handleDateChange(date) {
     this.setState({
@@ -56,57 +87,88 @@ class FillForms extends Component {
       dateOfBirth: date
     });
   }
+  componentWillMount = async () => {
+    const formsData = await axios
+      .get("http://localhost:5000/api/investor/" + "5cb36cd125e61c32f0e28feb")
+      .then(res => {
+        console.log(res.data.data);
+        this.setState({
+          inv: res.data.data
+        });
+      });
+  };
   handleSubmit = async e => {
     e.preventDefault();
     const user = await axios.get(
-      "http://localhost:5000/api/investor/" + this.props.loggedUser.id,
+      "http://localhost:5000/api/investor/" + "5cb36cd125e61c32f0e28feb",
       body
     );
-
+    const inv = user.data.data;
+    delete inv._v;
     let {
+      law,
+      formType,
+      legalForm,
       englishName,
+      phone,
       arabicName,
-      lastName,
-      dateOfBirth,
-      password,
-      email,
-      education,
-      speciality,
-      username,
-      emp_type
+      capitalVal,
+      capitalCurr,
+      fax,
+      address,
+      city,
+      country,
+      boardOfDirectors
     } = this.state;
-    let body = {
-      englishName: englishName,
-      arabicName: arabicName,
-      lastName: lastName,
-      dateOfBirth: dateOfBirth,
-      password: password,
-      email: email,
-      username: username,
-      joined_on: new Date(),
-      emp_type: emp_type,
-      lawyer_details: {
-        pending_forms: [],
-        reviewed_forms: [],
-        filled_forms: [],
-        speciality: speciality,
-        education: education
-      },
-      admin_details: {
-        registered_employees: []
-      },
-      reviewer_details: {
-        pending_forms: [],
-        reviewed_forms: []
-      }
-    };
+    let body;
+    if (formType === "SSC") {
+      body = {
+        englishName: englishName,
+        arabicName: arabicName,
+        law: law,
+        formType: formType,
+        legalForm: legalForm,
+        phone: phone,
+        capitalVal: capitalVal,
+        capitalCurr: capitalCurr,
+        fax: fax,
+        address: address + " " + city + " " + country,
+        boardOfDirectors: boardOfDirectors,
+        createdOn: new Date(),
+        status: "posted",
+        bitIL: 0,
+        comments: [],
+        investor: { ...inv, investorFormID: inv._id }
+      };
+    } else {
+      body = {
+        englishName: englishName,
+        arabicName: arabicName,
+        law: law,
+        formType: formType,
+        legalForm: legalForm,
+        phone: phone,
+        capitalVal: capitalVal,
+        capitalCurr: capitalCurr,
+        fax: fax,
+        address: address + " " + city + " " + country,
+        createdOn: new Date(),
+        status: "posted",
+        bitIL: 0,
+        comments: [],
+        investor: { ...inv, investorFormID: inv._id }
+      };
+    }
+    delete body.investor._id
+    delete body.investor.password;
+    delete body.investor.__v;
+
+        
+
     console.log(body);
     if (formValid(this.state)) {
       const form = await axios
-        .post(
-          "http://localhost:5000/api/forms/",
-          body
-        )
+        .post("http://localhost:5000/api/forms/", body)
         .then(result => {
           alert("Form Submitted Successfully");
         })
@@ -119,7 +181,41 @@ class FillForms extends Component {
       alert("Please Make Sure All Entries are Correct!");
     }
   };
+  addDirector = e => {
+    e.preventDefault();
 
+    const {
+      address1,
+      country1,
+      city1,
+      birthdate,
+      gender,
+      idNum,
+      name,
+      nationality,
+      position,
+      typeID,
+      typeInves,
+      boardOfDirectors
+    } = this.state;
+    console.log(boardOfDirectors)
+    if (formValid(this.state)) {
+        boardOfDirectors.push({
+          address: address1 + " " + city1 + " " + country1,
+          birthdate: birthdate,
+          gender: gender,
+          idNum: idNum,
+          name: name,
+          nationality: nationality,
+          position: position,
+          typeID: typeID,
+          typeInves: typeInves
+        });
+      this.setState({
+        boardOfDirectors: boardOfDirectors
+      });
+    }
+  };
   handleChange = e => {
     e.preventDefault();
     const { name, value } = e.target;
@@ -134,22 +230,22 @@ class FillForms extends Component {
         formErrors.arabicName =
           value.length < 3 ? "minimum 3 characaters required" : "";
         break;
-      case "lastName":
-        formErrors.lastName =
-          value.length < 3 ? "minimum 3 characaters required" : "";
+      case "capitalVal":
+        console.log(value > 5000);
+        formErrors.capitalVal =
+          parseInt(value) < 5000 || parseInt(value) > 999999999999
+            ? "Capital Value must be between 5000 and 999999999999"
+            : "";
         break;
-      case "username":
-        formErrors.username =
-          value.length < 3 ? "minimum 3 characaters required" : "";
+      case "idNum":
+        formErrors.idNum =
+          value.length < 8 ? "minimum 8 characaters required" : "";
         break;
-      case "email":
-        formErrors.email = emailRegex.test(value)
-          ? ""
-          : "invalid email address";
-        break;
-      case "password":
-        formErrors.password =
-          value.length < 6 ? "minimum 6 characaters required" : "";
+      case "nationality":
+        formErrors.nationality =
+          value !== "Egyptian" && this.state.inv.nationality !== "Egyptian"
+            ? "Director must be Egyptian as Investor is Foreign"
+            : "";
         break;
       default:
         break;
@@ -165,57 +261,166 @@ class FillForms extends Component {
       );
     }
   };
-
+  handleDateChange(date) {
+    this.setState({
+      startDate: date,
+      dateofbirth: date
+    });
+  }
   render() {
     const { formErrors } = this.state;
-    let lawyerStuff;
-    let lawyerStuff1;
-
-    if (this.state.emp_type === "Lawyer") {
-      lawyerStuff = (
-        <div className="speciality">
-          <label htmlFor="speciality">Speciality</label>
-          <input
-            className={formErrors.speciality.length > 0 ? "error" : null}
-            placeholder="Speciality"
-            type="text"
-            name="speciality"
-            noValidate
-            onChange={this.handleChange}
+    let SPCStuff;
+    if (this.state.formType === "SSC")
+      SPCStuff = (
+        <div>
+          <h2>Adding Board of Directors</h2>
+          <div className="country1">
+            <label htmlFor="country1">Country</label>
+            <input
+              placeholder="Country"
+              type="country"
+              name="country1"
+              noValidate
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="city1">
+            <label htmlFor="country1">City</label>
+            <input
+              placeholder="City"
+              type="city"
+              name="city1"
+              noValidate
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="address1">
+            <label htmlFor="address1">Address</label>
+            <input
+              placeholder="Address"
+              type="address1"
+              name="address1"
+              noValidate
+              onChange={this.handleChange}
+            />
+          </div>
+          <ReactDatez
+            name="dateofbirth"
+            handleChange={this.handleDateChange}
+            onChange={this.handleDateChange}
+            value={this.state.startDate}
+            allowFuture={false}
+            allowPast={true}
           />
-          {formErrors.speciality.length > 0 && (
-            <span className="errorMessage">{formErrors.speciality}</span>
-          )}
+          <div className="formType">
+            <Form.Label>Gender</Form.Label>
+            <Form.Control
+              as="select"
+              value={this.state.gender}
+              onChange={this.handleChange}
+              name="gender"
+            >
+              {" "}
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </Form.Control>
+          </div>
+          <div className="formType">
+            <Form.Label>Type of ID</Form.Label>
+            <Form.Control
+              as="select"
+              value={this.state.typeID}
+              onChange={this.handleChange}
+              name="typeID"
+            >
+              {" "}
+              <option value="passport">Passport</option>
+              <option value="id">ID</option>
+            </Form.Control>
+          </div>
+          <div className="idNum">
+            <label htmlFor="idNum">ID/Passport Number</label>
+            <input
+              className={formErrors.idNum.length > 0 ? "error" : null}
+              placeholder="ID Number"
+              type="text"
+              name="idNum"
+              noValidate
+              onChange={this.handleChange}
+            />
+            {formErrors.idNum.length > 0 && (
+              <span className="errorMessage">{formErrors.idNum}</span>
+            )}
+          </div>
+          <div className="name">
+            <label htmlFor="name">Name</label>
+            <input
+              placeholder="Name"
+              type="name"
+              name="name"
+              noValidate
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="position">
+            <label htmlFor="position">Position</label>
+            <input
+              placeholder="Position"
+              type="position"
+              name="position"
+              noValidate
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="nationality">
+            <label htmlFor="idNum">Nationality</label>
+            <input
+              className={
+                formErrors.nationality.length > 0 ? "error" : null
+              }
+              placeholder="Nationality"
+              type="text"
+              name="nationality"
+              noValidate
+              onChange={this.handleChange}
+            />
+            {formErrors.nationality.length > 0 && (
+              <span className="errorMessage">
+                {formErrors.nationality}
+              </span>
+            )}
+          </div>
+          <div className="formType">
+            <Form.Label>Type of Investor</Form.Label>
+            <Form.Control
+              as="select"
+              value={this.state.typeInves}
+              onChange={this.handleChange}
+              name="typeInves"
+            >
+              {" "}
+              <option value="individual">Individual</option>
+              <option value="company">Company</option>
+            </Form.Control>
+          </div>
+          <div>
+            <button onClick={this.addDirector.bind(this)}>
+              Add Director
+            </button>
+          </div>
         </div>
       );
-      lawyerStuff1 = (
-        <div className="education">
-          <label htmlFor="education">Education:</label>
-          <input
-            className={formErrors.education.length > 0 ? "error" : null}
-            placeholder="Education"
-            type="text"
-            name="education"
-            noValidate
-            onChange={this.handleChange}
-          />
-          {formErrors.education.length > 0 && (
-            <span className="errorMessage">{formErrors.education}</span>
-          )}
-        </div>
-      );
-    }
 
     return (
       <div className="wrFillFormser">
         <div className="form-wrFillFormser">
-          <h1>Register New Employee</h1>
+          <h1>Create New Company</h1>
           <form onSubmit={this.handleSubmit} noValidate>
             <div className="englishName">
-              <label htmlFor="englishName">First Name</label>
+              <label htmlFor="englishName">English Name</label>
               <input
                 className={formErrors.englishName.length > 0 ? "error" : null}
-                placeholder="First Name"
+                placeholder="English Name"
                 type="text"
                 name="englishName"
                 noValidate
@@ -226,10 +431,10 @@ class FillForms extends Component {
               )}
             </div>
             <div className="arabicName">
-              <label htmlFor="arabicName">Middle Name</label>
+              <label htmlFor="arabicName">Arabic Name</label>
               <input
                 className={formErrors.arabicName.length > 0 ? "error" : null}
-                placeholder="Middle Name"
+                placeholder="Arabic Name"
                 type="text"
                 name="arabicName"
                 noValidate
@@ -239,96 +444,116 @@ class FillForms extends Component {
                 <span className="errorMessage">{formErrors.arabicName}</span>
               )}
             </div>
-            <div className="lastName">
-              <label htmlFor="lastName">Last Name</label>
+            <div className="fax">
+              <label htmlFor="fax">Fax Number</label>
               <input
-                className={formErrors.lastName.length > 0 ? "error" : null}
-                placeholder="Last Name"
+                placeholder="Fax"
                 type="text"
-                name="lastName"
+                name="fax"
                 noValidate
                 onChange={this.handleChange}
               />
-              {formErrors.lastName.length > 0 && (
-                <span className="errorMessage">{formErrors.lastName}</span>
-              )}
             </div>
-            <div className="username">
-              <label htmlFor="username">Username:</label>
+            <div className="phone">
+              <label htmlFor="phone">Telephone Number</label>
               <input
-                className={formErrors.username.length > 0 ? "error" : null}
-                placeholder="username"
+                placeholder=""
                 type="text"
-                name="username"
+                name="phone"
                 noValidate
                 onChange={this.handleChange}
               />
-              {formErrors.username.length > 0 && (
-                <span className="errorMessage">{formErrors.username}</span>
-              )}
             </div>
-            <div className="email">
-              <label htmlFor="email">Email</label>
+            <div className="capitalVal">
+              <label htmlFor="capitalVal">Capital Value</label>
               <input
-                className={formErrors.email.length > 0 ? "error" : null}
-                placeholder="Email"
-                type="email"
-                name="email"
+                className={formErrors.capitalVal.length > 0 ? "error" : null}
+                placeholder="Capital Value"
+                type="text"
+                name="capitalVal"
                 noValidate
                 onChange={this.handleChange}
               />
-              {formErrors.email.length > 0 && (
-                <span className="errorMessage">{formErrors.email}</span>
+              {formErrors.capitalVal.length > 0 && (
+                <span className="errorMessage">{formErrors.capitalVal}</span>
               )}
             </div>
-            <div className="password">
-              <label htmlFor="password">Password</label>
+            <div className="country">
+              <label htmlFor="country">Country</label>
               <input
-                className={formErrors.password.length > 0 ? "error" : null}
-                placeholder="Password"
-                type="password"
-                name="password"
+                placeholder="Country"
+                type="country"
+                name="country"
                 noValidate
                 onChange={this.handleChange}
               />
-              {formErrors.password.length > 0 && (
-                <span className="errorMessage">{formErrors.password}</span>
-              )}
             </div>
-
-            <div className="DateofBirth">
-              <label htmlFor="DateofBirth">Date Of Birth</label>
-              <div />
-              <ReactDatez
-                name="dateOfBirth"
-                handleChange={this.handleDateChange}
-                onChange={this.handleDateChange}
-                value={this.state.startDate}
-                allowFuture={false}
-                allowPast={true}
+            <div className="city">
+              <label htmlFor="country">City</label>
+              <input
+                placeholder="City"
+                type="city"
+                name="city"
+                noValidate
+                onChange={this.handleChange}
               />
-              {/* {formErrors.password.length > 0 && (
-                <span className="errorMessage">{formErrors.password}</span>
-              )} */}
             </div>
-            <div className="Emp_type">
-              <Form.Label>Employee Type:</Form.Label>
+            <div className="address">
+              <label htmlFor="address">Address</label>
+              <input
+                placeholder="Address"
+                type="address"
+                name="address"
+                noValidate
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className="formType">
+              <Form.Label>Capital Currency</Form.Label>
               <Form.Control
                 as="select"
-                value={this.state.emp_type}
+                value={this.state.capitalCurr}
                 onChange={this.handleChange}
-                name="emp_type"
+                name="capitalCurr"
               >
-                <option value="Admin">Admin</option>
-                <option value="Lawyer">Lawyer</option>
-                <option value="Reviewer">Reviewer</option>
+                <option value="$">$</option>
+                <option value="CA$">CA$</option>
+                <option value="€">€</option>
+                <option value="AED">AED</option>
+                <option value="EGP">EGP</option>
+                <option value="£">£</option>
+                <option value="SR">SR</option>
               </Form.Control>
             </div>
-            {/* <p>{"\n"}</p> */}
-            {lawyerStuff}
-            {lawyerStuff1}
-            <div className="createAccount">
-              <button type="submit">Register New Employee</button>
+            <div className="formType">
+              <Form.Label>Law</Form.Label>
+              <Form.Control
+                as="select"
+                value={this.state.law}
+                onChange={this.handleChange}
+                name="law"
+              >
+                {" "}
+                <option value="73">73</option>
+                <option value="152">152</option>
+              </Form.Control>
+            </div>
+            <div className="formType">
+              <Form.Label>Form Type:</Form.Label>
+              <Form.Control
+                as="select"
+                value={this.state.formType}
+                onChange={this.handleChange}
+                name="formType"
+              >
+                {" "}
+                <option value="SPC">SPC</option>
+                <option value="SSC">SSC</option>
+              </Form.Control>
+            </div>
+            {SPCStuff}
+            <div className="createForm">
+              <button type="submit">Fill Form</button>
             </div>
           </form>
         </div>

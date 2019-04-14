@@ -14,6 +14,7 @@ import "./App.css";
 import Navbar from "./components/layout/Navbar";
 import { Provider } from "react-redux";
 import store from "./globalState/store";
+import FillForm from "./pages/FillForm";
 
 
 class App extends Component {
@@ -34,6 +35,7 @@ class App extends Component {
               />
               <Route exact path="/InvestorPage" component={InvestorPage} />
               <Route exact path="/CasePage" component={CasePage} />
+              <Route exact path="/FillForm" component={FillForm} />
 
               <Route
                 exact
