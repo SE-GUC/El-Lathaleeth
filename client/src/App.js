@@ -11,6 +11,8 @@ import "bootstrap/dist/css/bootstrap.css";
 import RegisterEmployee from "./pages/RegisterEmployee";
 import "./App.css";
 import Navbar from "./components/layout/Navbar";
+import ViewInvestorProfile from "./pages/ViewInvestorProfile";
+import UpdateInvestorProfile from "./pages/UpdateInvestorProfile";
 
 class App extends Component {
   render() {
@@ -28,6 +30,8 @@ class App extends Component {
                 component={lawyerPendingForms}
               />
               <Route exact path="/InvestorPage" component={InvestorPage} />
+              <Route exact path="/ViewInvestorProfile" component={ViewInvestorProfile} />
+              <Route exact path="/UpdateInvestorProfile" component={UpdateInvestorProfile} />
               <Route
                 exact
                 path="/RegisterEmployee"

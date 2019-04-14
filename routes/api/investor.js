@@ -22,7 +22,7 @@ router.get("/:id", async (req, res) => {
     const investor = await Investor.findById(id);
     if (!investor)
       return res.status(404).send({ error: "Investor does not exist" });
-    res.json({ msg: "Employee found", data: investor });
+    res.json({ msg: "Investor found", data: investor });
   } catch (error) {
     // We will be handling the error later
     console.log(error);
