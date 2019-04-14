@@ -19,15 +19,16 @@ class SignIn extends Component {
   };
   login =async () => {
     // try{
+      try{
    await  this.props.login({
       username: this.state.email,
       password: this.state.password
-    })
-    if(this.props.isLoggedIn){
-  window.location.hash = "#";}
-  else{
-    alert("Please Check Fields")
-  }
+    }) 
+     window.location.hash = "#";
+}
+catch(e){
+  alert("Check Fields")
+}  
 // }
     // catch(e){
 // alert("Check Fields")
@@ -61,9 +62,9 @@ class SignIn extends Component {
   render() {
     let test
     if (this.props.loggedUser.type === "investor") {
-      test = <div>alooooooooooooooooo ya investooor</div>;
+      test = <div>Investor Signed In</div>;
     } else if (this.props.loggedUser.type === "Lawyer") {
-      test = <div>alooooooooooooooooo ya Lawyer</div>;
+      test = <div>Employee Signed In</div>;
     }
     return (
       <Center>
