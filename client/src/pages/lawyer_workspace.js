@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import Cards from "../components/Cards";
+
 
 const axios = require("axios");
 
@@ -7,9 +9,10 @@ class lawyer_workspace extends Component {
   state = { pending_forms: [], reviewed_forms: [], filled_forms: [] };
 
   componentDidMount = async () => {
+    console.log(this.props.loggedUser);
     const lawyerinfo = await axios
       .get(
-        "http://localhost:5000/api/entity_emp/workSpace/5ca9ea8fd0935b3388eaa962"
+        "http://localhost:5000/api/entity_emp/workSpace/"+this.props.loggedUser.id
       )
       .then(res => {
         console.log(res.data);
@@ -55,5 +58,8 @@ class lawyer_workspace extends Component {
 
   
 }
-
-export default lawyer_workspace;
+const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isLoggedIn,
+  loggedUser: state.auth.loggedUser
+});
+export default connect( mapStateToProps )(lawyer_workspace);
