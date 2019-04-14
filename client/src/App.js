@@ -12,7 +12,6 @@ import "bootstrap/dist/css/bootstrap.css";
 import RegisterEmployee from "./pages/RegisterEmployee";
 import "./App.css";
 import Navbar from "./components/layout/Navbar";
-import Homepage from "./pages/Homepage";
 import ViewInvestorProfile from "./pages/ViewInvestorProfile";
 import UpdateInvestorProfile from "./pages/UpdateInvestorProfile";
 
@@ -33,8 +32,16 @@ class App extends Component {
             />
             <Route exact path="/InvestorPage" component={InvestorPage} />
             <Route exact path="/CasePage" component={CasePage} />
-            <Route exact path="/ViewInvestorProfile" component={ViewInvestorProfile} />
-            <Route exact path="/UpdateInvestorProfile" component={UpdateInvestorProfile} />
+            <Route
+              exact
+              path="/ViewInvestorProfile"
+              component={ViewInvestorProfile}
+            />
+            <Route
+              exact
+              path="/UpdateInvestorProfile"
+              component={UpdateInvestorProfile}
+            />
 
             <Route
               exact
