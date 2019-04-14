@@ -92,7 +92,7 @@ class Sidenav extends Component {
           </a>
         </li>
         <li>
-          <a href="#/ViewInvestorProfile" class="sidenav-close">
+          <a href="#/InvestorPage" class="sidenav-close">
             My Profile
           </a>
         </li>
@@ -132,7 +132,6 @@ class Sidenav extends Component {
           <li>
             <div className="divider" />
           </li>
-          {investorstuff}
           <li>
             <a className="subheader grey darken-3">Investor</a>
           </li>

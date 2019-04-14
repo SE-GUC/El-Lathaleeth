@@ -41,7 +41,7 @@ class Homepage extends Component {
           </div>
         </div>
         <div className="container-fluid">
-          <div clasName="row welcome text-center">
+          <div className="row welcome text-center">
             <div className="col-12">
               <h1 className="display-4">Africa's Most Prosperous Market</h1>
             </div>
