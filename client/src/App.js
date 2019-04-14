@@ -38,7 +38,7 @@ class App extends Component {
               />
               <Route exact path="/InvestorPage" component={InvestorPage} />
               <Route exact path="/CasePage" component={CasePage} />
-    {/*<Route exact path="/OneForm" component={OneForm} />*/}
+              {/*<Route exact path="/OneForm" component={OneForm} />*/}
               <Route
                 exact
                 path="/ViewInvestorProfile"
@@ -48,6 +48,11 @@ class App extends Component {
                 exact
                 path="/UpdateInvestorProfile"
                 component={UpdateInvestorProfile}
+              />
+              <Route
+                exact
+                path="/FillForm"
+                component={FillForm}
               />
 
               <Route
