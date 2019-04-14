@@ -17,13 +17,17 @@ class SignIn extends Component {
       [e.target.id]: e.target.value
     });
   };
-  login = () => {
+  login =async () => {
     // try{
-    this.props.login({
+   await  this.props.login({
       username: this.state.email,
       password: this.state.password
     })
-  window.location.hash = "#";
+    if(this.props.isLoggedIn){
+  window.location.hash = "#";}
+  else{
+    alert("Please Check Fields")
+  }
 // }
     // catch(e){
 // alert("Check Fields")
