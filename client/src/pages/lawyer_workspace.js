@@ -55,5 +55,8 @@ class lawyer_workspace extends Component {
 
   
 }
-
+const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isLoggedIn,
+  loggedUser: state.auth.loggedUser
+});
 export default lawyer_workspace;
