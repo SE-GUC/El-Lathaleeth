@@ -2,43 +2,32 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const InvestorSchema = new Schema({
-  firstName: {
-    type: String,
-    required: true
-  },
-  middleName: {
-    type: String
-  },
-  lastName: {
-    type: String,
-    required: true
-  },
-  gender: {
-    type: String,
-    required: true,
-    enum: ["male", "female"]
-  },
-  nationality: {
-    type: String,
-    required: true
-  },
   investorType: {
     type: String,
     required: true,
     enum: ["individual", "company"]
   },
+  name:{
+    type:String,
+    required:true
+  },
+  gender: {
+    type: String,
+    enum: ["male", "female",null,""]
+  },
+  nationality: {
+    type: String,
+    required: true
+  },
   typeOfID: {
     type: String,
-    required: true,
-    enum: ["passport", "id"]
+    enum: ["passport", "national id",null,""]
   },
   IDNumber: {
-    type: String,
-    required: true
+    type: String
   },
   dateOfBirth: {
-    type: Date,
-    required: true
+    type: Date
   },
   address: {
     type: String,
@@ -58,16 +47,9 @@ const InvestorSchema = new Schema({
     required: true
   },
   password: {
-    type: String
-  },
-  capital: {
-    type: Number,
-    required: true
-  },
-  capitalCurrency: {
     type: String,
     required: true
-  }, 
+  },
   investorFormID:{
     type: String
   }

@@ -127,7 +127,24 @@ class Sidenav extends Component {
           <li>
             <div className="divider" />
           </li>
+<<<<<<< HEAD
           {investorstuff}
+=======
+          <li>
+            <a className="subheader grey darken-3">Investor</a>
+          </li>
+          <li>
+            <a href="#/ViewInvestorProfile"className="sidenav-close">My Profile</a>
+          </li>
+          <li>
+            <a href="#/InvestorPage"className="sidenav-close">My Companies</a>
+          </li>
+          <li>
+            <a href="#/trackCasePage" className="sidenav-close">
+              Track my Case
+            </a>
+          </li>
+>>>>>>> 14af88f9a51bc6f92ce918453f418e301e68260c
           <li>
             <div className="divider" />
           </li>
@@ -140,6 +157,7 @@ class Sidenav extends Component {
           href="#"
           data-target="slide-out"
           className="sidenav-trigger show-on-large"
+          style={{ textDecoration: 'none', color: 'white' }}
         >
           <i className="material-icons">menu</i>
         </a>

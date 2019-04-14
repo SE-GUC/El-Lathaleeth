@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Center from 'react-center';
 import { connect } from "react-redux";
 import { login } from "../../globalState/actions/authActions";
 import PropTypes from "prop-types";
@@ -16,13 +17,17 @@ class SignIn extends Component {
       [e.target.id]: e.target.value
     });
   };
-  login = () => {
+  login =async () => {
     // try{
-    this.props.login({
+   await  this.props.login({
       username: this.state.email,
       password: this.state.password
     })
-  window.location.hash = "#";
+    if(this.props.isLoggedIn){
+  window.location.hash = "#";}
+  else{
+    alert("Please Check Fields")
+  }
 // }
     // catch(e){
 // alert("Check Fields")
@@ -61,7 +66,7 @@ class SignIn extends Component {
       test = <div>alooooooooooooooooo ya Lawyer</div>;
     }
     return (
-      <div className="container">
+      <Center>
         <form className="white" onSubmit={this.handleSubmit}>
           <div className="container center padding-70">
             <h5 className="grey-text text-darken-3">Sign In</h5>
@@ -88,7 +93,7 @@ class SignIn extends Component {
             {test}
           </div>
         </form>
-      </div>
+      </Center>
     );
   }
 }

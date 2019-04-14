@@ -24,10 +24,11 @@ const Navbar = () => {
   console.log(e)}
   return (
     <nav className="nav-wrapper grey darken-3">
+     <Sidenav />
       <div className="container">
-        <Sidenav />
-        <Link to="/" className="brand-logo">
-          <i class="material-icons">donut_small</i>Sumerge Lathaleeth
+       
+        <Link style={{ textDecoration: 'none', color: 'white' }} to="/" className="brand-logo">
+          <i className="material-icons">donut_small</i>Sumerge Lathaleeth
         </Link>
         {signed}
       </div>

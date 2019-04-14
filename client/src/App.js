@@ -16,6 +16,11 @@ import { Provider } from "react-redux";
 import store from "./globalState/store";
 import FillForm from "./pages/FillForm";
 
+import OneForm from "./pages/OneForm";
+import RegisterInvestor from "./pages/RegisterInvestor";
+import ViewInvestorProfile from "./pages/ViewInvestorProfile";
+import UpdateInvestorProfile from "./pages/UpdateInvestorProfile";
+import Homepage from "./pages/Homepage";
 
 class App extends Component {
   render() {
@@ -25,6 +30,8 @@ class App extends Component {
           <body className="App">
             <header>
               <Navbar />
+              <Homepage />
+
             </header>
             <main>
               <Route exact path="/LawyerPage" component={LawyerPage} />
