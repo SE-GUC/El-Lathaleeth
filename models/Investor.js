@@ -60,14 +60,6 @@ const InvestorSchema = new Schema({
   password: {
     type: String
   },
-  capital: {
-    type: Number,
-    required: true
-  },
-  capitalCurrency: {
-    type: String,
-    required: true
-  }, 
   investorFormID:{
     type: String
   }

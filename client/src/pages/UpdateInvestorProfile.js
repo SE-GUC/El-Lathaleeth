@@ -104,9 +104,7 @@ class UpdateInvestorProfile extends Component {
             address,
             phoneNumber,
             faxNumber,
-            creditCardNumber,
-            capital,
-            capitalCurrency
+            creditCardNumber
         } = this.state;
 
         let body = {
@@ -123,9 +121,7 @@ class UpdateInvestorProfile extends Component {
             address: address,
             phoneNumber: phoneNumber,
             faxNumber: faxNumber,
-            creditCardNumber: creditCardNumber,
-            capital: capital,
-            capitalCurrency: capitalCurrency
+            creditCardNumber: creditCardNumber
         };
 
         console.log(body);
@@ -378,34 +374,6 @@ class UpdateInvestorProfile extends Component {
                          />
                         {formErrors.creditCardNumber.length > 0 && (
                         <span className="errorMessage">{formErrors.creditCardNumber}</span>
-                        )}
-                   </div>
-                   <div className="form-group">
-                        <label htmlFor="">Capital</label>
-                         <input type="number" 
-                         className={formErrors.capital.length > 0 ? "error" : null}
-                         //className="form-control"
-                         name="capital" 
-                         noValidate
-                         defaultValue={this.state.investor.capital}
-                         onChange={this.onChangeInput}
-                         />
-                        {formErrors.capital.length > 0 && (
-                        <span className="errorMessage">{formErrors.capital}</span>
-                        )}
-                   </div>
-                   <div className="form-group">
-                        <label htmlFor="">Capital Currency</label>
-                         <input type="text" 
-                         className={formErrors.capitalCurrency.length > 0 ? "error" : null}
-                         //className="form-control"
-                         name="capitalCurrency" 
-                         noValidate
-                         defaultValue={this.state.investor.capitalCurrency}
-                         onChange={this.onChangeInput}
-                         />
-                        {formErrors.capitalCurrency.length > 0 && (
-                        <span className="errorMessage">{formErrors.capitalCurrency}</span>
                         )}
                    </div>
                     <button className="btn btn-success btn-block">Edit Profile</button>

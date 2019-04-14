@@ -36,7 +36,8 @@ router.post("/", async (req, res) => {
     const password = req.body.password;
     const isValidated = validator.createValidation(req.body);
     if (isValidated.error)
-      return res.status(400).send({error: "Invalid datatype entered for one or more of the fields"});
+      return res.status(400).send({ error: isValidated.error.details[0].message });
+      //return res.status(400).send({error: "Invalid datatype entered for one or more of the fields"});
     let inv = await Investor.findOne({ email });
     if (inv) return res.status(400).json({ email: "Email already exists" });
     const salt = bcrypt.genSaltSync(10);
@@ -73,12 +74,12 @@ router.put("/:id", async (req, res) => {
       return res.status(404).send({ error: "Investor does not exist" });
     const isValidated = validator.updateValidation(req.body);
     if (isValidated.error)
-      //return res.status(400).send({ error: isValidated.error.details[0].message });
-      return res
-        .status(400)
-        .send({
-          error: "Invalid datatype entered for one or more of the fields"
-        });
+      return res.status(400).send({ error: isValidated.error.details[0].message });
+      //return res
+      //  .status(400)
+      //  .send({
+      //    error: "Invalid datatype entered for one or more of the fields"
+      //  });
     const updatedInvestor = await Investor.findByIdAndUpdate(id, req.body, {
       new: true
     });
