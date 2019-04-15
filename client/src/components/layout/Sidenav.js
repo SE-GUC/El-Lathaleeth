@@ -92,7 +92,7 @@ class Sidenav extends Component {
           </a>
         </li>
         <li>
-          <a href="#/InvestorPage" class="sidenav-close">
+          <a href="#/MyProfile" class="sidenav-close">
             My Profile
           </a>
         </li>

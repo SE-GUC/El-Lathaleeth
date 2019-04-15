@@ -23,7 +23,7 @@ import Homepage from "./pages/Homepage";
 
 class App extends Component {
   render() {
-    return (
+    return ( 
       <Provider store={store}>
         <HashRouter>
           <body className="App">
@@ -41,7 +41,7 @@ class App extends Component {
               {/*<Route exact path="/OneForm" component={OneForm} />*/}
               <Route
                 exact
-                path="/ViewInvestorProfile"
+                path="/MyProfile"
                 component={ViewInvestorProfile}
               />
               <Route
