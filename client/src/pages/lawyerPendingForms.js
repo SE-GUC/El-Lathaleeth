@@ -11,7 +11,8 @@ class lawyerPendingForms extends Component {
     console.log(this.props.loggedUser)
     const formsData = await axios
       .get(
-        "http://localhost:5000/api/forms/getPending/"+this.props.loggedUser.id
+        "https://lathaleeth.herokuapp.com/api/forms/getPending/" +
+          this.props.loggedUser.id
       )
       .then(res => {
         console.log(res.data.data);
@@ -41,7 +42,7 @@ class lawyerPendingForms extends Component {
     });
 
     const reserve = await axios.put(
-      "http://localhost:5000/api/forms/review/" + idl + "/" + id
+      "https://lathaleeth.herokuapp.com/api/forms/review/" + idl + "/" + id
     );
   };
   addComment = async (id, body) => {
@@ -57,12 +58,12 @@ class lawyerPendingForms extends Component {
     console.log(this.state.forms);
     //   useAlert("Comment Submitted")
     const add = await axios.put(
-      "http://localhost:5000/api/forms/commentOnForm/" + id,
+      "https://lathaleeth.herokuapp.com/api/forms/commentOnForm/" + id,
       body
     );
     const formsData = await axios
       .get(
-        "http://localhost:5000/api/forms/getPending/"+this.props.loggedUser.id
+        "https://lathaleeth.herokuapp.com/api/forms/getPending/"+this.props.loggedUser.id
       )
       .then(res => {
         console.log(res.data.data);

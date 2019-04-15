@@ -3,6 +3,7 @@ import Center from 'react-center';
 import { connect } from "react-redux";
 import { login } from "../../globalState/actions/authActions";
 import PropTypes from "prop-types";
+import axios from "axios";
 
 class SignIn extends Component {
   constructor(props) {
@@ -19,26 +20,55 @@ class SignIn extends Component {
   };
   login =async () => {
     // try{
-   await  this.props.login({
+      try{
+        await	axios.post(
+            "https://lathaleeth.herokuapp.com/api/entity_emp/login",
+            {
+              username: this.state.email,
+              password: this.state.password
+            }
+          );
+await  this.props.login({
       username: this.state.email,
       password: this.state.password
     })
-    if(this.props.isLoggedIn){
-  window.location.hash = "#";}
-  else{if(!this.props.isLoggedIn){
+          window.location.hash = "#";
+
+      }catch(e){
+        try{
+       await   axios.post(
+            "https://lathaleeth.herokuapp.com/api/investor/login",
+            {
+              email: this.state.email,
+              password: this.state.password
+            }
+          );
+          await  this.props.login({
+      username: this.state.email,
+      password: this.state.password
+    })
+          window.location.hash = "#";
+
+        }
+        catch(m){
     alert("Please Check Fields")}
-  }
+
+        }
+      
+      }
+      
+
 // }
     // catch(e){
 // alert("Check Fields")
     // }
 
-  };
+  ;
   handleSubmit = e => {
     e.preventDefault();
     this.login();
     // const login = axios
-    //   .put("http://localhost:5000/api/entity_emp/login", {
+    //   .put("https://lathaleeth.herokuapp.com/api/entity_emp/login", {
     //     username: this.state.username,
     //     password: this.state.password
     //   })
@@ -46,7 +76,7 @@ class SignIn extends Component {
     //   })
     //   .catch(error => {
     //     const invlogin = axios.put(
-    //       "http://localhost:5000/api/investor/login",
+    //       "https://lathaleeth.herokuapp.com/api/investor/login",
     //       {
     //         email: this.state.email,
     //         password: this.state.password

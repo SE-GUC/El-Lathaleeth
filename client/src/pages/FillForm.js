@@ -61,7 +61,7 @@ class FillForms extends Component {
       nationality: "",
       position: "",
       typeID: "passport",
-        typeInves:"individual",
+      typeInves: "individual",
       formErrors: {
         englishName: "",
         idNum: "",
@@ -81,6 +81,22 @@ class FillForms extends Component {
   selectRegion(val) {
     this.setState({ city: val });
   }
+  selectCountry1(val) {
+    this.setState({ country1: val });
+  }
+selectNationality(val){
+    let formErrors = { ...this.state.formErrors };
+
+  formErrors.nationality =
+    val !== "Egypt" && this.state.inv.nationality !== "EG"
+      ? "Director must be Egyptian as Investor is Foreign"
+      : "";
+      this.setState({ formErrors,nationality: val });
+
+}
+  selectRegion1(val) {
+    this.setState({ city1: val });
+  }
   handleDateChange(date) {
     this.setState({
       startDate: date,
@@ -89,7 +105,10 @@ class FillForms extends Component {
   }
   componentWillMount = async () => {
     const formsData = await axios
-      .get("http://localhost:5000/api/investor/" + this.props.loggedUser.id)
+      .get(
+        "https://lathaleeth.herokuapp.com/api/investor/" +
+          this.props.loggedUser.id
+      )
       .then(res => {
         console.log(res.data.data);
         this.setState({
@@ -100,7 +119,8 @@ class FillForms extends Component {
   handleSubmit = async e => {
     e.preventDefault();
     const user = await axios.get(
-      "http://localhost:5000/api/investor/" + this.props.loggedUser.id,
+      "https://lathaleeth.herokuapp.com/api/investor/" +
+        this.props.loggedUser.id,
       body
     );
     const inv = user.data.data;
@@ -159,16 +179,14 @@ class FillForms extends Component {
         investor: { ...inv, investorFormID: inv._id }
       };
     }
-    delete body.investor._id
+    delete body.investor._id;
     delete body.investor.password;
     delete body.investor.__v;
-
-        
 
     console.log(body);
     if (formValid(this.state)) {
       const form = await axios
-        .post("http://localhost:5000/api/forms/", body)
+        .post("https://lathaleeth.herokuapp.com/api/forms/", body)
         .then(result => {
           alert("Form Submitted Successfully");
           window.location.hash = "#";
@@ -199,19 +217,19 @@ class FillForms extends Component {
       typeInves,
       boardOfDirectors
     } = this.state;
-    console.log(boardOfDirectors)
+    console.log(boardOfDirectors);
     if (formValid(this.state)) {
-        boardOfDirectors.push({
-          address: address1 + " " + city1 + " " + country1,
-          birthdate: birthdate,
-          gender: gender,
-          idNum: idNum,
-          name: name,
-          nationality: nationality,
-          position: position,
-          typeID: typeID,
-          typeInves: typeInves
-        });
+      boardOfDirectors.push({
+        address: address1 + " " + city1 + " " + country1,
+        birthdate: birthdate,
+        gender: gender,
+        idNum: idNum,
+        name: name,
+        nationality: nationality,
+        position: position,
+        typeID: typeID,
+        typeInves: typeInves
+      });
       this.setState({
         boardOfDirectors: boardOfDirectors
       });
@@ -269,30 +287,30 @@ class FillForms extends Component {
     });
   }
   render() {
-    const { formErrors } = this.state;
+    const { formErrors, country1, country, city, city1 } = this.state;
+
     let SPCStuff;
     if (this.state.formType === "SSC")
       SPCStuff = (
         <div>
           <h2>Adding Board of Directors</h2>
           <div className="country1">
-            <label htmlFor="country1">Country</label>
-            <input
-              placeholder="Country"
-              type="country"
+            <label htmlFor="country">Country</label>
+
+            <CountryDropdown
+              value={country1}
               name="country1"
-              noValidate
-              onChange={this.handleChange}
+              onChange={val => this.selectCountry1(val)}
+              style={{ display: "block" }}
             />
-          </div>
-          <div className="city1">
-            <label htmlFor="country1">City</label>
-            <input
-              placeholder="City"
-              type="city"
+            <label htmlFor="city">City</label>
+
+            <RegionDropdown
+              country={country1}
               name="city1"
-              noValidate
-              onChange={this.handleChange}
+              value={city1}
+              onChange={val => this.selectRegion1(val)}
+              style={{ display: "block" }}
             />
           </div>
           <div className="address1">
@@ -375,15 +393,14 @@ class FillForms extends Component {
           </div>
           <div className="nationality">
             <label htmlFor="idNum">Nationality</label>
-            <input
+            <CountryDropdown
+              value={this.state.nationality}
+              name="country1"
+              onChange={val => this.selectNationality(val)}
+              style={{ display: "block" }}
               className={
                 formErrors.nationality.length > 0 ? "error" : null
               }
-              placeholder="Nationality"
-              type="text"
-              name="nationality"
-              noValidate
-              onChange={this.handleChange}
             />
             {formErrors.nationality.length > 0 && (
               <span className="errorMessage">
@@ -420,7 +437,9 @@ class FillForms extends Component {
             <div className="englishName">
               <label htmlFor="englishName">English Name</label>
               <input
-                className={formErrors.englishName.length > 0 ? "error" : null}
+                className={
+                  formErrors.englishName.length > 0 ? "error" : null
+                }
                 placeholder="English Name"
                 type="text"
                 name="englishName"
@@ -428,13 +447,17 @@ class FillForms extends Component {
                 onChange={this.handleChange}
               />
               {formErrors.englishName.length > 0 && (
-                <span className="errorMessage">{formErrors.englishName}</span>
+                <span className="errorMessage">
+                  {formErrors.englishName}
+                </span>
               )}
             </div>
             <div className="arabicName">
               <label htmlFor="arabicName">Arabic Name</label>
               <input
-                className={formErrors.arabicName.length > 0 ? "error" : null}
+                className={
+                  formErrors.arabicName.length > 0 ? "error" : null
+                }
                 placeholder="Arabic Name"
                 type="text"
                 name="arabicName"
@@ -442,7 +465,9 @@ class FillForms extends Component {
                 onChange={this.handleChange}
               />
               {formErrors.arabicName.length > 0 && (
-                <span className="errorMessage">{formErrors.arabicName}</span>
+                <span className="errorMessage">
+                  {formErrors.arabicName}
+                </span>
               )}
             </div>
             <div className="fax">
@@ -468,7 +493,9 @@ class FillForms extends Component {
             <div className="capitalVal">
               <label htmlFor="capitalVal">Capital Value</label>
               <input
-                className={formErrors.capitalVal.length > 0 ? "error" : null}
+                className={
+                  formErrors.capitalVal.length > 0 ? "error" : null
+                }
                 placeholder="Capital Value"
                 type="text"
                 name="capitalVal"
@@ -476,27 +503,28 @@ class FillForms extends Component {
                 onChange={this.handleChange}
               />
               {formErrors.capitalVal.length > 0 && (
-                <span className="errorMessage">{formErrors.capitalVal}</span>
+                <span className="errorMessage">
+                  {formErrors.capitalVal}
+                </span>
               )}
             </div>
             <div className="country">
               <label htmlFor="country">Country</label>
-              <input
-                placeholder="Country"
-                type="country"
+
+              <CountryDropdown
+                value={country}
                 name="country"
-                noValidate
-                onChange={this.handleChange}
+                onChange={val => this.selectCountry(val)}
+                style={{ display: "block" }}
               />
-            </div>
-            <div className="city">
-              <label htmlFor="country">City</label>
-              <input
-                placeholder="City"
-                type="city"
+              <label htmlFor="city">City</label>
+
+              <RegionDropdown
+                country={country}
                 name="city"
-                noValidate
-                onChange={this.handleChange}
+                value={city}
+                onChange={val => this.selectRegion(val)}
+                style={{ display: "block" }}
               />
             </div>
             <div className="address">

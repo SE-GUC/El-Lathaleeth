@@ -10,13 +10,15 @@ class InvestorPage extends Component {
 
     componentDidMount = async () => {
          console.log(this.props.loggedUser);
-         await axios.get(
-            "http://localhost:5000/api/forms/byInvestorID/"+this.props.loggedUser.id
-          )
-          .then(result => {
-            console.log(result.data.data);
-            this.setState({ companies: result.data.data });
-          });
+         await axios
+           .get(
+             "https://lathaleeth.herokuapp.com/api/forms/byInvestorID/" +
+               this.props.loggedUser.id
+           )
+           .then(result => {
+             console.log(result.data.data);
+             this.setState({ companies: result.data.data });
+           });
     };
 
     render() {

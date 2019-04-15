@@ -53,19 +53,19 @@ class RegisterInvestor extends Component {
     super(props);
 
     this.state = {
-      name: "",
+      name: null,
       dateOfBirth: new Date(),
       gender: "",
-      nationality: "",
-      investorType: "",
-      email: "",
-      password: "",
+      nationality: null,
+      investorType: null,
+      email: null,
+      password: null,
       typeOfID: "",
       IDNumber: "",
-      address: "",
-      phoneNumber: "",
-      faxNumber: "",
-      creditCardNumber: "",
+      address: null,
+      phoneNumber: null,
+      faxNumber: null,
+      creditCardNumber: null,
       formErrors: {
         name: "",
         dateOfBirth: "",
@@ -124,7 +124,7 @@ class RegisterInvestor extends Component {
     console.log(body);
     if (formValid(this.state)) {
       const user = await axios
-        .post("http://localhost:5000/api/investor/", body)
+        .post("https://lathaleeth.herokuapp.com/api/investor/", body)
         .then(result => {
           alert("Investor Registered Successfully");
           this.login();
@@ -179,11 +179,7 @@ class RegisterInvestor extends Component {
       this.setState(
         {
           formErrors,
-          [name]: value,
-          gender: null,
-          dateOfBirth: null,
-          typeOfID: null,
-          IDNumber: null
+          [name]: value
         },
         () => console.log(this.state)
       );

@@ -108,16 +108,16 @@ class RegisterEmployee extends Component {
     if (formValid(this.state)) {
       const user = await axios
         .post(
-          "http://localhost:5000/api/entity_emp/registerEmployee/"+this.props.loggedUser.id,
+          "https://lathaleeth.herokuapp.com/api/entity_emp/registerEmployee/" +
+            this.props.loggedUser.id,
           body
         )
-        .then(result=> {
-      alert("Employee Registered Successfully");
+        .then(result => {
+          alert("Employee Registered Successfully");
         })
         .catch(error => {
-            const err=Object.keys(error.response.data)[0]
+          const err = Object.keys(error.response.data)[0];
           alert(error.response.data[Object.keys(error.response.data)[0]]);
-          
         });
       console.log(user)
       ;
