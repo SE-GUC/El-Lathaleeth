@@ -175,21 +175,19 @@ class RegisterInvestor extends Component {
       default:
         break;
     }
-    if (value !== "individual" && name === "investorType") {
-      this.setState(
-        {
-          formErrors,
-          [name]: value
-        },
-        () => console.log(this.state)
-      );
-    } else {
+    
       this.setState({ formErrors, [name]: value }, () =>
         console.log(this.state)
       );
-      if (name === "nationality" && value === "EG") {
+      if (name === "investorType" && value === "individual") {
         this.setState(
           {
+            dateOfBirth: null,
+            gender: "male",
+            nationality: null,
+            typeOfID: null,
+            IDNumber: null,
+
             formErrors,
             [name]: value,
             typeOfID: "national id"
@@ -200,9 +198,14 @@ class RegisterInvestor extends Component {
           formErrors.IDNumber =
             value.length < 14 ? "please enter valid id number" : "";
         }
-      } else if (name === "IDNumber" && value === this.state.typeOfID) {
-        formErrors.IDNumber =
-          value.length < 14 ? "please enter valid id number" : "";
+      } else {if(name === "investorType" && value === "company"){;
+        this.setState({
+          dateOfBirth: "",
+          gender: "",
+          nationality: "",
+          typeOfID: "",
+          IDNumber: ""
+        });}
       }
       /*else if(name === "typeOfID" && value === "national id"){
 
@@ -214,7 +217,7 @@ class RegisterInvestor extends Component {
       }
       )
     }*/
-    }
+    
   };
 
   render() {
