@@ -23,7 +23,7 @@ import Homepage from "./pages/Homepage";
 
 class App extends Component {
   render() {
-    return (
+    return ( 
       <Provider store={store}>
         <HashRouter>
           <body className="App">
@@ -38,16 +38,21 @@ class App extends Component {
               />
               <Route exact path="/InvestorPage" component={InvestorPage} />
               <Route exact path="/CasePage" component={CasePage} />
-    {/*<Route exact path="/OneForm" component={OneForm} />*/}
+              {/*<Route exact path="/OneForm" component={OneForm} />*/}
               <Route
                 exact
-                path="/ViewInvestorProfile"
+                path="/MyProfile"
                 component={ViewInvestorProfile}
               />
               <Route
                 exact
                 path="/UpdateInvestorProfile"
                 component={UpdateInvestorProfile}
+              />
+              <Route
+                exact
+                path="/FillForm"
+                component={FillForm}
               />
 
               <Route

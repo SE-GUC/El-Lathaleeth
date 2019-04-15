@@ -17,7 +17,7 @@ class trackCasePage extends Component {
     search= async(id)=>{
       try{
         const stat = await axios.get(
-          "http://localhost:5000/api/forms//statusByID/"+id
+          "https://lathaleeth.herokuapp.com/api/forms/statusByID/"+id
         );
         this.setState({formStatus:stat.data.data})}
         catch(e){console.log("error")}

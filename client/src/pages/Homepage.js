@@ -5,12 +5,20 @@ import img2 from "../components/Assets/st.jpeg.jpg";
 import Carousel from "../components/Carousel";
 import "../styles/styles.css";
 import "bootstrap/dist/css/bootstrap.css";
+import {
+  CountryDropdown,
+  RegionDropdown,
+  CountryRegionData
+} from "react-country-region-selector";
 
 class Homepage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { country: "", region: "" };
+  }
   render() {
     return (
       <React.Fragment>
-        
         <div className="container-fluid no-padding">
           <div className="row">
             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -116,8 +124,6 @@ class Homepage extends Component {
             <div id="fixed" />
           </div>
         </figure>
-
-        
       </React.Fragment>
     );
   }

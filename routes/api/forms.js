@@ -348,7 +348,7 @@ router.put("/generateCost/:id", async (req, res) => {
       },
       { new: true }
     );
-    res.json({ msg: "Form paid successfully", data: updatedForm });
+    res.json({ msg: "Generated cost", data: updatedForm });
   } catch (error) {
     console.log(error);
   }

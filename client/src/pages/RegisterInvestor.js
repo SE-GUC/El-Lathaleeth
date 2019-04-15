@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import "./RegisterEmployee.css";
-import DatePicker from "react-datepicker";
+import { login } from "../globalState/actions/authActions";
 import "react-datepicker/dist/react-datepicker.css";
 import { ReactDatez, ReduxReactDatez } from "react-datez";
+import PropTypes from "prop-types";
 import "react-datez/dist/css/react-datez.css";
 import Form from "react-bootstrap/Form";
 import {
@@ -33,25 +34,38 @@ const formValid = ({ formErrors, ...rest }) => {
 
   return valid;
 };
+ 
 
 class RegisterInvestor extends Component {
+  login = async () => {
+    // try{
+    await this.props.login({
+      username: this.state.email,
+      password: this.state.password
+    });
+
+    // }
+    // catch(e){
+    // alert("Check Fields")
+    // }
+  };
   constructor(props) {
     super(props);
 
     this.state = {
-      name: "",
-      dateOfBirth: "",
+      name: null,
+      dateOfBirth: new Date(),
       gender: "",
-      nationality: "",
-      investorType: "",
-      email: "",
-      password: "",
+      nationality: null,
+      investorType: null,
+      email: null,
+      password: null,
       typeOfID: "",
       IDNumber: "",
-      address: "",
-      phoneNumber: "",
-      faxNumber: "",
-      creditCardNumber: "",
+      address: null,
+      phoneNumber: null,
+      faxNumber: null,
+      creditCardNumber: null,
       formErrors: {
         name: "",
         dateOfBirth: "",
@@ -110,10 +124,11 @@ class RegisterInvestor extends Component {
     console.log(body);
     if (formValid(this.state)) {
       const user = await axios
-        .post("http://localhost:5000/api/investor/", body)
+        .post("https://lathaleeth.herokuapp.com/api/investor/", body)
         .then(result => {
           alert("Investor Registered Successfully");
-          window.location.hash = "/InvestorPage"
+          this.login();
+          window.location.hash = "/InvestorPage";
         })
         .catch(error => {
           const err = Object.keys(error.response.data)[0];
@@ -124,14 +139,21 @@ class RegisterInvestor extends Component {
       alert("Please Make Sure All Entries are Correct!");
     }
   };
-  
+
   handleChange = e => {
     e.preventDefault();
     const { name, value } = e.target;
     let formErrors = { ...this.state.formErrors };
-    const getDateFromID=(IDNumber)=>{
-      return("19"+IDNumber.substring(1,3)+"-"+IDNumber.substring(3,5)+"-"+IDNumber.substring(5,7))
-      };
+    const getDateFromID = IDNumber => {
+      return (
+        "19" +
+        IDNumber.substring(1, 3) +
+        "-" +
+        IDNumber.substring(3, 5) +
+        "-" +
+        IDNumber.substring(5, 7)
+      );
+    };
     switch (name) {
       case "name":
         formErrors.name =
@@ -157,39 +179,32 @@ class RegisterInvestor extends Component {
       this.setState(
         {
           formErrors,
-          [name]: value,
-          gender: null,
-          dateOfBirth: null,
-          typeOfID: null,
-          IDNumber: null
+          [name]: value
         },
         () => console.log(this.state)
       );
-      
-    }
-    else {
+    } else {
       this.setState({ formErrors, [name]: value }, () =>
         console.log(this.state)
       );
-    if(name === "nationality" && value === "EG"){
-      this.setState(
-        {
-          formErrors,
-          [name]: value,
-          typeOfID: "national id",
-        },
-        () => console.log(this.state)
-      );
-      if(name === "typeOfID" && value === "national id"){
+      if (name === "nationality" && value === "EG") {
+        this.setState(
+          {
+            formErrors,
+            [name]: value,
+            typeOfID: "national id"
+          },
+          () => console.log(this.state)
+        );
+        if (name === "IDNumber" && value === this.state.typeOfID) {
+          formErrors.IDNumber =
+            value.length < 14 ? "please enter valid id number" : "";
+        }
+      } else if (name === "IDNumber" && value === this.state.typeOfID) {
         formErrors.IDNumber =
           value.length < 14 ? "please enter valid id number" : "";
       }
-    }
-    else if(name === "typeOfID" && value === "national id"){
-      formErrors.IDNumber =
-        value.length < 14 ? "please enter valid id number" : "";
-    }
-    /*else if(name === "typeOfID" && value === "national id"){
+      /*else if(name === "typeOfID" && value === "national id"){
 
       console.log(this.state.IDNumber)
       this.setState({
@@ -199,7 +214,7 @@ class RegisterInvestor extends Component {
       }
       )
     }*/
-  } 
+    }
   };
 
   render() {
@@ -216,7 +231,7 @@ class RegisterInvestor extends Component {
               name="dateOfBirth"
               handleChange={this.handleDateChange}
               onChange={this.handleDateChange}
-              value={this.state.startDate}
+              value={this.state.dateOfBirth}
               allowFuture={false}
               allowPast={true}
             />
@@ -232,7 +247,7 @@ class RegisterInvestor extends Component {
               onChange={this.handleChange}
               name="gender"
             >
-            <option value="">Select Gender</option>
+              <option value="">Select Gender</option>
               <option value="female">female</option>
               <option value="male">male</option>
             </Form.Control>
@@ -246,8 +261,8 @@ class RegisterInvestor extends Component {
               name="typeOfID"
             >
               <option value="">Select Type of ID</option>
-              <option value="passport">passport</option>
-              <option value="national id">national id</option>
+              <option value="passport">Passport</option>
+              <option value="id">National ID</option>
             </Form.Control>
           </Form.Group>
           <Form.Group className="IDnumber">
@@ -370,7 +385,9 @@ class RegisterInvestor extends Component {
               )}
             </Form.Group>
             <Form.Group className="creditCardNumber">
-              <Form.Label htmlFor="creditCardNumber">CreditCard Number</Form.Label>
+              <Form.Label htmlFor="creditCardNumber">
+                CreditCard Number
+              </Form.Label>
               <Form.Control
                 className={
                   formErrors.creditCardNumber.length > 0 ? "error" : null
@@ -655,8 +672,14 @@ class RegisterInvestor extends Component {
     );
   }
 }
+RegisterInvestor.propTypes = {
+  login: PropTypes.func.isRequired
+};
 const mapStateToProps = state => ({
   isLoggedIn: state.auth.isLoggedIn,
   loggedUser: state.auth.loggedUser
 });
-export default connect(mapStateToProps)(RegisterInvestor);
+export default connect(
+  mapStateToProps,
+  { login }
+)(RegisterInvestor);

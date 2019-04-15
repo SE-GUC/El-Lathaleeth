@@ -5,9 +5,7 @@ module.exports = {
   createValidation: (request, formType) => {
 
     const investorSchema = {
-      firstName: Joi.string().required(),
-      middleName: Joi.string(),
-      lastName: Joi.string().required(),
+      name: Joi.string().required(),
       gender: Joi.any().valid(["male", "female"]).required(), // Drop Down
       nationality: Joi.string().required(), // Drop Down
       investorType: Joi.any().valid(["individual", "company"]).required(), // Drop Down
@@ -89,9 +87,7 @@ module.exports = {
   updateValidation: (request, formType) => {
 
     const investorSchema = {
-      firstName: Joi.string().required(),
-      middleName: Joi.string(),
-      lastName: Joi.string().required(),
+      name: Joi.string().required(),
       gender: Joi.any().valid(["male", "female"]).required(), // Drop Down
       nationality: Joi.string().required(), // Drop Down
       investorType: Joi.any().valid(["individual", "company"]).required(), // Drop Down

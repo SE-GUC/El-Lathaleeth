@@ -132,19 +132,23 @@ class UpdateInvestorProfile extends Component {
         console.log(body);
 
         if(formValid(this.state)){
-            const investor = await axios.put(
-                "http://localhost:5000/api/investor/5cafca0b96a4844b0864c9fe", 
+            const investor = await axios
+              .put(
+                "https://lathaleeth.herokuapp.com/api/investor/5cafca0b96a4844b0864c9fe",
                 body
-            )
-            .then(result=> {
+              )
+              .then(result => {
                 alert("Profile successfully updated");
-                  })
-                  .catch(error => {
-                    console.log(this.state);
-                      const err=Object.keys(error.response.data)[0]
-                    alert(error.response.data[Object.keys(error.response.data)[0]]);
-                    
-                  });
+              })
+              .catch(error => {
+                console.log(this.state);
+                const err = Object.keys(error.response.data)[0];
+                alert(
+                  error.response.data[
+                    Object.keys(error.response.data)[0]
+                  ]
+                );
+              });
             //console.log(investor);
             //alert("Your Profile has been successfully edited!");
         }else {
@@ -156,7 +160,7 @@ class UpdateInvestorProfile extends Component {
     componentDidMount = async () => {
       console.log(this.props.loggedUser);
          await axios.get(
-            "http://localhost:5000/api/investor/"+this.props.loggedUser.id
+            "https://lathaleeth.herokuapp.com/api/investor/"+this.props.loggedUser.id
           )
           .then(result => {
             console.log(result.data.data);
