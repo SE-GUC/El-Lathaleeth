@@ -205,9 +205,9 @@ class RegisterInvestor extends Component {
           nationality: "",
           typeOfID: "",
           IDNumber: ""
-        });}
+        });} 
       }
-      /*else if(name === "typeOfID" && value === "national id"){
+      /*else if(name === "typceOfID" && value === "national id"){
 
       console.log(this.state.IDNumber)
       this.setState({
