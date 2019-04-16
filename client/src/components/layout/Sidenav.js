@@ -151,14 +151,19 @@ class Sidenav extends Component {
           </li>
 
           {adminstuff} */}
-         
+
           {displayed}
+          <li>
+            <a href="#/lawyerFillForm" class="sidenav-close">
+              Lawyer Fill Form
+            </a>
+          </li>
         </ul>
         <a
           href="#"
           data-target="slide-out"
           className="sidenav-trigger show-on-large"
-          style={{ textDecoration: 'none', color: 'white' }}
+          style={{ textDecoration: "none", color: "white" }}
         >
           <i className="material-icons">menu</i>
         </a>
