@@ -14,6 +14,7 @@ import Navbar from "./components/layout/Navbar";
 import { Provider } from "react-redux";
 import store from "./globalState/store";
 import FillForm from "./pages/FillForm";
+import LawyerFillForm from "./pages/LawyerFillForm";
 
 import OneForm from "./pages/OneForm";
 import RegisterInvestor from "./pages/RegisterInvestor";
@@ -23,13 +24,15 @@ import Homepage from "./pages/Homepage";
 
 class App extends Component {
   render() {
-    return ( 
+    return (
       <Provider store={store}>
         <HashRouter>
           <body className="App">
             <Navbar />
             <main>
               <Route exact path="/" component={Homepage} />
+              <Route exact path="/lawyerFillForm" component={LawyerFillForm} />
+
               <Route exact path="/LawyerPage" component={LawyerPage} />
               <Route
                 exact
@@ -49,11 +52,7 @@ class App extends Component {
                 path="/UpdateInvestorProfile"
                 component={UpdateInvestorProfile}
               />
-              <Route
-                exact
-                path="/FillForm"
-                component={FillForm}
-              />
+              <Route exact path="/FillForm" component={FillForm} />
 
               <Route
                 exact
