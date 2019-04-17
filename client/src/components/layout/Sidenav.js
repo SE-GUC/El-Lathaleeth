@@ -22,7 +22,7 @@ class Sidenav extends Component {
         </li>
         <li>
           <a href="#/LawyerPage" class="sidenav-close">
-            LawyerPage
+            Reserve Cases
           </a>
         </li>
         <li>
@@ -31,7 +31,7 @@ class Sidenav extends Component {
           </a>
         </li>
         <li>
-          <a href="#/lawyer_workspace" class="sidenav-close">
+          <a href="#/lawyerFillForm" class="sidenav-close">
             Fill Form for Investor
           </a>
         </li>
@@ -52,7 +52,7 @@ class Sidenav extends Component {
         </li>
         <li>
           <a href="#/LawyerPage" class="sidenav-close">
-            LawyerPage
+            Reserve Cases
           </a>
         </li>
         <li>
@@ -153,11 +153,6 @@ class Sidenav extends Component {
           {adminstuff} */}
 
           {displayed}
-          <li>
-            <a href="#/lawyerFillForm" class="sidenav-close">
-              Lawyer Fill Form
-            </a>
-          </li>
         </ul>
         <a
           href="#"

@@ -47,9 +47,7 @@ const InvestorSchema = new Schema({
     required: true
   },
   password: {
-    type: String,
-    required: true
-  },
+    type: String  },
   investorFormID:{
     type: String
   }

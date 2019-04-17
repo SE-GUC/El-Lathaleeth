@@ -6,12 +6,12 @@ module.exports = {
 
     const investorSchema = {
       name: Joi.string().required(),
-      gender: Joi.any().valid(["male", "female"]).required(), // Drop Down
+      gender: Joi.any().valid(["male", "female",""]).required(), // Drop Down
       nationality: Joi.string().required(), // Drop Down
       investorType: Joi.any().valid(["individual", "company"]).required(), // Drop Down
-      typeOfID: Joi.any().valid(["passport", "id"]).required(), // Drop Down
-      IDNumber: Joi.string().min(8).required(),
-      dateOfBirth: Joi.date().required(),
+      typeOfID: Joi.any().valid(["passport", "id"],"").required(), // Drop Down
+      IDNumber: Joi.optional(),
+      dateOfBirth: Joi.optional(),
       address: Joi.string().required(),
       phoneNumber: Joi.string().length(11),
       faxNumber: Joi.string(),
@@ -86,23 +86,22 @@ module.exports = {
   
   updateValidation: (request, formType) => {
 
-    const investorSchema = {
+    const investorSchema =  {
       name: Joi.string().required(),
-      gender: Joi.any().valid(["male", "female"]).required(), // Drop Down
+      gender: Joi.any().valid(["male", "female",""]).required(), // Drop Down
       nationality: Joi.string().required(), // Drop Down
       investorType: Joi.any().valid(["individual", "company"]).required(), // Drop Down
-      typeOfID: Joi.any().valid(["passport", "id"]).required(), // Drop Down
-      IDNumber: Joi.string().min(8).required(),
-      dateOfBirth: Joi.date().required(),
+      typeOfID: Joi.any().valid(["passport", "id"],"").required(), // Drop Down
+      IDNumber: Joi.optional(), 
+      dateOfBirth: Joi.optional(),
       address: Joi.string().required(),
       phoneNumber: Joi.string().length(11),
       faxNumber: Joi.string(),
       creditCardNumber: Joi.string().creditCard(),
       email: Joi.string().email().required(),
       investorFormID: Joi.string().optional(),
-      _id: Joi.optional()
-      // Drop Down
-    };
+      _id:Joi.string().optional()
+    }
 
     const SPCschema = {
       law: Joi.string().required(), //drop down menu
