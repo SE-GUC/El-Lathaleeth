@@ -382,7 +382,6 @@ class LawyerForms extends Component {
             </div>
             {SPCStuff}
             <div className="createForm">
-              <button type="submit">Fill Form</button>
             </div>
           </form>
         </div>

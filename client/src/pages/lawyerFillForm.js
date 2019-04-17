@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import LawyerInvestorForm from "./LawyerInvestorForm";
+import { connect } from "react-redux";
 import LawyerForm from "./LawyerForm";
-
+const validator = require("../validations/investorValidations");
+const axios = require("axios");
 // import UserDetails from "./UserDetails";
 // import PersonalDetails from "./PersonalDetails";
 // import Confirmation from "./Confirmation";
@@ -155,8 +157,22 @@ class LawyerFillForm extends Component {
           creditCardNumber,
           form1Errors
         })
-      ) {
-        console.log("tamam");
+      ) {const password='password'
+        const isValidated = validator.createValidation({
+          password,
+          name,
+          dateOfBirth,
+          gender,
+          nationality,
+          investorType,
+          email,
+          typeOfID,
+          IDNumber,
+          address,
+          phoneNumber,
+          faxNumber,
+          creditCardNumber},investorType);
+          if (!isValidated.error){
         currentStep = currentStep >= 2 ? 3 : currentStep + 1;
         this.setState({
           startDate: new Date(),
@@ -174,7 +190,7 @@ class LawyerFillForm extends Component {
             faxNumber:faxNumber,
             creditCardNumber:creditCardNumber
           },
-          currentStep: 1, // Default is Step 1
+          currentStep: currentStep, // Default is Step 1
           name: null,
           dateOfBirth: new Date(),
           gender: "",
@@ -201,7 +217,9 @@ class LawyerFillForm extends Component {
             faxNumber: "",
             creditCardNumber: ""
           }
-        });
+        });}else{
+          alert(isValidated.error.details[0].message)
+        }
       } else {
         alert("Please Make Sure You Have Entered All Fields Correctly");
       }
@@ -399,7 +417,7 @@ class LawyerFillForm extends Component {
   get nextButton() {
     let currentStep = this.state.currentStep;
     // If the current step is not 3, then render the "next" button
-    if (currentStep < 3) {
+    if (currentStep < 2) {
       return (
         <button
           className="btn btn-primary float-right"
@@ -409,6 +427,15 @@ class LawyerFillForm extends Component {
           Next
         </button>
       );
+    }
+    else{
+     return  <button
+          className="btn btn-primary float-right"
+          type="button"
+          onClick={this.handleSubmit}
+        >
+          Fill Form
+        </button>
     }
     // ...else render nothing
     return null;
@@ -512,10 +539,99 @@ class LawyerFillForm extends Component {
   }
 
   // Trigger an alert on form submission
-  handleSubmit = event => {
+  handleSubmit =async event => {
     event.preventDefault();
     console.log(this.state);
+    let {
+      law,
+      investor,
+      formType,
+      legalForm,
+      englishName,
+      phone,
+      arabicName,
+      capitalVal,
+      capitalCurr,
+      formErrors,
+      fax,
+      address2,
+      city,
+      country,
+      boardOfDirectors
+    } = this.state;
+    let body;
+    if (formType === "SSC") {
+      body = {
+        englishName: englishName,
+        arabicName: arabicName,
+        law: law,
+        formType: formType,
+        legalForm: legalForm,
+        phone: phone,
+        capitalVal: capitalVal,
+        capitalCurr: capitalCurr,
+        fax: fax,
+        address: address2 + " " + city + " " + country,
+        boardOfDirectors: boardOfDirectors,
+        createdOn: new Date(),
+        status: "lawyer check",
+        bitIL: 1,
+        comments: [],
+        investor:investor 
+      };
+    } else {
+      body = {
+        englishName: englishName,
+        arabicName: arabicName,
+        law: law,
+        formType: formType,
+        legalForm: legalForm,
+        phone: phone,
+        capitalVal: capitalVal,
+        capitalCurr: capitalCurr,
+        fax: fax,
+        address: address2 + " " + city + " " + country,
+        createdOn: new Date(),
+        status: "lawyer check",
+        bitIL: 1,
+        comments: [],
+        investor: investor
+      };
+    }
+    delete body.investor.password;
+
+    console.log(body);
+    if (formValid( law,
+      investor,
+      formType,
+      legalForm,
+      englishName,
+      phone,
+      arabicName,
+      capitalVal,
+      capitalCurr,
+      fax,
+      address2,
+      formErrors,
+      city,
+      country,
+      boardOfDirectors)) {
+      const form = await axios
+        .post("https://lathaleeth.herokuapp.com/api/entity_emp/lawyerfillform"+this.props.loggedUser.id, body)
+        .then(result => {
+          alert("Form Submitted Successfully");
+          window.location.hash = "#";
+        })
+        .catch(error => {
+          const err = Object.keys(error.response.data)[0];
+          alert(error.response.data[Object.keys(error.response.data)[0]]);
+        });
+      console.log(form);
+    } else {
+      alert("Please Make Sure All Entries are Correct!");
+    }
   };
+  
 
   render() {
     const a = this.state;
@@ -586,4 +702,8 @@ class LawyerFillForm extends Component {
     );
   }
 }
-export default LawyerFillForm;
+const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isLoggedIn,
+  loggedUser: state.auth.loggedUser
+});
+export default connect(mapStateToProps)(LawyerFillForm);
