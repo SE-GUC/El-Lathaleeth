@@ -25,6 +25,7 @@ const form1Valid = ({ form1Errors, ...rest }) => {
 };
 const formValid = ({ formErrors, ...rest }) => {
   let valid = true;
+  console.log(formErrors)
   // validate form errors being empty
   Object.values(formErrors).forEach(val => {
     val.length > 0 && (valid = false);
@@ -52,6 +53,7 @@ class LawyerFillForm extends Component {
     this.selectNationality = this.selectNationality.bind(this);
     this.selectRegion = this.selectRegion.bind(this);
     this.selectRegion1 = this.selectRegion1.bind(this);
+    this.handleSubmit=this.handleSubmit.bind(this)
 
     // Set the initial input values
     this.state = {
@@ -367,11 +369,28 @@ class LawyerFillForm extends Component {
       nationality1,
       position,
       typeID,
+      formErrors,
       typeInves,
       boardOfDirectors
     } = this.state;
     console.log(boardOfDirectors);
-    if (formValid(this.state)) {
+    if (
+      formValid({
+        address1,
+        country1,
+        city1,
+        birthdate,
+        gender1,
+        idNum,
+        name1,
+        formErrors,
+        nationality1,
+        position,
+        typeID,
+        typeInves,
+        boardOfDirectors
+      })
+    ) {
       boardOfDirectors.push({
         address: address1 + " " + city1 + " " + country1,
         birthdate: birthdate,
@@ -601,7 +620,8 @@ class LawyerFillForm extends Component {
     delete body.investor.password;
 
     console.log(body);
-    if (formValid( law,
+    console.log(formErrors)
+    if (formValid( {law,
       investor,
       formType,
       legalForm,
@@ -615,9 +635,13 @@ class LawyerFillForm extends Component {
       formErrors,
       city,
       country,
-      boardOfDirectors)) {
+      boardOfDirectors})) {
       const form = await axios
-        .post("https://lathaleeth.herokuapp.com/api/entity_emp/lawyerfillform"+this.props.loggedUser.id, body)
+        .post(
+          "https://lathaleeth.herokuapp.com/api/entity_emp/lawyerfillform/" +
+            this.props.loggedUser.id,
+          body
+        )
         .then(result => {
           alert("Form Submitted Successfully");
           window.location.hash = "#";
@@ -689,6 +713,7 @@ class LawyerFillForm extends Component {
             gender1={a.gender1}
             idNum={a.idNum}
             name1={a.name1}
+            startDate={a.startDate}
             nationality1={a.nationality1}
             position={a.position}
             typeID={a.typeID}

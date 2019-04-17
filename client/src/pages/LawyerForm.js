@@ -141,8 +141,8 @@ class LawyerForms extends Component {
           </div>
           <ReactDatez
             name="dateofbirth"
-            handleChange={this.props.handle1DateChange}
-            onChange={this.props.handle1DateChange}
+            handleChange={this.props.handleDate1Change}
+            onChange={this.props.handleDate1Change}
             value={this.props.startDate}
             allowFuture={false}
             allowPast={true}
