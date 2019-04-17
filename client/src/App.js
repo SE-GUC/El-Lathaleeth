@@ -14,7 +14,7 @@ import Navbar from "./components/layout/Navbar";
 import { Provider } from "react-redux";
 import store from "./globalState/store";
 import FillForm from "./pages/FillForm";
-import LawyerFillForm from "./pages/LawyerFillForm";
+import LawyerFillForm from "./pages/llawyerFillForm";
 
 import OneForm from "./pages/OneForm";
 import RegisterInvestor from "./pages/RegisterInvestor";
