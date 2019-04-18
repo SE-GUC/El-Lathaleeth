@@ -85,7 +85,7 @@ class LawyerInvestorForm extends Component {
             >
               <option value="">Select Type of ID</option>
               <option value="passport">Passport</option>
-              <option value="id">National ID</option>
+              <option value="national id">National ID</option>
             </Form.Control>
           </Form.Group>
           <Form.Group className="IDnumber">

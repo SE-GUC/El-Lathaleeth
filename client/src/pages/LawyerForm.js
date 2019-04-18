@@ -18,7 +18,7 @@ class LawyerForms extends Component {
   //   handleSubmit = async e => {
   //     e.preventDefault();
   //     const user = await axios.get(
-  //       "https://lathaleeth.herokuapp.com/api/investor/" +
+  //       "http://localhost:5000/api/investor/" +
   //         this.props.loggedUser.id,
   //       body
   //     );
@@ -85,7 +85,7 @@ class LawyerForms extends Component {
   //     console.log(body);
   //     if (formValid(this.props)) {
   //       const form = await axios
-  //         .post("https://lathaleeth.herokuapp.com/api/forms/", body)
+  //         .post("http://localhost:5000/api/forms/", body)
   //         .then(result => {
   //           alert("Form Submitted Successfully");
   //           window.location.hash = "#";

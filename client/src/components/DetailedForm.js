@@ -22,7 +22,7 @@ export class DetailedForm extends Component {
                </div>
                <div class="card-body">
                  <h5 class="card-title">
-                   Mr./Mrs. {this.props.form.investor.firstName}
+                   Mr./Mrs. {this.props.form.investor.name}
                  </h5>
                  <p class="card-text">
                    <p>ID: {this.props.form._id}</p>
