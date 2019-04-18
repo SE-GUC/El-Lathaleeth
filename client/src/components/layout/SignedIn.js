@@ -6,26 +6,45 @@ import { logout } from "../../globalState/actions/authActions";
 class SignedIn extends Component {
   logout = async () => {
     await this.props.logout();
-      window.location.hash = "#";
-
+    window.location.hash = "#";
   };
   render() {
     return (
       <div>
         <ul className="right">
           <li>
-            <NavLink style={{ textDecoration: "none", color: "white" }} to="/" onClick={this.logout}>
+            <NavLink
+              style={{ textDecoration: "none", color: "white" }}
+              to="/"
+              onClick={this.logout}
+            >
               Log Out
             </NavLink>
           </li>
           <li>
-            <NavLink
-              style={{ textDecoration: "none", color: "white" }}
-              to="/"
-              className="logo"
-            >
-              <i className="material-icons">face</i>
-            </NavLink>
+            {(this.props.loggedUser.type === "Lawyer" ||
+              this.props.loggedUser.type === "Reviewer") && (
+              <NavLink
+                style={{ textDecoration: "none", color: "white" }}
+                to="/lawyer_workspace"
+                className="logo"
+              >
+                <i className="material-icons" to="/lawyer_workspace">
+                  face
+                </i>
+              </NavLink>
+            )}
+            {(this.props.loggedUser.type === "investor" ) && (
+              <NavLink
+                style={{ textDecoration: "none", color: "white" }}
+                to="/InvestorPage"
+                className="logo"
+              >
+                <i className="material-icons" to="/lawyer_workspace">
+                  face
+                </i>
+              </NavLink>
+            )}
           </li>
         </ul>
       </div>
@@ -41,4 +60,3 @@ export default connect(
   mapStateToProps,
   { logout }
 )(SignedIn);
-

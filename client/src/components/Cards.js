@@ -7,7 +7,7 @@ class Cards extends Component {
       <div class="row">
         {this.props.forms.map(form => (
           <div class="col s12 m6 l3">
-            <FormCard form={form} tobereviewed={bool} />
+            <FormCard form={form} tobereviewed={bool} reviewForm={this.props.reviewForm} addComment={this.props.addComment}/>
           </div>
         ))}
       </div>
