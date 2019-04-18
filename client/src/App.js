@@ -113,7 +113,7 @@ class App extends Component {
                     <h5 className="white-text">Links</h5>
                     <ul>
                       <li>
-                        <a className="grey-text text-lighten-3" href="meetUs">
+                        <a className="grey-text text-lighten-3" href="/meetUs">
                           Meet Lathaleeth
                         </a>
                       </li>
