@@ -65,7 +65,8 @@ const FormSchema = new Schema({
       "company declared",
       "awaiting payment",
       "paid",
-      "pending"
+      "pending lawyer",
+      "pending reviewer"
     ]
   },
   deadline: {
