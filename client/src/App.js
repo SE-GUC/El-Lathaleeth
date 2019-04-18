@@ -17,7 +17,6 @@ import FillForm from "./pages/FillForm";
 import Carousel from "./components/Carousel";
 import LawyerFillForm from "./pages/LawyerFillForm";
 import PayPage from "./pages/PayPage";
-import OneForm from "./pages/OneForm";
 import UpdateOneForm from "./pages/UpdateOneForm";
 import RegisterInvestor from "./pages/RegisterInvestor";
 import ViewInvestorProfile from "./pages/ViewInvestorProfile";
@@ -58,7 +57,7 @@ class App extends Component {
               />
               <Route exact path="/InvestorPage" component={InvestorPage} />
               <Route exact path="/CasePage" component={CasePage} />
-              {/*<Route exact path="/OneForm" component={OneForm} />*/}
+      
               <Route
                 exact
                 path="/MyProfile"

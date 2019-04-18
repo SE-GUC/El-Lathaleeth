@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import Button from "react-bootstrap/Button"
+import Button from "react-bootstrap/Button";
 import Collapse from "react-bootstrap/Collapse";
 import { DetailedForm } from "./DetailedForm";
+import { connect } from "react-redux";
 
 export class FormCard extends Component {
   constructor(props, context) {
@@ -21,21 +22,27 @@ export class FormCard extends Component {
               <span class="card-title">
                 {this.props.form.englishName} - {this.props.form.arabicName}
               </span>
-              <p class="card-text">
-                Case Number: {this.props.form.caseNum}
-              </p>
+              <p class="card-text">Case Number: {this.props.form.caseNum}</p>
               <Button
-                color= "link"
+                color="link"
                 style={{ textDecoration: "none", color: "white" }}
                 onClick={() => this.setState({ open: !open })}
-                aria-controls="example-collapse-text"
+                aria-controls="detailedForm"
                 aria-expanded={open}
               >
                 <i className="material-icons">arrow_drop_down</i>
               </Button>
               <Collapse in={this.state.open}>
-                <div id="example-collapse-text">
-                  <DetailedForm form = {this.props.form} tobereviewed = {this.props.tobereviewed} reviewForm={this.props.reviewForm} addComment={this.props.addComment}/>
+                <div id="detailedForm">
+                {console.log(this.props.loggedUser)}
+                  <DetailedForm
+                    form={this.props.form}
+                    tobereviewed={this.props.tobereviewed}
+                    reviewForm={this.props.reviewForm}
+                    addComment={this.props.addComment}
+                    isLoggedIn={this.props.isLoggedIn}
+                    loggedUser = {this.props.loggedUser}
+                  />
                 </div>
               </Collapse>
             </div>
@@ -46,4 +53,9 @@ export class FormCard extends Component {
   }
 }
 
-export default FormCard;
+const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isLoggedIn,
+  loggedUser: state.auth.loggedUser
+});
+
+export default connect(mapStateToProps)(FormCard);

@@ -16,7 +16,9 @@ export class DetailedForm extends Component {
         content += p + " : " + this.props.form[p] + "\n";
       }
     }
+    console.log(this.props.loggedUser);
     return (
+      
       <div class="card">
         <div class="card-header">{this.props.form.formType}</div>
         <div class="card-body">

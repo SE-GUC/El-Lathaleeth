@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import FormCard from "./FormCard";
+import { connect } from "react-redux";
 class Cards extends Component {
   render() {
     const bool = this.props.tobereviewed;
@@ -14,5 +15,9 @@ class Cards extends Component {
     );
   }
 }
+const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isLoggedIn,
+  loggedUser: state.auth.loggedUser
+});
 
-export default Cards;
+export default connect(mapStateToProps)(Cards);
