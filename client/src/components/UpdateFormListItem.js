@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import { connect } from "react-redux";
 export class UpdateFormListItem extends Component {
  goedit =  e => {
- window.location.hash = "UpdateOneForm/" + this.props.loggedUser.id;
+ window.location.hash = "UpdateOneForm/" + this.props.form._id;
  }
   state = { clicked: false };
   render() {

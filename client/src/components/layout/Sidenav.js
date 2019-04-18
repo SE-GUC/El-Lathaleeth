@@ -14,7 +14,8 @@ class Sidenav extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     return (
       this.props.isLoggedIn !== nextProps.isLoggedIn ||
-      this.state.flag!==nextState.flag
+      this.state.flag!==nextState.flag ||
+      this.props.refresh!==nextProps.refresh
     );
   }
   componentDidUpdate = async () => {
@@ -85,7 +86,9 @@ class Sidenav extends Component {
   };
   get notif() {
     const { forms } = this.state;
+    console.log("HIIOO")
     if (forms.length > 0) {
+      console.log("HI")
       return (
         <div>
           <li>
@@ -264,7 +267,8 @@ class Sidenav extends Component {
 }
 const mapStateToProps = state => ({
   isLoggedIn: state.auth.isLoggedIn,
-  loggedUser: state.auth.loggedUser
+  loggedUser: state.auth.loggedUser,
+  refresh: state.nav.refresh
 });
 
 export default connect(
