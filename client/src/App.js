@@ -22,6 +22,8 @@ import RegisterInvestor from "./pages/RegisterInvestor";
 import ViewInvestorProfile from "./pages/ViewInvestorProfile";
 import UpdateInvestorProfile from "./pages/UpdateInvestorProfile";
 import UpdateFormPage from "./pages/UpdateFormPage";
+import contactUs from "./pages/contactUs";
+import meetUs from "./pages/meetUs";
 
 import Homepage from "./pages/Homepage";
 
@@ -85,6 +87,16 @@ class App extends Component {
                 path="/lawyer_workspace"
                 component={lawyer_workspace}
               />
+              <Route
+                exact
+                path="/contactUs"
+                component={contactUs}
+                />
+                <Route
+                exact
+                path="/meetUs"
+                component={meetUs}
+                />
               <Route exact path="/signin" component={SignIn} />
               {<Route exact path="/signup" component={RegisterInvestor} />}
             </main>
@@ -101,12 +113,12 @@ class App extends Component {
                     <h5 className="white-text">Links</h5>
                     <ul>
                       <li>
-                        <a className="grey-text text-lighten-3" href="#!">
+                        <a className="grey-text text-lighten-3" href="meetUs">
                           Meet Lathaleeth
                         </a>
                       </li>
                       <li>
-                        <a className="grey-text text-lighten-3" href="#!">
+                        <a className="grey-text text-lighten-3" href="/contactUs">
                           Contact us
                         </a>
                       </li>
