@@ -19,7 +19,7 @@ class Homepage extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="container-fluid no-padding">
+                <div className="container-fluid no-padding">
           <div className="row">
             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <Carousel/>

@@ -9,9 +9,9 @@ const FormSchema = new Schema({
     type: String,
     required: true
   },
-  caseNumber:{
+  caseNumber: {
     type: Number,
-    required:true
+    required: true
   },
   legalForm: {
     type: String,
@@ -65,7 +65,8 @@ const FormSchema = new Schema({
       "company declared",
       "awaiting payment",
       "paid",
-      "pending"
+      "pending reviewer",
+      "pending lawyer"
     ]
   },
   deadline: {

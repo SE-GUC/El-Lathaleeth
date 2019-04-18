@@ -12,7 +12,7 @@ module.exports = {
         .valid(["individual", "company"])
         .required(), // Drop Down
       typeOfID: Joi.any()
-        .valid(["passport", "national id"])
+        .valid(["passport", "id"])
         .required(), // Drop Down
       IDNumber: Joi.string()
         .min(8)
@@ -71,7 +71,7 @@ module.exports = {
         .valid(["individual", "company"])
         .required(), // Drop Down
       typeOfID: Joi.any()
-        .valid(["passport", "national id"])
+        .valid(["passport", "id"])
         .required(), // Drop Down
       IDNumber: Joi.string()
         .min(8)

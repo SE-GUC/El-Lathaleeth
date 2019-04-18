@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import "./RegisterEmployee.css";
-import { login } from "../globalState/actions/authActions";
 import "react-datepicker/dist/react-datepicker.css";
 import { ReactDatez, ReduxReactDatez } from "react-datez";
 import PropTypes from "prop-types";
@@ -19,11 +18,11 @@ const emailRegex = RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 );
 
-const formValid = ({ formErrors, ...rest }) => {
+const formValid = ({ form1Errors, ...rest }) => {
   let valid = true;
 
   // validate form errors being empty
-  Object.values(formErrors).forEach(val => {
+  Object.values(form1Errors).forEach(val => {
     val.length > 0 && (valid = false);
   });
 
@@ -34,197 +33,18 @@ const formValid = ({ formErrors, ...rest }) => {
 
   return valid;
 };
- 
 
-class RegisterInvestor extends Component {
-  login = async () => {
-    // try{
-    await this.props.login({
-      username: this.state.email,
-      password: this.state.password
-    });
-
-    // }
-    // catch(e){
-    // alert("Check Fields")
-    // }
-  };
+class LawyerInvestorForm extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      name: null,
-      dateOfBirth: new Date(),
-      gender: "",
-      nationality: null,
-      investorType: null,
-      email: null,
-      password: null,
-      typeOfID: "",
-      IDNumber: "",
-      address: null,
-      phoneNumber: null,
-      faxNumber: null,
-      creditCardNumber: null,
-      formErrors: {
-        name: "",
-        dateOfBirth: "",
-        gender: "",
-        nationality: "",
-        investorType: "",
-        email: "",
-        password: "",
-        typeOfID: "",
-        IDNumber: "",
-        address: "",
-        phoneNumber: "",
-        faxNumber: "",
-        creditCardNumber: ""
-      }
-    };
-    this.handleDateChange = this.handleDateChange.bind(this);
   }
-  handleDateChange(date) {
-    this.setState({
-      dateOfBirth: date
-    });
-  }
-  handleSubmit = async e => {
-    e.preventDefault();
-    let {
-      name,
-      dateOfBirth,
-      gender,
-      nationality,
-      investorType,
-      email,
-      password,
-      typeOfID,
-      IDNumber,
-      address,
-      phoneNumber,
-      faxNumber,
-      creditCardNumber
-    } = this.state;
-    let body = {
-      name: name,
-      dateOfBirth: dateOfBirth,
-      gender: gender,
-      nationality: nationality,
-      investorType: investorType,
-      email: email,
-      password: password,
-      typeOfID: typeOfID,
-      IDNumber: IDNumber,
-      address: address,
-      phoneNumber: phoneNumber,
-      faxNumber: faxNumber,
-      creditCardNumber: creditCardNumber
-    };
-    console.log(body);
-    if (formValid(this.state)) {
-      const user = await axios
-        .post("http://localhost:5000/api/investor/", body)
-        .then(result => {
-          alert("Investor Registered Successfully");
-          this.login();
-          window.location.hash = "/InvestorPage";
-        })
-        .catch(error => {
-          const err = Object.keys(error.response.data)[0];
-          alert(error.response.data[Object.keys(error.response.data)[0]]);
-        });
-      console.log(user);
-    } else {
-      alert("Please Make Sure All Entries are Correct!");
-    }
-  };
-
-  handleChange = e => {
-    e.preventDefault();
-    const { name, value } = e.target;
-    let formErrors = { ...this.state.formErrors };
-    const getDateFromID = IDNumber => {
-      return (
-        "19" +
-        IDNumber.substring(1, 3) +
-        "-" +
-        IDNumber.substring(3, 5) +
-        "-" +
-        IDNumber.substring(5, 7)
-      );
-    };
-    switch (name) {
-      case "name":
-        formErrors.name =
-          value.length < 3 ? "minimum 3 characaters required" : "";
-        break;
-      case "email":
-        formErrors.email = emailRegex.test(value)
-          ? ""
-          : "invalid email address";
-        break;
-      case "password":
-        formErrors.password =
-          value.length < 6 ? "minimum 6 characaters required" : "";
-        break;
-      case "phoneNumber":
-        formErrors.phoneNumber =
-          value.length < 11 ? "please enter valid phone number" : "";
-        break;
-      default:
-        break;
-    }
-    
-      this.setState({ formErrors, [name]: value }, () =>
-        console.log(this.state)
-      );
-      if (name === "investorType" && value === "individual") {
-        this.setState(
-          {
-            dateOfBirth: null,
-            gender: "male",
-            nationality: null,
-            typeOfID: null,
-            IDNumber: null,
-
-            formErrors,
-            [name]: value,
-            typeOfID: "national id"
-          },
-          () => console.log(this.state)
-        );
-        if (name === "IDNumber" && value === this.state.typeOfID) {
-          formErrors.IDNumber =
-            value.length < 14 ? "please enter valid id number" : "";
-        }
-      } else {if(name === "investorType" && value === "company"){;
-        this.setState({
-          dateOfBirth: "",
-          gender: "",
-          nationality: "",
-          typeOfID: "",
-          IDNumber: ""
-        });} 
-      }
-      /*else if(name === "typceOfID" && value === "national id"){
-
-      console.log(this.state.IDNumber)
-      this.setState({
-        formErrors,
-        [name]: value,
-        dateOfBirth:  new Date(getDateFromID(this.state.IDNumber)),
-      }
-      )
-    }*/
-    
-  };
-
   render() {
-    const { formErrors } = this.state;
+    const { form1Errors } = this.props;
     let individualRegister;
-
-    if (this.state.investorType === "individual") {
+ if (this.props.currentStep !== 1) {
+   return null;
+ }
+    if (this.props.investorType === "individual") {
       individualRegister = (
         <div>
           <Form.Group className="DateofBirth">
@@ -232,22 +52,22 @@ class RegisterInvestor extends Component {
             <div />
             <ReactDatez
               name="dateOfBirth"
-              handleChange={this.handleDateChange}
-              onChange={this.handleDateChange}
-              value={this.state.dateOfBirth}
+              handleChange={this.props.handleDateChange}
+              onChange={this.props.handleDateChange}
+              value={this.props.dateOfBirth}
               allowFuture={false}
               allowPast={true}
             />
-            {/* {formErrors.password.length > 0 && (
-              <span className="errorMessage">{formErrors.password}</span>
+            {/* {form1Errors.password.length > 0 && (
+              <span className="errorMessage">{form1Errors.password}</span>
             )} */}
           </Form.Group>
           <Form.Group className="gender">
             <Form.Label>Gender</Form.Label>
             <Form.Control
               as="select"
-              value={this.state.gender}
-              onChange={this.handleChange}
+              value={this.props.gender}
+              onChange={this.props.handleChange}
               name="gender"
             >
               <option value="">Select Gender</option>
@@ -259,8 +79,8 @@ class RegisterInvestor extends Component {
             <Form.Label>ID Type:</Form.Label>
             <Form.Control
               as="select"
-              value={this.state.typeOfID}
-              onChange={this.handleChange}
+              value={this.props.typeOfID}
+              onChange={this.props.handleChange}
               name="typeOfID"
             >
               <option value="">Select Type of ID</option>
@@ -271,31 +91,31 @@ class RegisterInvestor extends Component {
           <Form.Group className="IDnumber">
             <label htmlFor="address">IDNumber</label>
             <input
-              className={formErrors.IDNumber.length > 0 ? "error" : null}
+              className={form1Errors.IDNumber.length > 0 ? "error" : null}
               placeholder="IDNumber"
               type="IDNumber"
               name="IDNumber"
               noValidate
-              onChange={this.handleChange}
+              onChange={this.props.handleChange}
             />
-            {formErrors.IDNumber.length > 0 && (
-              <span className="errorMessage">{formErrors.IDNumber}</span>
+            {form1Errors.IDNumber.length > 0 && (
+              <span className="errorMessage">{form1Errors.IDNumber}</span>
             )}
           </Form.Group>
         </div>
       );
     }
     return (
-      <div className="wrRegisterInvestor container">
-        <div className="form-wrRegisterInvestor">
-          <h1>Sign up</h1>
+      <div className="wrlawyerInvestorForm container">
+        <div className="form-wrlawyerInvestorForm">
+          <h1>Investor Details</h1>
           <Form onSubmit={this.handleSubmit} noValidate>
             <Form.Group className="investorType">
               <Form.Label>Investor Type:</Form.Label>
               <Form.Control
                 as="select"
-                value={this.state.investorType}
-                onChange={this.handleChange}
+                value={this.props.investorType}
+                onChange={this.props.handleChange}
                 name="investorType"
               >
                 <option value="">Select Investor Type</option>
@@ -306,85 +126,71 @@ class RegisterInvestor extends Component {
             <Form.Group className="name">
               <Form.Label htmlFor="name">Name</Form.Label>
               <Form.Control
-                className={formErrors.name.length > 0 ? "error" : null}
+                className={form1Errors.name.length > 0 ? "error" : null}
                 placeholder="Name"
                 type="text"
                 name="name"
                 noValidate
-                onChange={this.handleChange}
+                onChange={this.props.handleChange}
               />
-              {formErrors.name.length > 0 && (
-                <span className="errorMessage">{formErrors.name}</span>
+              {form1Errors.name.length > 0 && (
+                <span className="errorMessage">{form1Errors.name}</span>
               )}
             </Form.Group>
             <Form.Group className="email">
               <Form.Label htmlFor="email">Email</Form.Label>
               <Form.Control
-                className={formErrors.email.length > 0 ? "error" : null}
+                className={form1Errors.email.length > 0 ? "error" : null}
                 placeholder="Email"
                 type="email"
                 name="email"
                 noValidate
-                onChange={this.handleChange}
+                onChange={this.props.handleChange}
               />
-              {formErrors.email.length > 0 && (
-                <span className="errorMessage">{formErrors.email}</span>
-              )}
-            </Form.Group>
-            <Form.Group className="password">
-              <Form.Label htmlFor="password">Password</Form.Label>
-              <Form.Control
-                className={formErrors.password.length > 0 ? "error" : null}
-                placeholder="Password"
-                type="password"
-                name="password"
-                noValidate
-                onChange={this.handleChange}
-              />
-              {formErrors.password.length > 0 && (
-                <span className="errorMessage">{formErrors.password}</span>
+              {form1Errors.email.length > 0 && (
+                <span className="errorMessage">{form1Errors.email}</span>
               )}
             </Form.Group>
             <Form.Group className="address">
               <Form.Label htmlFor="address">Address</Form.Label>
               <Form.Control
-                className={formErrors.address.length > 0 ? "error" : null}
+                className={form1Errors.address.length > 0 ? "error" : null}
                 placeholder="Address"
                 type="address"
                 name="address"
                 noValidate
-                onChange={this.handleChange}
+                onChange={this.props.handleChange}
               />
-              {formErrors.address.length > 0 && (
-                <span className="errorMessage">{formErrors.address}</span>
+              {form1Errors.address.length > 0 && (
+                <span className="errorMessage">{form1Errors.address}</span>
               )}
             </Form.Group>
             <Form.Group className="phoneNumber">
               <Form.Label htmlFor="phoneNumber">Phone Number</Form.Label>
               <Form.Control
-                className={formErrors.phoneNumber.length > 0 ? "error" : null}
+                className={form1Errors.phoneNumber.length > 0 ? "error" : null}
                 placeholder="phoneNumber"
                 type="phoneNumber"
                 name="phoneNumber"
                 noValidate
-                onChange={this.handleChange}
+                onChange={this.props.handleChange}
               />
-              {formErrors.phoneNumber.length > 0 && (
-                <span className="errorMessage">{formErrors.phoneNumber}</span>
+              {form1Errors.phoneNumber.length > 0 && (
+                <span className="errorMessage">{form1Errors.phoneNumber}</span>
               )}
             </Form.Group>
             <Form.Group className="faxNumber">
               <Form.Label htmlFor="faxNumber">Fax Number</Form.Label>
               <Form.Control
-                className={formErrors.faxNumber.length > 0 ? "error" : null}
+                className={form1Errors.faxNumber.length > 0 ? "error" : null}
                 placeholder="faxNumber"
                 type="faxNumber"
                 name="faxNumber"
                 noValidate
-                onChange={this.handleChange}
+                onChange={this.props.handleChange}
               />
-              {formErrors.faxNumber.length > 0 && (
-                <span className="errorMessage">{formErrors.faxNumber}</span>
+              {form1Errors.faxNumber.length > 0 && (
+                <span className="errorMessage">{form1Errors.faxNumber}</span>
               )}
             </Form.Group>
             <Form.Group className="creditCardNumber">
@@ -393,17 +199,17 @@ class RegisterInvestor extends Component {
               </Form.Label>
               <Form.Control
                 className={
-                  formErrors.creditCardNumber.length > 0 ? "error" : null
+                  form1Errors.creditCardNumber.length > 0 ? "error" : null
                 }
                 placeholder="creditCardNumber"
                 type="creditCardNumber"
                 name="creditCardNumber"
                 noValidate
-                onChange={this.handleChange}
+                onChange={this.props.handleChange}
               />
-              {formErrors.creditCardNumber.length > 0 && (
+              {form1Errors.creditCardNumber.length > 0 && (
                 <span className="errorMessage">
-                  {formErrors.creditCardNumber}
+                  {form1Errors.creditCardNumber}
                 </span>
               )}
             </Form.Group>
@@ -411,8 +217,8 @@ class RegisterInvestor extends Component {
               <Form.Label>Nationality</Form.Label>
               <Form.Control
                 as="select"
-                value={this.state.nationality}
-                onChange={this.handleChange}
+                value={this.props.nationality}
+                onChange={this.props.handleChange}
                 name="nationality"
               >
                 <option value="">Select Country</option>
@@ -666,23 +472,11 @@ class RegisterInvestor extends Component {
               </Form.Control>
             </Form.Group>
             {individualRegister}
-            <div className="createAccount">
-              <button type="submit">Sign Up</button>
-            </div>
           </Form>
         </div>
       </div>
     );
   }
 }
-RegisterInvestor.propTypes = {
-  login: PropTypes.func.isRequired
-};
-const mapStateToProps = state => ({
-  isLoggedIn: state.auth.isLoggedIn,
-  loggedUser: state.auth.loggedUser
-});
-export default connect(
-  mapStateToProps,
-  { login }
-)(RegisterInvestor);
+
+export default (LawyerInvestorForm);

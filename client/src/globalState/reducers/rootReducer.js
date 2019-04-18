@@ -1,10 +1,12 @@
 import { combineReducers } from "redux";
 // import bookReducer from "./bookReducer";
 import authReducer from "./authReducer";
+import navReducer from "./navReducer";
 // import userReducer from "./userReducer";
 
 export default combineReducers({
-//   books: bookReducer,
+  //   books: bookReducer,
   auth: authReducer,
-//   users: userReducer
+  nav: navReducer
+  //   users: userReducer
 });

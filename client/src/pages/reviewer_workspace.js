@@ -9,7 +9,7 @@ class reviewer_workspace extends Component {
   componentDidMount = async () => {
     const reviewerinfo = await axios
       .get(
-        "https://lathaleeth.herokuapp.com/api/entity_emp/workSpace/5ca9ea8fd0935b3388eaa962"
+        "http://localhost:5000/api/entity_emp/workSpace/5ca9ea8fd0935b3388eaa962"
       )
       .then(res => {
         console.log(res.data);

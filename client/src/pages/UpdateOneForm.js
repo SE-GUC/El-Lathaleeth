@@ -1,6 +1,9 @@
 import React, { Component } from "react";
+import "bootstrap/dist/css/bootstrap.css";
 import { connect } from "react-redux";
 import "./FillForm.css";
+import { refresh } from "../globalState/actions/navActions";
+import PropTypes from "prop-types";
 import "react-datepicker/dist/react-datepicker.css";
 import { ReactDatez, ReduxReactDatez } from "react-datez";
 import "react-datez/dist/css/react-datez.css";
@@ -11,7 +14,9 @@ import {
   CountryRegionData
 } from "react-country-region-selector";
 const axios = require("axios");
-
+function getSecondPart(x) {
+  return x.split("/")[5];
+}
 const emailRegex = RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 );
@@ -30,8 +35,57 @@ const formValid = ({ formErrors, ...rest }) => {
 
   return valid;
 };
+class UpdateOneForm extends Component {
+  state = {};
 
-class FillForms extends Component {
+  componentDidMount = async () => {
+    const x = window.location.href;
+    const y = getSecondPart(x);
+    const form1 = await axios.get("http://localhost:5000/api/forms/" + y);
+
+    const {
+      _id,
+      law,
+      formType,
+      legalForm,
+      englishName,
+      phone,
+      arabicName,
+      capitalVal,
+      capitalCurr,
+      fax,
+      createdOn,
+      status,
+      bitIL,
+      comments,
+      address,
+      boardOfDirectors
+    } = form1.data.data;
+    const addressArray = address.split(" ");
+    const city = addressArray[addressArray.length - 2];
+    const country = addressArray[addressArray.length - 1];
+
+    this.setState({
+      _id: _id,
+      law: law,
+      formType: formType,
+      legalForm: legalForm,
+      englishName: englishName,
+      arabicName: arabicName,
+      phone: phone,
+      capitalVal: capitalVal,
+      capitalCurr: capitalCurr,
+      fax: fax,
+      comments: comments,
+      address: address,
+      city: city,
+      createdOn: createdOn,
+      status: status,
+      bitIL: bitIL,
+      country: country,
+      boardOfDirectors: boardOfDirectors
+    });
+  };
   constructor(props) {
     super(props);
 
@@ -106,6 +160,7 @@ class FillForms extends Component {
     const formsData = await axios
       .get("http://localhost:5000/api/investor/" + this.props.loggedUser.id)
       .then(res => {
+        console.log(res.data.data);
         this.setState({
           inv: res.data.data
         });
@@ -131,10 +186,22 @@ class FillForms extends Component {
       fax,
       address,
       city,
+      comments,
       country,
+      bitIL,
+      createdOn,
+      status,
       boardOfDirectors
     } = this.state;
     let body;
+    console.log(comments);
+    const newComments = comments.map(e => {
+      if (!e.hasOwnProperty("read_at")) {
+        e.read_at = new Date();
+      }
+      return e;
+    });
+    console.log(newComments);
     if (formType === "SSC") {
       body = {
         englishName: englishName,
@@ -148,10 +215,10 @@ class FillForms extends Component {
         fax: fax,
         address: address + " " + city + " " + country,
         boardOfDirectors: boardOfDirectors,
-        createdOn: new Date(),
-        status: "posted",
-        bitIL: 0,
-        comments: [],
+        createdOn: createdOn,
+        status: status,
+        bitIL: bitIL,
+        comments: newComments,
         investor: { ...inv, investorFormID: inv._id }
       };
     } else {
@@ -166,10 +233,10 @@ class FillForms extends Component {
         capitalCurr: capitalCurr,
         fax: fax,
         address: address + " " + city + " " + country,
-        createdOn: new Date(),
-        status: "posted",
-        bitIL: 0,
-        comments: [],
+        createdOn: createdOn,
+        status: status,
+        bitIL: bitIL,
+        comments: newComments,
         investor: { ...inv, investorFormID: inv._id }
       };
     }
@@ -177,17 +244,20 @@ class FillForms extends Component {
     delete body.investor.password;
     delete body.investor.__v;
 
+    console.log(body);
     if (formValid(this.state)) {
       const form = await axios
-        .post("http://localhost:5000/api/forms/", body)
+        .put("http://localhost:5000/api/forms/" + this.state._id, body)
         .then(result => {
-          alert("Form Submitted Successfully");
+          alert("Form Edited Successfully");
+          this.props.refresh();
           window.location.hash = "#";
         })
         .catch(error => {
           const err = Object.keys(error.response.data)[0];
           alert(error.response.data[Object.keys(error.response.data)[0]]);
         });
+      console.log(form);
     } else {
       alert("Please Make Sure All Entries are Correct!");
     }
@@ -209,6 +279,7 @@ class FillForms extends Component {
       typeInves,
       boardOfDirectors
     } = this.state;
+    console.log(boardOfDirectors);
     if (formValid(this.state)) {
       boardOfDirectors.push({
         address: address1 + " " + city1 + " " + country1,
@@ -241,6 +312,7 @@ class FillForms extends Component {
           value.length < 3 ? "minimum 3 characaters required" : "";
         break;
       case "capitalVal":
+        console.log(value > 5000);
         formErrors.capitalVal =
           parseInt(value) < 5000 || parseInt(value) > 999999999999
             ? "Capital Value must be between 5000 and 999999999999"
@@ -422,6 +494,7 @@ class FillForms extends Component {
               <label htmlFor="englishName">English Name</label>
               <input
                 className={formErrors.englishName.length > 0 ? "error" : null}
+                value={this.state.englishName}
                 placeholder="English Name"
                 type="text"
                 name="englishName"
@@ -438,6 +511,7 @@ class FillForms extends Component {
                 className={formErrors.arabicName.length > 0 ? "error" : null}
                 placeholder="Arabic Name"
                 type="text"
+                value={this.state.arabicName}
                 name="arabicName"
                 noValidate
                 onChange={this.handleChange}
@@ -451,6 +525,7 @@ class FillForms extends Component {
               <input
                 placeholder="Fax"
                 type="text"
+                value={this.state.fax}
                 name="fax"
                 noValidate
                 onChange={this.handleChange}
@@ -459,6 +534,7 @@ class FillForms extends Component {
             <div className="phone">
               <label htmlFor="phone">Telephone Number</label>
               <input
+                value={this.state.phone}
                 placeholder=""
                 type="text"
                 name="phone"
@@ -470,6 +546,7 @@ class FillForms extends Component {
               <label htmlFor="capitalVal">Capital Value</label>
               <input
                 className={formErrors.capitalVal.length > 0 ? "error" : null}
+                value={this.state.capitalVal}
                 placeholder="Capital Value"
                 type="text"
                 name="capitalVal"
@@ -484,7 +561,7 @@ class FillForms extends Component {
               <label htmlFor="country">Country</label>
 
               <CountryDropdown
-                value={country}
+                value={this.state.country}
                 name="country"
                 onChange={val => this.selectCountry(val)}
                 style={{ display: "block" }}
@@ -494,7 +571,7 @@ class FillForms extends Component {
               <RegionDropdown
                 country={country}
                 name="city"
-                value={city}
+                value={this.state.city}
                 onChange={val => this.selectRegion(val)}
                 style={{ display: "block" }}
               />
@@ -505,6 +582,7 @@ class FillForms extends Component {
                 placeholder="Address"
                 type="address"
                 name="address"
+                value={this.state.address}
                 noValidate
                 onChange={this.handleChange}
               />
@@ -554,7 +632,7 @@ class FillForms extends Component {
             </div>
             {SPCStuff}
             <div className="createForm">
-              <button type="submit">Fill Form</button>
+              <button type="submit">Edit Form</button>
             </div>
           </form>
         </div>
@@ -562,8 +640,15 @@ class FillForms extends Component {
     );
   }
 }
+UpdateOneForm.propTypes = {
+  refresh: PropTypes.func.isRequired
+};
 const mapStateToProps = state => ({
   isLoggedIn: state.auth.isLoggedIn,
-  loggedUser: state.auth.loggedUser
+  loggedUser: state.auth.loggedUser,
+  refresh: state.nav.refresh
 });
-export default connect(mapStateToProps)(FillForms);
+export default connect(
+  mapStateToProps,
+  { refresh }
+)(UpdateOneForm);

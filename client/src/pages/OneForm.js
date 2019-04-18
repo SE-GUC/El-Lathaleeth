@@ -10,7 +10,7 @@ class OneForm extends Component {
   componentDidMount = async () => {
     const forminfo = await axios
       .get(
-        "https://lathaleeth.herokuapp.com/api/forms/5cb0e1470ed78e305c715e26"
+        "http://localhost:5000/api/forms/5cb0e1470ed78e305c715e26"
       )
       .then(res => {
         console.log(res.data);
@@ -40,7 +40,7 @@ class OneForm extends Component {
     });
 
     const reserve = await axios.put(
-      "https://lathaleeth.herokuapp.com/api/forms/review/" + idl + "/" + id
+      "http://localhost:5000/api/forms/review/" + idl + "/" + id
     );
   };
   addComment = async (id, body) => {
@@ -56,7 +56,7 @@ class OneForm extends Component {
     console.log(this.state.forms);
     //   useAlert("Comment Submitted")
     const add = await axios.put(
-      "https://lathaleeth.herokuapp.com/api/forms/commentOnForm/" + id,
+      "http://localhost:5000/api/forms/commentOnForm/" + id,
       body
     );
    
