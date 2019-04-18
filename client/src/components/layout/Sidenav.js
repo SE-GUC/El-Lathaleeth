@@ -9,13 +9,13 @@ import axios from "axios";
 class Sidenav extends Component {
   constructor(props) {
     super(props);
-    this.state = { forms: [],flag:true };
+    this.state = { forms: [], flag: true };
   }
   shouldComponentUpdate(nextProps, nextState) {
     return (
       this.props.isLoggedIn !== nextProps.isLoggedIn ||
-      this.state.flag!==nextState.flag ||
-      this.props.refresh!==nextProps.refresh
+      this.state.flag !== nextState.flag ||
+      this.props.refresh !== nextProps.refresh
     );
   }
   componentDidUpdate = async () => {
@@ -30,30 +30,22 @@ class Sidenav extends Component {
           "http://localhost:5000/api/forms/byInvestorID/" +
             this.props.loggedUser.id
         );
-        console.log(forms);
         const mappedforms = forms.data.data.map(e => {
           const filteredComments = e.comments.filter(a => {
-            console.log(a);
             return !a.hasOwnProperty("read_at");
           });
-          console.log(filteredComments);
           e.comments = filteredComments;
           return e;
         });
-        console.log(mappedforms);
         const newforms = mappedforms.filter(e => {
           return e.status === "pending lawyer" && e.comments.length > 0;
         });
-        console.log(newforms);
 
-        this.setState({ forms: newforms ,flag:false});
+        this.setState({ forms: newforms, flag: false });
       }
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
   componentDidMount = async () => {
-    console.log("testing");
     var elem = document.querySelector(".sidenav");
     var instance = M.Sidenav.init(elem, {
       edge: "left",
@@ -65,30 +57,23 @@ class Sidenav extends Component {
           "http://localhost:5000/api/forms/byInvestorID/" +
             this.props.loggedUser.id
         );
-        console.log(forms);
         const mappedforms = forms.data.data.map(e => {
           const filteredComments = e.comments.filter(a => {
             return !a.hasOwnProperty("read_at");
           });
           e.comments = filteredComments;
         });
-        console.log(mappedforms);
         const newforms = mappedforms.data.data.filter(e => {
           return e.status === "pending lawyer" && e.comments.length > 0;
         });
-        console.log(newforms);
 
         this.setState({ forms: newforms });
       }
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
   get notif() {
     const { forms } = this.state;
-    console.log("HIIOO")
     if (forms.length > 0) {
-      console.log("HI")
       return (
         <div>
           <li>
@@ -271,8 +256,5 @@ const mapStateToProps = state => ({
   refresh: state.nav.refresh
 });
 
-export default connect(
-  mapStateToProps
-)(Sidenav);
+export default connect(mapStateToProps)(Sidenav);
 // export default Sidenav
-

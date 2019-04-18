@@ -1,4 +1,4 @@
-import {  REFRESHNAV } from "./actionTypes";
+import { REFRESHNAV } from "./actionTypes";
 // export const login = () => dispatch => {
 //   dispatch({
 //     type: LOGIN,
@@ -12,5 +12,3 @@ import {  REFRESHNAV } from "./actionTypes";
 export const refresh = () => dispatch => {
   dispatch({ type: REFRESHNAV });
 };
-
-

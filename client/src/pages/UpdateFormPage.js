@@ -31,7 +31,7 @@ class UpdateFormPage extends Component {
         });
         console.log(newforms);
 
-        this.setState({ forms: newforms});
+        this.setState({ forms: newforms });
       }
     } catch (e) {
       console.log(e);
@@ -39,9 +39,10 @@ class UpdateFormPage extends Component {
   };
 
   render() {
-    return (<div>
+    return (
+      <div>
         <UpdateFormList forms={this.state.forms} />
-        </div>
+      </div>
     );
   }
 }
@@ -49,6 +50,4 @@ const mapStateToProps = state => ({
   isLoggedIn: state.auth.isLoggedIn,
   loggedUser: state.auth.loggedUser
 });
-export default connect(
-  mapStateToProps
-)(UpdateFormPage);
+export default connect(mapStateToProps)(UpdateFormPage);

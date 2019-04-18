@@ -61,10 +61,9 @@ class UpdateOneForm extends Component {
       address,
       boardOfDirectors
     } = form1.data.data;
-    const addressArray= address.split(" ");
-    const city=addressArray[addressArray.length-2]
+    const addressArray = address.split(" ");
+    const city = addressArray[addressArray.length - 2];
     const country = addressArray[addressArray.length - 1];
-
 
     this.setState({
       _id: _id,
@@ -77,7 +76,7 @@ class UpdateOneForm extends Component {
       capitalVal: capitalVal,
       capitalCurr: capitalCurr,
       fax: fax,
-      comments:comments,
+      comments: comments,
       address: address,
       city: city,
       createdOn: createdOn,
@@ -139,16 +138,15 @@ class UpdateOneForm extends Component {
   selectCountry1(val) {
     this.setState({ country1: val });
   }
-selectNationality(val){
+  selectNationality(val) {
     let formErrors = { ...this.state.formErrors };
 
-  formErrors.nationality =
-    val !== "Egypt" && this.state.inv.nationality !== "EG"
-      ? "Director must be Egyptian as Investor is Foreign"
-      : "";
-      this.setState({ formErrors,nationality: val });
-
-}
+    formErrors.nationality =
+      val !== "Egypt" && this.state.inv.nationality !== "EG"
+        ? "Director must be Egyptian as Investor is Foreign"
+        : "";
+    this.setState({ formErrors, nationality: val });
+  }
   selectRegion1(val) {
     this.setState({ city1: val });
   }
@@ -160,10 +158,7 @@ selectNationality(val){
   }
   componentWillMount = async () => {
     const formsData = await axios
-      .get(
-        "http://localhost:5000/api/investor/" +
-          this.props.loggedUser.id
-      )
+      .get("http://localhost:5000/api/investor/" + this.props.loggedUser.id)
       .then(res => {
         console.log(res.data.data);
         this.setState({
@@ -174,8 +169,7 @@ selectNationality(val){
   handleSubmit = async e => {
     e.preventDefault();
     const user = await axios.get(
-      "http://localhost:5000/api/investor/" +
-        this.props.loggedUser.id,
+      "http://localhost:5000/api/investor/" + this.props.loggedUser.id,
       body
     );
     const inv = user.data.data;
@@ -200,16 +194,14 @@ selectNationality(val){
       boardOfDirectors
     } = this.state;
     let body;
-    console.log(comments)
-    const newComments=comments.map(e=>{
-       
-            if(!e.hasOwnProperty("read_at")){
-                e.read_at=new Date()
-            }    
-            return e    
-        
-    })
-    console.log(newComments)
+    console.log(comments);
+    const newComments = comments.map(e => {
+      if (!e.hasOwnProperty("read_at")) {
+        e.read_at = new Date();
+      }
+      return e;
+    });
+    console.log(newComments);
     if (formType === "SSC") {
       body = {
         englishName: englishName,
@@ -226,7 +218,7 @@ selectNationality(val){
         createdOn: createdOn,
         status: status,
         bitIL: bitIL,
-        comments:newComments,
+        comments: newComments,
         investor: { ...inv, investorFormID: inv._id }
       };
     } else {
@@ -255,10 +247,10 @@ selectNationality(val){
     console.log(body);
     if (formValid(this.state)) {
       const form = await axios
-        .put("http://localhost:5000/api/forms/"+this.state._id, body)
+        .put("http://localhost:5000/api/forms/" + this.state._id, body)
         .then(result => {
           alert("Form Edited Successfully");
-          this.props.refresh()
+          this.props.refresh();
           window.location.hash = "#";
         })
         .catch(error => {
@@ -468,14 +460,10 @@ selectNationality(val){
               name="country1"
               onChange={val => this.selectNationality(val)}
               style={{ display: "block" }}
-              className={
-                formErrors.nationality.length > 0 ? "error" : null
-              }
+              className={formErrors.nationality.length > 0 ? "error" : null}
             />
             {formErrors.nationality.length > 0 && (
-              <span className="errorMessage">
-                {formErrors.nationality}
-              </span>
+              <span className="errorMessage">{formErrors.nationality}</span>
             )}
           </div>
           <div className="formType">
@@ -492,9 +480,7 @@ selectNationality(val){
             </Form.Control>
           </div>
           <div>
-            <button onClick={this.addDirector.bind(this)}>
-              Add Director
-            </button>
+            <button onClick={this.addDirector.bind(this)}>Add Director</button>
           </div>
         </div>
       );
@@ -507,9 +493,7 @@ selectNationality(val){
             <div className="englishName">
               <label htmlFor="englishName">English Name</label>
               <input
-                className={
-                  formErrors.englishName.length > 0 ? "error" : null
-                }
+                className={formErrors.englishName.length > 0 ? "error" : null}
                 value={this.state.englishName}
                 placeholder="English Name"
                 type="text"
@@ -518,17 +502,13 @@ selectNationality(val){
                 onChange={this.handleChange}
               />
               {formErrors.englishName.length > 0 && (
-                <span className="errorMessage">
-                  {formErrors.englishName}
-                </span>
+                <span className="errorMessage">{formErrors.englishName}</span>
               )}
             </div>
             <div className="arabicName">
               <label htmlFor="arabicName">Arabic Name</label>
               <input
-                className={
-                  formErrors.arabicName.length > 0 ? "error" : null
-                }
+                className={formErrors.arabicName.length > 0 ? "error" : null}
                 placeholder="Arabic Name"
                 type="text"
                 value={this.state.arabicName}
@@ -537,9 +517,7 @@ selectNationality(val){
                 onChange={this.handleChange}
               />
               {formErrors.arabicName.length > 0 && (
-                <span className="errorMessage">
-                  {formErrors.arabicName}
-                </span>
+                <span className="errorMessage">{formErrors.arabicName}</span>
               )}
             </div>
             <div className="fax">
@@ -556,7 +534,7 @@ selectNationality(val){
             <div className="phone">
               <label htmlFor="phone">Telephone Number</label>
               <input
-              value={this.state.phone}
+                value={this.state.phone}
                 placeholder=""
                 type="text"
                 name="phone"
@@ -567,9 +545,7 @@ selectNationality(val){
             <div className="capitalVal">
               <label htmlFor="capitalVal">Capital Value</label>
               <input
-                className={
-                  formErrors.capitalVal.length > 0 ? "error" : null
-                }
+                className={formErrors.capitalVal.length > 0 ? "error" : null}
                 value={this.state.capitalVal}
                 placeholder="Capital Value"
                 type="text"
@@ -578,9 +554,7 @@ selectNationality(val){
                 onChange={this.handleChange}
               />
               {formErrors.capitalVal.length > 0 && (
-                <span className="errorMessage">
-                  {formErrors.capitalVal}
-                </span>
+                <span className="errorMessage">{formErrors.capitalVal}</span>
               )}
             </div>
             <div className="country">

@@ -84,16 +84,15 @@ class FillForms extends Component {
   selectCountry1(val) {
     this.setState({ country1: val });
   }
-selectNationality(val){
+  selectNationality(val) {
     let formErrors = { ...this.state.formErrors };
 
-  formErrors.nationality =
-    val !== "Egypt" && this.state.inv.nationality !== "EG"
-      ? "Director must be Egyptian as Investor is Foreign"
-      : "";
-      this.setState({ formErrors,nationality: val });
-
-}
+    formErrors.nationality =
+      val !== "Egypt" && this.state.inv.nationality !== "EG"
+        ? "Director must be Egyptian as Investor is Foreign"
+        : "";
+    this.setState({ formErrors, nationality: val });
+  }
   selectRegion1(val) {
     this.setState({ city1: val });
   }
@@ -105,12 +104,8 @@ selectNationality(val){
   }
   componentWillMount = async () => {
     const formsData = await axios
-      .get(
-        "http://localhost:5000/api/investor/" +
-          this.props.loggedUser.id
-      )
+      .get("http://localhost:5000/api/investor/" + this.props.loggedUser.id)
       .then(res => {
-        console.log(res.data.data);
         this.setState({
           inv: res.data.data
         });
@@ -119,8 +114,7 @@ selectNationality(val){
   handleSubmit = async e => {
     e.preventDefault();
     const user = await axios.get(
-      "http://localhost:5000/api/investor/" +
-        this.props.loggedUser.id,
+      "http://localhost:5000/api/investor/" + this.props.loggedUser.id,
       body
     );
     const inv = user.data.data;
@@ -183,7 +177,6 @@ selectNationality(val){
     delete body.investor.password;
     delete body.investor.__v;
 
-    console.log(body);
     if (formValid(this.state)) {
       const form = await axios
         .post("http://localhost:5000/api/forms/", body)
@@ -195,7 +188,6 @@ selectNationality(val){
           const err = Object.keys(error.response.data)[0];
           alert(error.response.data[Object.keys(error.response.data)[0]]);
         });
-      console.log(form);
     } else {
       alert("Please Make Sure All Entries are Correct!");
     }
@@ -217,7 +209,6 @@ selectNationality(val){
       typeInves,
       boardOfDirectors
     } = this.state;
-    console.log(boardOfDirectors);
     if (formValid(this.state)) {
       boardOfDirectors.push({
         address: address1 + " " + city1 + " " + country1,
@@ -250,7 +241,6 @@ selectNationality(val){
           value.length < 3 ? "minimum 3 characaters required" : "";
         break;
       case "capitalVal":
-        console.log(value > 5000);
         formErrors.capitalVal =
           parseInt(value) < 5000 || parseInt(value) > 999999999999
             ? "Capital Value must be between 5000 and 999999999999"
@@ -398,14 +388,10 @@ selectNationality(val){
               name="country1"
               onChange={val => this.selectNationality(val)}
               style={{ display: "block" }}
-              className={
-                formErrors.nationality.length > 0 ? "error" : null
-              }
+              className={formErrors.nationality.length > 0 ? "error" : null}
             />
             {formErrors.nationality.length > 0 && (
-              <span className="errorMessage">
-                {formErrors.nationality}
-              </span>
+              <span className="errorMessage">{formErrors.nationality}</span>
             )}
           </div>
           <div className="formType">
@@ -422,9 +408,7 @@ selectNationality(val){
             </Form.Control>
           </div>
           <div>
-            <button onClick={this.addDirector.bind(this)}>
-              Add Director
-            </button>
+            <button onClick={this.addDirector.bind(this)}>Add Director</button>
           </div>
         </div>
       );
@@ -437,9 +421,7 @@ selectNationality(val){
             <div className="englishName">
               <label htmlFor="englishName">English Name</label>
               <input
-                className={
-                  formErrors.englishName.length > 0 ? "error" : null
-                }
+                className={formErrors.englishName.length > 0 ? "error" : null}
                 placeholder="English Name"
                 type="text"
                 name="englishName"
@@ -447,17 +429,13 @@ selectNationality(val){
                 onChange={this.handleChange}
               />
               {formErrors.englishName.length > 0 && (
-                <span className="errorMessage">
-                  {formErrors.englishName}
-                </span>
+                <span className="errorMessage">{formErrors.englishName}</span>
               )}
             </div>
             <div className="arabicName">
               <label htmlFor="arabicName">Arabic Name</label>
               <input
-                className={
-                  formErrors.arabicName.length > 0 ? "error" : null
-                }
+                className={formErrors.arabicName.length > 0 ? "error" : null}
                 placeholder="Arabic Name"
                 type="text"
                 name="arabicName"
@@ -465,9 +443,7 @@ selectNationality(val){
                 onChange={this.handleChange}
               />
               {formErrors.arabicName.length > 0 && (
-                <span className="errorMessage">
-                  {formErrors.arabicName}
-                </span>
+                <span className="errorMessage">{formErrors.arabicName}</span>
               )}
             </div>
             <div className="fax">
@@ -493,9 +469,7 @@ selectNationality(val){
             <div className="capitalVal">
               <label htmlFor="capitalVal">Capital Value</label>
               <input
-                className={
-                  formErrors.capitalVal.length > 0 ? "error" : null
-                }
+                className={formErrors.capitalVal.length > 0 ? "error" : null}
                 placeholder="Capital Value"
                 type="text"
                 name="capitalVal"
@@ -503,9 +477,7 @@ selectNationality(val){
                 onChange={this.handleChange}
               />
               {formErrors.capitalVal.length > 0 && (
-                <span className="errorMessage">
-                  {formErrors.capitalVal}
-                </span>
+                <span className="errorMessage">{formErrors.capitalVal}</span>
               )}
             </div>
             <div className="country">

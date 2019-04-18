@@ -5,8 +5,8 @@ import navReducer from "./navReducer";
 // import userReducer from "./userReducer";
 
 export default combineReducers({
-//   books: bookReducer,
+  //   books: bookReducer,
   auth: authReducer,
-  nav:navReducer
-//   users: userReducer
+  nav: navReducer
+  //   users: userReducer
 });
