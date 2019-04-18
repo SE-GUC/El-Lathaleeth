@@ -15,7 +15,7 @@ import { Provider } from "react-redux";
 import store from "./globalState/store";
 import FillForm from "./pages/FillForm";
 import LawyerFillForm from "./pages/LawyerFillForm";
-
+import PayPage from "./pages/PayPage";
 import OneForm from "./pages/OneForm";
 import UpdateOneForm from "./pages/UpdateOneForm";
 import RegisterInvestor from "./pages/RegisterInvestor";
@@ -34,6 +34,8 @@ class App extends Component {
             <Navbar />
             <main>
               <Route exact path="/" component={Homepage} />
+              <Route exact path="/PayPage" component={PayPage} />
+
               <Route
                 exact
                 path="/lawyerFillForm"
@@ -41,11 +43,7 @@ class App extends Component {
               />
 
               <Route exact path="/LawyerPage" component={LawyerPage} />
-              <Route
-                
-                path="/UpdateOneForm"
-                component={UpdateOneForm}
-              />
+              <Route path="/UpdateOneForm" component={UpdateOneForm} />
               <Route
                 exact
                 path="/UpdateFormPage"

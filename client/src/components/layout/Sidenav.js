@@ -9,7 +9,7 @@ import axios from "axios";
 class Sidenav extends Component {
   constructor(props) {
     super(props);
-    this.state = { forms: [], flag: true };
+    this.state = { payable: [], forms: [], flag: true };
   }
   shouldComponentUpdate(nextProps, nextState) {
     return (
@@ -40,8 +40,10 @@ class Sidenav extends Component {
         const newforms = mappedforms.filter(e => {
           return e.status === "pending lawyer" && e.comments.length > 0;
         });
-
-        this.setState({ forms: newforms, flag: false });
+        const payable = forms.data.data.filter(e => {
+          return e.status === "reviewer check";
+        });
+        this.setState({ payable: payable, forms: newforms, flag: false });
       }
     } catch (e) {}
   };
@@ -78,8 +80,25 @@ class Sidenav extends Component {
         <div>
           <li>
             <NotificationBadge count={forms.length} className={"abc"} />
-            <a href="#/UpdateFormPage" class="sidenav-close">
+            <a href="#/PayPage" class="sidenav-close">
               Update Form
+            </a>
+          </li>
+        </div>
+      );
+    }
+    // ...else return nothing
+    return null;
+  }
+  get notif1() {
+    const { payable } = this.state;
+    if (payable.length > 0) {
+      return (
+        <div>
+          <li>
+            <NotificationBadge count={payable.length} className={"abc"} />
+            <a href="#/PayPage" class="sidenav-close">
+              Pay for Forms
             </a>
           </li>
         </div>
@@ -124,7 +143,7 @@ class Sidenav extends Component {
     let reviewerstuff = (
       <div>
         <li>
-          <a className="subheader grey darken-3">Lawyer</a>
+          <a className="subheader grey darken-3">Reviewer</a>
         </li>
         <li>
           <a href="#/LawyerPage" class="sidenav-close">
@@ -173,6 +192,7 @@ class Sidenav extends Component {
           </a>
         </li>
         {this.notif}
+        {this.notif1}
 
         {/* {this.notif(forms)} */}
       </div>
