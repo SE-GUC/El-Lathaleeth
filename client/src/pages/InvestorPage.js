@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import MyCompanies from "../components/MyCompanies";
 
 const axios = require("axios");
@@ -8,13 +9,16 @@ class InvestorPage extends Component {
     state = { companies: [] };
 
     componentDidMount = async () => {
-         await axios.get(
-            "http://localhost:5000/api/forms/byInvestorID/5ca9f62ef9820e4cd8601fce"
-          )
-          .then(result => {
-            console.log(result.data.data);
-            this.setState({ companies: result.data.data });
-          });
+         console.log(this.props.loggedUser);
+         await axios
+           .get(
+             "http://localhost:5000/api/forms/byInvestorID/" +
+               this.props.loggedUser.id
+           )
+           .then(result => {
+             console.log(result.data.data);
+             this.setState({ companies: result.data.data });
+           });
     };
 
     render() {
@@ -28,5 +32,9 @@ class InvestorPage extends Component {
 
 }
 
+const mapStateToProps = state => ({
+    isLoggedIn: state.auth.isLoggedIn,
+    loggedUser: state.auth.loggedUser
+  });
 
-export default InvestorPage;
+export default connect( mapStateToProps )(InvestorPage);

@@ -68,7 +68,7 @@ test("Testing Create Actually Creates with correct values", async () => {
       phoneNumber: "01117208627",
       faxNumber: "1234A1234",
       creditCardNumber: "4024007158885060",
-      email: "hello@gmail.com",
+      email: "hello2@gmail.com",
       capital: "1000000",
       capitalCurrency: "Euro"
     },
@@ -115,7 +115,7 @@ test("Testing Creating with wrong data types", async () => {
         phoneNumber: "01117208627",
         faxNumber: "1234A1234",
         creditCardNumber: "4024007158885060",
-        email: "hello@gmail.com",
+        email: "hello3@gmail.com",
         capital: "1000000",
         capitalCurrency: "Euro"
       },
@@ -159,7 +159,7 @@ test("Testing view status after creating ", async () => {
       phoneNumber: "01117208627",
       faxNumber: "1234A1234",
       creditCardNumber: "4024007158885060",
-      email: "hello@gmail.com",
+      email: "hello4@gmail.com",
       capital: "1000000",
       capitalCurrency: "Euro"
     },
@@ -201,7 +201,7 @@ test("Testing after creating existing and updated values", async () => {
       phoneNumber: "01117208627",
       faxNumber: "1234A1234",
       creditCardNumber: "4024007158885060",
-      email: "hello@gmail.com",
+      email: "hello5@gmail.com",
       capital: "1000000",
       capitalCurrency: "Euro"
     },
@@ -238,7 +238,7 @@ test("Testing after creating existing and updated values", async () => {
         phoneNumber: "01117208627",
         faxNumber: "1234A1234",
         creditCardNumber: "4024007158885060",
-        email: "hello@gmail.com",
+        email: "hello5@gmail.com",
         capital: "1000000",
         capitalCurrency: "Euro"
       },
@@ -287,7 +287,7 @@ test("Testing updating with invalid info", async () => {
         phoneNumber: "01117208627",
         faxNumber: "1234A1234",
         creditCardNumber: "4024007158885060",
-        email: "hello@gmail.com",
+        email: "hello6@gmail.com",
         capital: "1000000",
         capitalCurrency: "Euro"
       },
@@ -324,7 +324,7 @@ test("Testing updating with invalid info", async () => {
           phoneNumber: "01117208627",
           faxNumber: "1234A1234",
           creditCardNumber: "4024007158885060",
-          email: "hello@gmail.com",
+          email: "hello6@gmail.com",
           capital: "1000000",
           capitalCurrency: "Euro"
         },
@@ -372,7 +372,7 @@ test("Testing updating a none form existing form", async () => {
           phoneNumber: "01117208627",
           faxNumber: "1234A1234",
           creditCardNumber: "4024007158885060",
-          email: "hello@gmail.com",
+          email: "hello7@gmail.com",
           capital: "1000000",
           capitalCurrency: "Euro"
         },
@@ -454,7 +454,7 @@ test("Creating Form, then deleting a form", async ()=>{
       phoneNumber: "01117208627",
       faxNumber: "1234A1234",
       creditCardNumber: "4024007158885060",
-      email: "hello@gmail.com",
+      email: "hello8@gmail.com",
       capital: "1000000",
       capitalCurrency: "Euro"
     },
@@ -502,7 +502,7 @@ test("Creating Form, assign it to lawyer,deleteing the form, and checking it got
       phoneNumber: "01117208627",
       faxNumber: "1234A1234",
       creditCardNumber: "4024007158885060",
-      email: "hello@gmail.com",
+      email: "hello9@gmail.com",
       capital: "1000000",
       capitalCurrency: "Euro"
     },
@@ -583,7 +583,7 @@ test("Creating Form, assign it to Reviewer,deleteing the form, and checking it g
       phoneNumber: "01117208627",
       faxNumber: "1234A1234",
       creditCardNumber: "4024007158885060",
-      email: "hello@gmail.com",
+      email: "hello9@gmail.com",
       capital: "1000000",
       capitalCurrency: "Euro"
     },
@@ -659,7 +659,7 @@ test("status of form changes after being reviewed by lawyer", async () => {
       phoneNumber: "01117208627",
       faxNumber: "1234A1234",
       creditCardNumber: "4024007158885060",
-      email: "hello@gmail.com",
+      email: "hello10@gmail.com",
       capital: "1000000",
       capitalCurrency: "Euro"
     },
@@ -734,7 +734,7 @@ test("status of form changes after being reviewed by reviewer", async () => {
       phoneNumber: "01117208627",
       faxNumber: "1234A1234",
       creditCardNumber: "4024007158885060",
-      email: "hello@gmail.com",
+      email: "hello11@gmail.com",
       capital: "1000000",
       capitalCurrency: "Euro"
     },

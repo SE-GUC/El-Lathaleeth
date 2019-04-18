@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import DetailedFormList from "../components/DetailedFormList";
 import { useAlert } from "react-alert";
 const axios = require("axios");
@@ -7,9 +8,11 @@ class lawyerPendingForms extends Component {
   state = { forms: [] };
   
   componentDidMount = async () => {
+    console.log(this.props.loggedUser)
     const formsData = await axios
       .get(
-        "http://localhost:5000/api/forms/getPending/5ca9ea8fd0935b3388eaa962"
+        "http://localhost:5000/api/forms/getPending/" +
+          this.props.loggedUser.id
       )
       .then(res => {
         console.log(res.data.data);
@@ -60,7 +63,7 @@ class lawyerPendingForms extends Component {
     );
     const formsData = await axios
       .get(
-        "http://localhost:5000/api/forms/getPending/5ca9ea8fd0935b3388eaa962"
+        "http://localhost:5000/api/forms/getPending/"+this.props.loggedUser.id
       )
       .then(res => {
         console.log(res.data.data);
@@ -68,5 +71,10 @@ class lawyerPendingForms extends Component {
       });
   };
 }
-
-export default lawyerPendingForms;
+  const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isLoggedIn,
+  loggedUser: state.auth.loggedUser
+});
+export default connect(
+  mapStateToProps
+)(lawyerPendingForms);

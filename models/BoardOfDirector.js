@@ -38,7 +38,7 @@ const BoardOfDirectorSchema = new Schema({
   },
   typeInves: {
     type: String,
-    enum: ["individual", "corprate"],
+    enum: ["individual", "company"],
     required: true
   }
 });

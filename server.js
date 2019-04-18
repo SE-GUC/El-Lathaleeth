@@ -38,7 +38,12 @@ app.use("/api/investor", investor);
 app.use("/api/comments", comments);
 app.use("/api/external_entity", external_entity);
 
-
+if(process.env.NODE_ENV==='production'){
+  app.use(express.static('client/build'));
+  app.get("*",(req,res)=>{
+    res.sendFile(path.resolve(__dirname,'client','build','index.html'))
+  })
+}
 // Handling 404
 app.use((req, res) => {
   res.status(404).send({ err: "We can not find what you are looking for" });

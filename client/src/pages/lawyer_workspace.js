@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import Cards from "../components/Cards";
 
 const axios = require("axios");
@@ -7,9 +8,11 @@ class lawyer_workspace extends Component {
   state = { pending_forms: [], reviewed_forms: [], filled_forms: [] };
 
   componentDidMount = async () => {
+    console.log(this.props.loggedUser);
     const lawyerinfo = await axios
       .get(
-        "http://localhost:5000/api/entity_emp/workSpace/5ca9ea8fd0935b3388eaa962"
+        "http://localhost:5000/api/entity_emp/workSpace/" +
+          this.props.loggedUser.id
       )
       .then(res => {
         console.log(res.data);
@@ -34,26 +37,76 @@ class lawyer_workspace extends Component {
             <Cards
               forms={pending_forms}
               tobereviewed={true}
+              reviewForm={this.reviewForm}
+              addComment={this.addComment}
             />
           )}
         </div>
         <div className="Reviewed Forms">
           {reviewed_forms.length > 0 && <h4>Reviewed Forms:</h4>}
           {reviewed_forms.length > 0 && (
-            <Cards forms={reviewed_forms} tobereviewed={false} />
+            <Cards
+              forms={reviewed_forms}
+              tobereviewed={false}
+              reviewForm={this.reviewForm}
+              addComment={this.addComment}
+            />
           )}
         </div>
         <div className="Filled Forms">
           {filled_forms.length > 0 && <h4>Filled Forms:</h4>}
           {filled_forms.length > 0 && (
-            <Cards forms={filled_forms} tobereviewed={false} />
+            <Cards
+              forms={filled_forms}
+              tobereviewed={false}
+              reviewForm={this.reviewForm}
+              addComment={this.addComment}
+            />
           )}
         </div>
       </div>
     );
   }
 
-  
-}
+  reviewForm = async (idl, id) => {
+    this.setState({
+      forms: this.state.forms.filter(form => {
+        return form._id !== id;
+      })
+    });
 
-export default lawyer_workspace;
+    const reserve = await axios.put(
+      "http://localhost:5000/api/forms/review/" + idl + "/" + id
+    );
+  };
+  addComment = async (id, body) => {
+    //still need to update data viewed when comment is written
+    // this.setState({
+    //   forms: this.state.forms.map(form => {
+    //     if (form._id === id) {
+    //       console.log(body);
+    //       form.comments.push(body);
+    //     }
+    //   })
+    // });
+    console.log(this.state.forms);
+    //   useAlert("Comment Submitted")
+    const add = await axios.put(
+      "http://localhost:5000/api/forms/commentOnForm/" + id,
+      body
+    );
+    const formsData = await axios
+      .get(
+        "http://localhost:5000/api/forms/getPending/" + this.props.loggedUser.id
+      )
+      .then(res => {
+        console.log(res.data.data);
+        this.setState({ forms: res.data.data });
+      });
+  };
+}
+const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isLoggedIn,
+  loggedUser: state.auth.loggedUser
+});
+export default connect(mapStateToProps)(lawyer_workspace);

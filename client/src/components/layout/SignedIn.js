@@ -1,15 +1,62 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
+import { logout } from "../../globalState/actions/authActions";
 
-const SignedIn = () => {
-  return (
-    <div>
-      <ul className="right">
-        <li><NavLink to='/'>Log Out</NavLink></li>
-        <li><NavLink to='/' className="logo"><i class="material-icons">face</i></NavLink></li>
-      </ul>
-    </div>
-  )
+class SignedIn extends Component {
+  logout = async () => {
+    await this.props.logout();
+    window.location.hash = "#";
+  };
+  render() {
+    return (
+      <div>
+        <ul className="right">
+          <li>
+            <NavLink
+              style={{ textDecoration: "none", color: "white" }}
+              to="/"
+              onClick={this.logout}
+            >
+              Log Out
+            </NavLink>
+          </li>
+          <li>
+            {(this.props.loggedUser.type === "Lawyer" ||
+              this.props.loggedUser.type === "Reviewer") && (
+              <NavLink
+                style={{ textDecoration: "none", color: "white" }}
+                to="/lawyer_workspace"
+                className="logo"
+              >
+                <i className="material-icons" to="/lawyer_workspace">
+                  face
+                </i>
+              </NavLink>
+            )}
+            {(this.props.loggedUser.type === "investor" ) && (
+              <NavLink
+                style={{ textDecoration: "none", color: "white" }}
+                to="/InvestorPage"
+                className="logo"
+              >
+                <i className="material-icons" to="/lawyer_workspace">
+                  face
+                </i>
+              </NavLink>
+            )}
+          </li>
+        </ul>
+      </div>
+    );
+  }
 }
+const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isLoggedIn,
+  loggedUser: state.auth.loggedUser
+});
 
-export default SignedIn;
+export default connect(
+  mapStateToProps,
+  { logout }
+)(SignedIn);
