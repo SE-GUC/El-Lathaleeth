@@ -18,7 +18,6 @@ export class DetailedForm extends Component {
     }
     console.log(this.props.loggedUser);
     return (
-      
       <div class="card">
         <div class="card-header">{this.props.form.formType}</div>
         <div class="card-body">
@@ -64,29 +63,35 @@ export class DetailedForm extends Component {
             ))}
             {review && (
               <div class="ui input">
-                <input
-                  type="text"
-                  placeholder="Write comment"
-                  value={this.state.value}
-                  onChange={this.handleChange}
-                />
-                <button
-                  type="button"
-                  onClick={this.props.addComment.bind(
-                    this,
-                    this.props.form._id,
-                    {
-                      author_type: this.props.loggedUser.type,
-                      author: this.props.loggedUser.id,
-                      text: this.state.value,
-                      postedOn: new Date()
-                    }
-                  )}
-                  class="btn btn-outline-secondary btn-sm"
-                >
-                  {" "}
-                  Add Comment
-                </button>{" "}
+                <ul>
+                  <li>
+                    <input
+                      type="text"
+                      placeholder="Write comment"
+                      value={this.state.value}
+                      onChange={this.handleChange}
+                    />
+                  </li>
+                  <li>
+                    <button
+                      type="button"
+                      onClick={this.props.addComment.bind(
+                        this,
+                        this.props.form._id,
+                        {
+                          author_type: this.props.loggedUser.type,
+                          author: this.props.loggedUser.id,
+                          text: this.state.value,
+                          postedOn: new Date()
+                        }
+                      )}
+                      class="btn btn-outline-secondary btn-sm"
+                    >
+                      {" "}
+                      Add Comment
+                    </button>{" "}
+                  </li>
+                </ul>
               </div>
             )}
           </p>
