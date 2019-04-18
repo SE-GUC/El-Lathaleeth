@@ -145,9 +145,13 @@ class Sidenav extends Component {
             <a href="#/trackCasePage" className="sidenav-close">
               Track my Case
             </a>
+          </li></div>
+    let adminstuff=<div>
+      <li>
+            <a className="subheader grey darken-3">Admin</a>
           </li>
           <li>
-            <div className="divider" />
+            <a href="#/RegisterEmployee">Register Employees</a>
           </li>
 
           {adminstuff} */}
