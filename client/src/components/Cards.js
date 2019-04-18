@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import FormCard from "./FormCard";
+import { connect } from "react-redux";
 class Cards extends Component {
   render() {
     const bool = this.props.tobereviewed;
@@ -7,12 +8,16 @@ class Cards extends Component {
       <div class="row">
         {this.props.forms.map(form => (
           <div class="col s12 m6 l3">
-            <FormCard form={form} tobereviewed={bool} />
+            <FormCard form={form} tobereviewed={bool} reviewForm={this.props.reviewForm} addComment={this.props.addComment}/>
           </div>
         ))}
       </div>
     );
   }
 }
+const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isLoggedIn,
+  loggedUser: state.auth.loggedUser
+});
 
-export default Cards;
+export default connect(mapStateToProps)(Cards);

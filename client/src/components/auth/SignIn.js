@@ -32,7 +32,7 @@ await  this.props.login({
       username: this.state.email,
       password: this.state.password
     })
-          window.location.hash = "#";
+          
 
       }catch(e){
         try{
@@ -47,7 +47,7 @@ await  this.props.login({
       username: this.state.email,
       password: this.state.password
     })
-          window.location.hash = "#";
+          
 
         }
         catch(m){
@@ -92,8 +92,10 @@ await  this.props.login({
     let test
     if (this.props.loggedUser.type === "investor") {
       test = <div>Investor Signed In</div>;
+      window.location.hash = "/InvestorPage";
     } else if (this.props.loggedUser.type === "Lawyer") {
       test = <div>Employee Signed In</div>;
+      window.location.hash = "/";
     }
     return (
       <Center>
