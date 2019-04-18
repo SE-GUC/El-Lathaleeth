@@ -57,7 +57,6 @@ class App extends Component {
               />
               <Route exact path="/InvestorPage" component={InvestorPage} />
               <Route exact path="/CasePage" component={CasePage} />
-      
               <Route
                 exact
                 path="/MyProfile"
