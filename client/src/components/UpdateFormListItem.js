@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import { connect } from "react-redux";
-export class ListItem extends Component {
+export class UpdateFormListItem extends Component {
+ goedit =  e => {
+ window.location.hash = "UpdateOneForm/" + this.props.loggedUser.id;
+ }
   state = { clicked: false };
   render() {
-          
     return (
       <div class="card">
         <div class="card-header">{this.props.form.formType}</div>
@@ -15,14 +17,9 @@ export class ListItem extends Component {
           <p class="card-text" />
           <button
             type="button"
-            onClick={this.props.reserveForm.bind(
-              this,
-              this.props.loggedUser.id,
-              this.props.form._id
-            )}
             class="btn btn-danger"
-          >
-            Reserve This Case
+onClick={this.goedit.bind(this)}          >
+            Edit Form
           </button>{" "}
         </div>
       </div>
@@ -33,7 +30,4 @@ const mapStateToProps = state => ({
   isLoggedIn: state.auth.isLoggedIn,
   loggedUser: state.auth.loggedUser
 });
-export default connect(
-  mapStateToProps
-)(ListItem);
-
+export default connect(mapStateToProps)(UpdateFormListItem);

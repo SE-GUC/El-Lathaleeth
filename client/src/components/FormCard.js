@@ -14,12 +14,12 @@ export class FormCard extends Component {
 
                 {this.props.form.investor.gender === "male" && (
                   <h5 class="card-title">
-                    Mr. {this.props.form.investor.lastName}
+                    Mr. {this.props.form.investor.name}
                   </h5>
                 )}
                 {this.props.form.investor.gender === "female" && (
                   <h5 class="card-title">
-                    Mrs. {this.props.form.investor.lastName}
+                    Mrs. {this.props.form.investor.name}
                   </h5>
                 )}
                 <p class="card-text">

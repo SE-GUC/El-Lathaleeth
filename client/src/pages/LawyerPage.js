@@ -6,7 +6,7 @@ const axios = require("axios");
 class LawyerPage extends Component {
   // constructor() {
   //   super();
-  //   const formsData = await axios.get("https://lathaleeth.herokuapp.com/api/forms/");
+  //   const formsData = await axios.get("http://localhost:5000/api/forms/");
 
   //   this.state = { forms:formsData.data.data };
   // }
@@ -14,7 +14,7 @@ class LawyerPage extends Component {
   //view all cases
   componentWillMount = async () => {
     const formsData = await axios
-      .get("https://lathaleeth.herokuapp.com/api/forms/")
+      .get("http://localhost:5000/api/forms/")
       .then(res => {
         console.log(res.data.data);
         this.setState({
@@ -125,7 +125,7 @@ for(var i=1;i<formTemp.length;i++){
     });
 
     const reserve = await axios.put(
-      "https://lathaleeth.herokuapp.com/api/entity_emp/reserveForm/" + idl + "/" + id
+      "http://localhost:5000/api/entity_emp/reserveForm/" + idl + "/" + id
     );
   };
  

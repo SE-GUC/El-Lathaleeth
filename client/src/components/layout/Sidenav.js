@@ -1,20 +1,108 @@
 import React, { Component } from "react";
 import M from "materialize-css/dist/js/materialize.min.js";
 import { connect } from "react-redux";
+import NotificationBadge from "react-notification-badge";
 import { BrowserRouter, Route } from "react-router-dom";
 import "materialize-css/dist/css/materialize.min.css";
+import axios from "axios";
 
 class Sidenav extends Component {
-  componentDidMount() {
+  constructor(props) {
+    super(props);
+    this.state = { forms: [],flag:true };
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    return (
+      this.props.isLoggedIn !== nextProps.isLoggedIn ||
+      this.state.flag!==nextState.flag
+    );
+  }
+  componentDidUpdate = async () => {
     var elem = document.querySelector(".sidenav");
     var instance = M.Sidenav.init(elem, {
       edge: "left",
       inDuration: 250
     });
-  }
+    try {
+      if (this.props.loggedUser.type === "investor") {
+        const forms = await axios.get(
+          "http://localhost:5000/api/forms/byInvestorID/" +
+            this.props.loggedUser.id
+        );
+        console.log(forms);
+        const mappedforms = forms.data.data.map(e => {
+          const filteredComments = e.comments.filter(a => {
+            console.log(a);
+            return !a.hasOwnProperty("read_at");
+          });
+          console.log(filteredComments);
+          e.comments = filteredComments;
+          return e;
+        });
+        console.log(mappedforms);
+        const newforms = mappedforms.filter(e => {
+          return e.status === "pending lawyer" && e.comments.length > 0;
+        });
+        console.log(newforms);
 
+        this.setState({ forms: newforms ,flag:false});
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  componentDidMount = async () => {
+    console.log("testing");
+    var elem = document.querySelector(".sidenav");
+    var instance = M.Sidenav.init(elem, {
+      edge: "left",
+      inDuration: 250
+    });
+    try {
+      if (this.props.loggedUser.type === "investor") {
+        const forms = await axios.get(
+          "http://localhost:5000/api/forms/byInvestorID/" +
+            this.props.loggedUser.id
+        );
+        console.log(forms);
+        const mappedforms = forms.data.data.map(e => {
+          const filteredComments = e.comments.filter(a => {
+            return !a.hasOwnProperty("read_at");
+          });
+          e.comments = filteredComments;
+        });
+        console.log(mappedforms);
+        const newforms = mappedforms.data.data.filter(e => {
+          return e.status === "pending lawyer" && e.comments.length > 0;
+        });
+        console.log(newforms);
+
+        this.setState({ forms: newforms });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  get notif() {
+    const { forms } = this.state;
+    if (forms.length > 0) {
+      return (
+        <div>
+          <li>
+            <NotificationBadge count={forms.length} className={"abc"} />
+            <a href="#/UpdateFormPage" class="sidenav-close">
+              Update Form
+            </a>
+          </li>
+        </div>
+      );
+    }
+    // ...else return nothing
+    return null;
+  }
   render() {
-    let displayed
+    let displayed;
+    const { forms } = this.state;
     let lawyerstuff = (
       <div>
         <li>
@@ -60,7 +148,7 @@ class Sidenav extends Component {
             Workspace
           </a>
         </li>
-       
+
         <li>
           <a href="#/lawyerPendingForms" class="sidenav-close">
             Pending Forms
@@ -96,34 +184,39 @@ class Sidenav extends Component {
             My Profile
           </a>
         </li>
+        {this.notif}
+
+        {/* {this.notif(forms)} */}
       </div>
     );
-    let adminstuff=<div>
-      <li>
-            <a className="subheader grey darken-3">Admin</a>
-          </li>
-          <li>
-            <a href="#/RegisterEmployee">Register Employees</a>
-          </li>
-          <li>
-            <a href="#/CasePage">View All Cases</a>
-          </li>
-          </div>
-          try{
-          if(this.props.loggedUser.type==='Lawyer' ){
-            displayed=lawyerstuff
-          }else if (this.props.loggedUser.type==='Reviewer'){
-                        displayed = reviewerstuff;
-
-          }
-          else if (this.props.loggedUser.type==="Admin"){
-            displayed=adminstuff
-          }
-          else if (this.props.loggedUser.type==="investor"){
-            displayed=investorstuff
-          }
-          else{displayed=""}}
-          catch(e){displayed=""}
+    let adminstuff = (
+      <div>
+        <li>
+          <a className="subheader grey darken-3">Admin</a>
+        </li>
+        <li>
+          <a href="#/RegisterEmployee">Register Employees</a>
+        </li>
+        <li>
+          <a href="#/CasePage">View All Cases</a>
+        </li>
+      </div>
+    );
+    try {
+      if (this.props.loggedUser.type === "Lawyer") {
+        displayed = lawyerstuff;
+      } else if (this.props.loggedUser.type === "Reviewer") {
+        displayed = reviewerstuff;
+      } else if (this.props.loggedUser.type === "Admin") {
+        displayed = adminstuff;
+      } else if (this.props.loggedUser.type === "investor") {
+        displayed = investorstuff;
+      } else {
+        displayed = "";
+      }
+    } catch (e) {
+      displayed = "";
+    }
     return (
       <div>
         <ul id="slide-out" className="sidenav">
@@ -155,7 +248,6 @@ class Sidenav extends Component {
           </li>
 
           {adminstuff} */}
-
           {displayed}
         </ul>
         <a

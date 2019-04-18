@@ -12,7 +12,7 @@ class lawyer_workspace extends Component {
     console.log(this.props.loggedUser);
     const lawyerinfo = await axios
       .get(
-        "https://lathaleeth.herokuapp.com/api/entity_emp/workSpace/" +
+        "http://localhost:5000/api/entity_emp/workSpace/" +
           this.props.loggedUser.id
       )
       .then(res => {

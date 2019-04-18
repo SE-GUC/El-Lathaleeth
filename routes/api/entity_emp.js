@@ -233,7 +233,7 @@ router.put("/reserveForm/:idl/:id", async (req, res) => {
         id,
         {
           $set: {
-            status: "pending"
+            status: "pending lawyer"
           }
         },
         { new: true }
@@ -256,7 +256,7 @@ router.put("/reserveForm/:idl/:id", async (req, res) => {
         id,
         {
           $set: {
-            status: "pending"
+            status: "pending reviewer"
           }
         },
         { new: true }

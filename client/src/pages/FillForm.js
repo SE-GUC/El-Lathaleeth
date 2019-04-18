@@ -106,7 +106,7 @@ selectNationality(val){
   componentWillMount = async () => {
     const formsData = await axios
       .get(
-        "https://lathaleeth.herokuapp.com/api/investor/" +
+        "http://localhost:5000/api/investor/" +
           this.props.loggedUser.id
       )
       .then(res => {
@@ -119,7 +119,7 @@ selectNationality(val){
   handleSubmit = async e => {
     e.preventDefault();
     const user = await axios.get(
-      "https://lathaleeth.herokuapp.com/api/investor/" +
+      "http://localhost:5000/api/investor/" +
         this.props.loggedUser.id,
       body
     );
@@ -186,7 +186,7 @@ selectNationality(val){
     console.log(body);
     if (formValid(this.state)) {
       const form = await axios
-        .post("https://lathaleeth.herokuapp.com/api/forms/", body)
+        .post("http://localhost:5000/api/forms/", body)
         .then(result => {
           alert("Form Submitted Successfully");
           window.location.hash = "#";

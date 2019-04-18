@@ -17,9 +17,12 @@ import FillForm from "./pages/FillForm";
 import LawyerFillForm from "./pages/LawyerFillForm";
 
 import OneForm from "./pages/OneForm";
+import UpdateOneForm from "./pages/UpdateOneForm";
 import RegisterInvestor from "./pages/RegisterInvestor";
 import ViewInvestorProfile from "./pages/ViewInvestorProfile";
 import UpdateInvestorProfile from "./pages/UpdateInvestorProfile";
+import UpdateFormPage from "./pages/UpdateFormPage";
+
 import Homepage from "./pages/Homepage";
 
 class App extends Component {
@@ -31,9 +34,24 @@ class App extends Component {
             <Navbar />
             <main>
               <Route exact path="/" component={Homepage} />
-              <Route exact path="/lawyerFillForm" component={LawyerFillForm} />
+              <Route
+                exact
+                path="/lawyerFillForm"
+                component={LawyerFillForm}
+              />
 
               <Route exact path="/LawyerPage" component={LawyerPage} />
+              <Route
+                
+                path="/UpdateOneForm"
+                component={UpdateOneForm}
+              />
+              <Route
+                exact
+                path="/UpdateFormPage"
+                component={UpdateFormPage}
+              />
+
               <Route
                 exact
                 path="/lawyerPendingForms"

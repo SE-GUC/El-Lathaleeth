@@ -21,7 +21,7 @@ export const login =  (userData) => dispatch => {
   console.log(userData)
 		axios
       .post(
-        "https://lathaleeth.herokuapp.com/api/entity_emp/login",
+        "http://localhost:5000/api/entity_emp/login",
         userData
       )
       .then(res => {
@@ -36,7 +36,7 @@ export const login =  (userData) => dispatch => {
         const body = { ...userData, email: userData.username };
         console.log(body);
         axios
-          .post("https://lathaleeth.herokuapp.com/api/investor/login", body)
+          .post("http://localhost:5000/api/investor/login", body)
           .then(res => {
             const { token } = res.data;
             localStorage.setItem("jwtToken", token);
