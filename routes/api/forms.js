@@ -216,6 +216,10 @@ router.get("/statusByID/:id", async (req, res) => {
           status =
             "Your Form is Currently Waiting to Be Reserved by a Reviewer";
           break;
+        case "paid":
+          status =
+            "Your Form has been paid";
+          break;
       }
     res.json({ msg: "Status found", data: status });
   } catch (error) {

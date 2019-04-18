@@ -56,6 +56,7 @@ class CasePage extends Component {
   handleChange = e => {
     e.preventDefault();
     const { name, value } = e.target;
+    
     if (value !== "") {
       this.setState({
         displayedForms: this.state.forms.filter(form => {
