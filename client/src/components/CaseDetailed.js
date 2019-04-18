@@ -20,7 +20,7 @@ export class CaseDetailed extends Component {
 
         <div class="card-body">
           <h5 class="card-title">
-            Mr./Mrs. {this.props.form.investor.firstName}
+            Mr./Mrs. {this.props.form.investor.name}
           </h5>
           <p class="card-text">
             <p>Law: {this.props.form.law}</p>

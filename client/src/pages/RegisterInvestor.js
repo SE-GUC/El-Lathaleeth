@@ -124,7 +124,7 @@ class RegisterInvestor extends Component {
     console.log(body);
     if (formValid(this.state)) {
       const user = await axios
-        .post("https://lathaleeth.herokuapp.com/api/investor/", body)
+        .post("http://localhost:5000/api/investor/", body)
         .then(result => {
           alert("Investor Registered Successfully");
           this.login();
@@ -265,7 +265,7 @@ class RegisterInvestor extends Component {
             >
               <option value="">Select Type of ID</option>
               <option value="passport">Passport</option>
-              <option value="id">National ID</option>
+              <option value="national id">National ID</option>
             </Form.Control>
           </Form.Group>
           <Form.Group className="IDnumber">

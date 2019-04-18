@@ -31,6 +31,7 @@ class UpdateInvestorProfile extends Component {
                 firstName: "",
                 middleName: "",
                 lastName: "",
+                name:"",
                 email: "",
                 password:"",
                 dateOfBirth: "",
@@ -55,12 +56,8 @@ class UpdateInvestorProfile extends Component {
         let formErrors = { ...this.state.formErrors };
 
         switch (name) {
-          case "firstName":
-            formErrors.firstName =
-              value.length < 3 ? "minimum 3 characaters required" : "";
-            break;
-          case "lastName":
-            formErrors.lastName =
+          case "name":
+            formErrors.name =
               value.length < 3 ? "minimum 3 characaters required" : "";
             break;
           case "email":
@@ -94,9 +91,7 @@ class UpdateInvestorProfile extends Component {
         e.preventDefault();
       console.log(this.state.investor.address)
         let {
-            firstName,
-            middleName,
-            lastName,
+            name,
             email,
             dateOfBirth,
             gender,
@@ -112,9 +107,7 @@ class UpdateInvestorProfile extends Component {
         } = this.state.investor;
 
         let body = {
-            firstName: firstName,
-            middleName: middleName,
-            lastName: lastName,
+            name:name,
             email: email,
             dateOfBirth: dateOfBirth,
             gender: gender,
@@ -134,7 +127,7 @@ class UpdateInvestorProfile extends Component {
         if(formValid(this.state)){
             const investor = await axios
               .put(
-                "https://lathaleeth.herokuapp.com/api/investor/5cafca0b96a4844b0864c9fe",
+                "http://localhost:5000/api/investor/5cafca0b96a4844b0864c9fe",
                 body
               )
               .then(result => {
@@ -160,7 +153,7 @@ class UpdateInvestorProfile extends Component {
     componentDidMount = async () => {
       console.log(this.props.loggedUser);
          await axios.get(
-            "https://lathaleeth.herokuapp.com/api/investor/"+this.props.loggedUser.id
+            "http://localhost:5000/api/investor/"+this.props.loggedUser.id
           )
           .then(result => {
             console.log(result.data.data);
@@ -194,21 +187,21 @@ class UpdateInvestorProfile extends Component {
                             <option value="company">company</option>
                         </Form.Control>
                    </div>
-                    <div className="form-group">
+                    {/* <div className="form-group">
                         <label htmlFor="">First Name</label>
                         <input type="text" 
                         className={formErrors.firstName.length > 0 ? "error" : null}
                         //className="form-control"
                         name="firstName" 
                         noValidate
-                        defaultValue={this.state.investor.firstName}
+                        defaultValue={this.state.investor.name}
                         onChange={this.onChangeInput}
                         />
                         {formErrors.firstName.length > 0 && (
                         <span className="errorMessage">{formErrors.firstName}</span>
                         )}
-                   </div>
-                   <div className="form-group">
+                   </div> */}
+                   {/* <div className="form-group">
                         <label htmlFor="">Middle Name</label>
                         <input type="text" 
                         className={formErrors.middleName.length > 0 ? "error" : null}
@@ -218,19 +211,19 @@ class UpdateInvestorProfile extends Component {
                         defaultValue={this.state.investor.middleName}
                         onChange={this.onChangeInput}
                         />
-                   </div> 
+                   </div>  */}
                    <div className="form-group">
-                        <label htmlFor="">Last Name</label>
+                        <label htmlFor="">Name</label>
                         <input type="text"
-                        className={formErrors.lastName.length > 0 ? "error" : null} 
+                        className={formErrors.name.length > 0 ? "error" : null} 
                         //className="form-control"
-                        name="lastName" 
+                        name="name" 
                         noValidate
-                        defaultValue={this.state.investor.lastName}
+                        defaultValue={this.state.investor.name}
                         onChange={this.onChangeInput}
                         />
-                        {formErrors.lastName.length > 0 && (
-                        <span className="errorMessage">{formErrors.lastName}</span>
+                        {formErrors.name.length > 0 && (
+                        <span className="errorMessage">{formErrors.name}</span>
                         )}
                    </div>
                    <div className="form-group">

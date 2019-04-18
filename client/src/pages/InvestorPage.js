@@ -12,7 +12,7 @@ class InvestorPage extends Component {
          console.log(this.props.loggedUser);
          await axios
            .get(
-             "https://lathaleeth.herokuapp.com/api/forms/byInvestorID/" +
+             "http://localhost:5000/api/forms/byInvestorID/" +
                this.props.loggedUser.id
            )
            .then(result => {
