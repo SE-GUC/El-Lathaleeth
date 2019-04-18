@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+
 const axios = require("axios");
 
 class contactUs extends Component {
@@ -20,3 +21,4 @@ class contactUs extends Component {
         );
     }
 }
+export default contactUs;
