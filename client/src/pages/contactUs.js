@@ -8,7 +8,7 @@ class contactUs extends Component {
         return(
             <div class="row">
       <h1>Contact Us</h1>
-      <div class="col s4">
+      <div class="col s4" style={{marginLeft: "20px"}}>
         Email: elLathaleeth@gmail.com<br/> 
         Landline: +203356479<br/>
         Mobile: 01004567987
