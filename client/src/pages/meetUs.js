@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+// import React, { Component } from "react";
 
-const axios = require("axios");
+// const axios = require("axios");
 
-class meetUs extends Component {
+// class meetUs extends Component {
     
-}
+// }

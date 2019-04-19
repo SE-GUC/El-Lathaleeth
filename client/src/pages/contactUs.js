@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+ import React, { Component } from "react";
 
 
 const axios = require("axios");
@@ -9,9 +9,9 @@ class contactUs extends Component {
             <div class="row">
       <h1>Contact Us</h1>
       <div class="col s4">
-        Email: elLathaleeth@gmail.Com
-        Landline: +203356479
-        Mobile: 01004567987
+        <br>Email: elLathaleeth@gmail.com</br> 
+        <br>Landline: +203356479</br>
+        <br>Mobile: 01004567987</br>
       </div>
       <div class="col s4">
         <h3>Visit Us</h3>
