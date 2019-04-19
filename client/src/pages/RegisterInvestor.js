@@ -90,7 +90,7 @@ class RegisterInvestor extends Component {
       dateOfBirth: date
     });
   }
-  
+
   handleSubmit = async e => {
     e.preventDefault();
     let {
@@ -141,7 +141,7 @@ class RegisterInvestor extends Component {
       alert("Please Make Sure All Entries are Correct!");
     }
   };
-  getAge = (dateString) => {
+  getAge = dateString => {
     var today = new Date();
     var birthDate = new Date(dateString);
     var age = today.getFullYear() - birthDate.getFullYear();
@@ -184,9 +184,9 @@ class RegisterInvestor extends Component {
         formErrors.phoneNumber =
           value.length < 11 ? "please enter valid phone number" : "";
         break;
-      case "dateOfBirth":
+      /*case "dateOfBirth":
         formErrors.dateOfBirth =
-          this.getAge(value) >= 21 ? "You are not old enough to create company" : "";
+          this.getAge(value) >= 21 ? "You are not old enough to create company" : "";*/
       default:
         break;
     }
@@ -262,9 +262,9 @@ class RegisterInvestor extends Component {
               allowFuture={false}
               allowPast={true}
             />
-            {this.getAge(formErrors.dateOfBirth) < 21 && (
+            {/*{this.getAge(formErrors.dateOfBirth) < 21 && (
               <span className="errorMessage">{formErrors.dateOfBirth}</span>
-            )}
+            )}*/}
           </Form.Group>
           <Form.Group className="gender">
             <Form.Label>Gender</Form.Label>
