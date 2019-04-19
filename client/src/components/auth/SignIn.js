@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { login } from "../../globalState/actions/authActions";
 import PropTypes from "prop-types";
 import axios from "axios";
+import Form from "react-bootstrap/Form";
 
 class SignIn extends Component {
   constructor(props) {
@@ -95,7 +96,7 @@ await  this.props.login({
       window.location.hash = "/InvestorPage";
     } else if (this.props.loggedUser.type === "Lawyer") {
       test = <div>Employee Signed In</div>;
-      window.location.hash = "/";
+      window.location.hash = "/lawyer_workspace";
     }
     return (
       <Center>
@@ -105,7 +106,7 @@ await  this.props.login({
             <div className="container">
               <div className="input-field">
                 <label htmlFor="email">Email or Username</label>
-                <input  id="email" onChange={this.handleChange} />
+                <input type="text" id="email" onChange={this.handleChange} />
               </div>
             </div>
 
