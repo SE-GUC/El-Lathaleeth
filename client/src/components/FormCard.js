@@ -22,7 +22,7 @@ export class FormCard extends Component {
               <span class="card-title">
                 {this.props.form.englishName} - {this.props.form.arabicName}
               </span>
-              <p class="card-text">Case Number: {this.props.form.caseNum}</p>
+              <p class="card-text">Case Number: {this.props.form.caseNumber}</p>
               <Button
                 color="link"
                 style={{ textDecoration: "none", color: "white" }}

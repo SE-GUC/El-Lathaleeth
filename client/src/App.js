@@ -14,7 +14,6 @@ import Navbar from "./components/layout/Navbar";
 import { Provider } from "react-redux";
 import store from "./globalState/store";
 import FillForm from "./pages/FillForm";
-import Carousel from "./components/Carousel";
 import LawyerFillForm from "./pages/LawyerFillForm";
 import PayPage from "./pages/PayPage";
 import UpdateOneForm from "./pages/UpdateOneForm";
@@ -57,6 +56,7 @@ class App extends Component {
               />
               <Route exact path="/InvestorPage" component={InvestorPage} />
               <Route exact path="/CasePage" component={CasePage} />
+      
               <Route
                 exact
                 path="/MyProfile"
