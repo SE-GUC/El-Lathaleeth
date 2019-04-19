@@ -3,9 +3,13 @@ import Company from "./Company";
 class MyCompanies extends Component {
 
   render() {
-    return this.props.companies.map(form => (
-      <Company form={form} />
-    ));
+    return this.props.companies
+      .filter(form => {
+        return form.status === "company declared";
+      })
+      .map(form => (
+        <Company form={form} />
+      ));
   }
 }
 
