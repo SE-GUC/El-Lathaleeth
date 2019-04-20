@@ -15,7 +15,9 @@ class contactUs extends Component {
       </div>
       <div class="col s4">
         <h3>Visit Us</h3>
-        El Lathaleeth HQ address
+        El Lathaleeth HQ<br/> 
+        German University in Cairo
+
       </div>
     </div>
         );
