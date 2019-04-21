@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import Collapse from "react-bootstrap/Collapse";
 import { DetailedForm } from "./DetailedForm";
 import { connect } from "react-redux";
+import Center from "react-center";
 
 export class FormCard extends Component {
   constructor(props, context) {
@@ -15,17 +16,16 @@ export class FormCard extends Component {
   render() {
     const { open } = this.state;
     return (
-      <div class="row">
-        <div class="col s12 m6 l3">
-          <div class="card">
+      <Center>
+          <div class="card hoverable" >
             <div class="card-content">
               <span class="card-title">
                 {this.props.form.englishName} - {this.props.form.arabicName}
               </span>
-              <p class="card-text">Case Number: {this.props.form.caseNum}</p>
+              <p class="card-text">Case Number: {this.props.form.caseNumber}</p>
               <Button
-                color="link"
-                style={{ textDecoration: "none", color: "white" }}
+                className="right shadow-none p-0 mb-5 bg-light rounded "
+                variant="link"
                 onClick={() => this.setState({ open: !open })}
                 aria-controls="detailedForm"
                 aria-expanded={open}
@@ -34,21 +34,20 @@ export class FormCard extends Component {
               </Button>
               <Collapse in={this.state.open}>
                 <div id="detailedForm">
-                {console.log(this.props.loggedUser)}
+                  {console.log(this.props.loggedUser)}
                   <DetailedForm
                     form={this.props.form}
                     tobereviewed={this.props.tobereviewed}
                     reviewForm={this.props.reviewForm}
                     addComment={this.props.addComment}
                     isLoggedIn={this.props.isLoggedIn}
-                    loggedUser = {this.props.loggedUser}
+                    loggedUser={this.props.loggedUser}
                   />
                 </div>
               </Collapse>
             </div>
           </div>
-        </div>
-      </div>
+      </Center>
     );
   }
 }

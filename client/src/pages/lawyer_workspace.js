@@ -70,7 +70,7 @@ class lawyer_workspace extends Component {
 
   reviewForm = async (idl, id) => {
     this.setState({
-      forms: this.state.forms.filter(form => {
+      pending_forms: this.state.pending_forms.filter(form => {
         return form._id !== id;
       })
     });
@@ -89,7 +89,7 @@ class lawyer_workspace extends Component {
     //     }
     //   })
     // });
-    console.log(this.state.forms);
+    console.log(this.state.pending_forms);
     //   useAlert("Comment Submitted")
     const add = await axios.put(
       "http://localhost:5000/api/forms/commentOnForm/" + id,
@@ -101,7 +101,7 @@ class lawyer_workspace extends Component {
       )
       .then(res => {
         console.log(res.data.data);
-        this.setState({ forms: res.data.data });
+        this.setState({ pending_forms: res.data.data });
       });
   };
 }

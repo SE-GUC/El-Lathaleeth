@@ -3,11 +3,20 @@ const router = express.Router();
 const Form = require("../../models/Form");
 const Entity_Emp = require("../../models/Entity_Emp");
 const Counter = require("../../models/Counter");
+//const stripe = require("stripe")("sk_test_j9JEVX9wDHvT5XfRZBkrurt600zQpSL660");
+//const bodyParser = require('body-parser');
+//const cors = require('cors');
+//const multer = require('multer');
+//const uuidv4 = require('uuid/v4');
 
 const validator = require("../../validations/formValidations");
 const commValidator = require("../../validations/commentValidation");
+//const upload = multer();
 
 const mongoose = require("mongoose");
+
+//router.use(bodyParser.urlencoded({ extended: false }));
+
 
 router.get("/", async (req, res) => {
   const forms = await Form.find();
@@ -183,7 +192,7 @@ router.put("/commentOnForm/:id", async (req, res) => {
       }
     );
     res.json({ data: test });
-  } catch (error) { 
+  } catch (error) {
     console.log(error);
     //error will be handled later
   }
@@ -192,31 +201,29 @@ router.put("/commentOnForm/:id", async (req, res) => {
 //As an investor/lawyer I can view status of form
 router.get("/statusByID/:id", async (req, res) => {
   try {
-    let status
+    let status;
     const id = req.params.id;
-    const findform = await Form.find({caseNumber:id});
+    const findform = await Form.find({ caseNumber: id });
     if (!findform)
       return res.status(404).send({ error: "Form does not exist" });
-      switch (findform[0].status) {
-        case "posted":
-          status =
-            "Your Form is Currently Waiting To Be Reserved by a Lawyer";
-          break;
-        case "pending reviewer":
-          status = "Your Form is Currently Being Reviewed by a Reviewer";
-          break;
+    switch (findform[0].status) {
+      case "posted":
+        status = "Your Form is Currently Waiting To Be Reserved by a Lawyer";
+        break;
+      case "pending reviewer":
+        status = "Your Form is Currently Being Reviewed by a Reviewer";
+        break;
 
-        case "pending lawyer":
-          status = "Your Form is Currently Being Reviewed by a Lawyer";
-          break;
-        case "reviewer check":
-          status = "Your Form is Currently Awaiting Payment";
-          break;
-        case "lawyer check":
-          status =
-            "Your Form is Currently Waiting to Be Reserved by a Reviewer";
-          break;
-      }
+      case "pending lawyer":
+        status = "Your Form is Currently Being Reviewed by a Lawyer";
+        break;
+      case "reviewer check":
+        status = "Your Form is Currently Awaiting Payment";
+        break;
+      case "lawyer check":
+        status = "Your Form is Currently Waiting to Be Reserved by a Reviewer";
+        break;
+    }
     res.json({ msg: "Status found", data: status });
   } catch (error) {
     // Error will be handled later
@@ -330,6 +337,91 @@ router.put("/formPaid/:id", async (req, res) => {
     console.log(error);
   }
 });
+/*router.post("/payStripe/:id", async (req, res) => {
+  const token = request.body.stripeToken;
+  try {
+    const form = await Form.findById(req.params.id);
+    if (!form) return res.status(404).send({ error: "Form does not exist" });
+    await stripe.charges.create({
+      amount: form.cost,
+      currency: "egp",
+      source: token, // obtained with Stripe.js
+      description:
+        "Charge for case num: " +
+        form.caseNumber +
+        ", by: " +
+        form.investor.name
+    });
+    console.log(charge);
+    const updatedForm = await Form.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: {
+          status: "paid"
+        }
+      },
+      { new: true }
+    );
+    res.json({ msg: "Paid Successfully using Stripe", data: updatedForm });
+  } catch (e) {
+    console.log(e);
+  }
+});
+router.post('/checkout/:id', upload.none(), cors(), async (req, res) => {
+  console.log(JSON.stringify(req.body));
+  let id = req.params.id;
+  const form = await Form.findById(req.params.id);
+    if (!form) return res.status(404).send({ error: "Form does not exist" });
+  let error;
+  let status = 'failed';
+  try {
+    const {
+      currency = 'usd',
+      description,
+      stripeEmail,
+      stripeToken,
+      stripeTokenType,
+    } = req.body;
+
+    // TODO: Assert not a CSRF.
+
+    let amount = form.cost;
+    
+
+    // TODO: Lookup existing customer or create a new customer.
+    // TODO: Save relevant billing and shipping address information.
+    const customer = await stripe.customers.create({
+      email: stripeEmail,
+      source: stripeToken
+    });
+
+    if (stripeTokenType === 'card') {
+      const idempotency_key = uuidv4();
+      const charge = await stripe.charges.create(
+        {
+          amount,
+          currency: currency,
+          customer: customer.id,
+          description: description,
+        },
+        {
+          idempotency_key,
+        }
+      );
+      console.log('charge:');
+      console.log(JSON.stringify(charge));
+    } else {
+      throw Error(`Unrecognized Stripe token type: "${stripeTokenType}"`);
+    }
+
+    status = 'success';
+  } catch (err) {
+    console.error(err);
+    error = err;
+  }
+
+  res.json({ error, status });
+});*/
 router.put("/generateCost/:id", async (req, res) => {
   try {
     const id = req.params.id;
