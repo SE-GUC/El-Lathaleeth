@@ -39,6 +39,7 @@ class lawyer_workspace extends Component {
               tobereviewed={true}
               reviewForm={this.reviewForm}
               addComment={this.addComment}
+              pay={this.pay}
             />
           )}
         </div>
@@ -50,6 +51,7 @@ class lawyer_workspace extends Component {
               tobereviewed={false}
               reviewForm={this.reviewForm}
               addComment={this.addComment}
+              pay={this.pay}
             />
           )}
         </div>
@@ -61,22 +63,45 @@ class lawyer_workspace extends Component {
               tobereviewed={false}
               reviewForm={this.reviewForm}
               addComment={this.addComment}
+              pay={this.pay}
+              edit={this.edit}
             />
           )}
         </div>
       </div>
     );
   }
+edit= async (id)=>{
+  
 
+}
   reviewForm = async (idl, id) => {
     this.setState({
-      forms: this.state.forms.filter(form => {
+      pending_forms: this.state.pending_forms.filter(form => {
         return form._id !== id;
       })
     });
 
     const reserve = await axios.put(
       "http://localhost:5000/api/forms/review/" + idl + "/" + id
+    );
+  };
+  pay = async (id) => {
+      const lawyerinfo = await axios
+      .get(
+        "http://localhost:5000/api/entity_emp/workSpace/" +
+          this.props.loggedUser.id
+      )
+      .then(res => {
+        console.log(res.data);
+        this.setState({
+          pending_forms: res.data.pending_forms,
+          reviewed_forms: res.data.reviewed_forms,
+          filled_forms: res.data.filled_forms
+        });
+      });
+    const reserve = await axios.put(
+      "http://localhost:5000/api/forms/formPaid/"+ id
     );
   };
   addComment = async (id, body) => {
@@ -95,13 +120,18 @@ class lawyer_workspace extends Component {
       "http://localhost:5000/api/forms/commentOnForm/" + id,
       body
     );
-    const formsData = await axios
+    const lawyerinfo = await axios
       .get(
-        "http://localhost:5000/api/forms/getPending/" + this.props.loggedUser.id
+        "http://localhost:5000/api/entity_emp/workSpace/" +
+          this.props.loggedUser.id
       )
       .then(res => {
-        console.log(res.data.data);
-        this.setState({ forms: res.data.data });
+        console.log(res.data);
+        this.setState({
+          pending_forms: res.data.pending_forms,
+          reviewed_forms: res.data.reviewed_forms,
+          filled_forms: res.data.filled_forms
+        });
       });
   };
 }

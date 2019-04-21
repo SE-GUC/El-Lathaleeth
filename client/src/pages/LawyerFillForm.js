@@ -642,8 +642,9 @@ class LawyerFillForm extends Component {
             this.props.loggedUser.id,
           body
         )
-        .then(result => {
+        .then(async result => {
           alert("Form Submitted Successfully");
+          await axios.put("http://localhost:5000/api/forms/generateCost/"+result.data.data._id)
           window.location.hash = "#";
         })
         .catch(error => {

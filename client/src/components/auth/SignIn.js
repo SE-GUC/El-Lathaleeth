@@ -97,6 +97,10 @@ await  this.props.login({
       test = <div>Employee Signed In</div>;
       window.location.hash = "/";
     }
+    else if(this.props.loggedUser.type==='Reviewer'){
+            window.location.hash = "/";
+
+    }
     return (
       <Center>
         <form className="white" onSubmit={this.handleSubmit}>
