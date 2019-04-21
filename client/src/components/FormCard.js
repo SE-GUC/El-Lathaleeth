@@ -4,6 +4,7 @@ import Collapse from "react-bootstrap/Collapse";
 import { DetailedForm } from "./DetailedForm";
 import { connect } from "react-redux";
 import Center from "react-center";
+import "./abougabal.css";
 
 export class FormCard extends Component {
   constructor(props, context) {
@@ -17,7 +18,8 @@ export class FormCard extends Component {
     const { open } = this.state;
     return (
       <Center>
-          <div class="card hoverable" >
+         <div className="abougabal1">
+          <div class="card hoverable">
             <div class="card-content">
               <span class="card-title">
                 {this.props.form.englishName} - {this.props.form.arabicName}
@@ -47,11 +49,13 @@ export class FormCard extends Component {
                 </div>
               </Collapse>
             </div>
+            </div>
           </div>
-      </Center>
+          </Center>
     );
   }
 }
+
 
 const mapStateToProps = state => ({
   isLoggedIn: state.auth.isLoggedIn,

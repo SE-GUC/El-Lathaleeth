@@ -108,7 +108,7 @@ class LawyerInvestorForm extends Component {
     return (
       <div className="wrlawyerInvestorForm container">
         <div className="form-wrlawyerInvestorForm">
-          <h1>Investor Details</h1>
+          <h3>Investor Details</h3>
           <Form onSubmit={this.handleSubmit} noValidate>
             <Form.Group className="investorType">
               <Form.Label>Investor Type:</Form.Label>
@@ -137,9 +137,10 @@ class LawyerInvestorForm extends Component {
                 <span className="errorMessage">{form1Errors.name}</span>
               )}
             </Form.Group>
-            <Form.Group className="email">
-              <Form.Label htmlFor="email">Email</Form.Label>
+            <Form.Group className="email" >
+              <Form.Label style={{marginLeft: "-0.85%"}} htmlFor="email">Email</Form.Label>
               <Form.Control
+              style={{marginLeft: "-0.85%"}}
                 className={form1Errors.email.length > 0 ? "error" : null}
                 placeholder="Email"
                 type="email"
@@ -152,8 +153,9 @@ class LawyerInvestorForm extends Component {
               )}
             </Form.Group>
             <Form.Group className="address">
-              <Form.Label htmlFor="address">Address</Form.Label>
+              <Form.Label style={{marginLeft: "-1.925%"}} htmlFor="address">Address</Form.Label>
               <Form.Control
+              style={{marginLeft: "-2%"}}
                 className={form1Errors.address.length > 0 ? "error" : null}
                 placeholder="Address"
                 type="address"
@@ -169,7 +171,7 @@ class LawyerInvestorForm extends Component {
               <Form.Label htmlFor="phoneNumber">Phone Number</Form.Label>
               <Form.Control
                 className={form1Errors.phoneNumber.length > 0 ? "error" : null}
-                placeholder="phoneNumber"
+                placeholder="Phone Number"
                 type="phoneNumber"
                 name="phoneNumber"
                 noValidate
@@ -179,11 +181,12 @@ class LawyerInvestorForm extends Component {
                 <span className="errorMessage">{form1Errors.phoneNumber}</span>
               )}
             </Form.Group>
-            <Form.Group className="faxNumber">
+            <Form.Group className="faxNumber" style={{marginLeft: "1.5%"}}>
+            
               <Form.Label htmlFor="faxNumber">Fax Number</Form.Label>
               <Form.Control
                 className={form1Errors.faxNumber.length > 0 ? "error" : null}
-                placeholder="faxNumber"
+                placeholder="Fax Number"
                 type="faxNumber"
                 name="faxNumber"
                 noValidate
@@ -193,15 +196,15 @@ class LawyerInvestorForm extends Component {
                 <span className="errorMessage">{form1Errors.faxNumber}</span>
               )}
             </Form.Group>
-            <Form.Group className="creditCardNumber">
+            <Form.Group className="creditCardNumber" style={{marginLeft: "1.5%"}}>
               <Form.Label htmlFor="creditCardNumber">
-                CreditCard Number
+                Credit Card Number
               </Form.Label>
               <Form.Control
                 className={
                   form1Errors.creditCardNumber.length > 0 ? "error" : null
                 }
-                placeholder="creditCardNumber"
+                placeholder="Credit Card Number"
                 type="creditCardNumber"
                 name="creditCardNumber"
                 noValidate

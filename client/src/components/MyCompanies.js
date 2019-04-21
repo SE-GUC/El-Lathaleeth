@@ -9,6 +9,7 @@ class MyCompanies extends Component {
       .filter(form => {
         return form.status === "paid";
       })
+
       .map(form => (
       <FormCard form={form} tobereviewed={false} reviewForm={false} addComment={false}/>
       ));

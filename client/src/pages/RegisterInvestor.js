@@ -336,7 +336,7 @@ class RegisterInvestor extends Component {
                 <li>
                   <Form.Row>
                     <Form.Group className="col-md-6">
-                      <Form.Label htmlFor="name">Name</Form.Label>
+                     
                       <Form.Control
                         className={formErrors.name.length > 0 ? "error" : null}
                         placeholder="Name"
@@ -350,7 +350,6 @@ class RegisterInvestor extends Component {
                       )}
                     </Form.Group>
                     <Form.Group className="col-md-6">
-                      <Form.Label htmlFor="password">Password</Form.Label>
                       <Form.Control
                         className={
                           formErrors.password.length > 0 ? "error" : null
@@ -370,8 +369,7 @@ class RegisterInvestor extends Component {
                   </Form.Row>
                 </li>
                 <li>
-                  <Form.Group className="email">
-                    <Form.Label htmlFor="email">Email</Form.Label>
+                  <Form.Group className="email" style={{marginLeft: "-0.00%"}}>
                     <Form.Control
                       className={formErrors.email.length > 0 ? "error" : null}
                       placeholder="Email"
@@ -386,8 +384,8 @@ class RegisterInvestor extends Component {
                   </Form.Group>
                 </li>
                 <li>
-                  <Form.Group className="address">
-                    <Form.Label htmlFor="address">Address</Form.Label>
+                  <Form.Group className="address" style={{marginLeft: "0.0%", width:"100%"}}>
+                    
                     <Form.Control
                       className={formErrors.address.length > 0 ? "error" : null}
                       placeholder="Address"
@@ -403,12 +401,12 @@ class RegisterInvestor extends Component {
                 </li>
                 <li>
                   <Form.Group className="phoneNumber">
-                    <Form.Label htmlFor="phoneNumber">Phone Number</Form.Label>
+                  
                     <Form.Control
                       className={
                         formErrors.phoneNumber.length > 0 ? "error" : null
                       }
-                      placeholder="phoneNumber"
+                      placeholder="Phone Number"
                       type="phoneNumber"
                       name="phoneNumber"
                       noValidate
@@ -423,12 +421,12 @@ class RegisterInvestor extends Component {
                 </li>
                 <li>
                   <Form.Group className="faxNumber">
-                    <Form.Label htmlFor="faxNumber">Fax Number</Form.Label>
+                  
                     <Form.Control
                       className={
                         formErrors.faxNumber.length > 0 ? "error" : null
                       }
-                      placeholder="faxNumber"
+                      placeholder="Fax Number"
                       type="faxNumber"
                       name="faxNumber"
                       noValidate
@@ -443,14 +441,12 @@ class RegisterInvestor extends Component {
                 </li>
                 <li>
                   <Form.Group className="creditCardNumber">
-                    <Form.Label htmlFor="creditCardNumber">
-                      CreditCard Number
-                    </Form.Label>
+                   
                     <Form.Control
                       className={
                         formErrors.creditCardNumber.length > 0 ? "error" : null
                       }
-                      placeholder="creditCardNumber"
+                      placeholder="Credit Card Number"
                       type="creditCardNumber"
                       name="creditCardNumber"
                       noValidate
@@ -464,9 +460,10 @@ class RegisterInvestor extends Component {
                   </Form.Group>
                 </li>
                 <li>
-                  <Form.Group className="nationality">
-                    <Form.Label>Nationality</Form.Label>
+                  <Form.Group className="nationality" style={{marginLeft: "0.0%", width:"100%"}}>
+                    <Form.Label style={{fontSize:18}}> Nationality </Form.Label>
                     <Form.Control
+                      
                       as="select"
                       value={this.state.nationality}
                       onChange={this.handleChange}

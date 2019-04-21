@@ -104,7 +104,7 @@ await  this.props.login({
     }
     return (
       <Center >
-        <div className =  "center-align">
+        <div className =  "col-md-3 col-md-offset-6">
         <form className="white" onSubmit={this.handleSubmit}>
           <div className="container center padding-70">
             <h5 className="grey-text text-darken-3">Sign In</h5>

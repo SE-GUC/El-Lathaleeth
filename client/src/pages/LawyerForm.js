@@ -244,7 +244,8 @@ class LawyerForms extends Component {
     return (
       <div className="wrLawyerFormser">
         <div className="form-wrLawyerFormser">
-          <h1>Create New Company</h1>
+          <h3 style={{marginLeft: "1.5%"}}>Create New Company  
+          </h3>
           <form onSubmit={this.handleSubmit} noValidate>
             <div className="englishName">
               <label htmlFor="englishName">English Name</label>
@@ -327,10 +328,10 @@ class LawyerForms extends Component {
                 style={{ display: "block" }}
               />
             </div>
-            <div className="address">
-              <label htmlFor="address2">address</label>
+            <div className="address" >
+              <label htmlFor="address2">Address</label>
               <input
-                placeholder="address"
+                placeholder="Address"
                 type="address2"
                 name="address2"
                 noValidate
