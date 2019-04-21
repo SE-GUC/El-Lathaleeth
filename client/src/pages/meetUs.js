@@ -6,9 +6,10 @@ class meetUs extends Component {
     render(){
         return(
 <div class="row">
-    <div class="column">
-        <div class="card card-custom mx-2 mb-3">
-        <img class="card-img-top" src="https://upload.wikimedia.org/wikipedia/en/a/a9/Example.jpg" alt="Card image"/>
+    <h1>Meet El Lathaleeth</h1>
+        <div class="column">
+            <div class="card card-custom mx-2 mb-3">
+                 <img class="card-img-top" src="https://upload.wikimedia.org/wikipedia/en/a/a9/Example.jpg" alt="Card image"/>
   <div class="card-body">
     <h4 class="card-title">Ali Souidan</h4>
     <p class="card-text">Some example text.</p>
