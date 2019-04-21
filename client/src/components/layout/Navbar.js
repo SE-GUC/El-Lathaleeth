@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+// import { connect } from "react-redux";
 import Sidenav from "./Sidenav";
 import SignedIn from "./SignedIn";
 import { connect } from "react-redux";

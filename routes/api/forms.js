@@ -199,16 +199,22 @@ router.get("/statusByID/:id", async (req, res) => {
       return res.status(404).send({ error: "Form does not exist" });
       switch (findform[0].status) {
         case "posted":
-          status = "Your Form is Currently Waiting To Be Reviewed by a Lawyer";
+          status =
+            "Your Form is Currently Waiting To Be Reserved by a Lawyer";
           break;
-        case "reserved":
-          status = "Your Form is Currently Being Reviewed";
+        case "pending reviewer":
+          status = "Your Form is Currently Being Reviewed by a Reviewer";
+          break;
+
+        case "pending lawyer":
+          status = "Your Form is Currently Being Reviewed by a Lawyer";
           break;
         case "reviewer check":
           status = "Your Form is Currently Awaiting Payment";
           break;
         case "lawyer check":
-          status = "Your Form is Currently Waiting to Be Reviewed by a Reviewer";
+          status =
+            "Your Form is Currently Waiting to Be Reserved by a Reviewer";
           break;
       }
     res.json({ msg: "Status found", data: status });
@@ -348,7 +354,7 @@ router.put("/generateCost/:id", async (req, res) => {
       },
       { new: true }
     );
-    res.json({ msg: "Form paid successfully", data: updatedForm });
+    res.json({ msg: "Generated cost", data: updatedForm });
   } catch (error) {
     console.log(error);
   }

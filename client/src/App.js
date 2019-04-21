@@ -14,11 +14,15 @@ import Navbar from "./components/layout/Navbar";
 import { Provider } from "react-redux";
 import store from "./globalState/store";
 import FillForm from "./pages/FillForm";
-
-import OneForm from "./pages/OneForm";
+import Carousel from "./components/Carousel";
+import LawyerFillForm from "./pages/LawyerFillForm";
+import PayPage from "./pages/PayPage";
+import UpdateOneForm from "./pages/UpdateOneForm";
 import RegisterInvestor from "./pages/RegisterInvestor";
 import ViewInvestorProfile from "./pages/ViewInvestorProfile";
 import UpdateInvestorProfile from "./pages/UpdateInvestorProfile";
+import UpdateFormPage from "./pages/UpdateFormPage";
+
 import Homepage from "./pages/Homepage";
 
 class App extends Component {
@@ -30,7 +34,22 @@ class App extends Component {
             <Navbar />
             <main>
               <Route exact path="/" component={Homepage} />
+              <Route exact path="/PayPage" component={PayPage} />
+
+              <Route
+                exact
+                path="/lawyerFillForm"
+                component={LawyerFillForm}
+              />
+
               <Route exact path="/LawyerPage" component={LawyerPage} />
+              <Route path="/UpdateOneForm" component={UpdateOneForm} />
+              <Route
+                exact
+                path="/UpdateFormPage"
+                component={UpdateFormPage}
+              />
+
               <Route
                 exact
                 path="/lawyerPendingForms"
@@ -38,10 +57,9 @@ class App extends Component {
               />
               <Route exact path="/InvestorPage" component={InvestorPage} />
               <Route exact path="/CasePage" component={CasePage} />
-    {/*<Route exact path="/OneForm" component={OneForm} />*/}
               <Route
                 exact
-                path="/ViewInvestorProfile"
+                path="/MyProfile"
                 component={ViewInvestorProfile}
               />
               <Route
@@ -49,6 +67,7 @@ class App extends Component {
                 path="/UpdateInvestorProfile"
                 component={UpdateInvestorProfile}
               />
+              <Route exact path="/FillForm" component={FillForm} />
 
               <Route
                 exact

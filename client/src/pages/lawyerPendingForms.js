@@ -11,7 +11,8 @@ class lawyerPendingForms extends Component {
     console.log(this.props.loggedUser)
     const formsData = await axios
       .get(
-        "http://localhost:5000/api/forms/getPending/"+this.props.loggedUser.id
+        "http://localhost:5000/api/forms/getPending/" +
+          this.props.loggedUser.id
       )
       .then(res => {
         console.log(res.data.data);

@@ -23,13 +23,15 @@ class ViewInvestorProfile extends Component {
 
     componentDidMount = async () => {
         console.log(this.props.loggedUser);
-         await axios.get(
-            "http://localhost:5000/api/investor/"+this.props.loggedUser.id
-          )
-          .then(result => {
-            console.log(result.data.data);
-            this.setState({ investor: result.data.data });
-          });
+         await axios
+           .get(
+             "http://localhost:5000/api/investor/" +
+               this.props.loggedUser.id
+           )
+           .then(result => {
+             console.log(result.data.data);
+             this.setState({ investor: result.data.data });
+           });
     };
 
     render() {
@@ -38,7 +40,7 @@ class ViewInvestorProfile extends Component {
                 <NewNav title="My Profile"/>
                 <div class="card-body">
                     <h3 class="card-title">
-                    {this.state.investor.firstName} {this.state.investor.middleName} {this.state.investor.lastName} 
+                    {this.state.investor.name}
                     <Link to={'/UpdateInvestorProfile'}>
                         <i className="fa fa-pencil" style={{
                             color: 'orange', 

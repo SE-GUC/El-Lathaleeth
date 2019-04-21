@@ -3,6 +3,7 @@ import Center from 'react-center';
 import { connect } from "react-redux";
 import { login } from "../../globalState/actions/authActions";
 import PropTypes from "prop-types";
+import axios from "axios";
 
 class SignIn extends Component {
   constructor(props) {
@@ -20,21 +21,49 @@ class SignIn extends Component {
   login =async () => {
     // try{
       try{
-   await  this.props.login({
+        await	axios.post(
+            "http://localhost:5000/api/entity_emp/login",
+            {
+              username: this.state.email,
+              password: this.state.password
+            }
+          );
+await  this.props.login({
       username: this.state.email,
       password: this.state.password
-    }) 
-     window.location.hash = "#";
-}
-catch(e){
-  alert("Check Fields")
-}  
+    })
+          
+
+      }catch(e){
+        try{
+       await   axios.post(
+            "http://localhost:5000/api/investor/login",
+            {
+              email: this.state.email,
+              password: this.state.password
+            }
+          );
+          await  this.props.login({
+      username: this.state.email,
+      password: this.state.password
+    })
+          
+
+        }
+        catch(m){
+    alert("Please Check Fields")}
+
+        }
+      
+      }
+      
+
 // }
     // catch(e){
 // alert("Check Fields")
     // }
 
-  };
+  ;
   handleSubmit = e => {
     e.preventDefault();
     this.login();
@@ -63,8 +92,10 @@ catch(e){
     let test
     if (this.props.loggedUser.type === "investor") {
       test = <div>Investor Signed In</div>;
+      window.location.hash = "/InvestorPage";
     } else if (this.props.loggedUser.type === "Lawyer") {
       test = <div>Employee Signed In</div>;
+      window.location.hash = "/";
     }
     return (
       <Center>
@@ -103,8 +134,7 @@ SignIn.propTypes = {
 };
 const mapStateToProps = state => ({
   isLoggedIn: state.auth.isLoggedIn,
-  loggedUser: state.auth.loggedUser
-});
+  loggedUser: state.auth.loggedUser});
 
 export default connect(
   mapStateToProps,
