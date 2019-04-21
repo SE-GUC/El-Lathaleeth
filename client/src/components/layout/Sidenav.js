@@ -210,6 +210,16 @@ class Sidenav extends Component {
         </li>
       </div>
     );
+    let userstuff = (
+      <div>
+        <li>
+          <a className="subheader grey darken-3">User</a>
+        </li>
+        <li>
+          <a href="#/EstablishedCompanies">View Companies</a>
+        </li>
+      </div>
+    );
     try {
       if (this.props.loggedUser.type === "Lawyer") {
         displayed = lawyerstuff;
@@ -220,7 +230,7 @@ class Sidenav extends Component {
       } else if (this.props.loggedUser.type === "investor") {
         displayed = investorstuff;
       } else {
-        displayed = "";
+        displayed = userstuff; //unregistered users
       }
     } catch (e) {
       displayed = "";
