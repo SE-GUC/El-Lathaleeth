@@ -94,12 +94,13 @@ await  this.props.login({
     if (this.props.loggedUser.type === "investor") {
       test = <div>Investor Signed In</div>;
       window.location.hash = "/InvestorPage";
-    } else if (this.props.loggedUser.type === "Lawyer") {
+    } else if ((this.props.loggedUser.type === "Lawyer")||(this.props.loggedUser.type === "Reviewer")) {
       test = <div>Employee Signed In</div>;
       window.location.hash = "/lawyer_workspace";
     }
     return (
-      <Center>
+      <Center >
+        <div className =  "center-align">
         <form className="white" onSubmit={this.handleSubmit}>
           <div className="container center padding-70">
             <h5 className="grey-text text-darken-3">Sign In</h5>
@@ -126,6 +127,7 @@ await  this.props.login({
             {test}
           </div>
         </form>
+        </div>
       </Center>
     );
   }

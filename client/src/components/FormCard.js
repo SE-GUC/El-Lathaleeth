@@ -17,12 +17,12 @@ export class FormCard extends Component {
     const { open } = this.state;
     return (
       <Center>
-          <div class="card" >
+          <div class="card hoverable" >
             <div class="card-content">
               <span class="card-title">
                 {this.props.form.englishName} - {this.props.form.arabicName}
               </span>
-              <p class="card-text">Case Number: {this.props.form.caseNum}</p>
+              <p class="card-text">Case Number: {this.props.form.caseNumber}</p>
               <Button
                 className="right shadow-none p-0 mb-5 bg-light rounded "
                 variant="link"

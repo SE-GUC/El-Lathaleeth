@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import MyCompanies from "../components/MyCompanies";
+import trackCasePage from "./trackCasePage";
 
 const axios = require("axios");
 
@@ -25,6 +26,7 @@ class InvestorPage extends Component {
         console.log(this.state.companies);
         return (
             <div className="InvestorPage">
+                <trackCasePage/>
                 <MyCompanies companies={this.state.companies} />
             </div>
         );
