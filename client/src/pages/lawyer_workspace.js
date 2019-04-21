@@ -114,7 +114,7 @@ edit= async (id)=>{
     //     }
     //   })
     // });
-    console.log(this.state.forms);
+    console.log(this.state.pending_forms);
     //   useAlert("Comment Submitted")
     const add = await axios.put(
       "http://localhost:5000/api/forms/commentOnForm/" + id,

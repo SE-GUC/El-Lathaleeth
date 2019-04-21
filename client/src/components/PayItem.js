@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import { connect } from "react-redux";
+//import PayStripe from "./PayStripe";
 export class PayItem extends Component {
   state = { clicked: false };
   render() {

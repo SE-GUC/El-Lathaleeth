@@ -7,14 +7,10 @@ class Cards extends Component {
     return (
       <div class="row">
         {this.props.forms.map(form => (
-          <div class="col s12 m6 l3">
-            <FormCard
-              form={form}
-              tobereviewed={bool}
-              pay={this.props.pay}
-              reviewForm={this.props.reviewForm}
-              addComment={this.props.addComment}
-            />
+          <div className = "fixed-width"style = {{width: 400}}>
+            <FormCard form={form} tobereviewed={bool} 
+            pay={this.props.pay}
+            reviewForm={this.props.reviewForm} addComment={this.props.addComment}/>
           </div>
         ))}
       </div>
