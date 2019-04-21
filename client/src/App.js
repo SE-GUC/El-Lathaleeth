@@ -24,6 +24,8 @@ import UpdateInvestorProfile from "./pages/UpdateInvestorProfile";
 import UpdateFormPage from "./pages/UpdateFormPage";
 import contactUs from "./pages/contactUs";
 import meetUs from "./pages/meetUs";
+import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+
 
 import Homepage from "./pages/Homepage";
 
