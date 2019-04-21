@@ -107,7 +107,7 @@ await  this.props.login({
         <div className =  "col-md-3 col-md-offset-6">
         <form className="white" onSubmit={this.handleSubmit}>
           <div className="container center padding-70">
-            <h5 className="grey-text text-darken-3">Sign In</h5>
+            <h3 className="grey-text text-darken-3" style={{lineHeight:4}} >Sign In</h3>
             <div className="container">
               <div className="input-field">
                 <label htmlFor="email">Email or Username</label>

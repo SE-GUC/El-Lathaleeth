@@ -315,12 +315,12 @@ class RegisterInvestor extends Component {
       <Center>
         <div className="wrRegisterInvestor">
           <div className="form">
-            <h1>Sign up</h1>
+            <h1 style={{marginLeft: "-5.00%", lineHeight:2.5}} >Sign up</h1>
             <Form onSubmit={this.handleSubmit} noValidate>
               <ul>
                 <li>
                   <Form.Group className="investorType">
-                    <Form.Label>Investor Type:</Form.Label>
+                    <Form.Label style={{fontSize:18}}>Investor Type:</Form.Label>
                     <Form.Control
                       as="select"
                       value={this.state.investorType}
@@ -723,7 +723,8 @@ class RegisterInvestor extends Component {
                 <li>{individualRegister}</li>
               </ul>
               <div className="createAccount">
-                <Button type="submit">Sign Up</Button>
+                <Button type="submit" style={{marginLeft: "-15.0%", width:"25%"}}>
+                Sign Up</Button>
               </div>
             </Form>
           </div>
