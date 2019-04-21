@@ -25,8 +25,7 @@ class InvestorPage extends Component {
     render() {
         console.log(this.state.companies);
         return (
-            <div className="InvestorPage">
-                <trackCasePage/>
+            <div className="InvestorPage">           
                 <MyCompanies companies={this.state.companies} />
             </div>
         );
