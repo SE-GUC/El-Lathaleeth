@@ -98,6 +98,10 @@ await  this.props.login({
       test = <div>Employee Signed In</div>;
       window.location.hash = "/lawyer_workspace";
     }
+    else if(this.props.loggedUser.type==='Reviewer'){
+            window.location.hash = "/";
+
+    }
     return (
       <Center >
         <div className =  "center-align">

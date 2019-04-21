@@ -37,6 +37,7 @@ export class FormCard extends Component {
                   {console.log(this.props.loggedUser)}
                   <DetailedForm
                     form={this.props.form}
+                    pay={this.props.pay}
                     tobereviewed={this.props.tobereviewed}
                     reviewForm={this.props.reviewForm}
                     addComment={this.props.addComment}

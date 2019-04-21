@@ -180,8 +180,9 @@ class FillForms extends Component {
     if (formValid(this.state)) {
       const form = await axios
         .post("http://localhost:5000/api/forms/", body)
-        .then(result => {
+        .then(async (result) => {
           alert("Form Submitted Successfully");
+          await axios.put("http://localhost:5000/api/forms/generateCost/"+result.data.data._id)
           window.location.hash = "#";
         })
         .catch(error => {

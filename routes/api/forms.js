@@ -214,16 +214,21 @@ router.get("/statusByID/:id", async (req, res) => {
         status = "Your Form is Currently Being Reviewed by a Reviewer";
         break;
 
-      case "pending lawyer":
-        status = "Your Form is Currently Being Reviewed by a Lawyer";
-        break;
-      case "reviewer check":
-        status = "Your Form is Currently Awaiting Payment";
-        break;
-      case "lawyer check":
-        status = "Your Form is Currently Waiting to Be Reserved by a Reviewer";
-        break;
-    }
+        case "pending lawyer":
+          status = "Your Form is Currently Being Reviewed by a Lawyer";
+          break;
+        case "reviewer check":
+          status = "Your Form is Currently Awaiting Payment";
+          break;
+        case "lawyer check":
+          status =
+            "Your Form is Currently Waiting to Be Reserved by a Reviewer";
+          break;
+        case "paid":
+          status =
+            "Your Form has been paid";
+          break;
+      }
     res.json({ msg: "Status found", data: status });
   } catch (error) {
     // Error will be handled later
