@@ -24,6 +24,7 @@ import UpdateInvestorProfile from "./pages/UpdateInvestorProfile";
 import UpdateFormPage from "./pages/UpdateFormPage";
 
 import Homepage from "./pages/Homepage";
+import EstablishedCompanies from "./pages/EstablishedCompanies";
 
 class App extends Component {
   render() {
@@ -68,7 +69,11 @@ class App extends Component {
                 component={UpdateInvestorProfile}
               />
               <Route exact path="/FillForm" component={FillForm} />
-
+              <Route
+                exact
+                path="/EstablishedCompanies"
+                component={EstablishedCompanies}
+              />
               <Route
                 exact
                 path="/RegisterEmployee"
