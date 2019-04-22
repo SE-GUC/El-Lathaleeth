@@ -25,7 +25,7 @@ export const logout = () => dispatch => {
 export const login =  (userData) => dispatch => {
 		axios
       .post(
-        "http://localhost:5000/api/entity_emp/login",
+        "https://lathaleeth.herokuapp.com/api/entity_emp/login",
         userData
       )
       .then(res => {
@@ -37,7 +37,7 @@ export const login =  (userData) => dispatch => {
       .catch(err => {
         const body = { ...userData, email: userData.username };
         axios
-          .post("http://localhost:5000/api/investor/login", body)
+          .post("https://lathaleeth.herokuapp.com/api/investor/login", body)
           .then(res => {
             const { token } = res.data;
             localStorage.setItem("jwtToken", token);

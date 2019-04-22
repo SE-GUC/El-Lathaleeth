@@ -9,7 +9,7 @@ class PayPage extends Component {
 
   componentDidMount = async () => {
     const forms = await axios.get(
-      "http://localhost:5000/api/forms/byInvestorID/" + this.props.loggedUser.id
+      "https://lathaleeth.herokuapp.com/api/forms/byInvestorID/" + this.props.loggedUser.id
     );
     this.setState({
       forms: forms.data.data.filter(e => {
@@ -25,7 +25,7 @@ class PayPage extends Component {
     });
 
     const reserve = await axios.put(
-      "http://localhost:5000/api/forms/formPaid/"+ id
+      "https://lathaleeth.herokuapp.com/api/forms/formPaid/"+ id
     );
   };
   render() {

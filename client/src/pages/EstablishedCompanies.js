@@ -7,7 +7,7 @@ class EstablishedCompanies extends Component {
   state = { companies: [] };
 
   componentDidMount = async () => {
-    await axios.get("http://localhost:5000/api/forms/").then(result => {
+    await axios.get("https://lathaleeth.herokuapp.com/api/forms/").then(result => {
       this.setState({ companies: result.data.data });
     });
   };
