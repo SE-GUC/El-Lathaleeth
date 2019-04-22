@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Image from 'react-image-resizer';
 import souidan from  "../components/Assets/imgs/souidan.jpeg";
 import laithy from "../components/Assets/imgs/laithy.jpeg";
 import lina from "../components/Assets/imgs/lina.jpeg";
