@@ -90,6 +90,7 @@ await  this.props.login({
    
   };
   render() {
+    if(this.props.isEnglish){
     let test
     if (this.props.loggedUser.type === "investor") {
       test = <div>Investor Signed In</div>;
@@ -137,14 +138,78 @@ await  this.props.login({
         </div>
       </Center>
     );
+  }else
+  {let test
+    if (this.props.loggedUser.type === "investor") {
+      test = <div>Investor Signed In</div>;
+      window.location.hash = "/InvestorPage";
+    } else if ((this.props.loggedUser.type === "Lawyer")||(this.props.loggedUser.type === "Reviewer")) {
+      test = <div>Employee Signed In</div>;
+      window.location.hash = "/lawyer_workspace";
+    }
+    else if(this.props.loggedUser.type==='Reviewer'){
+            window.location.hash = "/";
+
+    }
+    else if(this.props.loggedUser.type==='Admin'){
+ window.location.hash = "/";
+    }
+    return (
+      <Center>
+        <div className="col-md-3 col-md-offset-6">
+          <form className="white" onSubmit={this.handleSubmit}>
+            <div className="container center padding-70">
+              <h3
+                className="grey-text text-darken-3"
+                style={{ lineHeight: 4 }}
+              >
+                تسجيل دخول
+              </h3>
+              <div className="container">
+                <div className="input-field">
+                  <label htmlFor="email">
+                    إسم المستخدم او البريد الالكتروني
+                  </label>
+                  <input
+                    type="text"
+                    id="email"
+                    onChange={this.handleChange}
+                  />
+                </div>
+              </div>
+
+              <div className="container">
+                <div className="input-field">
+                  <label htmlFor="password">كلمة السر</label>
+                  <input
+                    type="password"
+                    id="password"
+                    onChange={this.handleChange}
+                  />
+                </div>
+              </div>
+              <div className="input-field">
+                <button className="btn pink lighten-1 z-depth-0">
+                  تسجيل دخول
+                </button>
+              </div>
+              {test}
+            </div>
+          </form>
+        </div>
+      </Center>
+    );
+
   }
+}
 }
 SignIn.propTypes = {
   login: PropTypes.func.isRequired,
 };
 const mapStateToProps = state => ({
   isLoggedIn: state.auth.isLoggedIn,
-  loggedUser: state.auth.loggedUser});
+  loggedUser: state.auth.loggedUser,
+isEnglish:state.nav.isEnglish});
 
 export default connect(
   mapStateToProps,

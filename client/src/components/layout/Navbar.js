@@ -6,6 +6,7 @@ import SignedIn from "./SignedIn";
 import { connect } from "react-redux";
 import SignedOut from "./SignedOut";
 import SignIn from "../auth/SignIn";
+import img from "../Assets/Sumergepng.png"
 import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 import { remember } from "../../globalState/actions/authActions";
@@ -41,13 +42,11 @@ class Navbar extends Component {
 
         <div className="container">
           <Link
-            onClick={this.changeLanguage}
             style={{ textDecoration: "none", color: "white" }}
             to="/"
             className="brand-logo"
           >
             <i className="material-icons">donut_small</i>Sumerge Lathaleeth{" "}
-            {language}
           </Link>
           <div>
             <ul className="right">
