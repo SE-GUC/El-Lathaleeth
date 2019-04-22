@@ -738,7 +738,8 @@ RegisterInvestor.propTypes = {
 };
 const mapStateToProps = state => ({
   isLoggedIn: state.auth.isLoggedIn,
-  loggedUser: state.auth.loggedUser
+  loggedUser: state.auth.loggedUser,
+  isEnglish:state.nav.isEnglish
 });
 export default connect(
   mapStateToProps,
