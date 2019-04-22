@@ -131,7 +131,7 @@ class UpdateInvestorProfile extends Component {
     if (formValid(this.state)) {
       const investor = await axios
         .put(
-          "http://localhost:5000/api/investor/5cafca0b96a4844b0864c9fe",
+          "https://lathaleeth.herokuapp.com/api/investor/5cafca0b96a4844b0864c9fe",
           body
         )
         .then(result => {
@@ -153,7 +153,7 @@ class UpdateInvestorProfile extends Component {
   componentDidMount = async () => {
     console.log(this.props.loggedUser);
     await axios
-      .get("http://localhost:5000/api/investor/" + this.props.loggedUser.id)
+      .get("https://lathaleeth.herokuapp.com/api/investor/" + this.props.loggedUser.id)
       .then(result => {
         console.log(result.data.data);
         this.setState({ investor: result.data.data });

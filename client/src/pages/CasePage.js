@@ -8,7 +8,7 @@ const axios = require("axios");
 class CasePage extends Component {
   // constructor() {
   //   super();
-  //   const formsData = await axios.get("http://localhost:5000/api/forms/");
+  //   const formsData = await axios.get("https://lathaleeth.herokuapp.com/api/forms/");
 
   //   this.state = { forms:formsData.data.data };
   // }
@@ -16,7 +16,7 @@ class CasePage extends Component {
   //view all cases
   componentWillMount = async () => {
     const formsData = await axios
-      .get("http://localhost:5000/api/forms/")
+      .get("https://lathaleeth.herokuapp.com/api/forms/")
       .then(res => {
         console.log(res.data.data);
         this.setState({
@@ -130,7 +130,7 @@ class CasePage extends Component {
     });
 
     const reserve = await axios.put(
-      "http://localhost:5000/api/entity_emp/reserveForm/" + idl + "/" + id
+      "https://lathaleeth.herokuapp.com/api/entity_emp/reserveForm/" + idl + "/" + id
     );
   };
 }

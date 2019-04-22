@@ -104,7 +104,7 @@ class FillForms extends Component {
   }
   componentWillMount = async () => {
     const formsData = await axios
-      .get("http://localhost:5000/api/investor/" + this.props.loggedUser.id)
+      .get("https://lathaleeth.herokuapp.com/api/investor/" + this.props.loggedUser.id)
       .then(res => {
         this.setState({
           inv: res.data.data
@@ -114,7 +114,7 @@ class FillForms extends Component {
   handleSubmit = async e => {
     e.preventDefault();
     const user = await axios.get(
-      "http://localhost:5000/api/investor/" + this.props.loggedUser.id,
+      "https://lathaleeth.herokuapp.com/api/investor/" + this.props.loggedUser.id,
       body
     );
     const inv = user.data.data;
@@ -179,7 +179,7 @@ class FillForms extends Component {
 
     if (formValid(this.state)) {
       const form = await axios
-        .post("http://localhost:5000/api/forms/", body)
+        .post("https://lathaleeth.herokuapp.com/api/forms/", body)
         .then(async result => {
           if (this.props.isEnglish) {
             alert("Form Submitted Successfully");
@@ -187,7 +187,7 @@ class FillForms extends Component {
             alert("تم بنجاح");
           }
           await axios.put(
-            "http://localhost:5000/api/forms/generateCost/" +
+            "https://lathaleeth.herokuapp.com/api/forms/generateCost/" +
               result.data.data._id
           );
           window.location.hash = "#";
