@@ -39,7 +39,7 @@ class lawyer_workspace extends Component {
               tobereviewed={true}
               reviewForm={this.reviewForm}
               addComment={this.addComment}
-              pay={this.pay}
+              pay={false}
             />
           )}
         </div>
@@ -51,7 +51,7 @@ class lawyer_workspace extends Component {
               tobereviewed={false}
               reviewForm={this.reviewForm}
               addComment={this.addComment}
-              pay={this.pay}
+              pay={false}
             />
           )}
         </div>
