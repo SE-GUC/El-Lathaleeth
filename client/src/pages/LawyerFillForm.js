@@ -15,7 +15,7 @@ const form1Valid = ({ form1Errors, ...rest }) => {
   Object.values(form1Errors).forEach(val => {
     val.length > 0 && (valid = false);
   });
- 
+
   // validate the form was filled out
   Object.values(rest).forEach(val => {
     val === null && (valid = false);
@@ -25,7 +25,7 @@ const form1Valid = ({ form1Errors, ...rest }) => {
 };
 const formValid = ({ formErrors, ...rest }) => {
   let valid = true;
-  console.log(formErrors)
+  console.log(formErrors);
   // validate form errors being empty
   Object.values(formErrors).forEach(val => {
     val.length > 0 && (valid = false);
@@ -53,7 +53,7 @@ class LawyerFillForm extends Component {
     this.selectNationality = this.selectNationality.bind(this);
     this.selectRegion = this.selectRegion.bind(this);
     this.selectRegion1 = this.selectRegion1.bind(this);
-    this.handleSubmit=this.handleSubmit.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this);
 
     // Set the initial input values
     this.state = {
@@ -159,72 +159,79 @@ class LawyerFillForm extends Component {
           creditCardNumber,
           form1Errors
         })
-      ) {const password='password'
-        const isValidated = validator.createValidation({
-          password,
-          name,
-          dateOfBirth,
-          gender,
-          nationality,
-          investorType,
-          email,
-          typeOfID,
-          IDNumber,
-          address,
-          phoneNumber,
-          faxNumber,
-          creditCardNumber},investorType);
-          if (!isValidated.error){
-        currentStep = currentStep >= 2 ? 3 : currentStep + 1;
-        this.setState({
-          startDate: new Date(),
-          investor: {
-            name: name,
-            dateOfBirth: dateOfBirth,
-            gender:gender,
-            nationality:nationality,
-            investorType:investorType,
-            email:email,
-            typeOfID:typeOfID,
-            IDNumber:IDNumber,
-            address:address,
-            phoneNumber:phoneNumber,
-            faxNumber:faxNumber,
-            creditCardNumber:creditCardNumber
+      ) {
+        const password = "password";
+        const isValidated = validator.createValidation(
+          {
+            password,
+            name,
+            dateOfBirth,
+            gender,
+            nationality,
+            investorType,
+            email,
+            typeOfID,
+            IDNumber,
+            address,
+            phoneNumber,
+            faxNumber,
+            creditCardNumber
           },
-          currentStep: currentStep, // Default is Step 1
-          name: null,
-          dateOfBirth: new Date(),
-          gender: "",
-          nationality: null,
-          investorType: null,
-          email: null,
-          typeOfID: "",
-          IDNumber: "",
-          address: null,
-          phoneNumber: null,
-          faxNumber: null,
-          creditCardNumber: null,
-          form1Errors: {
-            name: "",
-            dateOfBirth: "",
+          investorType
+        );
+        if (!isValidated.error) {
+          currentStep = currentStep >= 2 ? 3 : currentStep + 1;
+          this.setState({
+            startDate: new Date(),
+            investor: {
+              name: name,
+              dateOfBirth: dateOfBirth,
+              gender: gender,
+              nationality: nationality,
+              investorType: investorType,
+              email: email,
+              typeOfID: typeOfID,
+              IDNumber: IDNumber,
+              address: address,
+              phoneNumber: phoneNumber,
+              faxNumber: faxNumber,
+              creditCardNumber: creditCardNumber
+            },
+            currentStep: currentStep, // Default is Step 1
+            name: null,
+            dateOfBirth: new Date(),
             gender: "",
-            nationality: "",
-            investorType: "",
-            email: "",
+            nationality: null,
+            investorType: null,
+            email: null,
             typeOfID: "",
             IDNumber: "",
-            address: "",
-            phoneNumber: "",
-            faxNumber: "",
-            creditCardNumber: ""
-          }
-        });}else{
-          alert(isValidated.error.details[0].message)
+            address: null,
+            phoneNumber: null,
+            faxNumber: null,
+            creditCardNumber: null,
+            form1Errors: {
+              name: "",
+              dateOfBirth: "",
+              gender: "",
+              nationality: "",
+              investorType: "",
+              email: "",
+              typeOfID: "",
+              IDNumber: "",
+              address: "",
+              phoneNumber: "",
+              faxNumber: "",
+              creditCardNumber: ""
+            }
+          });
+        } else {
+          alert(isValidated.error.details[0].message);
         }
       } else {
-        alert("Please Make Sure You Have Entered All Fields Correctly");
-      }
+if (this.props.isEnglish)
+  alert("Please Make Sure You Have Entered All Fields Correctly");
+else alert("بالرجاء التأكد من صحة البيانات");      }
     } else if (currentStep === 2) {
       const {
         law,
@@ -322,13 +329,9 @@ class LawyerFillForm extends Component {
           startDate: new Date()
         });
       } else {
-        if(this.props.isEnglish)
-        alert("Please Make Sure You Have Entered All Fields Correctly");
-        else
-                alert(
-                  "بالرجاء التأكد من صحة البيانات"
-                );
-
+        if (this.props.isEnglish)
+          alert("Please Make Sure You Have Entered All Fields Correctly");
+        else alert("بالرجاء التأكد من صحة البيانات");
       }
     } else {
     }
@@ -345,18 +348,17 @@ class LawyerFillForm extends Component {
   }
   selectNationality(val) {
     let formErrors = { ...this.state.formErrors };
-if(this.props.isEnglish){
-    formErrors.nationality1 =
-      val !== "Egypt" && this.state.investor.nationality !== "EG"
-        ? "Director must be Egyptian as Investor is Foreign"
-        : "";}
-        else
-        {formErrors.nationality1 =
-           val !== "Egypt" && this.state.investor.nationality !== "EG"
-             ? "العضو يجب ان يكوم مصري لأن المستثمر اجنبي"
-             : "";
-
-        }
+    if (this.props.isEnglish) {
+      formErrors.nationality1 =
+        val !== "Egypt" && this.state.investor.nationality !== "EG"
+          ? "Director must be Egyptian as Investor is Foreign"
+          : "";
+    } else {
+      formErrors.nationality1 =
+        val !== "Egypt" && this.state.investor.nationality !== "EG"
+          ? "العضو يجب ان يكوم مصري لأن المستثمر اجنبي"
+          : "";
+    }
     this.setState({ formErrors, nationality1: val });
   }
   selectRegion1(val) {
@@ -429,95 +431,95 @@ if(this.props.isEnglish){
     });
   }
   get previousButton() {
-    if(this.props.isEnglish){
-    let currentStep = this.state.currentStep;
-    // If the current step is not 1, then render the "previous" button
-    if (currentStep !== 1) {
-      return (
-        <button
-          className="btn btn-secondary"
-          type="button"
-          onClick={this._prev}
-        >
-          Previous
-        </button>
-      );
-    }
-    // ...else return nothing
-    return null;}
-    else{
-     
-    let currentStep = this.state.currentStep;
-    // If the current step is not 1, then render the "previous" button
-    if (currentStep !== 1) {
-      return (
-        <button
-          className="btn btn-secondary"
-          type="button"
-          onClick={this._prev}
-        >
-          الرجوع
-        </button>
-      );
-    }
-    // ...else return nothing
-    return null; 
+    if (this.props.isEnglish) {
+      let currentStep = this.state.currentStep;
+      // If the current step is not 1, then render the "previous" button
+      if (currentStep !== 1) {
+        return (
+          <button
+            className="btn btn-secondary"
+            type="button"
+            onClick={this._prev}
+          >
+            Previous
+          </button>
+        );
+      }
+      // ...else return nothing
+      return null;
+    } else {
+      let currentStep = this.state.currentStep;
+      // If the current step is not 1, then render the "previous" button
+      if (currentStep !== 1) {
+        return (
+          <button
+            className="btn btn-secondary"
+            type="button"
+            onClick={this._prev}
+          >
+            الرجوع
+          </button>
+        );
+      }
+      // ...else return nothing
+      return null;
     }
   }
 
   get nextButton() {
-    if(this.props.isEnglish){
-    let currentStep = this.state.currentStep;
-    // If the current step is not 3, then render the "next" button
-    if (currentStep < 2) {
-      return (
-        <button
-          className="btn btn-primary float-right"
-          type="button"
-          onClick={this._next}
-        >
-          Next
-        </button>
-      );
-    }
-    else{
-     return  <button
-          className="btn btn-primary float-right"
-          type="button"
-          onClick={this.handleSubmit}
-        >
-          Fill Form
-        </button>
-    }
-    // ...else render nothing
-    return null;}
-    else
-    {
-    let currentStep = this.state.currentStep;
-    // If the current step is not 3, then render the "next" button
-    if (currentStep < 2) {
-      return (
-        <button
-          className="btn btn-primary float-right"
-          type="button"
-          onClick={this._next}
-        >
-          التالى
-        </button>
-      );
+    if (this.props.isEnglish) {
+      let currentStep = this.state.currentStep;
+      // If the current step is not 3, then render the "next" button
+      if (currentStep < 2) {
+        return (
+          <button
+            className="btn btn-primary float-right"
+            type="button"
+            onClick={this._next}
+          >
+            Next
+          </button>
+        );
+      } else {
+        return (
+          <button
+            className="btn btn-primary float-right"
+            type="button"
+            onClick={this.handleSubmit}
+          >
+            Fill Form
+          </button>
+        );
+      }
+      // ...else render nothing
+      return null;
     } else {
-      return (
-        <button
-          className="btn btn-primary float-right"
-          type="button"
-          onClick={this.handleSubmit}
-        >
-          انتهاء 
-        </button>
-      );
+      let currentStep = this.state.currentStep;
+      // If the current step is not 3, then render the "next" button
+      if (currentStep < 2) {
+        return (
+          <button
+            className="btn btn-primary float-right"
+            type="button"
+            onClick={this._next}
+          >
+            التالى
+          </button>
+        );
+      } else {
+        return (
+          <button
+            className="btn btn-primary float-right"
+            type="button"
+            onClick={this.handleSubmit}
+          >
+            انتهاء
+          </button>
+        );
+      }
+      // ...else render nothing
+      return null;
     }
-    // ...else render nothing
-    return null;}
   }
   handleDateChange(date) {
     this.setState({
@@ -710,7 +712,7 @@ if(this.props.isEnglish){
   }
 
   // Trigger an alert on form submission
-  handleSubmit =async event => {
+  handleSubmit = async event => {
     event.preventDefault();
     console.log(this.state);
     let {
@@ -748,7 +750,7 @@ if(this.props.isEnglish){
         status: "lawyer check",
         bitIL: 1,
         comments: [],
-        investor:investor 
+        investor: investor
       };
     } else {
       body = {
@@ -772,22 +774,26 @@ if(this.props.isEnglish){
     delete body.investor.password;
 
     console.log(body);
-    console.log(formErrors)
-    if (formValid( {law,
-      investor,
-      formType,
-      legalForm,
-      englishName,
-      phone,
-      arabicName,
-      capitalVal,
-      capitalCurr,
-      fax,
-      address2,
-      formErrors,
-      city,
-      country,
-      boardOfDirectors})) {
+    console.log(formErrors);
+    if (
+      formValid({
+        law,
+        investor,
+        formType,
+        legalForm,
+        englishName,
+        phone,
+        arabicName,
+        capitalVal,
+        capitalCurr,
+        fax,
+        address2,
+        formErrors,
+        city,
+        country,
+        boardOfDirectors
+      })
+    ) {
       const form = await axios
         .post(
           "http://localhost:5000/api/entity_emp/lawyerfillform/" +
@@ -795,8 +801,17 @@ if(this.props.isEnglish){
           body
         )
         .then(async result => {
-          alert("Form Submitted Successfully");
-          await axios.put("http://localhost:5000/api/forms/generateCost/"+result.data.data._id)
+          if(this.props.isEnglish){
+        alert("Form Submitted Successfully");
+          }
+          else{
+                    alert("تم بنجاح");
+
+          }
+          await axios.put(
+            "http://localhost:5000/api/forms/generateCost/" +
+              result.data.data._id
+          );
           window.location.hash = "#";
         })
         .catch(error => {
@@ -805,27 +820,32 @@ if(this.props.isEnglish){
         });
       console.log(form);
     } else {
-      alert("Please Make Sure All Entries are Correct!");
+      if (this.props.isEnglish) {
+        alert("Please Make Sure All Entries are Correct!");
+      } else {
+        alert("بالرجاء التأكد من البيانات");
+      }
     }
   };
-  
 
   render() {
     const a = this.state;
-    let walk
-    let step
-    if(this.props.isEnglish){
-      walk="Walk In Form"
-      step="Step"
-    }
-    else{
-      walk="املاء بيانات شركة لمستثمر"
-      step="مرحلة رقم "
+    let walk;
+    let step;
+    if (this.props.isEnglish) {
+      walk = "Walk In Form";
+      step = "Step";
+    } else {
+      walk = "املاء بيانات شركة لمستثمر";
+      step = "مرحلة رقم ";
     }
     return (
       <React.Fragment>
         <h1>{walk}</h1>
-        <h2> {step} {this.state.currentStep}  </h2>
+        <h2>
+          {" "}
+          {step} {this.state.currentStep}{" "}
+        </h2>
 
         <form onSubmit={this.handleSubmit}>
           <LawyerInvestorForm
@@ -883,12 +903,10 @@ if(this.props.isEnglish){
             typeInves={a.typeInves}
             formErrors={a.formErrors}
           />
-          
-          
         </form>
         <div>
-        {this.previousButton}
-          {this.nextButton }
+          {this.previousButton}
+          {this.nextButton}
         </div>
       </React.Fragment>
     );
@@ -897,6 +915,6 @@ if(this.props.isEnglish){
 const mapStateToProps = state => ({
   isLoggedIn: state.auth.isLoggedIn,
   loggedUser: state.auth.loggedUser,
-  isEnglish:state.nav.isEnglish
+  isEnglish: state.nav.isEnglish
 });
 export default connect(mapStateToProps)(LawyerFillForm);
