@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import CaseList from "../components/CaseList";
 const axios = require("axios");
+import { connect } from "react-redux";
 
 // const form_funcs = require("./funcs/form_funcs");
 class CasePage extends Component {
@@ -28,8 +29,9 @@ class CasePage extends Component {
     console.log(this.state.displayedForms);
     return (
       <div>
-        <form>
-          Enter Case Number:
+        <form className="col-md-3 col-md-offset-6">
+          {this.props.isEnglish && <div>Enter Case Number</div>}
+          {!this.props.isEnglish && <div>أدخل رقم القضية</div>}
           <input
             type="text"
             name="caseNumber"
@@ -38,16 +40,18 @@ class CasePage extends Component {
             onChange={this.handleChange}
           />
           <button onClick={this.sortCreationDate.bind(this)}>
-            Sort By Creation Date
+          {this.props.isEnglish && <div>Sort By Creation Date</div>}
+          {!this.props.isEnglish && <div>الترتيب حسب تاريخ الإنشاء</div>}
+            
           </button>
           <button onClick={this.sortCaseNum.bind(this)}>
-            Sort By Case Number
+          {this.props.isEnglish && <div>Sort By Case Number</div>}
+          {!this.props.isEnglish && <div>الترتيب حسب رقم القضية</div>}
+            
           </button>
         </form>
-        <div className="CasePage">
-          <CaseList
-            forms={this.state.displayedForms}
-          />
+        <div className="row offset-sm-1">
+          <CaseList forms={this.state.displayedForms} />
         </div>
       </div>
     );
@@ -56,7 +60,7 @@ class CasePage extends Component {
   handleChange = e => {
     e.preventDefault();
     const { name, value } = e.target;
-    
+
     if (value !== "") {
       this.setState({
         displayedForms: this.state.forms.filter(form => {
@@ -125,12 +129,15 @@ class CasePage extends Component {
     });
 
     const reserve = await axios.put(
-      "http://localhost:5000/api/entity_emp/reserveForm/" +
-        idl +
-        "/" +
-        id
+      "http://localhost:5000/api/entity_emp/reserveForm/" + idl + "/" + id
     );
   };
 }
+const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isLoggedIn,
+  loggedUser: state.auth.loggedUser,
+  refresh: state.nav.refresh,
+  isEnglish: state.nav.isEnglish
+});
 
-export default CasePage;
+export default connect(mapStateToProps)(CasePage);

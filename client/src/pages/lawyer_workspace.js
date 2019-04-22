@@ -32,31 +32,31 @@ class lawyer_workspace extends Component {
     return (
       <div className="lawyer_workspace">
         <div className="Pending Forms">
-          {pending_forms.length > 0 && <h4>Pending Forms:</h4>}
+          {pending_forms.length > 0 && <h4 className="col-md-3 col-md-offset-6">Pending Forms:</h4>}
           {pending_forms.length > 0 && (
             <Cards
               forms={pending_forms}
               tobereviewed={true}
               reviewForm={this.reviewForm}
               addComment={this.addComment}
-              pay={this.pay}
+              pay={false}
             />
           )}
         </div>
         <div className="Reviewed Forms">
-          {reviewed_forms.length > 0 && <h4>Reviewed Forms:</h4>}
+          {reviewed_forms.length > 0 && <h4 className="col-md-3 col-md-offset-6">Reviewed Forms:</h4>}
           {reviewed_forms.length > 0 && (
             <Cards
               forms={reviewed_forms}
               tobereviewed={false}
               reviewForm={this.reviewForm}
               addComment={this.addComment}
-              pay={this.pay}
+              pay={false}
             />
           )}
         </div>
         <div className="Filled Forms">
-          {filled_forms.length > 0 && <h4>Filled Forms:</h4>}
+          {filled_forms.length > 0 && <h4 className="col-md-3 col-md-offset-6">Filled Forms:</h4>}
           {filled_forms.length > 0 && (
             <Cards
               forms={filled_forms}
