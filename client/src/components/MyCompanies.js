@@ -17,3 +17,4 @@ class MyCompanies extends Component {
 }
 
 export default MyCompanies;
+ 

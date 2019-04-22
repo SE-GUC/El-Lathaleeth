@@ -11,7 +11,7 @@ export class UpdateFormListItem extends Component {
       <div class="card">
         <div class="card-header">{this.props.form.formType}</div>
         <div class="card-body">
-          <h5 class="card-title">Mr./Mrs. {this.props.form.investor.name}</h5>
+          <h5 class="card-title">Case Number: {this.props.form.caseNumber}</h5>
           <p class="card-text" />
           <button
             type="button"

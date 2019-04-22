@@ -80,7 +80,7 @@ class Sidenav extends Component {
         <div>
           <li>
             <NotificationBadge count={forms.length} className={"abc"} />
-            <a href="#/PayPage" className="sidenav-close">
+            <a href="#/UpdateFormPage" class="sidenav-close">
               Update Form
             </a>
           </li>

@@ -26,6 +26,7 @@ import Homepage from "./pages/Homepage";
 import EstablishedCompanies from "./pages/EstablishedCompanies";
 
 class App extends Component {
+ 
   render() {
     return (
       <Provider store={store}>
@@ -36,19 +37,11 @@ class App extends Component {
               <Route exact path="/" component={Homepage} />
               <Route exact path="/PayPage" component={PayPage} />
 
-              <Route
-                exact
-                path="/lawyerFillForm"
-                component={LawyerFillForm}
-              />
+              <Route exact path="/lawyerFillForm" component={LawyerFillForm} />
 
               <Route exact path="/LawyerPage" component={LawyerPage} />
               <Route path="/UpdateOneForm" component={UpdateOneForm} />
-              <Route
-                exact
-                path="/UpdateFormPage"
-                component={UpdateFormPage}
-              />
+              <Route exact path="/UpdateFormPage" component={UpdateFormPage} />
 
               <Route
                 exact
@@ -57,12 +50,8 @@ class App extends Component {
               />
               <Route exact path="/InvestorPage" component={InvestorPage} />
               <Route exact path="/CasePage" component={CasePage} />
-      
-              <Route
-                exact
-                path="/MyProfile"
-                component={ViewInvestorProfile}
-              />
+
+              <Route exact path="/MyProfile" component={ViewInvestorProfile} />
               <Route
                 exact
                 path="/UpdateInvestorProfile"
@@ -79,11 +68,7 @@ class App extends Component {
                 path="/RegisterEmployee"
                 component={RegisterEmployee}
               />
-              <Route
-                exact
-                path="/trackCasePage"
-                component={trackCasePage}
-              />
+              <Route exact path="/trackCasePage" component={trackCasePage} />
               <Route
                 exact
                 path="/lawyer_workspace"
@@ -130,5 +115,15 @@ class App extends Component {
     );
   }
 }
-
+// App.propTypes = {
+//   remember: PropTypes.func.isRequired
+// };
+// const mapStateToProps = state => ({
+//   isLoggedIn: state.auth.isLoggedIn,
+//   loggedUser: state.auth.loggedUser
+// });
+// export default connect(
+//   mapStateToProps,
+//   { remember }
+// )(App);
 export default App;
