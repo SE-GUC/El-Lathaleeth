@@ -1,7 +1,7 @@
+import { connect } from "react-redux";
 import React, { Component } from "react";
 import CaseList from "../components/CaseList";
 const axios = require("axios");
-import { connect } from "react-redux";
 
 // const form_funcs = require("./funcs/form_funcs");
 class CasePage extends Component {
