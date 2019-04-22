@@ -7,10 +7,15 @@ const Form = require("../../models/Form");
 const tokenKey = require("../../config/keys").secretOrKey;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-router.get("/", async (req, res) => {
-  const emps = await Entity_Emp.find();
-  res.json({ data: emps });
-});
+const passport = require("passport");
+router.get(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const emps = await Entity_Emp.find();
+    res.json({ data: emps });
+  }
+);
 // router.get("/law", async (req, res) => {
 //   const emps = await Lawyer.find();
 //   res.json({ data: emps });

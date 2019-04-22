@@ -55,7 +55,8 @@ class Navbar extends Component {
                   to="/"
                   onClick={this.changeLanguage}
                 >
-                  Change Language
+                  {this.props.isEnglish && <div>Change Language</div>}
+                  {!this.props.isEnglish && <div>تغيير اللغة</div>}
                 </NavLink>
               </li>
             </ul>
