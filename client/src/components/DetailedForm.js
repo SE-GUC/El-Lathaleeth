@@ -154,7 +154,7 @@ export class DetailedForm extends Component {
               <div>
               {this.props.isEnglish &&
                 <p>Comment:{comment.text}</p>}
-                {this.props.isEnglish &&
+                {!this.props.isEnglish &&
                 <p>{comment.text}: تعليق</p>}
               </div>
             ))}
