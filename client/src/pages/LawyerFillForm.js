@@ -15,7 +15,7 @@ const form1Valid = ({ form1Errors, ...rest }) => {
   Object.values(form1Errors).forEach(val => {
     val.length > 0 && (valid = false);
   });
- 
+
   // validate the form was filled out
   Object.values(rest).forEach(val => {
     val === null && (valid = false);
@@ -25,7 +25,7 @@ const form1Valid = ({ form1Errors, ...rest }) => {
 };
 const formValid = ({ formErrors, ...rest }) => {
   let valid = true;
-  console.log(formErrors)
+  console.log(formErrors);
   // validate form errors being empty
   Object.values(formErrors).forEach(val => {
     val.length > 0 && (valid = false);
@@ -53,7 +53,7 @@ class LawyerFillForm extends Component {
     this.selectNationality = this.selectNationality.bind(this);
     this.selectRegion = this.selectRegion.bind(this);
     this.selectRegion1 = this.selectRegion1.bind(this);
-    this.handleSubmit=this.handleSubmit.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this);
 
     // Set the initial input values
     this.state = {
@@ -159,72 +159,79 @@ class LawyerFillForm extends Component {
           creditCardNumber,
           form1Errors
         })
-      ) {const password='password'
-        const isValidated = validator.createValidation({
-          password,
-          name,
-          dateOfBirth,
-          gender,
-          nationality,
-          investorType,
-          email,
-          typeOfID,
-          IDNumber,
-          address,
-          phoneNumber,
-          faxNumber,
-          creditCardNumber},investorType);
-          if (!isValidated.error){
-        currentStep = currentStep >= 2 ? 3 : currentStep + 1;
-        this.setState({
-          startDate: new Date(),
-          investor: {
-            name: name,
-            dateOfBirth: dateOfBirth,
-            gender:gender,
-            nationality:nationality,
-            investorType:investorType,
-            email:email,
-            typeOfID:typeOfID,
-            IDNumber:IDNumber,
-            address:address,
-            phoneNumber:phoneNumber,
-            faxNumber:faxNumber,
-            creditCardNumber:creditCardNumber
+      ) {
+        const password = "password";
+        const isValidated = validator.createValidation(
+          {
+            password,
+            name,
+            dateOfBirth,
+            gender,
+            nationality,
+            investorType,
+            email,
+            typeOfID,
+            IDNumber,
+            address,
+            phoneNumber,
+            faxNumber,
+            creditCardNumber
           },
-          currentStep: currentStep, // Default is Step 1
-          name: null,
-          dateOfBirth: new Date(),
-          gender: "",
-          nationality: null,
-          investorType: null,
-          email: null,
-          typeOfID: "",
-          IDNumber: "",
-          address: null,
-          phoneNumber: null,
-          faxNumber: null,
-          creditCardNumber: null,
-          form1Errors: {
-            name: "",
-            dateOfBirth: "",
+          investorType
+        );
+        if (!isValidated.error) {
+          currentStep = currentStep >= 2 ? 3 : currentStep + 1;
+          this.setState({
+            startDate: new Date(),
+            investor: {
+              name: name,
+              dateOfBirth: dateOfBirth,
+              gender: gender,
+              nationality: nationality,
+              investorType: investorType,
+              email: email,
+              typeOfID: typeOfID,
+              IDNumber: IDNumber,
+              address: address,
+              phoneNumber: phoneNumber,
+              faxNumber: faxNumber,
+              creditCardNumber: creditCardNumber
+            },
+            currentStep: currentStep, // Default is Step 1
+            name: null,
+            dateOfBirth: new Date(),
             gender: "",
-            nationality: "",
-            investorType: "",
-            email: "",
+            nationality: null,
+            investorType: null,
+            email: null,
             typeOfID: "",
             IDNumber: "",
-            address: "",
-            phoneNumber: "",
-            faxNumber: "",
-            creditCardNumber: ""
-          }
-        });}else{
-          alert(isValidated.error.details[0].message)
+            address: null,
+            phoneNumber: null,
+            faxNumber: null,
+            creditCardNumber: null,
+            form1Errors: {
+              name: "",
+              dateOfBirth: "",
+              gender: "",
+              nationality: "",
+              investorType: "",
+              email: "",
+              typeOfID: "",
+              IDNumber: "",
+              address: "",
+              phoneNumber: "",
+              faxNumber: "",
+              creditCardNumber: ""
+            }
+          });
+        } else {
+          alert(isValidated.error.details[0].message);
         }
       } else {
-        alert("Please Make Sure You Have Entered All Fields Correctly");
-      }
+if (this.props.isEnglish)
+  alert("Please Make Sure You Have Entered All Fields Correctly");
+else alert("بالرجاء التأكد من صحة البيانات");      }
     } else if (currentStep === 2) {
       const {
         law,
@@ -322,7 +329,9 @@ class LawyerFillForm extends Component {
           startDate: new Date()
         });
       } else {
-        alert("Please Make Sure You Have Entered All Fields Correctly");
+        if (this.props.isEnglish)
+          alert("Please Make Sure You Have Entered All Fields Correctly");
+        else alert("بالرجاء التأكد من صحة البيانات");
       }
     } else {
     }
@@ -339,11 +348,17 @@ class LawyerFillForm extends Component {
   }
   selectNationality(val) {
     let formErrors = { ...this.state.formErrors };
-
-    formErrors.nationality1 =
-      val !== "Egypt" && this.state.investor.nationality !== "EG"
-        ? "Director must be Egyptian as Investor is Foreign"
-        : "";
+    if (this.props.isEnglish) {
+      formErrors.nationality1 =
+        val !== "Egypt" && this.state.investor.nationality !== "EG"
+          ? "Director must be Egyptian as Investor is Foreign"
+          : "";
+    } else {
+      formErrors.nationality1 =
+        val !== "Egypt" && this.state.investor.nationality !== "EG"
+          ? "العضو يجب ان يكوم مصري لأن المستثمر اجنبي"
+          : "";
+    }
     this.setState({ formErrors, nationality1: val });
   }
   selectRegion1(val) {
@@ -416,48 +431,95 @@ class LawyerFillForm extends Component {
     });
   }
   get previousButton() {
-    let currentStep = this.state.currentStep;
-    // If the current step is not 1, then render the "previous" button
-    if (currentStep !== 1) {
-      return (
-        <button
-          className="btn btn-secondary"
-          type="button"
-          onClick={this._prev}
-        >
-          Previous
-        </button>
-      );
+    if (this.props.isEnglish) {
+      let currentStep = this.state.currentStep;
+      // If the current step is not 1, then render the "previous" button
+      if (currentStep !== 1) {
+        return (
+          <button
+            className="btn btn-secondary"
+            type="button"
+            onClick={this._prev}
+          >
+            Previous
+          </button>
+        );
+      }
+      // ...else return nothing
+      return null;
+    } else {
+      let currentStep = this.state.currentStep;
+      // If the current step is not 1, then render the "previous" button
+      if (currentStep !== 1) {
+        return (
+          <button
+            className="btn btn-secondary"
+            type="button"
+            onClick={this._prev}
+          >
+            الرجوع
+          </button>
+        );
+      }
+      // ...else return nothing
+      return null;
     }
-    // ...else return nothing
-    return null;
   }
 
   get nextButton() {
-    let currentStep = this.state.currentStep;
-    // If the current step is not 3, then render the "next" button
-    if (currentStep < 2) {
-      return (
-        <button
-          className="btn btn-primary float-right"
-          type="button"
-          onClick={this._next}
-        >
-          Next
-        </button>
-      );
+    if (this.props.isEnglish) {
+      let currentStep = this.state.currentStep;
+      // If the current step is not 3, then render the "next" button
+      if (currentStep < 2) {
+        return (
+          <button
+            className="btn btn-primary float-right"
+            type="button"
+            onClick={this._next}
+          >
+            Next
+          </button>
+        );
+      } else {
+        return (
+          <button
+            className="btn btn-primary float-right"
+            type="button"
+            onClick={this.handleSubmit}
+          >
+            Fill Form
+          </button>
+        );
+      }
+      // ...else render nothing
+      return null;
+    } else {
+      let currentStep = this.state.currentStep;
+      // If the current step is not 3, then render the "next" button
+      if (currentStep < 2) {
+        return (
+          <button
+            className="btn btn-primary float-right"
+            type="button"
+            onClick={this._next}
+          >
+            التالى
+          </button>
+        );
+      } else {
+        return (
+          <button
+            className="btn btn-primary float-right"
+            type="button"
+            onClick={this.handleSubmit}
+          >
+            انتهاء
+          </button>
+        );
+      }
+      // ...else render nothing
+      return null;
     }
-    else{
-     return  <button
-          className="btn btn-primary float-right"
-          type="button"
-          onClick={this.handleSubmit}
-        >
-          Fill Form
-        </button>
-    }
-    // ...else render nothing
-    return null;
   }
   handleDateChange(date) {
     this.setState({
@@ -466,86 +528,87 @@ class LawyerFillForm extends Component {
   }
   // Use the submitted data to set the state
   handleChange(event) {
-    const { name, value } = event.target;
-    let form1Errors = { ...this.state.form1Errors };
-    let formErrors = { ...this.state.formErrors };
-    switch (name) {
-      case "name":
-        form1Errors.name =
-          value.length < 3 ? "minimum 3 characaters required" : "";
-        break;
-      case "email":
-        form1Errors.email = emailRegex.test(value)
-          ? ""
-          : "invalid email address";
-        break;
-      case "phoneNumber":
-        form1Errors.phoneNumber =
-          value.length < 11 ? "please enter valid phone number" : "";
-        break;
-      case "englishName":
-        formErrors.englishName =
-          value.length < 3 ? "minimum 3 characaters required" : "";
-        break;
-      case "arabicName":
-        formErrors.arabicName =
-          value.length < 3 ? "minimum 3 characaters required" : "";
-        break;
-      case "capitalVal":
-        console.log(value > 5000);
-        formErrors.capitalVal =
-          parseInt(value) < 5000 || parseInt(value) > 999999999999
-            ? "Capital Value must be between 5000 and 999999999999"
-            : "";
-        break;
-      case "idNum":
-        formErrors.idNum =
-          value.length < 8 ? "minimum 8 characaters required" : "";
-        break;
-      case "nationality1":
-        formErrors.nationality =
-          value !== "Egypt" && this.state.investor.nationality !== "EG"
-            ? "Director must be Egyptian as Investor is Foreign"
-            : "";
-        break;
-      default:
-        break;
-    }
-    if (name === "investorType" && value === "individual") {
-      this.setState(
-        {
-          dateOfBirth: null,
-          gender: "male",
-          nationality: null,
-          typeOfID: null,
-          IDNumber: null,
+    if (this.props.isEnglish) {
+      const { name, value } = event.target;
+      let form1Errors = { ...this.state.form1Errors };
+      let formErrors = { ...this.state.formErrors };
+      switch (name) {
+        case "name":
+          form1Errors.name =
+            value.length < 3 ? "minimum 3 characaters required" : "";
+          break;
+        case "email":
+          form1Errors.email = emailRegex.test(value)
+            ? ""
+            : "invalid email address";
+          break;
+        case "phoneNumber":
+          form1Errors.phoneNumber =
+            value.length < 11 ? "please enter valid phone number" : "";
+          break;
+        case "englishName":
+          formErrors.englishName =
+            value.length < 3 ? "minimum 3 characaters required" : "";
+          break;
+        case "arabicName":
+          formErrors.arabicName =
+            value.length < 3 ? "minimum 3 characaters required" : "";
+          break;
+        case "capitalVal":
+          console.log(value > 5000);
+          formErrors.capitalVal =
+            parseInt(value) < 5000 || parseInt(value) > 999999999999
+              ? "Capital Value must be between 5000 and 999999999999"
+              : "";
+          break;
+        case "idNum":
+          formErrors.idNum =
+            value.length < 8 ? "minimum 8 characaters required" : "";
+          break;
+        case "nationality1":
+          formErrors.nationality =
+            value !== "Egypt" && this.state.investor.nationality !== "EG"
+              ? "Director must be Egyptian as Investor is Foreign"
+              : "";
+          break;
+        default:
+          break;
+      }
+      if (name === "investorType" && value === "individual") {
+        this.setState(
+          {
+            dateOfBirth: null,
+            gender: "male",
+            nationality: null,
+            typeOfID: null,
+            IDNumber: null,
 
-          form1Errors,
-          [name]: value,
-          typeOfID: "national id"
-        },
-        () => console.log(this.state)
+            form1Errors,
+            [name]: value,
+            typeOfID: "national id"
+          },
+          () => console.log(this.state)
+        );
+        if (name === "IDNumber" && value === this.state.typeOfID) {
+          form1Errors.IDNumber =
+            value.length < 14 ? "please enter valid id number" : "";
+        }
+      } else {
+        if (name === "investorType" && value === "company") {
+          this.setState({
+            dateOfBirth: "",
+            gender: "",
+            nationality: "",
+            typeOfID: "",
+            IDNumber: ""
+          });
+        }
+      }
+      this.setState({ form1Errors, formErrors, [name]: value }, () =>
+        console.log(this.state)
       );
-      if (name === "IDNumber" && value === this.state.typeOfID) {
-        form1Errors.IDNumber =
-          value.length < 14 ? "please enter valid id number" : "";
-      }
-    } else {
-      if (name === "investorType" && value === "company") {
-        this.setState({
-          dateOfBirth: "",
-          gender: "",
-          nationality: "",
-          typeOfID: "",
-          IDNumber: ""
-        });
-      }
-    }
-    this.setState({ form1Errors, formErrors, [name]: value }, () =>
-      console.log(this.state)
-    );
 
-    /*else if(name === "typceOfID" && value === "national id"){
+      /*else if(name === "typceOfID" && value === "national id"){
 
       console.log(this.state.IDNumber)
       this.setState({
@@ -555,10 +618,101 @@ class LawyerFillForm extends Component {
       }
       )
     }*/
+    } else {
+      const { name, value } = event.target;
+      let form1Errors = { ...this.state.form1Errors };
+      let formErrors = { ...this.state.formErrors };
+      switch (name) {
+        case "name":
+          form1Errors.name =
+            value.length < 3 ? "يجب ان يكون ثلاث حروف على الاقل" : "";
+          break;
+        case "email":
+          form1Errors.email = emailRegex.test(value)
+            ? ""
+            : "بريد الكتروني غير صحيح";
+          break;
+        case "phoneNumber":
+          form1Errors.phoneNumber =
+            value.length < 11 ? "بالرجاء ادخال رقم صحيح" : "";
+          break;
+        case "englishName":
+          formErrors.englishName =
+            value.length < 3 ? "يجب ان يكون ثلاث حروف على الاقل" : "";
+          break;
+        case "arabicName":
+          formErrors.arabicName =
+            value.length < 3 ? "يجب ان يكون ثلاث حروف على الاقل" : "";
+          break;
+        case "capitalVal":
+          console.log(value > 5000);
+          formErrors.capitalVal =
+            parseInt(value) < 5000 || parseInt(value) > 999999999999
+              ? "رأس المال يجب ان يكون بين 5000 و 999999999999"
+              : "";
+          break;
+        case "idNum":
+          formErrors.idNum =
+            value.length < 8 ? "يجب ان يكون ثمانية حروف على الاقل" : "";
+          break;
+        case "nationality1":
+          formErrors.nationality =
+            value !== "Egypt" && this.state.investor.nationality !== "EG"
+              ? "عضو يجب ان يكون مصري لان المستثمر اجنبي"
+              : "";
+          break;
+        default:
+          break;
+      }
+      if (name === "investorType" && value === "individual") {
+        this.setState(
+          {
+            dateOfBirth: null,
+            gender: "male",
+            nationality: null,
+            typeOfID: null,
+            IDNumber: null,
+
+            form1Errors,
+            [name]: value,
+            typeOfID: "national id"
+          },
+          () => console.log(this.state)
+        );
+        if (name === "IDNumber" && value === this.state.typeOfID) {
+          form1Errors.IDNumber =
+            value.length < 14 ? "بالرجاء ادخال رقم بطاقة صحيح" : "";
+        }
+      } else {
+        if (name === "investorType" && value === "company") {
+          this.setState({
+            dateOfBirth: "",
+            gender: "",
+            nationality: "",
+            typeOfID: "",
+            IDNumber: ""
+          });
+        }
+      }
+      this.setState({ form1Errors, formErrors, [name]: value }, () =>
+        console.log(this.state)
+      );
+
+      /*else if(name === "typceOfID" && value === "national id"){
+
+      console.log(this.state.IDNumber)
+      this.setState({
+        form1Errors,
+        [name]: value,
+        dateOfBirth:  new Date(getDateFromID(this.state.IDNumber)),
+      }
+      )
+    }*/
+    }
   }
 
   // Trigger an alert on form submission
-  handleSubmit =async event => {
+  handleSubmit = async event => {
     event.preventDefault();
     console.log(this.state);
     let {
@@ -596,7 +750,7 @@ class LawyerFillForm extends Component {
         status: "lawyer check",
         bitIL: 1,
         comments: [],
-        investor:investor 
+        investor: investor
       };
     } else {
       body = {
@@ -620,30 +774,44 @@ class LawyerFillForm extends Component {
     delete body.investor.password;
 
     console.log(body);
-    console.log(formErrors)
-    if (formValid( {law,
-      investor,
-      formType,
-      legalForm,
-      englishName,
-      phone,
-      arabicName,
-      capitalVal,
-      capitalCurr,
-      fax,
-      address2,
-      formErrors,
-      city,
-      country,
-      boardOfDirectors})) {
+    console.log(formErrors);
+    if (
+      formValid({
+        law,
+        investor,
+        formType,
+        legalForm,
+        englishName,
+        phone,
+        arabicName,
+        capitalVal,
+        capitalCurr,
+        fax,
+        address2,
+        formErrors,
+        city,
+        country,
+        boardOfDirectors
+      })
+    ) {
       const form = await axios
         .post(
           "https://lathaleeth.herokuapp.com/api/entity_emp/lawyerfillform/" +
             this.props.loggedUser.id,
           body
         )
-        .then(result => {
-          alert("Form Submitted Successfully");
+        .then(async result => {
+          if(this.props.isEnglish){
+        alert("Form Submitted Successfully");
+          }
+          else{
+                    alert("تم بنجاح");
+
+          }
+          await axios.put(
+            "https://lathaleeth.herokuapp.com/api/forms/generateCost/" +
+              result.data.data._id
+          );
           window.location.hash = "#";
         })
         .catch(error => {
@@ -652,17 +820,32 @@ class LawyerFillForm extends Component {
         });
       console.log(form);
     } else {
-      alert("Please Make Sure All Entries are Correct!");
+      if (this.props.isEnglish) {
+        alert("Please Make Sure All Entries are Correct!");
+      } else {
+        alert("بالرجاء التأكد من البيانات");
+      }
     }
   };
-  
 
   render() {
     const a = this.state;
+    let walk;
+    let step;
+    if (this.props.isEnglish) {
+      walk = "Walk In Form";
+      step = "Step";
+    } else {
+      walk = "املاء بيانات شركة لمستثمر";
+      step = "مرحلة رقم ";
+    }
     return (
       <React.Fragment>
-        <h1>Walk In Form</h1>
-        <p>Step {this.state.currentStep} </p>
+        <h1>{walk}</h1>
+        <h2>
+          {" "}
+          {step} {this.state.currentStep}{" "}
+        </h2>
 
         <form onSubmit={this.handleSubmit}>
           <LawyerInvestorForm
@@ -720,15 +903,18 @@ class LawyerFillForm extends Component {
             typeInves={a.typeInves}
             formErrors={a.formErrors}
           />
+        </form>
+        <div>
           {this.previousButton}
           {this.nextButton}
-        </form>
+        </div>
       </React.Fragment>
     );
   }
 }
 const mapStateToProps = state => ({
   isLoggedIn: state.auth.isLoggedIn,
-  loggedUser: state.auth.loggedUser
+  loggedUser: state.auth.loggedUser,
+  isEnglish: state.nav.isEnglish
 });
 export default connect(mapStateToProps)(LawyerFillForm);

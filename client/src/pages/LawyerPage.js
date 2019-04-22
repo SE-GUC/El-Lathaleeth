@@ -10,7 +10,7 @@ class LawyerPage extends Component {
 
   //   this.state = { forms:formsData.data.data };
   // }
-  state = { forms: [],displayedForms:[] ,caseNumber:''};
+  state = { forms: [], displayedForms: [], caseNumber: "" };
   //view all cases
   componentWillMount = async () => {
     const formsData = await axios
@@ -28,8 +28,9 @@ class LawyerPage extends Component {
     console.log(this.state.displayedForms);
     return (
       <div>
-        <form>
-          Enter Case Number:
+        <form className="col-md-3 col-md-offset-6">
+        {this.props.isEnglish && <div>Enter Case Number</div>}
+          {!this.props.isEnglish && <div>أدخل رقم القضية</div>}
           <input
             type="text"
             name="caseNumber"
@@ -38,10 +39,12 @@ class LawyerPage extends Component {
             onChange={this.handleChange}
           />
           <button onClick={this.sortCreationDate.bind(this)}>
-            Sort By Creation Date
+          {this.props.isEnglish && <div>Sort By Creation Date</div>}
+          {!this.props.isEnglish && <div>الترتيب حسب تاريخ الإنشاء</div>}
           </button>
           <button onClick={this.sortCaseNum.bind(this)}>
-            Sort By Case Number
+          {this.props.isEnglish && <div>Sort By Case Number</div>}
+          {!this.props.isEnglish && <div>الترتيب حسب رقم القضية</div>}
           </button>
         </form>
         <div className="LawyerPage">
@@ -54,69 +57,69 @@ class LawyerPage extends Component {
     );
   }
 
-  handleChange = (e) => {
-    e.preventDefault()
+  handleChange = e => {
+    e.preventDefault();
     const { name, value } = e.target;
-    if(value!==""){
-this.setState({
-  displayedForms: this.state.forms.filter(form => {
-
-    return form.caseNumber === parseInt(value);
-  })
-})}else{
-  this.setState({displayedForms:this.state.forms})
-}
-}
-//search case
-  searchForm = async(e) => {
-    e.preventDefault()
-    console.log(this.state.value)
+    if (value !== "") {
+      this.setState({
+        displayedForms: this.state.forms.filter(form => {
+          return form.caseNumber === parseInt(value);
+        })
+      });
+    } else {
+      this.setState({ displayedForms: this.state.forms });
+    }
+  };
+  //search case
+  searchForm = async e => {
+    e.preventDefault();
+    console.log(this.state.value);
     this.setState({
       displayedForms: this.state.forms.filter(form => {
         return form.caseNumber === this.state.caseNumber;
       })
     });
-  }
-//sort by creation date
-sortCreationDate = async(e) =>{
-      e.preventDefault();
+  };
+  //sort by creation date
+  sortCreationDate = async e => {
+    e.preventDefault();
 
-  var temp
-  var formTemp  = this.state.forms
-  console.log(formTemp)
-  for(var i=1;i<formTemp.length;i++){
-    for(var j=i;j>0;j--){
-      if(formTemp[j].createdOn<formTemp[j-1].createdOn){
-        temp = formTemp[j]
-        formTemp[j] = formTemp[j-1] 
-        formTemp[j-1] = temp
+    var temp;
+    var formTemp = this.state.forms;
+    console.log(formTemp);
+    for (var i = 1; i < formTemp.length; i++) {
+      for (var j = i; j > 0; j--) {
+        if (formTemp[j].createdOn < formTemp[j - 1].createdOn) {
+          temp = formTemp[j];
+          formTemp[j] = formTemp[j - 1];
+          formTemp[j - 1] = temp;
+        }
       }
     }
-  }
     console.log(formTemp);
 
-  this.setState({
-    forms:formTemp
-  }) 
-}
-  sortCaseNum = async(e) =>{
-          e.preventDefault();
+    this.setState({
+      forms: formTemp
+    });
+  };
+  sortCaseNum = async e => {
+    e.preventDefault();
 
-    var temp
-    var formTemp  = this.state.forms
-for(var i=1;i<formTemp.length;i++){
-    for(var j=i;j>0;j--){
-      if(formTemp[j].caseNumber<formTemp[j-1].caseNumber){
-        temp = formTemp[j]
-        formTemp[j] = formTemp[j-1] 
-        formTemp[j-1] = temp
+    var temp;
+    var formTemp = this.state.forms;
+    for (var i = 1; i < formTemp.length; i++) {
+      for (var j = i; j > 0; j--) {
+        if (formTemp[j].caseNumber < formTemp[j - 1].caseNumber) {
+          temp = formTemp[j];
+          formTemp[j] = formTemp[j - 1];
+          formTemp[j - 1] = temp;
+        }
       }
     }
-  }
-  this.setState({
-    forms:formTemp
-  })  
-}
+    this.setState({
+      forms: formTemp
+    });
+  };
   reserveForm = async (idl, id) => {
     this.setState({
       displayedForms: this.state.displayedForms.filter(form => {
@@ -128,13 +131,11 @@ for(var i=1;i<formTemp.length;i++){
       "https://lathaleeth.herokuapp.com/api/entity_emp/reserveForm/" + idl + "/" + id
     );
   };
- 
 }
 const mapStateToProps = state => ({
   isLoggedIn: state.auth.isLoggedIn,
-  loggedUser: state.auth.loggedUser
+  loggedUser: state.auth.loggedUser,
+  isEnglish : state.nav.isEnglish
 });
 
-export default connect(
-  mapStateToProps
-)(LawyerPage);
+export default connect(mapStateToProps)(LawyerPage);

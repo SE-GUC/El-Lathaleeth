@@ -14,8 +14,8 @@ const emailRegex = RegExp(
 
 const formValid = ({ formErrors, ...rest }) => {
   let valid = true;
-delete rest.speciality;
-delete rest.education;
+  delete rest.speciality;
+  delete rest.education;
   // validate form errors being empty
   Object.values(formErrors).forEach(val => {
     val.length > 0 && (valid = false);
@@ -65,7 +65,7 @@ class RegisterEmployee extends Component {
       dateOfBirth: date
     });
   }
-  handleSubmit =async e => {
+  handleSubmit = async e => {
     e.preventDefault();
     let {
       firstName,
@@ -104,7 +104,7 @@ class RegisterEmployee extends Component {
         reviewed_forms: []
       }
     };
-    console.log(body)
+    console.log(body);
     if (formValid(this.state)) {
       const user = await axios
         .post(
@@ -119,14 +119,14 @@ class RegisterEmployee extends Component {
           const err = Object.keys(error.response.data)[0];
           alert(error.response.data[Object.keys(error.response.data)[0]]);
         });
-      console.log(user)
-      ;
+      console.log(user);
     } else {
       alert("Please Make Sure All Entries are Correct!");
     }
   };
 
   handleChange = e => {
+    if(this.props.isEnglish){
     e.preventDefault();
     const { name, value } = e.target;
     let formErrors = { ...this.state.formErrors };
@@ -160,23 +160,72 @@ class RegisterEmployee extends Component {
       default:
         break;
     }
-    if(value!=="Lawyer" && name==="emp_type"){
-        this.setState({ formErrors, [name]: value,education:null,speciality:null }, () =>
-          console.log(this.state)
-        );
-    }else{
+    if (value !== "Lawyer" && name === "emp_type") {
+      this.setState(
+        { formErrors, [name]: value, education: null, speciality: null },
+        () => console.log(this.state)
+      );
+    } else {
+      this.setState({ formErrors, [name]: value }, () =>
+        console.log(this.state)
+      );
+    }
+  }
+  else{
+    e.preventDefault();
+    const { name, value } = e.target;
+    let formErrors = { ...this.state.formErrors };
 
-    this.setState({ formErrors, [name]: value }, () => console.log(this.state));}
+    switch (name) {
+      case "firstName":
+        formErrors.firstName =
+          value.length < 3 ? "يجب ان يكون ثلاث حروف على الاقل" : "";
+        break;
+      case "middleName":
+        formErrors.middleName =
+          value.length < 3 ? "يجب ان يكون ثلاث حروف على الاقل" : "";
+        break;
+      case "lastName":
+        formErrors.lastName =
+          value.length < 3 ? "يجب ان يكون ثلاث حروف على الاقل" : "";
+        break;
+      case "username":
+        formErrors.username =
+          value.length < 3 ? "يجب ان يكون ثلاث حروف على الاقل" : "";
+        break;
+      case "email":
+        formErrors.email = emailRegex.test(value)
+          ? ""
+          : "بريد الكتروني غير صحيح";
+        break;
+      case "password":
+        formErrors.password =
+          value.length < 6 ? "يجب ان يكون ستة حروف على الاقل" : "";
+        break;
+      default:
+        break;
+    }
+    if (value !== "Lawyer" && name === "emp_type") {
+      this.setState(
+        { formErrors, [name]: value, education: null, speciality: null },
+        () => console.log(this.state)
+      );
+    } else {
+      this.setState({ formErrors, [name]: value }, () =>
+        console.log(this.state)
+      );
+    }
+  }
   };
 
   render() {
-    const { formErrors } = this.state;
-    let lawyerStuff;
-        let lawyerStuff1;
+    if (this.props.isEnglish) {
+      const { formErrors } = this.state;
+      let lawyerStuff;
+      let lawyerStuff1;
 
-    if (this.state.emp_type === "Lawyer") {
-      lawyerStuff = (
-        
+      if (this.state.emp_type === "Lawyer") {
+        lawyerStuff = (
           <div className="speciality">
             <label htmlFor="speciality">Speciality</label>
             <input
@@ -191,164 +240,329 @@ class RegisterEmployee extends Component {
               <span className="errorMessage">{formErrors.speciality}</span>
             )}
           </div>
-         
-        
-      );
-      lawyerStuff1 = ( <div className="education">
-         <label htmlFor="education">Education:</label>
-         <input
-           className={formErrors.education.length > 0 ? "error" : null}
-           placeholder="Education"
-           type="text"
-           name="education"
-           noValidate
-           onChange={this.handleChange}
-         />
-         {formErrors.education.length > 0 && (
-           <span className="errorMessage">{formErrors.education}</span>
-         )}
-       </div>)
-    }
-    
-    return (
-      <div className="wrRegisterEmployeeer">
-        <div className="form-wrRegisterEmployeeer">
-          <h1>Register New Employee</h1>
-          <form onSubmit={this.handleSubmit} noValidate>
-            <div className="firstName">
-              <label htmlFor="firstName">First Name</label>
-              <input
-                className={formErrors.firstName.length > 0 ? "error" : null}
-                placeholder="First Name"
-                type="text"
-                name="firstName"
-                noValidate
-                onChange={this.handleChange}
-              />
-              {formErrors.firstName.length > 0 && (
-                <span className="errorMessage">{formErrors.firstName}</span>
-              )}
-            </div>
-            <div className="middleName">
-              <label htmlFor="middleName">Middle Name</label>
-              <input
-                className={
-                  formErrors.middleName.length > 0 ? "error" : null
-                }
-                placeholder="Middle Name"
-                type="text"
-                name="middleName"
-                noValidate
-                onChange={this.handleChange}
-              />
-              {formErrors.middleName.length > 0 && (
-                <span className="errorMessage">
-                  {formErrors.middleName}
-                </span>
-              )}
-            </div>
-            <div className="lastName">
-              <label htmlFor="lastName">Last Name</label>
-              <input
-                className={formErrors.lastName.length > 0 ? "error" : null}
-                placeholder="Last Name"
-                type="text"
-                name="lastName"
-                noValidate
-                onChange={this.handleChange}
-              />
-              {formErrors.lastName.length > 0 && (
-                <span className="errorMessage">{formErrors.lastName}</span>
-              )}
-            </div>
-            <div className="username">
-              <label htmlFor="username">Username:</label>
-              <input
-                className={formErrors.username.length > 0 ? "error" : null}
-                placeholder="username"
-                type="text"
-                name="username"
-                noValidate
-                onChange={this.handleChange}
-              />
-              {formErrors.username.length > 0 && (
-                <span className="errorMessage">{formErrors.username}</span>
-              )}
-            </div>
-            <div className="email">
-              <label htmlFor="email">Email</label>
-              <input
-                className={formErrors.email.length > 0 ? "error" : null}
-                placeholder="Email"
-                type="email"
-                name="email"
-                noValidate
-                onChange={this.handleChange}
-              />
-              {formErrors.email.length > 0 && (
-                <span className="errorMessage">{formErrors.email}</span>
-              )}
-            </div>
-            <div className="password">
-              <label htmlFor="password">Password</label>
-              <input
-                className={formErrors.password.length > 0 ? "error" : null}
-                placeholder="Password"
-                type="password"
-                name="password"
-                noValidate
-                onChange={this.handleChange}
-              />
-              {formErrors.password.length > 0 && (
-                <span className="errorMessage">{formErrors.password}</span>
-              )}
-            </div>
+        );
+        lawyerStuff1 = (
+          <div className="education">
+            <label htmlFor="education">Education:</label>
+            <input
+              className={formErrors.education.length > 0 ? "error" : null}
+              placeholder="Education"
+              type="text"
+              name="education"
+              noValidate
+              onChange={this.handleChange}
+            />
+            {formErrors.education.length > 0 && (
+              <span className="errorMessage">{formErrors.education}</span>
+            )}
+          </div>
+        );
+      }
 
-            <div className="DateofBirth">
-              <label htmlFor="DateofBirth">Date Of Birth</label>
-              <div />
-              <ReactDatez
-                name="dateOfBirth"
-                handleChange={this.handleDateChange}
-                onChange={this.handleDateChange}
-                value={this.state.startDate}
-                allowFuture={false}
-                allowPast={true}
-              />
-              {/* {formErrors.password.length > 0 && (
+      return (
+        <div className="wrRegisterEmployeeer">
+          <div className="form-wrRegisterEmployeeer">
+            <h1>Register New Employee</h1>
+            <form onSubmit={this.handleSubmit} noValidate>
+              <div className="firstName">
+                <label htmlFor="firstName">First Name</label>
+                <input
+                  className={formErrors.firstName.length > 0 ? "error" : null}
+                  placeholder="First Name"
+                  type="text"
+                  name="firstName"
+                  noValidate
+                  onChange={this.handleChange}
+                />
+                {formErrors.firstName.length > 0 && (
+                  <span className="errorMessage">{formErrors.firstName}</span>
+                )}
+              </div>
+              <div className="middleName">
+                <label htmlFor="middleName">Middle Name</label>
+                <input
+                  className={formErrors.middleName.length > 0 ? "error" : null}
+                  placeholder="Middle Name"
+                  type="text"
+                  name="middleName"
+                  noValidate
+                  onChange={this.handleChange}
+                />
+                {formErrors.middleName.length > 0 && (
+                  <span className="errorMessage">{formErrors.middleName}</span>
+                )}
+              </div>
+              <div className="lastName">
+                <label htmlFor="lastName">Last Name</label>
+                <input
+                  className={formErrors.lastName.length > 0 ? "error" : null}
+                  placeholder="Last Name"
+                  type="text"
+                  name="lastName"
+                  noValidate
+                  onChange={this.handleChange}
+                />
+                {formErrors.lastName.length > 0 && (
+                  <span className="errorMessage">{formErrors.lastName}</span>
+                )}
+              </div>
+              <div className="username">
+                <label htmlFor="username">Username:</label>
+                <input
+                  className={formErrors.username.length > 0 ? "error" : null}
+                  placeholder="username"
+                  type="text"
+                  name="username"
+                  noValidate
+                  onChange={this.handleChange}
+                />
+                {formErrors.username.length > 0 && (
+                  <span className="errorMessage">{formErrors.username}</span>
+                )}
+              </div>
+              <div className="email">
+                <label htmlFor="email">Email</label>
+                <input
+                  className={formErrors.email.length > 0 ? "error" : null}
+                  placeholder="Email"
+                  type="email"
+                  name="email"
+                  noValidate
+                  onChange={this.handleChange}
+                />
+                {formErrors.email.length > 0 && (
+                  <span className="errorMessage">{formErrors.email}</span>
+                )}
+              </div>
+              <div className="password">
+                <label htmlFor="password">Password</label>
+                <input
+                  className={formErrors.password.length > 0 ? "error" : null}
+                  placeholder="Password"
+                  type="password"
+                  name="password"
+                  noValidate
+                  onChange={this.handleChange}
+                />
+                {formErrors.password.length > 0 && (
+                  <span className="errorMessage">{formErrors.password}</span>
+                )}
+              </div>
+
+              <div className="DateofBirth">
+                <label htmlFor="DateofBirth">Date Of Birth</label>
+                <div />
+                <ReactDatez
+                  name="dateOfBirth"
+                  handleChange={this.handleDateChange}
+                  onChange={this.handleDateChange}
+                  value={this.state.startDate}
+                  allowFuture={false}
+                  allowPast={true}
+                />
+                {/* {formErrors.password.length > 0 && (
                 <span className="errorMessage">{formErrors.password}</span>
               )} */}
-            </div>
-            <div className="Emp_type">
-              <Form.Label>Employee Type:</Form.Label>
-              <Form.Control
-                as="select"
-                value={this.state.emp_type}
-                onChange={this.handleChange}
-                name="emp_type"
-              >
-                <option value="Admin">Admin</option>
-                <option value="Lawyer">Lawyer</option>
-                <option value="Reviewer">Reviewer</option>
-              </Form.Control>
-            </div>
-            {/* <p>{"\n"}</p> */}
-            {lawyerStuff}
-            {lawyerStuff1}
-            <div className="createAccount">
-              <button type="submit">Register New Employee</button>
-            </div>
-          </form>
+              </div>
+              <div className="Emp_type">
+                <Form.Label>Employee Type:</Form.Label>
+                <Form.Control
+                  as="select"
+                  value={this.state.emp_type}
+                  onChange={this.handleChange}
+                  name="emp_type"
+                >
+                  <option value="Admin">Admin</option>
+                  <option value="Lawyer">Lawyer</option>
+                  <option value="Reviewer">Reviewer</option>
+                </Form.Control>
+              </div>
+              {/* <p>{"\n"}</p> */}
+              {lawyerStuff}
+              {lawyerStuff1}
+              <div className="createAccount">
+                <button type="submit">Register New Employee</button>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      const { formErrors } = this.state;
+      let lawyerStuff;
+      let lawyerStuff1;
+
+      if (this.state.emp_type === "Lawyer") {
+        lawyerStuff = (
+          <div className="speciality">
+            <label htmlFor="speciality">تخصص</label>
+            <input
+              className={formErrors.speciality.length > 0 ? "error" : null}
+              placeholder="تخصص"
+              type="text"
+              name="speciality"
+              noValidate
+              onChange={this.handleChange}
+            />
+            {formErrors.speciality.length > 0 && (
+              <span className="errorMessage">{formErrors.speciality}</span>
+            )}
+          </div>
+        );
+        lawyerStuff1 = (
+          <div className="education">
+            <label htmlFor="education">التعليم</label>
+            <input
+              className={formErrors.education.length > 0 ? "error" : null}
+              placeholder="التعليم"
+              type="text"
+              name="education"
+              noValidate
+              onChange={this.handleChange}
+            />
+            {formErrors.education.length > 0 && (
+              <span className="errorMessage">{formErrors.education}</span>
+            )}
+          </div>
+        );
+      }
+
+      return (
+        <div className="wrRegisterEmployeeer">
+          <div className="form-wrRegisterEmployeeer">
+            <h1>تسجيل موظف جديد</h1>
+            <form onSubmit={this.handleSubmit} noValidate>
+              <div className="firstName">
+                <label htmlFor="firstName">الاسم</label>
+                <input
+                  className={formErrors.firstName.length > 0 ? "error" : null}
+                  placeholder="الاسم"
+                  type="text"
+                  name="firstName"
+                  noValidate
+                  onChange={this.handleChange}
+                />
+                {formErrors.firstName.length > 0 && (
+                  <span className="errorMessage">{formErrors.firstName}</span>
+                )}
+              </div>
+              <div className="middleName">
+                <label htmlFor="middleName">اسم الأب</label>
+                <input
+                  className={formErrors.middleName.length > 0 ? "error" : null}
+                  placeholder="اسم الأب"
+                  type="text"
+                  name="middleName"
+                  noValidate
+                  onChange={this.handleChange}
+                />
+                {formErrors.middleName.length > 0 && (
+                  <span className="errorMessage">{formErrors.middleName}</span>
+                )}
+              </div>
+              <div className="lastName">
+                <label htmlFor="lastName">اسم العائلة</label>
+                <input
+                  className={formErrors.lastName.length > 0 ? "error" : null}
+                  placeholder="اسم العائلة"
+                  type="text"
+                  name="lastName"
+                  noValidate
+                  onChange={this.handleChange}
+                />
+                {formErrors.lastName.length > 0 && (
+                  <span className="errorMessage">{formErrors.lastName}</span>
+                )}
+              </div>
+              <div className="username">
+                <label htmlFor="username">اسم المستخدم</label>
+                <input
+                  className={formErrors.username.length > 0 ? "error" : null}
+                  placeholder="اسم المستخدم
+"
+                  type="text"
+                  name="username"
+                  noValidate
+                  onChange={this.handleChange}
+                />
+                {formErrors.username.length > 0 && (
+                  <span className="errorMessage">{formErrors.username}</span>
+                )}
+              </div>
+              <div className="email">
+                <label htmlFor="email">البريد الإلكتروني</label>
+                <input
+                  className={formErrors.email.length > 0 ? "error" : null}
+                  placeholder="البريد الإلكتروني
+"
+                  type="email"
+                  name="email"
+                  noValidate
+                  onChange={this.handleChange}
+                />
+                {formErrors.email.length > 0 && (
+                  <span className="errorMessage">{formErrors.email}</span>
+                )}
+              </div>
+              <div className="password">
+                <label htmlFor="password">كلمة السر</label>
+                <input
+                  className={formErrors.password.length > 0 ? "error" : null}
+                  placeholder="كلمة السر"
+                  type="password"
+                  name="password"
+                  noValidate
+                  onChange={this.handleChange}
+                />
+                {formErrors.password.length > 0 && (
+                  <span className="errorMessage">{formErrors.password}</span>
+                )}
+              </div>
+
+              <div className="DateofBirth">
+                <label htmlFor="DateofBirth">تاريخ الميلاد</label>
+                <div />
+                <ReactDatez
+                  name="dateOfBirth"
+                  handleChange={this.handleDateChange}
+                  onChange={this.handleDateChange}
+                  value={this.state.startDate}
+                  allowFuture={false}
+                  allowPast={true}
+                />
+                {/* {formErrors.password.length > 0 && (
+                <span className="errorMessage">{formErrors.password}</span>
+              )} */}
+              </div>
+              <div className="Emp_type">
+                <Form.Label>نوع موظف</Form.Label>
+                <Form.Control
+                  as="select"
+                  value={this.state.emp_type}
+                  onChange={this.handleChange}
+                  name="emp_type"
+                >
+                  <option value="Admin">مشرف</option>
+                  <option value="Lawyer">محامي</option>
+                  <option value="Reviewer">مراجع</option>
+                </Form.Control>
+              </div>
+              {/* <p>{"\n"}</p> */}
+              {lawyerStuff}
+              {lawyerStuff1}
+              <div className="createAccount">
+                <button type="submit">تسجيل موظف جديد</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      );
+    }
   }
 }
- const mapStateToProps = state => ({
+const mapStateToProps = state => ({
   isLoggedIn: state.auth.isLoggedIn,
-  loggedUser: state.auth.loggedUser
+  loggedUser: state.auth.loggedUser,
+  isEnglish: state.nav.isEnglish
 });
-export default connect(
-  mapStateToProps
-)(RegisterEmployee);
-
+export default connect(mapStateToProps)(RegisterEmployee);

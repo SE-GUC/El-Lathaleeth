@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT } from "./actionTypes";
+import { LOGIN, LOGOUT, REMEMBER } from "./actionTypes";
 import axios from "axios";
 
 import setAuthToken from "../../helpers/setAuthToken";
@@ -12,13 +12,17 @@ import setAuthToken from "../../helpers/setAuthToken";
 //     }
 //   });
 // };
-
+export const remember= (token)=>dispatch =>{
+const base64Url = token.split(".")[1];
+ setAuthToken(token);
+const decodedValue = JSON.parse(window.atob(base64Url));
+  dispatch({type:REMEMBER,payload:{...decodedValue}})
+}
 export const logout = () => dispatch => {
   dispatch({ type: LOGOUT });
 };
 
 export const login =  (userData) => dispatch => {
-  console.log(userData)
 		axios
       .post(
         "https://lathaleeth.herokuapp.com/api/entity_emp/login",
@@ -29,12 +33,9 @@ export const login =  (userData) => dispatch => {
         localStorage.setItem("jwtToken", token);
         setAuthToken(token);
         dispatch({ payload: { ...res.data }, type: LOGIN });
-        console.log("yarab");
       })
       .catch(err => {
-        console.log(err);
         const body = { ...userData, email: userData.username };
-        console.log(body);
         axios
           .post("https://lathaleeth.herokuapp.com/api/investor/login", body)
           .then(res => {

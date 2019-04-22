@@ -10,7 +10,7 @@ export class ListItem extends Component {
         <div class="card-header">{this.props.form.formType}</div>
         <div class="card-body">
           <h5 class="card-title">
-            Mr./Mrs. {this.props.form.investor.firstName}
+            Mr./Mrs. {this.props.form.investor.name}
           </h5>
           <p class="card-text" />
           <button

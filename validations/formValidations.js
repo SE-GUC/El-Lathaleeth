@@ -12,7 +12,7 @@ module.exports = {
         .valid(["individual", "company"])
         .required(), // Drop Down
       typeOfID: Joi.any()
-        .valid(["passport", "id"], "")
+        .valid(["passport", "national id"], "")
         .required(), // Drop Down
       IDNumber: Joi.optional(),
       dateOfBirth: Joi.optional(),
@@ -138,7 +138,7 @@ module.exports = {
         .valid(["individual", "company"])
         .required(), // Drop Down
       typeOfID: Joi.any()
-        .valid(["passport", "id"], "")
+        .valid(["passport", "national id"], "")
         .required(), // Drop Down
       IDNumber: Joi.optional(),
       dateOfBirth: Joi.optional(),
