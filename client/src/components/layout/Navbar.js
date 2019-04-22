@@ -53,7 +53,6 @@ class Navbar extends Component {
               <li>
                 <NavLink
                   style={{ textDecoration: "none", color: "white" }}
-                  to="/"
                   onClick={this.changeLanguage}
                 >
                   {this.props.isEnglish && <div>Change Language</div>}

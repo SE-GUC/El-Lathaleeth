@@ -110,8 +110,6 @@ export class DetailedForm extends Component {
             {!this.props.isEnglish && <p> {this.props.form._id}:رقم الهوية</p>}
             {this.props.isEnglish &&<p>Law: {this.props.form.law}</p>}
             {!this.props.isEnglish && <p> {this.props.form.law}:القانون المسجل</p>}
-            {this.props.isEnglish &&<p>Legal Form: {this.props.form.legalForm}</p>}
-            {!this.props.isEnglish && <p> {this.props.form.legalForm}:الشكل القانوني </p>}
             {this.props.isEnglish &&<p>Form Type: {this.props.form.formType}</p>}
             {!this.props.isEnglish && <p> {this.props.form.formType}:نوع الاستمارة</p>}
             {this.props.isEnglish &&<p>Address: {this.props.form.address}</p>}
@@ -169,7 +167,7 @@ export class DetailedForm extends Component {
                       value={this.state.value}
                       onChange={this.handleChange}
                     />}
-                    {this.props.isEnglish &&
+                    {!this.props.isEnglish &&
                     <input
                       type="text"
                       placeholder="إضافة تعليق"

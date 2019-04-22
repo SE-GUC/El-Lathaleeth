@@ -18,7 +18,8 @@ class SignedIn extends Component {
               to="/"
               onClick={this.logout}
             >
-              Log Out
+              {this.props.isEnglish && <div> Log Out</div>}
+              {!this.props.isEnglish && <div>الخروج</div>}
             </NavLink>
           </li>
           <li>
@@ -34,7 +35,7 @@ class SignedIn extends Component {
                 </i>
               </NavLink>
             )}
-            {(this.props.loggedUser.type === "investor" ) && (
+            {this.props.loggedUser.type === "investor" && (
               <NavLink
                 style={{ textDecoration: "none", color: "white" }}
                 to="/InvestorPage"
@@ -53,7 +54,8 @@ class SignedIn extends Component {
 }
 const mapStateToProps = state => ({
   isLoggedIn: state.auth.isLoggedIn,
-  loggedUser: state.auth.loggedUser
+  loggedUser: state.auth.loggedUser,
+  isEnglish: state.nav.isEnglish
 });
 
 export default connect(

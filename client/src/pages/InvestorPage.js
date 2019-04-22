@@ -30,7 +30,8 @@ class InvestorPage extends Component {
        
         <div className="col-md-3 col-md-offset-6">
         <TrackCasePage/>
-          <h4>My Established Companies:</h4>
+        {this.props.isEnglish && <h4>My Established Companies</h4>}
+          {!this.props.isEnglish && <h4>شركاتي </h4>}
         </div>
         <div className="row offset-sm-1">
           <MyCompanies companies={this.state.companies} />
@@ -42,7 +43,8 @@ class InvestorPage extends Component {
 
 const mapStateToProps = state => ({
   isLoggedIn: state.auth.isLoggedIn,
-  loggedUser: state.auth.loggedUser
+  loggedUser: state.auth.loggedUser,
+  isEnglish: state.nav.isEnglish
 });
 
 export default connect(mapStateToProps)(InvestorPage);
