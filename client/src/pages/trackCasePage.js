@@ -35,6 +35,7 @@ class trackCasePage extends Component {
   render() {
     return (
       <div className="trackCasePage">
+      {this.props.isEnglish &&
         <div class="ui input">
           <input
             type="text"
@@ -48,9 +49,27 @@ class trackCasePage extends Component {
             class="btn btn-outline-secondary btn-sm"
           >
             {" "}
-            Track Case
+            Trach Case    
           </button>{" "}
-        </div>
+        </div>}
+        {!this.props.isEnglish &&
+        <div class="ui input">
+          <input
+            type="text"
+            placeholder= "رقم الاستمارة"
+            value={this.state.value}
+            onChange={this.handleChange}
+          />
+          <button
+            type="button"
+            onClick={this.search.bind(this, this.state.value)}
+            class="btn btn-outline-secondary btn-sm"
+          >
+            {" "}
+            وضع الاستمارة
+            
+          </button>{" "}
+        </div>}
         <Status_Card formStatus={this.state.formStatus} />
       </div>
     );
@@ -59,6 +78,7 @@ class trackCasePage extends Component {
 
 const mapStateToProps = state => ({
   isLoggedIn: state.auth.isLoggedIn,
-  loggedUser: state.auth.loggedUser
+  loggedUser: state.auth.loggedUser,
+  isEnglish: state.nav.isEnglish
 });
 export default connect(mapStateToProps)(trackCasePage);

@@ -29,7 +29,8 @@ class LawyerPage extends Component {
     return (
       <div>
         <form className="col-md-3 col-md-offset-6">
-          Enter Case Number:
+        {this.props.isEnglish && <div>Enter Case Number</div>}
+          {!this.props.isEnglish && <div>أدخل رقم القضية</div>}
           <input
             type="text"
             name="caseNumber"
@@ -38,10 +39,12 @@ class LawyerPage extends Component {
             onChange={this.handleChange}
           />
           <button onClick={this.sortCreationDate.bind(this)}>
-            Sort By Creation Date
+          {this.props.isEnglish && <div>Sort By Creation Date</div>}
+          {!this.props.isEnglish && <div>الترتيب حسب تاريخ الإنشاء</div>}
           </button>
           <button onClick={this.sortCaseNum.bind(this)}>
-            Sort By Case Number
+          {this.props.isEnglish && <div>Sort By Case Number</div>}
+          {!this.props.isEnglish && <div>الترتيب حسب رقم القضية</div>}
           </button>
         </form>
         <div className="LawyerPage">
@@ -131,7 +134,8 @@ class LawyerPage extends Component {
 }
 const mapStateToProps = state => ({
   isLoggedIn: state.auth.isLoggedIn,
-  loggedUser: state.auth.loggedUser
+  loggedUser: state.auth.loggedUser,
+  isEnglish : state.nav.isEnglish
 });
 
 export default connect(mapStateToProps)(LawyerPage);

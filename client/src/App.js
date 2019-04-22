@@ -35,7 +35,7 @@ class App extends Component {
           <body className="App">
             <Navbar />
             <main>
-              <Route exact path="/" component={ArabicHomepage} />
+              <Route exact path="/" component={Homepage} />
               <Route exact path="/PayPage" component={PayPage} />
 
               <Route exact path="/lawyerFillForm" component={LawyerFillForm} />
