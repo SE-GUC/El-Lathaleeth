@@ -41,13 +41,11 @@ class Navbar extends Component {
 
         <div className="container">
           <Link
-            onClick={this.changeLanguage}
             style={{ textDecoration: "none", color: "white" }}
             to="/"
             className="brand-logo"
           >
             <i className="material-icons">donut_small</i>Sumerge Lathaleeth{" "}
-            {language}
           </Link>
           <div>
             <ul className="right">
