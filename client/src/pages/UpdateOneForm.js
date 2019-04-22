@@ -41,7 +41,7 @@ class UpdateOneForm extends Component {
   componentDidMount = async () => {
     const x = window.location.href;
     const y = getSecondPart(x);
-    const form1 = await axios.get("http://localhost:5000/api/forms/" + y);
+    const form1 = await axios.get("https://lathaleeth.herokuapp.com/api/forms/" + y);
 
     const {
       _id,
@@ -160,7 +160,7 @@ class UpdateOneForm extends Component {
   }
   componentWillMount = async () => {
     const formsData = await axios
-      .get("http://localhost:5000/api/investor/" + this.props.loggedUser.id)
+      .get("https://lathaleeth.herokuapp.com/api/investor/" + this.props.loggedUser.id)
       .then(res => {
         console.log(res.data.data);
         this.setState({
@@ -174,7 +174,7 @@ class UpdateOneForm extends Component {
     let inv;
     try {
       user = await axios.get(
-        "http://localhost:5000/api/investor/" + this.props.loggedUser.id,
+        "https://lathaleeth.herokuapp.com/api/investor/" + this.props.loggedUser.id,
         body
       );
       inv = user.data.data;
@@ -255,7 +255,7 @@ class UpdateOneForm extends Component {
     console.log(body);
     if (formValid(this.state)) {
       const form = await axios
-        .put("http://localhost:5000/api/forms/" + this.state._id, body)
+        .put("https://lathaleeth.herokuapp.com/api/forms/" + this.state._id, body)
         .then(result => {
           if (this.props.isEnglish) {
             alert("Form Edited Successfully");

@@ -108,7 +108,7 @@ class RegisterEmployee extends Component {
     if (formValid(this.state)) {
       const user = await axios
         .post(
-          "http://localhost:5000/api/entity_emp/registerEmployee/" +
+          "https://lathaleeth.herokuapp.com/api/entity_emp/registerEmployee/" +
             this.props.loggedUser.id,
           body
         )

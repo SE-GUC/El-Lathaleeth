@@ -16,12 +16,12 @@ class trackCasePage extends Component {
   search = async id => {
     try {
       const forms = await axios.get(
-        "http://localhost:5000/api/forms/byInvestorID/" +
+        "https://lathaleeth.herokuapp.com/api/forms/byInvestorID/" +
           this.props.loggedUser.id
       );
       if (forms.data.data.findIndex(x => x.caseNumber === parseInt(id))!==(-1)) {
         const stat = await axios.get(
-          "http://localhost:5000/api/forms/statusByID/" + id
+          "https://lathaleeth.herokuapp.com/api/forms/statusByID/" + id
         );
         this.setState({ formStatus: stat.data.data });
       } else {
@@ -49,7 +49,7 @@ class trackCasePage extends Component {
             class="btn btn-outline-secondary btn-sm"
           >
             {" "}
-            TracK Case    
+            Track Case    
           </button>{" "}
         </div>}
         {!this.props.isEnglish &&

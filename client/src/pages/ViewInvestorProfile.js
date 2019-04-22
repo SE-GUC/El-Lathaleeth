@@ -23,7 +23,7 @@ class ViewInvestorProfile extends Component {
   componentDidMount = async () => {
     console.log(this.props.loggedUser);
     await axios
-      .get("http://localhost:5000/api/investor/" + this.props.loggedUser.id)
+      .get("https://lathaleeth.herokuapp.com/api/investor/" + this.props.loggedUser.id)
       .then(result => {
         console.log(result.data.data);
         this.setState({ investor: result.data.data });
