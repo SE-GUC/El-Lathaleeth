@@ -47,6 +47,7 @@ export class FormCard extends Component {
                   addComment={this.props.addComment}
                   isLoggedIn={this.props.isLoggedIn}
                   loggedUser={this.props.loggedUser}
+                  isEnglish={this.props.isEnglish}
                 />
               </div>
             </Collapse>
@@ -60,7 +61,7 @@ export class FormCard extends Component {
 const mapStateToProps = state => ({
   isLoggedIn: state.auth.isLoggedIn,
   loggedUser: state.auth.loggedUser,
-  isEnglish: state.nav.isEnglish
+  isEnglish:state.nav.isEnglish
 });
 
 export default connect(mapStateToProps)(FormCard);

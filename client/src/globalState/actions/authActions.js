@@ -14,6 +14,7 @@ import setAuthToken from "../../helpers/setAuthToken";
 // };
 export const remember= (token)=>dispatch =>{
 const base64Url = token.split(".")[1];
+ setAuthToken(token);
 const decodedValue = JSON.parse(window.atob(base64Url));
   dispatch({type:REMEMBER,payload:{...decodedValue}})
 }

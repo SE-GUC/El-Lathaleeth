@@ -11,7 +11,7 @@ class MyCompanies extends Component {
       })
 
       .map(form => (
-      <FormCard form={form} tobereviewed={false} reviewForm={false} addComment={false}/>
+      <FormCard form={form} tobereviewed={false} paid={false} reviewForm={false} addComment={false}/>
       ));
   }
 }
