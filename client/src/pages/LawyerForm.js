@@ -99,7 +99,8 @@ class LawyerForms extends Component {
   //       alert("Please Make Sure All Entries are Correct!");
   //     }
   //   };
-  render() {
+  render() {if(this.props.isEnglish){
+  
     if (this.props.currentStep !== 2) {
       return null;
     }
@@ -389,9 +390,316 @@ class LawyerForms extends Component {
       </div>
     );
   }
+
+else{
+   if (this.props.currentStep !== 2) {
+      return null;
+    }
+    const { formErrors, country1, country, city, city1 } = this.props;
+
+    let SPCStuff;
+    if (this.props.formType === "SSC")
+      SPCStuff = (
+        <div>
+          <h2>أضافة اعضاء مجلس الإدارة</h2>
+          <div className="country1">
+            <label htmlFor="country">الدولة</label>
+
+            <CountryDropdown
+              value={country1}
+              name="country1"
+              onChange={val => this.props.selectCountry1(val)}
+              style={{ display: "block" }}
+            />
+            <label htmlFor="city">المدينة</label>
+
+            <RegionDropdown
+              country={country1}
+              name="city1"
+              value={city1}
+              onChange={val => this.props.selectRegion1(val)}
+              style={{ display: "block" }}
+            />
+          </div>
+          <div className="address1">
+            <label htmlFor="address1">عنوان</label>
+            <input
+              placeholder="address"
+              type="address1"
+              name="address1"
+              noValidate
+              onChange={this.props.handleChange}
+            />
+          </div>
+          <ReactDatez
+            name="dateofbirth"
+            handleChange={this.props.handleDate1Change}
+            onChange={this.props.handleDate1Change}
+            value={this.props.startDate}
+            allowFuture={false}
+            allowPast={true}
+          />
+          <div className="formType">
+            <Form.Label>الجنس</Form.Label>
+            <Form.Control
+              as="select"
+              value={this.props.gender}
+              onChange={this.props.handleChange}
+              name="gender"
+            >
+              {" "}
+              <option value="male">ذكر</option>
+              <option value="female">أنثة</option>
+            </Form.Control>
+          </div>
+          <div className="formType">
+            <Form.Label>نوع البطاقة</Form.Label>
+            <Form.Control
+              as="select"
+              value={this.props.typeID}
+              onChange={this.props.handleChange}
+              name="typeID"
+            >
+              {" "}
+              <option value="passport">جواز سفر</option>
+              <option value="id">بطاقة قومية</option>
+            </Form.Control>
+          </div>
+          <div className="idNum">
+            <label htmlFor="idNum">رقم البطاقة-جواز السفر</label>
+            <input
+              className={formErrors.idNum.length > 0 ? "error" : null}
+              placeholder="ID Number"
+              type="text"
+              name="idNum"
+              noValidate
+              onChange={this.props.handleChange}
+            />
+            {formErrors.idNum.length > 0 && (
+              <span className="errorMessage">{formErrors.idNum}</span>
+            )}
+          </div>
+          <div className="name">
+            <label htmlFor="name">اسم العضو</label>
+            <input
+              placeholder="Name"
+              type="name"
+              name="name1"
+              noValidate
+              onChange={this.props.handleChange}
+            />
+          </div>
+          <div className="position">
+            <label htmlFor="position">مركز العضو</label>
+            <input
+              placeholder="Position"
+              type="position"
+              name="position"
+              noValidate
+              onChange={this.props.handleChange}
+            />
+          </div>
+          <div className="nationality">
+            <label htmlFor="idNum">جنسية</label>
+            <CountryDropdown
+              value={this.props.nationality1}
+              name="nationality1"
+              onChange={val => this.props.selectNationality(val)}
+              style={{ display: "block" }}
+              className={
+                formErrors.nationality1.length > 0 ? "error" : null
+              }
+            />
+            {formErrors.nationality1.length > 0 && (
+              <span className="errorMessage">
+                {formErrors.nationality1}
+              </span>
+            )}
+          </div>
+          <div className="formType">
+            <Form.Label>نوع المستثمر</Form.Label>
+            <Form.Control
+              as="select"
+              value={this.props.typeInves}
+              onChange={this.props.handleChange}
+              name="typeInves"
+            >
+              {" "}
+              <option value="individual">شخص</option>
+              <option value="company">شركة</option>
+            </Form.Control>
+          </div>
+          <div>
+            <button onClick={this.props.addDirector.bind(this)}>
+              أضافة عضو مجلس إدارة
+            </button>
+          </div>
+        </div>
+      );
+
+    return (
+      <div className="wrLawyerFormser">
+        <div className="form-wrLawyerFormser">
+          <h3 style={{ marginLeft: "1.5%" }}>أنشاء شركة جديدة</h3>
+          <form onSubmit={this.handleSubmit} noValidate>
+            <div className="englishName">
+              <label htmlFor="englishName">الاسم بالانجليزي</label>
+              <input
+                className={
+                  formErrors.englishName.length > 0 ? "error" : null
+                }
+                placeholder="English Name"
+                type="text"
+                name="englishName"
+                noValidate
+                onChange={this.props.handleChange}
+              />
+              {formErrors.englishName.length > 0 && (
+                <span className="errorMessage">
+                  {formErrors.englishName}
+                </span>
+              )}
+            </div>
+            <div className="arabicName">
+              <label htmlFor="arabicName">الاسم بالعربي</label>
+              <input
+                className={
+                  formErrors.arabicName.length > 0 ? "error" : null
+                }
+                placeholder="Arabic Name"
+                type="text"
+                name="arabicName"
+                noValidate
+                onChange={this.props.handleChange}
+              />
+              {formErrors.arabicName.length > 0 && (
+                <span className="errorMessage">
+                  {formErrors.arabicName}
+                </span>
+              )}
+            </div>
+            <div className="fax">
+              <label htmlFor="fax">رقم الفاكس</label>
+              <input
+                placeholder="Fax"
+                type="text"
+                name="fax"
+                noValidate
+                onChange={this.props.handleChange}
+              />
+            </div>
+            <div className="phone">
+              <label htmlFor="phone">رقم التيليفون</label>
+              <input
+                placeholder=""
+                type="text"
+                name="phone"
+                noValidate
+                onChange={this.props.handleChange}
+              />
+            </div>
+            <div className="capitalVal">
+              <label htmlFor="capitalVal">رأس المال</label>
+              <input
+                className={
+                  formErrors.capitalVal.length > 0 ? "error" : null
+                }
+                placeholder="Capital Value"
+                type="text"
+                name="capitalVal"
+                noValidate
+                onChange={this.props.handleChange}
+              />
+              {formErrors.capitalVal.length > 0 && (
+                <span className="errorMessage">
+                  {formErrors.capitalVal}
+                </span>
+              )}
+            </div>
+            <div className="country">
+              <label htmlFor="country">الدولة</label>
+
+              <CountryDropdown
+                value={country}
+                name="country"
+                onChange={val => this.props.selectCountry(val)}
+                style={{ display: "block" }}
+              />
+              <label htmlFor="city">المدينة</label>
+
+              <RegionDropdown
+                country={country}
+                name="city"
+                value={city}
+                onChange={val => this.props.selectRegion(val)}
+                style={{ display: "block" }}
+              />
+            </div>
+            <div className="address">
+              <label htmlFor="address2">عنوان</label>
+              <input
+                placeholder="Address"
+                type="address2"
+                name="address2"
+                noValidate
+                onChange={this.props.handleChange}
+              />
+            </div>
+            <div className="formType">
+              <Form.Label>عملة رأس المال</Form.Label>
+              <Form.Control
+                as="select"
+                value={this.props.capitalCurr}
+                onChange={this.props.handleChange}
+                name="capitalCurr"
+              >
+                <option value="$">$</option>
+                <option value="CA$">CA$</option>
+                <option value="€">€</option>
+                <option value="AED">AED</option>
+                <option value="EGP">EGP</option>
+                <option value="£">£</option>
+                <option value="SR">SR</option>
+              </Form.Control>
+            </div>
+            <div className="formType">
+              <Form.Label>القانون</Form.Label>
+              <Form.Control
+                as="select"
+                value={this.props.law}
+                onChange={this.props.handleChange}
+                name="law"
+              >
+                {" "}
+                <option value="73">73</option>
+                <option value="152">152</option>
+              </Form.Control>
+            </div>
+            <div className="formType">
+              <Form.Label>نوع الشركة</Form.Label>
+              <Form.Control
+                as="select"
+                value={this.props.formType}
+                onChange={this.props.handleChange}
+                name="formType"
+              >
+                {" "}
+                <option value="SPC">SPC</option>
+                <option value="SSC">SSC</option>
+              </Form.Control>
+            </div>
+            {SPCStuff}
+            <div className="createForm" />
+          </form>
+        </div>
+      </div>
+    );
+  }
+}
 }
 const mapStateToProps = state => ({
   isLoggedIn: state.auth.isLoggedIn,
-  loggedUser: state.auth.loggedUser
+  loggedUser: state.auth.loggedUser,
+  isEnglish:state.nav.isEnglish
 });
 export default connect(mapStateToProps)(LawyerForms);

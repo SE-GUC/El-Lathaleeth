@@ -23,22 +23,19 @@ import UpdateInvestorProfile from "./pages/UpdateInvestorProfile";
 import UpdateFormPage from "./pages/UpdateFormPage";
 import contactUs from "./pages/contactUs";
 import meetUs from "./pages/meetUs";
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
-
-
+import ArabicHomepage from "./pages/ArabicHomepage";
 import Homepage from "./pages/Homepage";
 import EstablishedCompanies from "./pages/EstablishedCompanies";
 
 class App extends Component {
- 
-  render() {
+  render() { 
     return (
       <Provider store={store}>
         <HashRouter>
           <body className="App">
             <Navbar />
             <main>
-              <Route exact path="/" component={Homepage} />
+              <Route exact path="/" component={ArabicHomepage} />
               <Route exact path="/PayPage" component={PayPage} />
 
               <Route exact path="/lawyerFillForm" component={LawyerFillForm} />
@@ -78,16 +75,8 @@ class App extends Component {
                 path="/lawyer_workspace"
                 component={lawyer_workspace}
               />
-              <Route
-                exact
-                path="/contactUs"
-                component={contactUs}
-                />
-                <Route
-                exact
-                path="/meetUs"
-                component={meetUs}
-                />
+              <Route exact path="/contactUs" component={contactUs} />
+              <Route exact path="/meetUs" component={meetUs} />
               <Route exact path="/signin" component={SignIn} />
               {<Route exact path="/signup" component={RegisterInvestor} />}
             </main>
@@ -109,7 +98,10 @@ class App extends Component {
                         </a>
                       </li>
                       <li>
-                        <a className="grey-text text-lighten-3" href="#/contactUs">
+                        <a
+                          className="grey-text text-lighten-3"
+                          href="#/contactUs"
+                        >
                           Contact us
                         </a>
                       </li>

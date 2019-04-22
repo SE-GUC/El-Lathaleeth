@@ -25,7 +25,7 @@ class contactUs extends Component {
          Gamal Abd El-Nasir St.,<br/>
           New Cairo City<br/>
         <Map google={this.props.google} zoom={13}
-        style={{height: '225px', width: '350px'}}
+        style={{height: '210px', width: '350px'}}
         initialCenter={{
           lat: 29.9877551,
           lng: 31.4419748}}>

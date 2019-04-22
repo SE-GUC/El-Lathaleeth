@@ -61,7 +61,7 @@ export class FormCard extends Component {
 const mapStateToProps = state => ({
   isLoggedIn: state.auth.isLoggedIn,
   loggedUser: state.auth.loggedUser,
-  isEnglish: state.nav.isEnglish
+  isEnglish:state.nav.isEnglish
 });
 
 export default connect(mapStateToProps)(FormCard);
