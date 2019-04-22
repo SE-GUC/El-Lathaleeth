@@ -47,6 +47,7 @@ export class FormCard extends Component {
                   addComment={this.props.addComment}
                   isLoggedIn={this.props.isLoggedIn}
                   loggedUser={this.props.loggedUser}
+                  isEnglish={this.props.isEnglish}
                 />
               </div>
             </Collapse>

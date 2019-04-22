@@ -31,10 +31,12 @@ class lawyer_workspace extends Component {
     const filled_forms = this.state.filled_forms;
     return (
       <div className="lawyer_workspace">
-        <div className="Pending Forms">
-          {pending_forms.length > 0 && <h4 className="col-md-3 col-md-offset-6">Pending Forms:</h4>}
+       <div className="Pending Forms">
+          {pending_forms.length > 0 && this.props.isEnglish && <h4 className="col-md-3 col-md-offset-6">Pending Forms</h4>}
+          {pending_forms.length > 0 && !this.props.isEnglish && <h4 className="col-md-3 col-md-offset-6">الإستمارات في قيد الانتظار </h4>}
           {pending_forms.length > 0 && (
             <Cards
+            className="col-md-3 col-md-offset-6"
               forms={pending_forms}
               tobereviewed={true}
               reviewForm={this.reviewForm}
@@ -44,7 +46,8 @@ class lawyer_workspace extends Component {
           )}
         </div>
         <div className="Reviewed Forms">
-          {reviewed_forms.length > 0 && <h4 className="col-md-3 col-md-offset-6">Reviewed Forms:</h4>}
+          {reviewed_forms.length > 0 && this.props.isEnglish &&<h4 className="col-md-3 col-md-offset-6">Reviewed Forms</h4>}
+          {reviewed_forms.length > 0 && !this.props.isEnglish &&<h4 className="col-md-3 col-md-offset-6">إستمارات مراجعة</h4>}
           {reviewed_forms.length > 0 && (
             <Cards
               forms={reviewed_forms}
@@ -56,7 +59,8 @@ class lawyer_workspace extends Component {
           )}
         </div>
         <div className="Filled Forms">
-          {filled_forms.length > 0 && <h4 className="col-md-3 col-md-offset-6">Filled Forms:</h4>}
+          {filled_forms.length > 0 && this.props.isEnglish &&<h4 className="col-md-3 col-md-offset-6">Filled Forms</h4>}
+          {filled_forms.length > 0 && !this.props.isEnglish &&<h4 className="col-md-3 col-md-offset-6"> إستماراتي</h4>}
           {filled_forms.length > 0 && (
             <Cards
               forms={filled_forms}
@@ -137,6 +141,7 @@ edit= async (id)=>{
 }
 const mapStateToProps = state => ({
   isLoggedIn: state.auth.isLoggedIn,
-  loggedUser: state.auth.loggedUser
+  loggedUser: state.auth.loggedUser,
+  isEnglish: state.nav.isEnglish
 });
 export default connect(mapStateToProps)(lawyer_workspace);
