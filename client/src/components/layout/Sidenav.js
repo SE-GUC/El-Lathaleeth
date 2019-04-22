@@ -80,7 +80,7 @@ class Sidenav extends Component {
         <div>
           <li>
             <NotificationBadge count={forms.length} className={"abc"} />
-            <a href="#/PayPage" class="sidenav-close">
+            <a href="#/PayPage" className="sidenav-close">
               Update Form
             </a>
           </li>
@@ -97,7 +97,7 @@ class Sidenav extends Component {
         <div>
           <li>
             <NotificationBadge count={payable.length} className={"abc"} />
-            <a href="#/PayPage" class="sidenav-close">
+            <a href="#/PayPage" className="sidenav-close">
               Pay for Forms
             </a>
           </li>
@@ -116,25 +116,25 @@ class Sidenav extends Component {
           <a className="subheader grey darken-3">Lawyer</a>
         </li>
         <li>
-          <a href="#/LawyerPage" class="sidenav-close">
+          <a href="#/LawyerPage" className="sidenav-close">
             Reserve Cases
           </a>
         </li>
         <li>
-          <a href="#/lawyer_workspace" class="sidenav-close">
+          <a href="#/lawyer_workspace" className="sidenav-close">
             Workspace
           </a>
         </li>
         <li>
-          <a href="#/lawyerFillForm" class="sidenav-close">
+          <a href="#/lawyerFillForm" className="sidenav-close">
             Fill Form for Investor
           </a>
         </li>
-        <li>
-          <a href="#/lawyerPendingForms" class="sidenav-close">
+        {/*<li>
+          <a href="#/lawyerPendingForms" className="sidenav-close">
             Pending Forms
           </a>
-        </li>
+        </li>*/}
         <li>
           <a href="#/CasePage">View All Cases</a>
         </li>
@@ -146,21 +146,21 @@ class Sidenav extends Component {
           <a className="subheader grey darken-3">Reviewer</a>
         </li>
         <li>
-          <a href="#/LawyerPage" class="sidenav-close">
+          <a href="#/LawyerPage" className="sidenav-close">
             Reserve Cases
           </a>
         </li>
         <li>
-          <a href="#/lawyer_workspace" class="sidenav-close">
+          <a href="#/lawyer_workspace" className="sidenav-close">
             Workspace
           </a>
         </li>
 
-        <li>
-          <a href="#/lawyerPendingForms" class="sidenav-close">
+       {/* <li>
+          <a href="#/lawyerPendingForms" className="sidenav-close">
             Pending Forms
           </a>
-        </li>
+        </li>*/}
         <li>
           <a href="#/CasePage">View All Cases</a>
         </li>
@@ -172,22 +172,22 @@ class Sidenav extends Component {
           <a className="subheader grey darken-3">Investor</a>
         </li>
         <li>
-          <a href="#/InvestorPage" class="sidenav-close">
+          <a href="#/InvestorPage" className="sidenav-close">
             My Companies
           </a>
         </li>
-        <li>
-          <a href="#/trackCasePage" class="sidenav-close">
+       {/* <li>
+          <a href="#/trackCasePage" className="sidenav-close">
             Track my Case
           </a>
-        </li>
+       </li>*/}
         <li>
-          <a href="#/FillForm" class="sidenav-close">
+          <a href="#/FillForm" className="sidenav-close">
             Fill Form
           </a>
         </li>
         <li>
-          <a href="#/MyProfile" class="sidenav-close">
+          <a href="#/MyProfile" className="sidenav-close">
             My Profile
           </a>
         </li>

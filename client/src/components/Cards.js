@@ -7,7 +7,7 @@ class Cards extends Component {
   render() {
     const bool = this.props.tobereviewed;
     return (
-      <div className="row">
+      <div className="row offset-sm-1">
         {this.props.forms.map(form => (
           <div className = "abougabal">
             <FormCard form={form} tobereviewed={bool} 
