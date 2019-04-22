@@ -181,8 +181,11 @@ class FillForms extends Component {
       const form = await axios
         .post("http://localhost:5000/api/forms/", body)
         .then(async (result) => {
-          alert("Form Submitted Successfully");
-          await axios.put("http://localhost:5000/api/forms/generateCost/"+result.data.data._id)
+ if (this.props.isEnglish) {
+   alert("Form Submitted Successfully");
+ } else {
+   alert("تم بنجاح");
+ }          await axios.put("http://localhost:5000/api/forms/generateCost/"+result.data.data._id)
           window.location.hash = "#";
         })
         .catch(error => {
@@ -190,8 +193,10 @@ class FillForms extends Component {
           alert(error.response.data[Object.keys(error.response.data)[0]]);
         });
     } else {
-      alert("Please Make Sure All Entries are Correct!");
-    }
+      
+if (this.props.isEnglish)
+  alert("Please Make Sure You Have Entered All Fields Correctly");
+else alert("بالرجاء التأكد من صحة البيانات");    }
   };
   addDirector = e => {
     e.preventDefault();
@@ -231,7 +236,7 @@ class FillForms extends Component {
     e.preventDefault();
     const { name, value } = e.target;
     let formErrors = { ...this.state.formErrors };
-
+if(this.props.isEnglish){
     switch (name) {
       case "englishName":
         formErrors.englishName =
@@ -259,6 +264,39 @@ class FillForms extends Component {
         break;
       default:
         break;
+    }}
+    else{
+      switch (name) {
+        case "englishName":
+          formErrors.englishName =
+            value.length < 3 ? "يجب ان يكون ثلاث حروف على الاقل" : "";
+          break;
+        case "arabicName":
+          formErrors.arabicName =
+            value.length < 3 ? "يجب ان يكون ثلاث حروف على الاقل" : "";
+          break;
+        case "capitalVal":
+          formErrors.capitalVal =
+            parseInt(value) < 5000 || parseInt(value) > 999999999999
+              ? "رأس المال يجب ان يكون بين 5000 و 999999999999"
+              : "";
+          break;
+        case "idNum":
+          formErrors.idNum =
+            value.length < 8
+              ? "يجب ان يكون ثمانية حروف على الاقل"
+              : "";
+          break;
+        case "nationality":
+          formErrors.nationality =
+            value !== "Egyptian" &&
+            this.state.inv.nationality !== "Egyptian"
+              ? "عضو يجب ان يكون مصري لان المستثمر اجنبي"
+              : "";
+          break;
+        default:
+          break;
+      }
     }
     if (value !== "Lawyer" && name === "emp_type") {
       this.setState(
@@ -278,6 +316,7 @@ class FillForms extends Component {
     });
   }
   render() {
+    if(this.props.isEnglish){
     const { formErrors, country1, country, city, city1 } = this.state;
 
     let SPCStuff;
@@ -562,9 +601,314 @@ class FillForms extends Component {
       </div>
     );
   }
+  else{
+    const { formErrors, country1, country, city, city1 } = this.state;
+
+    let SPCStuff;
+    if (this.state.formType === "SSC")
+      SPCStuff = (
+        <div>
+          <h2>أضافة اعضاء مجلس الإدارة</h2>
+          <div className="country1">
+            <label htmlFor="country">الدولة</label>
+
+            <CountryDropdown
+              value={country1}
+              name="country1"
+              onChange={val => this.selectCountry1(val)}
+              style={{ display: "block" }}
+            />
+            <label htmlFor="city">المدينة</label>
+
+            <RegionDropdown
+              country={country1}
+              name="city1"
+              value={city1}
+              onChange={val => this.selectRegion1(val)}
+              style={{ display: "block" }}
+            />
+          </div>
+          <div className="address1">
+            <label htmlFor="address1">عنوان</label>
+            <input
+              placeholder="عنوان"
+              type="address1"
+              name="address1"
+              noValidate
+              onChange={this.handleChange}
+            />
+          </div>
+          <ReactDatez
+            name="dateofbirth"
+            handleChange={this.handleDateChange}
+            onChange={this.handleDateChange}
+            value={this.state.startDate}
+            allowFuture={false}
+            allowPast={true}
+          />
+          <div className="formType">
+            <Form.Label>الجنس</Form.Label>
+            <Form.Control
+              as="select"
+              value={this.state.gender}
+              onChange={this.handleChange}
+              name="gender"
+            >
+              {" "}
+              <option value="male">ذكر</option>
+              <option value="female">أنثة</option>
+            </Form.Control>
+          </div>
+          <div className="formType">
+            <Form.Label>نوع البطاقة</Form.Label>
+            <Form.Control
+              as="select"
+              value={this.state.typeID}
+              onChange={this.handleChange}
+              name="typeID"
+            >
+              {" "}
+              <option value="passport">جواز سفر</option>
+              <option value="id">بطاقة قومية</option>
+            </Form.Control>
+          </div>
+          <div className="idNum">
+            <label htmlFor="idNum">رقم البطاقة-جواز السفر</label>
+            <input
+              className={formErrors.idNum.length > 0 ? "error" : null}
+              placeholder="رقم البطاقة-جواز السفر"
+              type="text"
+              name="idNum"
+              noValidate
+              onChange={this.handleChange}
+            />
+            {formErrors.idNum.length > 0 && (
+              <span className="errorMessage">{formErrors.idNum}</span>
+            )}
+          </div>
+          <div className="name">
+            <label htmlFor="name">اسم العضو</label>
+            <input
+              placeholder="اسم العضو"
+              type="name"
+              name="name"
+              noValidate
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="position">
+            <label htmlFor="position">مركز العضو</label>
+            <input
+              placeholder="مركز العضو"
+              type="position"
+              name="position"
+              noValidate
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="nationality">
+            <label htmlFor="idNum">جنسية</label>
+            <CountryDropdown
+              value={this.state.nationality}
+              name="country1"
+              onChange={val => this.selectNationality(val)}
+              style={{ display: "block" }}
+              className={
+                formErrors.nationality.length > 0 ? "error" : null
+              }
+            />
+            {formErrors.nationality.length > 0 && (
+              <span className="errorMessage">
+                {formErrors.nationality}
+              </span>
+            )}
+          </div>
+          <div className="formType">
+            <Form.Label>نوع المستثمر</Form.Label>
+            <Form.Control
+              as="select"
+              value={this.state.typeInves}
+              onChange={this.handleChange}
+              name="typeInves"
+            >
+              {" "}
+              <option value="individual">شخص</option>
+              <option value="company">شركة</option>
+            </Form.Control>
+          </div>
+          <div>
+            <button onClick={this.addDirector.bind(this)}>
+              أضافة عضو مجلس إدارة
+            </button>
+          </div>
+        </div>
+      );
+
+    return (
+      <div className="wrFillFormser">
+        <div className="form-wrFillFormser">
+          <h1>أنشاء شركة جديدة</h1>
+          <form onSubmit={this.handleSubmit} noValidate>
+            <div className="englishName">
+              <label htmlFor="englishName">الاسم بالانجليزي</label>
+              <input
+                className={
+                  formErrors.englishName.length > 0 ? "error" : null
+                }
+                placeholder="الاسم بالانجليزي"
+                type="text"
+                name="englishName"
+                noValidate
+                onChange={this.handleChange}
+              />
+              {formErrors.englishName.length > 0 && (
+                <span className="errorMessage">
+                  {formErrors.englishName}
+                </span>
+              )}
+            </div>
+            <div className="arabicName">
+              <label htmlFor="arabicName">الاسم بالعربي</label>
+              <input
+                className={
+                  formErrors.arabicName.length > 0 ? "error" : null
+                }
+                placeholder="الاسم بالعربي"
+                type="text"
+                name="arabicName"
+                noValidate
+                onChange={this.handleChange}
+              />
+              {formErrors.arabicName.length > 0 && (
+                <span className="errorMessage">
+                  {formErrors.arabicName}
+                </span>
+              )}
+            </div>
+            <div className="fax">
+              <label htmlFor="fax">رقم الفاكس</label>
+              <input
+                placeholder="رقم الفاكس"
+                type="text"
+                name="fax"
+                noValidate
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className="phone">
+              <label htmlFor="phone">رقم التيليفون</label>
+              <input
+                placeholder="رقم التيليفون"
+                type="text"
+                name="phone"
+                noValidate
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className="capitalVal">
+              <label htmlFor="capitalVal">رأس المال</label>
+              <input
+                className={
+                  formErrors.capitalVal.length > 0 ? "error" : null
+                }
+                placeholder="رأس المال"
+                type="text"
+                name="capitalVal"
+                noValidate
+                onChange={this.handleChange}
+              />
+              {formErrors.capitalVal.length > 0 && (
+                <span className="errorMessage">
+                  {formErrors.capitalVal}
+                </span>
+              )}
+            </div>
+            <div className="country">
+              <label htmlFor="country">الدولة</label>
+
+              <CountryDropdown
+                value={country}
+                name="country"
+                onChange={val => this.selectCountry(val)}
+                style={{ display: "block" }}
+              />
+              <label htmlFor="city">المدينة</label>
+
+              <RegionDropdown
+                country={country}
+                name="city"
+                value={city}
+                onChange={val => this.selectRegion(val)}
+                style={{ display: "block" }}
+              />
+            </div>
+            <div className="address">
+              <label htmlFor="address">عنوان</label>
+              <input
+                placeholder="عنوان"
+                type="address"
+                name="address"
+                noValidate
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className="formType">
+              <Form.Label>عملة رأس المال</Form.Label>
+              <Form.Control
+                as="select"
+                value={this.state.capitalCurr}
+                onChange={this.handleChange}
+                name="capitalCurr"
+              >
+                <option value="$">$</option>
+                <option value="CA$">CA$</option>
+                <option value="€">€</option>
+                <option value="AED">AED</option>
+                <option value="EGP">EGP</option>
+                <option value="£">£</option>
+                <option value="SR">SR</option>
+              </Form.Control>
+            </div>
+            <div className="formType">
+              <Form.Label>القانون</Form.Label>
+              <Form.Control
+                as="select"
+                value={this.state.law}
+                onChange={this.handleChange}
+                name="law"
+              >
+                {" "}
+                <option value="73">73</option>
+                <option value="152">152</option>
+              </Form.Control>
+            </div>
+            <div className="formType">
+              <Form.Label>نوع الشركة</Form.Label>
+              <Form.Control
+                as="select"
+                value={this.state.formType}
+                onChange={this.handleChange}
+                name="formType"
+              >
+                {" "}
+                <option value="SPC">SPC</option>
+                <option value="SSC">SSC</option>
+              </Form.Control>
+            </div>
+            {SPCStuff}
+            <div className="createForm">
+              <button type="submit">تقدم</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    );
+  }
+}
 }
 const mapStateToProps = state => ({
   isLoggedIn: state.auth.isLoggedIn,
-  loggedUser: state.auth.loggedUser
+  loggedUser: state.auth.loggedUser,
+  isEnglish:state.nav.isEnglish
 });
 export default connect(mapStateToProps)(FillForms);
