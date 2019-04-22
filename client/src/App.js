@@ -28,7 +28,7 @@ import Homepage from "./pages/Homepage";
 import EstablishedCompanies from "./pages/EstablishedCompanies";
 
 class App extends Component {
-  render() {
+  render() { 
     return (
       <Provider store={store}>
         <HashRouter>
