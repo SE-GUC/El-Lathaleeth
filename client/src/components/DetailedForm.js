@@ -21,6 +21,7 @@ export class DetailedForm extends Component {
            }
            let payButton;
            let editButton
+           try{
            if (this.props.form.status === "reviewer check") {
              payButton = (
                <div>
@@ -38,7 +39,8 @@ export class DetailedForm extends Component {
              );
            } else {
              payButton = "";
-           }
+           }}
+           catch(e){}
            const filteredComments = this.props.form.comments.filter(
              a => {
                console.log(a);
@@ -70,6 +72,9 @@ export class DetailedForm extends Component {
            } else {
              editButton = "";
            }
+            if(this.props.loggedUser.type==='Reviewer'){editButton='' 
+            payButton=''}
+
            console.log(this.props.loggedUser);
            return (
              <div class="card">

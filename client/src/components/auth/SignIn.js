@@ -102,6 +102,9 @@ await  this.props.login({
             window.location.hash = "/";
 
     }
+    else if(this.props.loggedUser.type==='Admin'){
+ window.location.hash = "/";
+    }
     return (
       <Center >
         <div className =  "col-md-3 col-md-offset-6">
