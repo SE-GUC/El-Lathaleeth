@@ -3,7 +3,7 @@ import FormCard from "./FormCard";
 class CaseList extends Component {
   render() {
     return this.props.forms.map(form => (
-      <FormCard form={form} tobereviewed={false} reviewForm={false} addComment={false}/>
+      <FormCard form={form} tobereviewed={false} pay = {false} reviewForm={false} addComment={false}/>
     ));
   }
 }

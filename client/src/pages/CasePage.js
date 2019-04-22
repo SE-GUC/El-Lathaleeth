@@ -28,7 +28,7 @@ class CasePage extends Component {
     console.log(this.state.displayedForms);
     return (
       <div>
-        <form>
+        <form className="col-md-3 col-md-offset-6">
           Enter Case Number:
           <input
             type="text"
@@ -44,7 +44,7 @@ class CasePage extends Component {
             Sort By Case Number
           </button>
         </form>
-        <div className="CasePage">
+        <div className="row offset-sm-1">
           <CaseList
             forms={this.state.displayedForms}
           />
