@@ -79,17 +79,6 @@ class meetUs extends Component {
 
 <div class="column">
         <div class="card card-custom mx-2 mb-3">
-        <img class="card-img-top" src={df} alt="Card image"/>
-  <div class="card-body">
-    <h4 class="card-title">Youssef El Sebaei</h4>
-    <p class="card-text">Stake Holder</p>
-        </div>
-    </div>
-</div>
-
-
-<div class="column">
-        <div class="card card-custom mx-2 mb-3">
         <img class="card-img-top" src={abougabal} alt="Card image"/>
   <div class="card-body">
     <h4 class="card-title">Youssef Abougabal</h4>
@@ -104,6 +93,16 @@ class meetUs extends Component {
   <div class="card-body">
     <h4 class="card-title">Peter Samir</h4>
     <p class="card-text">Backend Developer</p>
+        </div>
+    </div>
+</div>
+
+<div class="column">
+        <div class="card card-custom mx-2 mb-3">
+        <img class="card-img-top" src={df} alt="Card image"/>
+  <div class="card-body">
+    <h4 class="card-title">Youssef El Sebaei</h4>
+    <p class="card-text">Stake Holder</p>
         </div>
     </div>
 </div>
