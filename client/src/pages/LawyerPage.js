@@ -6,7 +6,7 @@ const axios = require("axios");
 class LawyerPage extends Component {
   // constructor() {
   //   super();
-  //   const formsData = await axios.get("http://localhost:5000/api/forms/");
+  //   const formsData = await axios.get("https://lathaleeth.herokuapp.com/api/forms/");
 
   //   this.state = { forms:formsData.data.data };
   // }
@@ -14,7 +14,7 @@ class LawyerPage extends Component {
   //view all cases
   componentWillMount = async () => {
     const formsData = await axios
-      .get("http://localhost:5000/api/forms/")
+      .get("https://lathaleeth.herokuapp.com/api/forms/")
       .then(res => {
         console.log(res.data.data);
         this.setState({
@@ -28,8 +28,9 @@ class LawyerPage extends Component {
     console.log(this.state.displayedForms);
     return (
       <div>
-        <form>
-          Enter Case Number:
+        <form className="col-md-3 col-md-offset-6">
+        {this.props.isEnglish && <div>Enter Case Number</div>}
+          {!this.props.isEnglish && <div>أدخل رقم القضية</div>}
           <input
             type="text"
             name="caseNumber"
@@ -38,10 +39,12 @@ class LawyerPage extends Component {
             onChange={this.handleChange}
           />
           <button onClick={this.sortCreationDate.bind(this)}>
-            Sort By Creation Date
+          {this.props.isEnglish && <div>Sort By Creation Date</div>}
+          {!this.props.isEnglish && <div>الترتيب حسب تاريخ الإنشاء</div>}
           </button>
           <button onClick={this.sortCaseNum.bind(this)}>
-            Sort By Case Number
+          {this.props.isEnglish && <div>Sort By Case Number</div>}
+          {!this.props.isEnglish && <div>الترتيب حسب رقم القضية</div>}
           </button>
         </form>
         <div className="LawyerPage">
@@ -125,13 +128,14 @@ class LawyerPage extends Component {
     });
 
     const reserve = await axios.put(
-      "http://localhost:5000/api/entity_emp/reserveForm/" + idl + "/" + id
+      "https://lathaleeth.herokuapp.com/api/entity_emp/reserveForm/" + idl + "/" + id
     );
   };
 }
 const mapStateToProps = state => ({
   isLoggedIn: state.auth.isLoggedIn,
-  loggedUser: state.auth.loggedUser
+  loggedUser: state.auth.loggedUser,
+  isEnglish : state.nav.isEnglish
 });
 
 export default connect(mapStateToProps)(LawyerPage);

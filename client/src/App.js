@@ -16,17 +16,19 @@ import store from "./globalState/store";
 import FillForm from "./pages/FillForm";
 import LawyerFillForm from "./pages/LawyerFillForm";
 import PayPage from "./pages/PayPage";
-import OneForm from "./pages/OneForm";
 import UpdateOneForm from "./pages/UpdateOneForm";
 import RegisterInvestor from "./pages/RegisterInvestor";
 import ViewInvestorProfile from "./pages/ViewInvestorProfile";
 import UpdateInvestorProfile from "./pages/UpdateInvestorProfile";
 import UpdateFormPage from "./pages/UpdateFormPage";
-
+import contactUs from "./pages/contactUs";
+import meetUs from "./pages/meetUs";
+import ArabicHomepage from "./pages/ArabicHomepage";
 import Homepage from "./pages/Homepage";
+import EstablishedCompanies from "./pages/EstablishedCompanies";
 
 class App extends Component {
-  render() {
+  render() { 
     return (
       <Provider store={store}>
         <HashRouter>
@@ -36,19 +38,11 @@ class App extends Component {
               <Route exact path="/" component={Homepage} />
               <Route exact path="/PayPage" component={PayPage} />
 
-              <Route
-                exact
-                path="/lawyerFillForm"
-                component={LawyerFillForm}
-              />
+              <Route exact path="/lawyerFillForm" component={LawyerFillForm} />
 
               <Route exact path="/LawyerPage" component={LawyerPage} />
               <Route path="/UpdateOneForm" component={UpdateOneForm} />
-              <Route
-                exact
-                path="/UpdateFormPage"
-                component={UpdateFormPage}
-              />
+              <Route exact path="/UpdateFormPage" component={UpdateFormPage} />
 
               <Route
                 exact
@@ -57,34 +51,32 @@ class App extends Component {
               />
               <Route exact path="/InvestorPage" component={InvestorPage} />
               <Route exact path="/CasePage" component={CasePage} />
-              {/*<Route exact path="/OneForm" component={OneForm} />*/}
-              <Route
-                exact
-                path="/MyProfile"
-                component={ViewInvestorProfile}
-              />
+
+              <Route exact path="/MyProfile" component={ViewInvestorProfile} />
               <Route
                 exact
                 path="/UpdateInvestorProfile"
                 component={UpdateInvestorProfile}
               />
               <Route exact path="/FillForm" component={FillForm} />
-
+              <Route
+                exact
+                path="/EstablishedCompanies"
+                component={EstablishedCompanies}
+              />
               <Route
                 exact
                 path="/RegisterEmployee"
                 component={RegisterEmployee}
               />
-              <Route
-                exact
-                path="/trackCasePage"
-                component={trackCasePage}
-              />
+              <Route exact path="/trackCasePage" component={trackCasePage} />
               <Route
                 exact
                 path="/lawyer_workspace"
                 component={lawyer_workspace}
               />
+              <Route exact path="/contactUs" component={contactUs} />
+              <Route exact path="/meetUs" component={meetUs} />
               <Route exact path="/signin" component={SignIn} />
               {<Route exact path="/signup" component={RegisterInvestor} />}
             </main>
@@ -101,12 +93,15 @@ class App extends Component {
                     <h5 className="white-text">Links</h5>
                     <ul>
                       <li>
-                        <a className="grey-text text-lighten-3" href="#!">
-                          Meet Lathaleeth
+                        <a className="grey-text text-lighten-3" href="#/meetUs">
+                          Meet El Lathaleeth
                         </a>
                       </li>
                       <li>
-                        <a className="grey-text text-lighten-3" href="#!">
+                        <a
+                          className="grey-text text-lighten-3"
+                          href="#/contactUs"
+                        >
                           Contact us
                         </a>
                       </li>
@@ -126,5 +121,15 @@ class App extends Component {
     );
   }
 }
-
+// App.propTypes = {
+//   remember: PropTypes.func.isRequired
+// };
+// const mapStateToProps = state => ({
+//   isLoggedIn: state.auth.isLoggedIn,
+//   loggedUser: state.auth.loggedUser
+// });
+// export default connect(
+//   mapStateToProps,
+//   { remember }
+// )(App);
 export default App;

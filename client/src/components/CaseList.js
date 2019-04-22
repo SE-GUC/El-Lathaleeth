@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-import CaseDetailed from "./CaseDetailed";
+import FormCard from "./FormCard";
 class CaseList extends Component {
   render() {
     return this.props.forms.map(form => (
-      <CaseDetailed
-        form={form}
-      />
+      <FormCard form={form} tobereviewed={false} pay = {false} reviewForm={false} addComment={false}/>
     ));
   }
 }
