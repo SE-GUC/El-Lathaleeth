@@ -11,7 +11,7 @@ import {
   CountryRegionData
 } from "react-country-region-selector";
 
-class Homepage extends Component {
+class ArabicHomepage extends Component {
   constructor(props) {
     super(props);
     this.state = { country: "", region: "" };
@@ -31,18 +31,17 @@ class Homepage extends Component {
           <div className="row jumbotron">
             <div className="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-10">
               <p className="lead">
-                This is a jumbotron for el lathaleeth where will be writing any
-                kind of a welcome note/or important news that would motivate the
-                investor to learn more.
+                هذه اللافتة سيتم استخدامها لعرض المعلومات التي سيهتم المستثمر
+                بالمعرفة عنها اكثر
               </p>
               <div className="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-2">
-                <a href="#">
+                <a href="https://www.gafi.gov.eg/Arabic/Pages/default.aspx">
                   {" "}
                   <button
                     type="button"
                     className="btn btn-outline-secondary btn-lg"
                   >
-                    Learn More
+                    اعرف اكثر
                   </button>
                 </a>
               </div>
@@ -52,12 +51,12 @@ class Homepage extends Component {
         <div className="container-fluid">
           <div className="row welcome text-center">
             <div className="col-12">
-              <h1 className="display-4">Africa's Most Prosperous Market</h1>
+              <h1 className="display-4">سوق أفريقيا الأكثر ازدهارا</h1>
             </div>
             <div className="col-12">
               <p className="lead text-center">
-                A nation with a plenty of resources and a mindset of winning,
-                your ideal choice for Investment
+                أمة لديها الكثير من الموارد وعقلية الفوز ، خيارك المثالي
+                للاستثمار
               </p>
             </div>
             <hr className="my-4" />
@@ -68,18 +67,18 @@ class Homepage extends Component {
           <div className="row text-center padding">
             <div className="col-xs-12 col-sm-6 col-md-4">
               <i className="material-icons md-48">account_balance</i>
-              <h3>Ministry of Trade</h3>
-              <p>Encouraging Investment in Egypt</p>
+              <h3>وزارة التجارة</h3>
+              <p>تشجيع الاستثمار في مصر</p>
             </div>
             <div className="col-xs-12 col-sm-6 col-md-4">
               <i className="material-icons md-48">account_balance</i>
-              <h3>Central Bank Of Egypt</h3>
-              <p>Stable and Steadily Growth is the key to our future</p>
+              <h3>البنك المركزي المصري</h3>
+              <p>النمو المستقر والمطرد هو مفتاح مستقبلنا</p>
             </div>
             <div className="col-xs-12 col-sm-6 col-md-4">
               <i className="material-icons md-48">account_balance</i>
-              <h3>General Authority for Investment</h3>
-              <p>Welcome to the land of the pharoas</p>
+              <h3>الهيئة العامة للاستثمار</h3>
+              <p>مرحبا بكم في أرض الفراعنة</p>
             </div>
           </div>
           <hr className="my-4" />
@@ -87,31 +86,32 @@ class Homepage extends Component {
         <div className="container-fluid padding">
           <div className="row padding">
             <div className="col-lg-6">
-              <h2>If you invest in Egypt...</h2>
+              <h2>إذا كنت تستثمر في مصر ...</h2>
               <p>
-                ·The Egyptian Economy's resilience is capable of overcoming its
-                economic challenges as it did in the 2008 financial crisis, and
-                long-term investors will see many opportunities.
+                ·مرونة الاقتصاد المصري قادرة على التغلب عليها
+                                التحديات الاقتصادية كما فعلت في الأزمة المالية
+                لعام 2008 ، و                 سوف يرى المستثمرون على المدى
+                الطويل العديد من الفرص.
               </p>
               <p>
                 {" "}
-                ·Egypt has started its transformation to a stable, democratic
-                and modern economy, where the dividends of growth and prosperity
-                will be shared by all who participated in its achievement.
+                ·بدأت مصر تحولها إلى مستقر وديمقراطي                 والاقتصاد
+                الحديث ، حيث أرباح النمو والازدهار                 سيتم مشاركتها
+                من قبل جميع الذين شاركوا في تحقيقها.
               </p>
               <p>
                 {" "}
-                ·The Egyptian economy's ability to post positive real economic
-                growth rates amid the global economic downturn as well as during
-                the political unrest that prevailed in 2011-2013 indicates how
-                resilient economic activity in Egypt.
+                ·قدرة الاقتصاد المصري على نشر اقتصادي حقيقي إيجابي
+                                معدلات النمو وسط الانكماش الاقتصادي العالمي
+                وكذلك خلال                 الاضطرابات السياسية التي سادت في
+                2011-2013 تشير إلى كيف                 نشاط اقتصادي مرن في مصر.
               </p>
               <br />
               <a
-                href="https://www.gafi.gov.eg/English/whyegypt/pages/reasonstoinvestinegypt.aspx"
+                href="https://www.gafi.gov.eg/Arabic/whyegypt/pages/reasonstoinvestinegypt.aspx"
                 className="btn btn-primary"
               >
-                Read More
+                اقرأ المزيد
               </a>
             </div>
             <div className="col-lg-6">
@@ -125,4 +125,4 @@ class Homepage extends Component {
   }
 }
 
-export default Homepage;
+export default ArabicHomepage;
