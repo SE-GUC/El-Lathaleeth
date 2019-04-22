@@ -120,11 +120,6 @@ class Homepage extends Component {
           </div>
         </div>
         <hr className="my-4" />
-        <figure>
-          <div className="fixed-wrap">
-            <div id="fixed" />
-          </div>
-        </figure>
       </React.Fragment>
     );
   }
