@@ -164,7 +164,7 @@ class UpdateInvestorProfile extends Component {
     const { formErrors } = this.state;
 
     return (
-      <div>
+      <div className="col-4 offset-3 mx-auto w-50">
         <form onSubmit={this.submit} noValidate>
           <div class="card">
             <div class="card-body">

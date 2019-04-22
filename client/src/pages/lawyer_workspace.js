@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import html2canvas from "html2canvas";
 import Cards from "../components/Cards";
+import jsPDF from 'jspdf';
+import DetailedForm from "../components/DetailedForm";
 
 const axios = require("axios");
 
@@ -108,6 +111,24 @@ edit= async (id)=>{
       "https://lathaleeth.herokuapp.com/api/forms/formPaid/"+ id
     );
   };
+  /*print = async form => {
+    let hey = <div id="printme">
+      <DetailedForm
+        form={form}
+        tobereviewed={false}
+        pay={false}
+        reviewForm={false}
+        addComment={false}
+      />
+    </div>;
+    const input = document.getElementById("printme");
+    html2canvas(input).then(canvas => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF();
+      pdf.addImage(imgData, "PNG", 0, 0);
+      pdf.save("download.pdf");
+    });
+  };*/
   addComment = async (id, body) => {
     //still need to update data viewed when comment is written
     // this.setState({
@@ -144,4 +165,6 @@ const mapStateToProps = state => ({
   loggedUser: state.auth.loggedUser,
   isEnglish: state.nav.isEnglish
 });
+ 
+
 export default connect(mapStateToProps)(lawyer_workspace);
