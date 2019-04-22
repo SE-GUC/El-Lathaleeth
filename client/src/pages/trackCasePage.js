@@ -49,7 +49,7 @@ class trackCasePage extends Component {
             class="btn btn-outline-secondary btn-sm"
           >
             {" "}
-            Trach Case    
+            Track Case    
           </button>{" "}
         </div>}
         {!this.props.isEnglish &&

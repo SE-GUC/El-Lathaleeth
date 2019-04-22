@@ -245,7 +245,9 @@ class RegisterInvestor extends Component {
           gender: "",
           nationality: "",
           typeOfID: "",
-          IDNumber: ""
+          IDNumber: "",
+          formErrors:{...formErrors,IDNumber:""}
+          // formErrors.IDNumber:""
         });
       }
     }
@@ -260,6 +262,15 @@ class RegisterInvestor extends Component {
       );
     }
     if (name === "typeOfID" && value === "national id") {
+      if (this.props.isEnglish) {
+        formErrors.IDNumber =
+          value.length < 14 ? "please enter valid id number" : "";
+      } else {
+        formErrors.IDNumber =
+          value.length < 14 ? "بالرجاء ادخال رقم بطاقة صحيح" : "";
+      }
+    }
+    if (name === "IDNumber" && this.state.typeOfID === "national id") {
       if (this.props.isEnglish) {
         formErrors.IDNumber =
           value.length < 14 ? "please enter valid id number" : "";
