@@ -424,7 +424,7 @@ else{
           <div className="address1">
             <label htmlFor="address1">عنوان</label>
             <input
-              placeholder="address"
+              placeholder="عنوان"
               type="address1"
               name="address1"
               noValidate
@@ -469,7 +469,7 @@ else{
             <label htmlFor="idNum">رقم البطاقة-جواز السفر</label>
             <input
               className={formErrors.idNum.length > 0 ? "error" : null}
-              placeholder="ID Number"
+              placeholder="رقم البطاقة-جواز السفر"
               type="text"
               name="idNum"
               noValidate
@@ -482,7 +482,7 @@ else{
           <div className="name">
             <label htmlFor="name">اسم العضو</label>
             <input
-              placeholder="Name"
+              placeholder="اسم العضو"
               type="name"
               name="name1"
               noValidate
@@ -492,7 +492,7 @@ else{
           <div className="position">
             <label htmlFor="position">مركز العضو</label>
             <input
-              placeholder="Position"
+              placeholder="مركز العضو"
               type="position"
               name="position"
               noValidate
@@ -548,7 +548,7 @@ else{
                 className={
                   formErrors.englishName.length > 0 ? "error" : null
                 }
-                placeholder="English Name"
+                placeholder="الاسم بالانجليزي"
                 type="text"
                 name="englishName"
                 noValidate
@@ -566,7 +566,7 @@ else{
                 className={
                   formErrors.arabicName.length > 0 ? "error" : null
                 }
-                placeholder="Arabic Name"
+                placeholder="الاسم بالعربي"
                 type="text"
                 name="arabicName"
                 noValidate
@@ -581,7 +581,7 @@ else{
             <div className="fax">
               <label htmlFor="fax">رقم الفاكس</label>
               <input
-                placeholder="Fax"
+                placeholder="رقم الفاكس"
                 type="text"
                 name="fax"
                 noValidate
@@ -591,7 +591,7 @@ else{
             <div className="phone">
               <label htmlFor="phone">رقم التيليفون</label>
               <input
-                placeholder=""
+                placeholder="رقم التيليفون"
                 type="text"
                 name="phone"
                 noValidate
@@ -604,7 +604,7 @@ else{
                 className={
                   formErrors.capitalVal.length > 0 ? "error" : null
                 }
-                placeholder="Capital Value"
+                placeholder="رأس المال"
                 type="text"
                 name="capitalVal"
                 noValidate
@@ -638,7 +638,7 @@ else{
             <div className="address">
               <label htmlFor="address2">عنوان</label>
               <input
-                placeholder="Address"
+                placeholder="عنوان"
                 type="address2"
                 name="address2"
                 noValidate
