@@ -50,7 +50,7 @@ class Navbar extends Component {
             {language}
           </Link>
           <div>
-            <ul className="left">
+            <ul className="right">
               <li>
                 <NavLink
                   style={{ textDecoration: "none", color: "white" }}
