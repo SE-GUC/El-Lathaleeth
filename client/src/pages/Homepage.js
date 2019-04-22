@@ -19,11 +19,11 @@ class Homepage extends Component {
   render() {
     return (
       <React.Fragment>
-                <div className="container-fluid no-padding">
+        <div className="container-fluid no-padding">
           <div className="row">
             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <Carousel/>
-    {/*<img src={img} className="img-fluid center-block" alt="hi" />*/}
+              <Carousel />
+              {/*<img src={img} className="img-fluid center-block" alt="hi" />*/}
             </div>
           </div>
         </div>
@@ -120,11 +120,6 @@ class Homepage extends Component {
           </div>
         </div>
         <hr className="my-4" />
-        <figure>
-          <div className="fixed-wrap">
-            <div id="fixed" />
-          </div>
-        </figure>
       </React.Fragment>
     );
   }
