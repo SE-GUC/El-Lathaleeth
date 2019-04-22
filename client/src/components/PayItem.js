@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import { connect } from "react-redux";
+//import PayStripe from "./PayStripe";
 export class PayItem extends Component {
   state = { clicked: false };
   render() {
@@ -8,7 +9,7 @@ export class PayItem extends Component {
       <div class="card">
         <div class="card-header">{this.props.form.formType}</div>
         <div class="card-body">
-          <h5 class="card-title">Mr./Mrs. {this.props.form.investor.name}</h5>
+          <h5 class="card-title">Case Number: {this.props.form.caseNumber}</h5>
           <p class="card-text" />
           <button
             type="button"

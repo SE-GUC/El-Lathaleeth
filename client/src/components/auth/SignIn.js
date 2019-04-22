@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { login } from "../../globalState/actions/authActions";
 import PropTypes from "prop-types";
 import axios from "axios";
+import Form from "react-bootstrap/Form";
 
 class SignIn extends Component {
   constructor(props) {
@@ -93,19 +94,27 @@ await  this.props.login({
     if (this.props.loggedUser.type === "investor") {
       test = <div>Investor Signed In</div>;
       window.location.hash = "/InvestorPage";
-    } else if (this.props.loggedUser.type === "Lawyer") {
+    } else if ((this.props.loggedUser.type === "Lawyer")||(this.props.loggedUser.type === "Reviewer")) {
       test = <div>Employee Signed In</div>;
-      window.location.hash = "/";
+      window.location.hash = "/lawyer_workspace";
+    }
+    else if(this.props.loggedUser.type==='Reviewer'){
+            window.location.hash = "/";
+
+    }
+    else if(this.props.loggedUser.type==='Admin'){
+ window.location.hash = "/";
     }
     return (
-      <Center>
+      <Center >
+        <div className =  "col-md-3 col-md-offset-6">
         <form className="white" onSubmit={this.handleSubmit}>
           <div className="container center padding-70">
-            <h5 className="grey-text text-darken-3">Sign In</h5>
+            <h3 className="grey-text text-darken-3" style={{lineHeight:4}} >Sign In</h3>
             <div className="container">
               <div className="input-field">
                 <label htmlFor="email">Email or Username</label>
-                <input  id="email" onChange={this.handleChange} />
+                <input type="text" id="email" onChange={this.handleChange} />
               </div>
             </div>
 
@@ -125,6 +134,7 @@ await  this.props.login({
             {test}
           </div>
         </form>
+        </div>
       </Center>
     );
   }

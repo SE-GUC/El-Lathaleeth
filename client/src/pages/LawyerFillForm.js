@@ -642,8 +642,9 @@ class LawyerFillForm extends Component {
             this.props.loggedUser.id,
           body
         )
-        .then(result => {
+        .then(async result => {
           alert("Form Submitted Successfully");
+          await axios.put("http://localhost:5000/api/forms/generateCost/"+result.data.data._id)
           window.location.hash = "#";
         })
         .catch(error => {
@@ -662,7 +663,7 @@ class LawyerFillForm extends Component {
     return (
       <React.Fragment>
         <h1>Walk In Form</h1>
-        <p>Step {this.state.currentStep} </p>
+        <h2> Step {this.state.currentStep}  </h2>
 
         <form onSubmit={this.handleSubmit}>
           <LawyerInvestorForm
@@ -720,9 +721,13 @@ class LawyerFillForm extends Component {
             typeInves={a.typeInves}
             formErrors={a.formErrors}
           />
-          {this.previousButton}
-          {this.nextButton}
+          
+          
         </form>
+        <div>
+        {this.previousButton}
+          {this.nextButton }
+        </div>
       </React.Fragment>
     );
   }

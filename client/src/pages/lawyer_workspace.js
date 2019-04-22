@@ -32,51 +32,76 @@ class lawyer_workspace extends Component {
     return (
       <div className="lawyer_workspace">
         <div className="Pending Forms">
-          {pending_forms.length > 0 && <h4>Pending Forms:</h4>}
+          {pending_forms.length > 0 && <h4 className="col-md-3 col-md-offset-6">Pending Forms:</h4>}
           {pending_forms.length > 0 && (
             <Cards
               forms={pending_forms}
               tobereviewed={true}
               reviewForm={this.reviewForm}
               addComment={this.addComment}
+              pay={this.pay}
             />
           )}
         </div>
         <div className="Reviewed Forms">
-          {reviewed_forms.length > 0 && <h4>Reviewed Forms:</h4>}
+          {reviewed_forms.length > 0 && <h4 className="col-md-3 col-md-offset-6">Reviewed Forms:</h4>}
           {reviewed_forms.length > 0 && (
             <Cards
               forms={reviewed_forms}
               tobereviewed={false}
               reviewForm={this.reviewForm}
               addComment={this.addComment}
+              pay={this.pay}
             />
           )}
         </div>
         <div className="Filled Forms">
-          {filled_forms.length > 0 && <h4>Filled Forms:</h4>}
+          {filled_forms.length > 0 && <h4 className="col-md-3 col-md-offset-6">Filled Forms:</h4>}
           {filled_forms.length > 0 && (
             <Cards
               forms={filled_forms}
               tobereviewed={false}
               reviewForm={this.reviewForm}
               addComment={this.addComment}
+              pay={this.pay}
+              edit={this.edit}
             />
           )}
         </div>
       </div>
     );
   }
+edit= async (id)=>{
+  
 
+}
   reviewForm = async (idl, id) => {
     this.setState({
-      forms: this.state.forms.filter(form => {
+      pending_forms: this.state.pending_forms.filter(form => {
         return form._id !== id;
       })
     });
 
     const reserve = await axios.put(
       "http://localhost:5000/api/forms/review/" + idl + "/" + id
+    );
+  };
+  pay = async (id) => {
+      const lawyerinfo = await axios
+      .get(
+        "http://localhost:5000/api/entity_emp/workSpace/" +
+          this.props.loggedUser.id
+      )
+      .then(res => {
+        console.log(res.data);
+        this.setState({
+          pending_forms: res.data.pending_forms,
+          reviewed_forms: res.data.reviewed_forms,
+          filled_forms: res.data.filled_forms
+        });
+      });
+    const reserve = await axios.put(
+      "http://localhost:5000/api/forms/formPaid/"+ id
     );
   };
   addComment = async (id, body) => {
@@ -89,19 +114,24 @@ class lawyer_workspace extends Component {
     //     }
     //   })
     // });
-    console.log(this.state.forms);
+    console.log(this.state.pending_forms);
     //   useAlert("Comment Submitted")
     const add = await axios.put(
       "http://localhost:5000/api/forms/commentOnForm/" + id,
       body
     );
-    const formsData = await axios
+    const lawyerinfo = await axios
       .get(
-        "http://localhost:5000/api/forms/getPending/" + this.props.loggedUser.id
+        "http://localhost:5000/api/entity_emp/workSpace/" +
+          this.props.loggedUser.id
       )
       .then(res => {
-        console.log(res.data.data);
-        this.setState({ forms: res.data.data });
+        console.log(res.data);
+        this.setState({
+          pending_forms: res.data.pending_forms,
+          reviewed_forms: res.data.reviewed_forms,
+          filled_forms: res.data.filled_forms
+        });
       });
   };
 }

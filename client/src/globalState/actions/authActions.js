@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT } from "./actionTypes";
+import { LOGIN, LOGOUT, REMEMBER } from "./actionTypes";
 import axios from "axios";
 
 import setAuthToken from "../../helpers/setAuthToken";
@@ -12,7 +12,11 @@ import setAuthToken from "../../helpers/setAuthToken";
 //     }
 //   });
 // };
-
+export const remember= (token)=>dispatch =>{
+const base64Url = token.split(".")[1];
+const decodedValue = JSON.parse(window.atob(base64Url));
+  dispatch({type:REMEMBER,payload:{...decodedValue}})
+}
 export const logout = () => dispatch => {
   dispatch({ type: LOGOUT });
 };

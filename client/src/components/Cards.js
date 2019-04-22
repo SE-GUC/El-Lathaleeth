@@ -1,17 +1,21 @@
 import React, { Component } from "react";
 import FormCard from "./FormCard";
 import { connect } from "react-redux";
+import "./abougabal.css";
+
 class Cards extends Component {
   render() {
     const bool = this.props.tobereviewed;
     return (
-      <div class="row">
+      <div className="row offset-sm-1">
         {this.props.forms.map(form => (
-          <div class="col s12 m6 l3">
-            <FormCard form={form} tobereviewed={bool} reviewForm={this.props.reviewForm} addComment={this.props.addComment}/>
+          <div className = "abougabal">
+            <FormCard form={form} tobereviewed={bool} 
+            pay={this.props.pay}
+            reviewForm={this.props.reviewForm} addComment={this.props.addComment}/>
           </div>
         ))}
-      </div>
+     </div>
     );
   }
 }

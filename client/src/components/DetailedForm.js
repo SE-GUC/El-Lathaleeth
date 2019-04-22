@@ -4,35 +4,96 @@ import { connect } from "react-redux";
 // import { Button, Form } from "semantic-ui-react";
 import "bootstrap/dist/css/bootstrap.css";
 export class DetailedForm extends Component {
-  state = { clicked: false };
-  handleChange = event => {
-    this.setState({ value: event.target.value });
-  };
-  render() {
-    const review = this.props.tobereviewed;
-    let content = "";
-    for (let p in this.props.form) {
-      if (this.props.form.hasOwnProperty(p)) {
-        content += p + " : " + this.props.form[p] + "\n";
-      }
-    }
-    console.log(this.props.loggedUser);
-    return (
-      <div class="card">
-        <div class="card-header">{this.props.form.formType}</div>
-        <div class="card-body">
-          <h5 class="card-title">Mr./Mrs. {this.props.form.investor.name}</h5>
-          <p class="card-text">
-            <p>ID: {this.props.form._id}</p>
-            <p>Law: {this.props.form.law}</p>
-            <p>Legal Form: {this.props.form.legalForm}</p>
-            <p>Form Type: {this.props.form.formType}</p>
-            <p>Address: {this.props.form.address}</p>
-            <p>Phone Number: {this.props.form.phone}</p>
-            <p> Number: {this.props.form.fax}</p>
-            <p>Created On: {this.props.form.createdOn}</p>
-            <p>Capital Currency: {this.props.form.capitalCurr}</p>
-            <p>Capital Value: {this.props.form.capitalVal}</p>
+         goedit = e => {
+           window.location.hash = "UpdateOneForm/" + this.props.form._id;
+         };
+         state = { clicked: false };
+         handleChange = event => {
+           this.setState({ value: event.target.value });
+         };
+         render() {
+           const review = this.props.tobereviewed;
+           let content = "";
+           for (let p in this.props.form) {
+             if (this.props.form.hasOwnProperty(p)) {
+               content += p + " : " + this.props.form[p] + "\n";
+             }
+           }
+           let payButton;
+           let editButton
+           try{
+           if (this.props.form.status === "reviewer check") {
+             payButton = (
+               <div>
+                 <button
+                   type="button"
+                   onClick={this.props.pay.bind(
+                     this,
+                     this.props.form._id
+                   )}
+                   class="btn btn-success"
+                 >
+                   Pay Fees
+                 </button>
+               </div>
+             );
+           } else {
+             payButton = "";
+           }}
+           catch(e){}
+           const filteredComments = this.props.form.comments.filter(
+             a => {
+               console.log(a);
+               return !a.hasOwnProperty("read_at");
+             }
+           );
+           const newforms = filteredComments.filter(e => {
+             return (
+               e.status === "pending reviewer" && e.comments.length > 0
+             );
+           });
+           if (
+             this.props.form.status === "pending reviewer" &&
+             filteredComments.length > 0
+           ) {
+             editButton = (
+               <div>
+                 <button
+                   type="button"
+                   onClick={this.goedit.bind(
+                     this
+                   )}
+                   class="btn btn-success"
+                 >
+                   Edit Form
+                 </button>
+               </div>
+             );
+           } else {
+             editButton = "";
+           }
+            if(this.props.loggedUser.type==='Reviewer'){editButton='' 
+            payButton=''}
+
+           console.log(this.props.loggedUser);
+           return (
+             <div class="card">
+               <div class="card-header">{this.props.form.formType}</div>
+               <div class="card-body">
+                 <h5 class="card-title">
+                   Mr./Mrs. {this.props.form.investor.name}
+                 </h5>
+                 <p class="card-text">
+                   <p>ID: {this.props.form._id}</p>
+                   <p>Law: {this.props.form.law}</p>
+                   <p>Legal Form: {this.props.form.legalForm}</p>
+                   <p>Form Type: {this.props.form.formType}</p>
+                   <p>Address: {this.props.form.address}</p>
+                   <p>Phone Number: {this.props.form.phone}</p>
+                   <p> Number: {this.props.form.fax}</p>
+                   <p>Created On: {this.props.form.createdOn}</p>
+                   <p>Capital Currency: {this.props.form.capitalCurr}</p>
+                   <p>Capital Value: {this.props.form.capitalVal}</p>
 
             {this.props.form.boardOfDirectors.map(BoardOfDirector => (
               <div>
@@ -108,6 +169,18 @@ export class DetailedForm extends Component {
               Approve This Case
             </button>
           )}
+          {this.props.pay && (
+            <div>
+              <button
+                type="button"
+                onClick={this.props.pay.bind(this, this.props.form._id)}
+                class="btn btn-success"
+              >
+                Pay Fees
+              </button>
+            </div>
+          )}
+          {editButton}
         </div>
         {/* <Form reply>
                        <Form.TextArea />

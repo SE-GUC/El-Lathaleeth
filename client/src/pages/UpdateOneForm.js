@@ -52,6 +52,7 @@ class UpdateOneForm extends Component {
       phone,
       arabicName,
       capitalVal,
+      investor,
       capitalCurr,
       fax,
       createdOn,
@@ -77,6 +78,7 @@ class UpdateOneForm extends Component {
       capitalCurr: capitalCurr,
       fax: fax,
       comments: comments,
+      investor1:investor,
       address: address,
       city: city,
       createdOn: createdOn,
@@ -168,11 +170,18 @@ class UpdateOneForm extends Component {
   };
   handleSubmit = async e => {
     e.preventDefault();
-    const user = await axios.get(
+    let user
+    let inv
+    try{
+     user = await axios.get(
       "http://localhost:5000/api/investor/" + this.props.loggedUser.id,
       body
     );
-    const inv = user.data.data;
+        inv = user.data.data;
+}
+    catch(e){
+      inv=this.state.investor1
+    }
     delete inv._v;
     let {
       law,
@@ -215,7 +224,7 @@ class UpdateOneForm extends Component {
         fax: fax,
         address: address + " " + city + " " + country,
         boardOfDirectors: boardOfDirectors,
-        createdOn: createdOn,
+        createdOn: createdOn,  
         status: status,
         bitIL: bitIL,
         comments: newComments,
