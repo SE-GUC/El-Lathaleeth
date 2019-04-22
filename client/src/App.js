@@ -23,14 +23,12 @@ import UpdateInvestorProfile from "./pages/UpdateInvestorProfile";
 import UpdateFormPage from "./pages/UpdateFormPage";
 import contactUs from "./pages/contactUs";
 import meetUs from "./pages/meetUs";
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
-
 import ArabicHomepage from "./pages/ArabicHomepage";
 import Homepage from "./pages/Homepage";
 import EstablishedCompanies from "./pages/EstablishedCompanies";
 
 class App extends Component {
-  render() {
+  render() { 
     return (
       <Provider store={store}>
         <HashRouter>

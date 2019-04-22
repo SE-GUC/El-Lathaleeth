@@ -71,7 +71,7 @@ export class DetailedForm extends Component {
     }
 
     console.log(this.props.loggedUser);
-    return (
+    return (  
       <div class="card">
         <div class="card-header">{this.props.form.status}</div>
         <div class="card-body">
@@ -154,7 +154,7 @@ export class DetailedForm extends Component {
               <div>
               {this.props.isEnglish &&
                 <p>Comment:{comment.text}</p>}
-                {this.props.isEnglish &&
+                {!this.props.isEnglish &&
                 <p>{comment.text}: تعليق</p>}
               </div>
             ))}
