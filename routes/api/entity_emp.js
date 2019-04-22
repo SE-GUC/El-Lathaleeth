@@ -37,66 +37,74 @@ router.get(
     }
   }
 );
-router.get("/workSpace/:id",
-  passport.authenticate("jwt", { session: false }), async (req, res) => {
-  try {
-    const id = req.params.id;
-    const findEmp = await Entity_Emp.findById(id);
-    const pending_forms = [];
-    const reviewed_forms = [];
-    const filled_forms = [];
-    if (!findEmp)
-      return res.status(404).send({ error: "Employee does not exist" });
-    if (findEmp.emp_type === "Lawyer") {
-      const emp = await Entity_Emp.findById(id)
-        .populate("lawyer_details.pending_forms")
-        .populate("lawyer_details.reviewed_forms")
-        .populate("lawyer_details.filled_forms");
-      emp.lawyer_details.pending_forms.map(formID => {
-        if (pending_forms.indexOf(formID) === -1) pending_forms.push(formID);
+router.get(
+  "/workSpace/:id",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    try {
+      const id = req.params.id;
+      const findEmp = await Entity_Emp.findById(id);
+      const pending_forms = [];
+      const reviewed_forms = [];
+      const filled_forms = [];
+      if (!findEmp)
+        return res.status(404).send({ error: "Employee does not exist" });
+      if (findEmp.emp_type === "Lawyer") {
+        const emp = await Entity_Emp.findById(id)
+          .populate("lawyer_details.pending_forms")
+          .populate("lawyer_details.reviewed_forms")
+          .populate("lawyer_details.filled_forms");
+        emp.lawyer_details.pending_forms.map(formID => {
+          if (pending_forms.indexOf(formID) === -1) pending_forms.push(formID);
+        });
+        emp.lawyer_details.filled_forms.map(formID => {
+          if (filled_forms.indexOf(formID) === -1) filled_forms.push(formID);
+        });
+        emp.lawyer_details.reviewed_forms.map(formID => {
+          if (reviewed_forms.indexOf(formID) === -1)
+            reviewed_forms.push(formID);
+        });
+      } else if (findEmp.emp_type === "Reviewer") {
+        const emp = await Entity_Emp.findById(id)
+          .populate("reviewer_details.pending_forms")
+          .populate("reviewer_details.reviewed_forms");
+        emp.reviewer_details.pending_forms.map(formID => {
+          if (pending_forms.indexOf(formID) === -1) pending_forms.push(formID);
+        });
+        emp.reviewer_details.reviewed_forms.map(formID => {
+          if (reviewed_forms.indexOf(formID) === -1)
+            reviewed_forms.push(formID);
+        });
+      }
+      res.json({
+        pending_forms: pending_forms,
+        reviewed_forms: reviewed_forms,
+        filled_forms: filled_forms
       });
-      emp.lawyer_details.filled_forms.map(formID => {
-        if (filled_forms.indexOf(formID) === -1) filled_forms.push(formID);
-      });
-      emp.lawyer_details.reviewed_forms.map(formID => {
-        if (reviewed_forms.indexOf(formID) === -1) reviewed_forms.push(formID);
-      });
-    } else if (findEmp.emp_type === "Reviewer") {
-      const emp = await Entity_Emp.findById(id)
-        .populate("reviewer_details.pending_forms")
-        .populate("reviewer_details.reviewed_forms");
-      emp.reviewer_details.pending_forms.map(formID => {
-        if (pending_forms.indexOf(formID) === -1) pending_forms.push(formID);
-      });
-      emp.reviewer_details.reviewed_forms.map(formID => {
-        if (reviewed_forms.indexOf(formID) === -1) reviewed_forms.push(formID);
-      });
+    } catch (error) {
+      console.log(error);
     }
-    res.json({
-      pending_forms: pending_forms,
-      reviewed_forms: reviewed_forms,
-      filled_forms: filled_forms
-    });
-  } catch (error) {
-    console.log(error);
   }
-});
+);
 
-router.get("/:id",
-  passport.authenticate("jwt", { session: false }), async (req, res) => {
-  try {
-    console.log(0);
-    const id = req.params.id;
-    const findEmp = await Entity_Emp.findById(id);
-    console.log(findEmp);
-    console.log(0);
-    if (!findEmp)
-      return res.status(404).send({ error: "Employee does not exist" });
-    res.json({ msg: "Employee found", data: findEmp });
-  } catch (error) {
-    // Error will be handled later
+router.get(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    try {
+      console.log(0);
+      const id = req.params.id;
+      const findEmp = await Entity_Emp.findById(id);
+      console.log(findEmp);
+      console.log(0);
+      if (!findEmp)
+        return res.status(404).send({ error: "Employee does not exist" });
+      res.json({ msg: "Employee found", data: findEmp });
+    } catch (error) {
+      // Error will be handled later
+    }
   }
-});
+);
 router.post(
   "/",
   passport.authenticate("jwt", { session: false }),
@@ -172,61 +180,18 @@ router.post(
       const type = req.body.formType;
       const incrementer = await Counter.findOne({ name: "formCount" });
 
-    const isValidated = validator.createValidation(req.body);
-    if (isValidated.error)
-      return res
-        .status(400)
-        .send({ error: isValidated.error.details[0].message });
-    let user = await Entity_Emp.findOne({ email });
-    if (user) return res.status(400).json({ email: "Email already exists" });
-    user = await Entity_Emp.findOne({ username });
-    if (user)
-      return res.status(400).json({ username: "Username already exists" });
-    const salt = bcrypt.genSaltSync(10);
-    const hashedPassword = bcrypt.hashSync(password, salt);
-    const newEmp = await Entity_Emp.create({
-      ...req.body,
-      password: hashedPassword
-    });
-
-    const admin = req.params.adminid;
-    await Entity_Emp.findByIdAndUpdate(
-      admin,
-      { $addToSet: { "admin_details.registered_employees": newEmp.id } },
-      { safe: true },
-      function(err, doc) {
-        if (err) {
-          console.log(err);
-        } else {
-          //do stuff
-        }
-      }
-    );
-    res.json({ msg: " was created successfully", data: newEmp });
-  } catch (error) {
-    // We will be handling the error later
-    console.log(error);
-  }
-});
-
-router.put("/reserveForm/:idl/:id", async (req, res) => {
-  try {
-    const idl = req.params.idl;
-    const id = req.params.id;
-    const form = await Form.findById(id);
-    if (!form) return res.status(404).send({ error: "Form does not exist" });
-    const findLawyer = await Entity_Emp.findById(idl);
-    if (!findLawyer)
-      return res.status(404).send({ error: "Employee does not exist" });
-    else if (findLawyer.emp_type === "Lawyer") {
-      const updatedForm = await Form.findByIdAndUpdate(
-        id,
-        {
-          $set: {
-            status: "pending lawyer"
-          }
-        },
-        { new: true }
+      const isValidated = formvalidator.createValidation(req.body, type);
+      if (isValidated.error)
+        return res
+          .status(400)
+          .send({ error: isValidated.error.details[0].message });
+      const newForm = await Form.create({
+        ...req.body,
+        caseNumber: incrementer.count
+      });
+      const updatedCount = await Counter.findOneAndUpdate(
+        { name: "formCount" },
+        { $set: { count: incrementer.count + 1 } }
       );
       const lawyerid = req.params.lawyerid;
       await Entity_Emp.findByIdAndUpdate(
@@ -241,17 +206,40 @@ router.put("/reserveForm/:idl/:id", async (req, res) => {
           }
         }
       );
-      res.json({ msg: "Form reserved successfully", data: updatedForm });
-    } else if (findLawyer.emp_type === "Reviewer") {
-      const updatedForm = await Form.findByIdAndUpdate(
-        id,
-        {
-          $set: {
-            status: "pending reviewer"
-          }
-        },
-        { new: true }
-      );
+      res.json({ msg: "Form was created successfully", data: newForm });
+    } catch (error) {
+      // We will be handling the error later
+      console.log(error);
+    }
+  }
+);
+router.post(
+  "/registerEmployee/:adminid/",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    try {
+      const email = req.body.email;
+      const username = req.body.username;
+      const password = req.body.password;
+
+      const isValidated = validator.createValidation(req.body);
+      if (isValidated.error)
+        return res
+          .status(400)
+          .send({ error: isValidated.error.details[0].message });
+      let user = await Entity_Emp.findOne({ email });
+      if (user) return res.status(400).json({ email: "Email already exists" });
+      user = await Entity_Emp.findOne({ username });
+      if (user)
+        return res.status(400).json({ username: "Username already exists" });
+      const salt = bcrypt.genSaltSync(10);
+      const hashedPassword = bcrypt.hashSync(password, salt);
+      const newEmp = await Entity_Emp.create({
+        ...req.body,
+        password: hashedPassword
+      });
+
+      const admin = req.params.adminid;
       await Entity_Emp.findByIdAndUpdate(
         admin,
         { $addToSet: { "admin_details.registered_employees": newEmp.id } },
@@ -265,9 +253,12 @@ router.put("/reserveForm/:idl/:id", async (req, res) => {
         }
       );
       res.json({ msg: " was created successfully", data: newEmp });
-    } 
+    } catch (error) {
+      // We will be handling the error later
+      console.log(error);
+    }
   }
-
+);
 
 router.put(
   "/reserveForm/:idl/:id",
